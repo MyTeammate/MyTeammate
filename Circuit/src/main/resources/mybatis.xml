@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 取别名，这个必须按照一定的顺序配置 -->
+	<typeAliases>
+		<!-- 将这个包下面的所有的类全部倒入进来，明明规则就是类名首字母小写 -->
+		<package name="com.znsd.circuit.entities" />
+		<!-- 指定单独一个类的别名 -->
+		<!-- <typeAlias type="com.lxit.ssm.entities.Student" alias="stu"/> -->
+	</typeAliases>
+
+</configuration>

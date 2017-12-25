@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+   	   http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/jdbc
+         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util.xsd
+          http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 自动扫描基包，将类加载到Spring容器中 -->
+	<context:component-scan base-package="com.znsd.circuit" />
+	
+	
+	<!-- html视图解析器 必须先配置freemarkerConfig,注意html是没有prefix前缀属性的-->  
+   <!-- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">    
+       <property name="templateLoaderPath">    
+           <value>/WEB-INF/views/</value>    
+       </property>    
+   </bean>    
+    <bean id="htmlviewResolver"    
+       class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">    
+       <property name="suffix" value=".html" />   
+       <property name="order" value="0"></property>   
+       <property name="contentType" value="text/html;charset=UTF-8"></property>           
+   </bean> -->
+   
+   <!-- 视图解析器：将逻辑视图转发到对应的物理视图 -->
+	<bean  
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+		<!-- 视图前缀 -->
+		<property name="prefix" value="/WEB-INF/views/" />
+		<!-- 视图后置 -->
+		<property name="suffix" value=".jsp" />
+		<!-- <property name="order" value="0"></property>    -->
+		<!-- <property name="order" value="13"></property> -->
+		
+	</bean>
+
+	<!-- 将静态资源交由tomcat来处理 -->
+	<mvc:default-servlet-handler />
+	<!-- 注册类型转换器 -->
+	<mvc:annotation-driven />
+
+	<!-- 配置文件上传组件 -->
+	<!-- <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		指定默认的编码格式
+		<property name="defaultEncoding" value="UTF-8" />
+		指定允许上传的文件大小，单位Byte
+		<property name="maxUploadSize" value="512000" />
+	</bean> -->
+	
+	
+</beans>
