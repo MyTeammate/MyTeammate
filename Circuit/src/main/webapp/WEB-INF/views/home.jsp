@@ -22,7 +22,15 @@
 		style="width: 180px; padding: 10px;">
         <ul id="nav"></ul>
     </div>   
-    <div data-options="region:'center'" style="overflow: hidden; background: #eee;"></div>   
+    <div data-options="region:'center'" style="overflow: hidden; background: #eee;">
+        <div id="tabs">
+			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
+				class="iconfont .icon-logistic"
+				style="padding: 0 10px; display: block;">
+				<p style="color: #00EE00;">欢迎来到电力巡检系统！</p>
+			</div>
+		</div>
+    </div>   
 </body>
 <script type="text/javascript" src="js/home.js"></script>
 </body>
