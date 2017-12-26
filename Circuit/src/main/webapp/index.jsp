@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-1212456dfg666sa44aaaaaa	22we aaaa<%-- <%
-    response.sendRedirect("stu/login");
-    %> --%>
+	<%
+    response.sendRedirect("user/home");
+    %>
 </body>
 </html>
