@@ -25,7 +25,7 @@ $(function(){
 						title : node.text,
 						closable : true,
 						iconCls:node.iconCls,
-						href : "http://localhost:8080/crm/"+node.url,
+						href : "http://localhost:8080/Circuit/"+node.url,
 						onLoad:function(){
 							orderInquiry();
 						}

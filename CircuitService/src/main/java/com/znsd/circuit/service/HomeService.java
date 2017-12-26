@@ -1,5 +1,9 @@
 package com.znsd.circuit.service;
 
-public interface HomeService {
+import java.util.List;
 
+import com.znsd.circuit.model.Power;
+
+public interface HomeService {
+	public List<Power> selectAllPower(Integer nid);
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.HomeDao">
+    <select id="selectAllPower" resultType="Power" parameterType="Integer">
+        select DISTINCT id,text,state,url,iconCls,nid
+		from t_power p
+		where p.nid=#{nid}
+    </select>
+</mapper>
