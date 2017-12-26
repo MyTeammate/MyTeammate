@@ -8,5 +8,6 @@ import com.znsd.circuit.model.Power;
 
 @MapperScan
 public interface HomeDao {
+	//查询所有树形菜单
     public List<Power> selectAllPower(Integer nid);
 }
