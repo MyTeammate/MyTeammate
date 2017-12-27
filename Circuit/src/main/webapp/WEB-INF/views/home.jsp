@@ -15,7 +15,8 @@
 	src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	  <script type="text/javascript" src="js/home.js"></script>
 	  <script type="text/javascript" src="js/tower.js"></script>
-
+	  <script type="text/javascript" src="js/flaw_manager.js"></script>
+	  <script type="text/javascript" src="js/add_eliminate_flaw.js"></script>
 </head>
 
 <body class="easyui-layout">
