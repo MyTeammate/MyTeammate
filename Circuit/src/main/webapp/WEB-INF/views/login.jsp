@@ -51,15 +51,29 @@
 				return false;
 			}
 			else{
-				var reg = /^[0-9A-Za-z]$/;
+				var reg = /^[0-9A-Za-z]+$/;
 				if(!reg.exec(u.val()))
 				{
-					$("#ts").html("用户名错误!");
+					$("#ts").html("用户名不能输入符号，如,");
 					is_show();
 					return false;
 				}else{
-					$("#ts").html("登录成功！");
-					is_show();
+					var data={userName:u.val(),passWord:p.val()};
+					$.ajax({
+						url:"homeController/login",
+						type:"post",
+						data:data,
+						success:function(result){
+							if(result==true){
+								window.location.href="home";
+							}else{
+								$("#ts").html("用户名或密码错误！");
+								is_show();
+							}
+						}
+					})
+				/* 	$("#ts").html("登录成功！");
+					is_show(); */
 					// 与后台交互
 				}
 			}
