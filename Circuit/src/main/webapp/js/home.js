@@ -1,4 +1,5 @@
 $(function(){
+	
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
@@ -28,7 +29,6 @@ $(function(){
 						iconCls:node.iconCls,
 						href : "http://localhost:8080/Circuit/"+node.url,
 						onLoad:function(){
-							//orderInquiry();
 							if(node.text=="杆塔管理"){
 								tower();
 							}
@@ -58,4 +58,7 @@ function move($text,$url){
 	tab.panel('refresh',$url);
 
 }
+
+
+
 
