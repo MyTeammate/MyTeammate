@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
 	<%
-    	response.sendRedirect("home");
+     response.sendRedirect("login");
     %>
 </body>
 </html>
