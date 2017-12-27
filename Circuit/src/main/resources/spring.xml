@@ -27,7 +27,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"/>
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.16.143:3306/circuit"/>
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 		<!-- 队列中的最小连接数 -->
