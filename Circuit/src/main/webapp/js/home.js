@@ -17,7 +17,8 @@ $(function(){
 		}, 
 		onClick : function(node) {
 			console.log(node);
-			if (node.url) {
+			if (node.url) { 
+				console.log($("#tabs"))
 				if ($("#tabs").tabs('exists', node.text)) {
 					$("#tabs").tabs('select', node.text);
 				} else {
@@ -27,7 +28,10 @@ $(function(){
 						iconCls:node.iconCls,
 						href : "http://localhost:8080/Circuit/"+node.url,
 						onLoad:function(){
-							orderInquiry();
+							//orderInquiry();
+							if(node.text=="杆塔管理"){
+								tower();
+							}
 						}
 					});
 				}
@@ -35,3 +39,23 @@ $(function(){
 		}
 	}); 
 })
+
+//更改一个面板（跳面板）
+function move($text,$url){
+	// 更新选择的面板的新标题和内容
+	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+	$('#tabs').tabs('update', {
+		tab: tab,
+		options: {
+			title: $text,
+			href: $url  // 新内容的URL
+		}
+	});
+	
+	// 调用 'refresh' 方法更新选项卡面板的内容
+	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+	
+	tab.panel('refresh',$url);
+
+}
+

@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-</head>
 <link rel="stylesheet" type="text/css"
 	href="easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
@@ -14,7 +13,11 @@
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="easyui/locale/easyui-lang-zh_CN.js"></script>
-<body>
+	  <script type="text/javascript" src="js/home.js"></script>
+	  <script type="text/javascript" src="js/tower.js"></script>
+
+</head>
+
 <body class="easyui-layout">
     <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
 		style="height: 60px; background: #ccc;">23</div>   
@@ -23,7 +26,7 @@
         <ul id="nav"></ul>
     </div>   
     <div data-options="region:'center'" style="overflow: hidden; background: #eee;">
-        <div id="tabs">
+        <div id="tabs" class="easyui-tabs">
 			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">
@@ -31,7 +34,7 @@
 			</div>
 		</div>
     </div>   
+  
 </body>
-<script type="text/javascript" src="js/home.js"></script>
-</body>
+
 </html>
