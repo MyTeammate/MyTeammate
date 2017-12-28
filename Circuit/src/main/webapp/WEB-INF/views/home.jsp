@@ -37,7 +37,7 @@
         <ul id="nav"></ul>
     </div>   
     <div data-options="region:'center'" style="overflow: hidden; background: #eee;">
-        <div id="tabs" class="easyui-tabs">
+        <div id="tabs" class="easyui-tabs" style="height:750px">
 			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">
