@@ -18,6 +18,7 @@
 	  <script type="text/javascript" src="js/perWork.js"></script>
 	  <script type="text/javascript" src="js/taskP.js"></script>
 	  <script type="text/javascript" src="js/taskE.js"></script>
+	  <script type="text/javascript" src="js/perFile.js"></script>
 </head>
 
 <body class="easyui-layout">
