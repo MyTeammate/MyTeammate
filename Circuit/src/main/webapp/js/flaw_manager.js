@@ -37,6 +37,6 @@ function search_eliminate() {
 	 */
 
 }
-function goto(){
+function gotoanthor(){
 	move("制定消缺任务","http://localhost:8080/Circuit/eliminate/addeliminateflaw");
 }

@@ -26,7 +26,7 @@ body {
 		下发时间：<input id="flaw_startdate" type="text" class="easyui-datebox">-
 		<input id="flaw_enddate" type="text" class="easyui-datebox">
 		<a href="#" onclick="search_eliminate()	" class="easyui-linkbutton" iconCls="icon-search">查询</a>
-		<a href="javascript:onclick=goto()" class="easyui-linkbutton" style="">制定消缺任务</a>
+		<a href="javascript:onclick=gotoanthor()" class="easyui-linkbutton" style="">制定消缺任务</a>
 	</div>
 	<hr/>
 	<div style="margin-left: 120px;margin-top:20px;width:1000px;height:800px;">
