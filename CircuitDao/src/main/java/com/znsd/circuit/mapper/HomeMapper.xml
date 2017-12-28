@@ -18,7 +18,7 @@
 		where u.userName=#{userName} and u.`password`=#{passWord}
     </select>
     
-    <update id="loginDate" parameterType="Map">
+    <update id="loginDate" parameterType="Map"> 
         update t_user u set u.loginDate=#{time}
         where u.id=#{id}
     </update>
