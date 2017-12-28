@@ -31,9 +31,6 @@
 			</div>
 		</div>
 		<!-- 再加一个弹框，提示登录成功 -->
-		
-
-        <!-- Javascript http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js-->
 		<script src="js/jquery-1.6.4.min.js" type="text/javascript"></script>
         <script src="js/login_base.js"></script>
         <script src="js/login_img_carousel.js"></script>
@@ -65,6 +62,12 @@
 						data:data,
 						success:function(result){
 							if(result==true){
+								/* $.ajax({
+									url:"http://192.168.16.143:7075/newWeather/weather",
+									type:"post",
+									success:function(result){
+									}
+								}) */
 								window.location.href="home";
 							}else{
 								$("#ts").html("用户名或密码错误！");
@@ -72,9 +75,6 @@
 							}
 						}
 					})
-				/* 	$("#ts").html("登录成功！");
-					is_show(); */
-					// 与后台交互
 				}
 			}
 		});

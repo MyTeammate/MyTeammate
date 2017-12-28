@@ -1,4 +1,10 @@
 $(function(){
+	/*$('#sy').tabs('add', {
+		options: {
+			title: 待办列表,
+			href: personalWork  // 新内容的URL
+		}
+	});*/
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
