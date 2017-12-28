@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping
 public class SetController {
 	//首页
     @RequestMapping("/home")
@@ -18,4 +17,10 @@ public class SetController {
 	public String login(){
 		return "login";		
 	}
+    
+    //数据字典页面
+    @RequestMapping("/systemData")
+    public String systemData(){
+    	return "systemData";
+    }
 }
