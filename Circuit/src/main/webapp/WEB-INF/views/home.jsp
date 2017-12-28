@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
 <title>电力巡检</title>
 <link rel="stylesheet" type="text/css"
 	href="easyui/themes/default/easyui.css" />
@@ -11,16 +13,17 @@
 <link rel="stylesheet" type="text/css" href="css/home.css" />
 <script type="text/javascript" src="easyui/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	  <script type="text/javascript" src="js/home.js"></script>
 	  <script type="text/javascript" src="js/tower.js"></script>
+	  <script type="text/javascript" src="js/flaw_manager.js"></script>
 	  <script type="text/javascript" src="js/perWork.js"></script>
 	  <script type="text/javascript" src="js/taskP.js"></script>
 	  <script type="text/javascript" src="js/taskE.js"></script>
+	  <script type="text/javascript" src="js/systemData.js"></script>
 </head>
 
-<body class="easyui-layout">
+<body class="easyui-layout" style=" width:1439px;height:1000px">
     <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
 		style="height: 60px; background: #ccc;">
 		<div class="logo">电力巡检§</div>
@@ -34,7 +37,7 @@
         <ul id="nav"></ul>
     </div>   
     <div data-options="region:'center'" style="overflow: hidden; background: #eee;">
-        <div id="tabs" class="easyui-tabs">
+        <div id="tabs" class="easyui-tabs" style="height:750px">
 			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">

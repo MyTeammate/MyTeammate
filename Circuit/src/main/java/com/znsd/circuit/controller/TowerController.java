@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class TowerController {
+public class TowerController  {
 
 	
 	@RequestMapping("/intoTower")
