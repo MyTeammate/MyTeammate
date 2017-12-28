@@ -46,6 +46,10 @@ $(function(){
 							}else if(node.text=="数据字典"){
 								data_tb();
 							}
+							if(node.text=="消缺任务制定与分配"){
+								eliminate();
+							}
+							
 						}
 					});
 				}
@@ -65,11 +69,8 @@ function move($text,$url){
 			href: $url  // 新内容的URL
 		}
 	});
-	
 	// 调用 'refresh' 方法更新选项卡面板的内容
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-	
 	tab.panel('refresh',$url);
-
 }
 
