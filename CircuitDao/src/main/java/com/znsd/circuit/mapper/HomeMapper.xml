@@ -10,7 +10,7 @@
     </select>
     
     <select id="login" resultType="User" parameterType="Map">
-        select u.id,u.userName,u.`passWord`,u.`name`,r.id,r.`name`,u.sex,u.age,u.entryDate,u.leaveDate,u.phone,u.email,u.loginDate,u.state from t_user u
+        select u.id,u.userName,u.`passWord`,u.`name`,r.id roleId,r.`name` roleName,u.sex,u.age,u.entryDate,u.leaveDate,u.phone,u.email,u.loginDate,u.state from t_user u
 		LEFT JOIN t_user_role ur
 		on u.id=ur.userId
 		LEFT JOIN t_role r
@@ -19,7 +19,7 @@
     </select>
     
     <update id="loginDate" parameterType="Map">
-        update t_user u set u.leaveDate=#{time}
+        update t_user u set u.loginDate=#{time}
         where u.id=#{id}
     </update>
 </mapper>
