@@ -58,7 +58,6 @@ body {
 	<!-- </div> -->
 	<div style="margin-left: 120px;margin-top:60px;width:900px;height:600px;">
 		<table id="add_flaw">
-		没有数据
 		</table>
 	</div>
 	

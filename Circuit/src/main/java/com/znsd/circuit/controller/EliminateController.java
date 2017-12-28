@@ -28,7 +28,7 @@ public class EliminateController {
 	public String eliminates() {
 		return "add_eliminate_flaw";
 	}
-	//½«ËùÓĞµÄÈÎÎñ²éÑ¯³öÀ´
+	//æŸ¥è¯¢å‡ºä»»åŠ¡
 	@RequestMapping("/getAll")
 	@ResponseBody
 	public Map<String,Object> getAll(@RequestParam("page") int page, @RequestParam("rows") int rows) {
@@ -40,7 +40,7 @@ public class EliminateController {
 		Map<String, Object> maps = new HashMap<String, Object>();
 		List<Eliminate> list = eliminateService.getAllTask(map);
 		for (Eliminate eliminate : list) {
-			eliminate.setOperation("<a href='#'>²é¿´</a>|<a href='#'>·ÖÅäÈÎÎñ</a>|<a href='#'>ĞŞ¸Ä</a>|<a href='#'>È¡Ïû</a>");
+			eliminate.setOperation("<a href='#'>æŸ¥çœ‹</a>|<a href='#'>åˆ†é…ä»»åŠ¡</a>|<a href='#'>ä¿®æ”¹</a>|<a href='#'>å–æ¶ˆ</a>");
 		}
 		/*Eliminate eliminate = new Eliminate();
 		eliminate.setOperation(operation);*/
@@ -49,7 +49,7 @@ public class EliminateController {
 		maps.put("total", count);
 		return maps;
 	}
-	//²éÑ¯³öËùÓĞµÄÈÎÎñµ¥¾İ
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ñµ¥¾ï¿½
 	//@RequestMapping("/getBills")
 	//@ResponseBody
 	/*public List<> getbills() {
