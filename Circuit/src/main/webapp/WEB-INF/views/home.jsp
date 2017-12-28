@@ -5,18 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="css/home.css" />
 <script type="text/javascript" src="easyui/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	  <script type="text/javascript" src="js/home.js"></script>
 	  <script type="text/javascript" src="js/tower.js"></script>
 	  <script type="text/javascript" src="js/flaw_manager.js"></script>
-	  <script type="text/javascript" src="js/add_eliminate_flaw.js"></script>
+	  
 </head>
 
 <body class="easyui-layout">

@@ -1,15 +1,14 @@
-package com.znsd.circuit.dao;
+package com.znsd.circuit.service;
+
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.annotation.MapperScan;
-
 import com.znsd.circuit.model.Eliminate;
 
-@MapperScan
-public interface EliminateDao {
+public interface EliminateService {
 	/**
 	 * 查出所有的任务
+	 * 
 	 * @return
 	 */
 	public List<Eliminate> getAllTask(Map map);

@@ -31,9 +31,11 @@ $(function(){
 							//orderInquiry();
 							if(node.text=="杆塔管理"){
 								tower();
-							}else if(node.text=="消缺任务制定与分配"){
+							}
+							if(node.text=="消缺任务制定与分配"){
 								eliminate();
 							}
+							
 						}
 					});
 				}
