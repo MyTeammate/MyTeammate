@@ -26,10 +26,14 @@
 	  <script type="text/javascript" src="js/perWork.js"></script>
 	  <script type="text/javascript" src="js/taskP.js"></script>
 	  <script type="text/javascript" src="js/taskE.js"></script>
+<<<<<<< HEAD
+	  <script type="text/javascript" src="js/systemData.js"></script>
+=======
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 >>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 </head>
 
-<body class="easyui-layout">
+<body class="easyui-layout" style=" width:1439px;height:1000px">
     <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
 		style="height: 60px; background: #ccc;">
 		<div class="logo">电力巡检§</div>
