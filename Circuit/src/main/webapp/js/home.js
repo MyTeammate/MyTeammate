@@ -1,4 +1,10 @@
 $(function(){
+	/*$('#sy').tabs('add', {
+		options: {
+			title: 待办列表,
+			href: personalWork  // 新内容的URL
+		}
+	});*/
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
@@ -31,6 +37,12 @@ $(function(){
 							//orderInquiry();
 							if(node.text=="杆塔管理"){
 								tower();
+							}else if(node.text=="待办列表"){
+								perWork();
+							}else if(node.text=="巡检记录统计"){
+								taskP();
+							}else if(node.text=="消缺记录统计"){
+								taskE();
 							}
 							if(node.text=="消缺任务制定与分配"){
 								eliminate();

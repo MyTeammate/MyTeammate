@@ -4,8 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<<<<<<< HEAD
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+=======
+<title>电力巡检</title>
+<link rel="stylesheet" type="text/css"
+	href="easyui/themes/default/easyui.css" />
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="css/home.css" />
 <script type="text/javascript" src="easyui/jquery.min.js"></script>
@@ -13,13 +19,25 @@
 <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	  <script type="text/javascript" src="js/home.js"></script>
 	  <script type="text/javascript" src="js/tower.js"></script>
+<<<<<<< HEAD
 	  <script type="text/javascript" src="js/flaw_manager.js"></script>
 	  
+=======
+	  <script type="text/javascript" src="js/perWork.js"></script>
+	  <script type="text/javascript" src="js/taskP.js"></script>
+	  <script type="text/javascript" src="js/taskE.js"></script>
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 </head>
 
 <body class="easyui-layout">
     <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
-		style="height: 60px; background: #ccc;">23</div>   
+		style="height: 60px; background: #ccc;">
+		<div class="logo">电力巡检§</div>
+		<div class="logout">
+			您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="../role/signout">&nbsp;&nbsp;退出</a>
+		</div>
+		<div class="logout">当前权限：${user.roleName}</div>
+	</div>   
     <div data-options="region:'west',title:'     导             航',split:true,iconCls:'icon-world'"
 		style="width: 180px; padding: 10px;">
         <ul id="nav"></ul>
