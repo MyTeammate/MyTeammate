@@ -23,7 +23,13 @@
 
 <body class="easyui-layout">
     <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
-		style="height: 60px; background: #ccc;">23</div>   
+		style="height: 60px; background: #ccc;">
+		<div class="logo">电力巡检§</div>
+		<div class="logout">
+			您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="../role/signout">&nbsp;&nbsp;退出</a>
+		</div>
+		<div class="logout">当前权限：${user.roleName}</div>
+	</div>   
     <div data-options="region:'west',title:'     导             航',split:true,iconCls:'icon-world'"
 		style="width: 180px; padding: 10px;">
         <ul id="nav"></ul>

@@ -35,7 +35,6 @@ public class HomeController {
 		List<Power> listPower=homeService.selectAllPower(nid);
 		for (Iterator iterator = listPower.iterator(); iterator.hasNext();) {
 			Power power = (Power) iterator.next();
-			System.out.println(power);
 		}
     	return listPower;
     }
@@ -49,6 +48,7 @@ public class HomeController {
 		map.put("passWord",passWord);
 		User user=homeService.login(map);
 		if(user!=null){
+			System.out.println(user);
 			session.setAttribute("user",user);
 			Date date=new Date();
 			DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
