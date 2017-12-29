@@ -1,5 +1,14 @@
 $(function(){
+<<<<<<< HEAD
 	
+=======
+	/*$('#sy').tabs('add', {
+		options: {
+			title: 待办列表,
+			href: personalWork  // 新内容的URL
+		}
+	});*/
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
@@ -31,10 +40,27 @@ $(function(){
 						onLoad:function(){
 							if(node.text=="杆塔管理"){
 								tower();
+							}else if(node.text=="待办列表"){
+								perWork();
+							}else if(node.text=="巡检记录统计"){
+								taskP();
+							}else if(node.text=="消缺记录统计"){
+								taskE();
+							}else if(node.text=="消缺任务制定与分配"){
+								inspectionMakeAllot();
+							}else if(node.text=="数据字典"){
+								data_tb();
 							}
+<<<<<<< HEAD
 							if(node.text=="路线管理"){
 								line();
 							}
+=======
+							if(node.text=="消缺任务制定与分配"){
+								eliminate();
+							}
+							
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 						}
 					});
 				}
@@ -54,12 +80,9 @@ function move($text,$url){
 			href: $url  // 新内容的URL
 		}
 	});
-	
 	// 调用 'refresh' 方法更新选项卡面板的内容
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-	
 	tab.panel('refresh',$url);
-
 }
 
 function addTabs($text,$url){

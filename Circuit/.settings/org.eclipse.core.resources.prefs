@@ -1,2 +1,7 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding/<project>=UTF-8
+=======
+encoding//src/main/java/com/znsd/circuit/controller/EliminateController.java=UTF-8
+encoding//src/main/java/com/znsd/circuit/controller/HomeController.java=UTF-8
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
