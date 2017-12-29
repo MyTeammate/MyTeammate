@@ -1,17 +1,21 @@
 package com.znsd.circuit.model;
 
-public class Line {
+public class Threads {
 
-	 private int id;
-	 private String coding;
-	 private String name;
-	 private double length;
-	 private String returnWay;
-	 private String date;
+	private int id;
+	private String coding;
+	private String name;
+	private int lineId;
+	private String lineName;
+	private double length;
+	private double returnWay;
+	private int rank;
 	 private String startTower;
 	 private String endTower;
 	 private int redix;
 	 private int state;
+	 private String runningStateString;
+	 private int runningState;
 	 private String stateString;
 	 private int  createById;
 	 private String createDate;
@@ -19,8 +23,6 @@ public class Line {
 	 private String deleteFlag;
 	 private String remark;
 	 private String operation;
-	 
-	 
 	public int getId() {
 		return id;
 	}
@@ -39,23 +41,36 @@ public class Line {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getLineId() {
+		return lineId;
+	}
+	public void setLineId(int lineId) {
+		this.lineId = lineId;
+	}
+	
+	public String getLineName() {
+		return lineName;
+	}
+	public void setLineName(String lineName) {
+		this.lineName = lineName;
+	}
 	public double getLength() {
 		return length;
 	}
 	public void setLength(double length) {
 		this.length = length;
 	}
-	public String getReturnWay() {
+	public double getReturnWay() {
 		return returnWay;
 	}
-	public void setReturnWay(String returnWay) {
+	public void setReturnWay(double returnWay) {
 		this.returnWay = returnWay;
 	}
-	public String getDate() {
-		return date;
+	public int getRank() {
+		return rank;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 	public String getStartTower() {
 		return startTower;
@@ -81,7 +96,24 @@ public class Line {
 	public void setState(int state) {
 		this.state = state;
 	}
-
+	public String getRunningStateString() {
+		return runningStateString;
+	}
+	public void setRunningStateString(String runningStateString) {
+		this.runningStateString = runningStateString;
+	}
+	public int getRunningState() {
+		return runningState;
+	}
+	public void setRunningState(int runningState) {
+		this.runningState = runningState;
+	}
+	public String getStateString() {
+		return stateString;
+	}
+	public void setStateString(String stateString) {
+		this.stateString = stateString;
+	}
 	public int getCreateById() {
 		return createById;
 	}
@@ -112,23 +144,12 @@ public class Line {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getStateString() {
-		return stateString;
-	}
-	public void setStateString(String stateString) {
-		this.stateString = stateString;
-	}
 	public String getOperation() {
 		return operation;
 	}
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
-	
 	 
 	 
-	 
-	 
-	 
-	
 }
