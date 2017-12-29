@@ -4,7 +4,7 @@ public class Systemsetting {
 	private int id;//配置id
 	private String coding;//配置编码
 	private String name;//配置名称
-	private int state;//状态
+	private String state;//状态
 	private int createBy;//创建人
 	private String createDate;//创建日期
 	private String updateDate;//修改日期
@@ -14,7 +14,7 @@ public class Systemsetting {
 		super();
 
 	}
-	public Systemsetting(int id, String coding, String name, int state, int createBy, String createDate,
+	public Systemsetting(int id, String coding, String name, String state, int createBy, String createDate,
 			String updateDate, String delete_flag, String remark) {
 		super();
 		this.id = id;
@@ -52,11 +52,11 @@ public class Systemsetting {
 		this.name = name;
 	}
 
-	public int getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
