@@ -55,6 +55,12 @@ function data_tb(){
 											if(result==1){
 												var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
 										    	tab.panel('refresh', 'systemData');
+											}else{
+												$.messager.alert({
+													title:'错误',
+													msg:'添加错误！',
+													icon:'info'
+												});
 											}
 										}
 									})
@@ -66,6 +72,109 @@ function data_tb(){
     });   
 	
 	$("#data_delete").bind('click',function(){
+		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		var data={id:cost.id};
+		$.ajax({
+			url:"dateManage/deleteSystemsetting",
+			type:"post",
+			data:data,
+			success:function(result){
+				if(result==1){
+					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+			    	tab.panel('refresh', 'systemData');
+				}else{
+					$.messager.alert({
+						title:'错误',
+						msg:'删除错误！',
+						icon:'info'
+					});
+				}
+			}
+		})
+	})
+	
+	$("#data_update").bind('click',function(){
+		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		var data={id:cost.id};
+		$.ajax({
+			url:"dateManage/updateSystemsetting",
+			type:"post",
+			data:data,
+			success:function(result){
+				$('#data_add_option').html("<tr><td style='float:right'>配置类型编码：</td><td><input type='text' id='coding' value='"+result.coding+"'/><span style='color: red'>*</span></td><td></td></tr><tr><td style='float:right'>配置类型名称：</td><td><input type='text' id='typeName' value='"+result.name+"'/><span style='color: red'>*</span></td></tr><tr><td style='float:right'>描述：</td><td><input type='text' id='describe' value='"+result.remark+"'/><span style='color: red'>*</span></td></tr>");
+		    	$('#data_add_option').dialog({
+		    		width:360,
+		    		height:120,
+		    		inline:true,
+		    		left:320,
+		    		top:210,
+					title:'修改',
+					buttons:[
+								{
+									text:'取消',
+									width:60,
+									handler:function(){	
+									    $('#data_add_option').dialog('close')
+									}		
+								},
+								{
+									text:'确定',
+									width:60,
+									handler:function(){	
+										if(($('#coding').val()=="")||($('#typeName').val()=="")||($('#describe').val()=="")){
+											$.messager.alert({
+												title:'提示',
+												msg:'请填写必填项！',
+												icon:'info'
+											});
+										}else{
+											var data={id:cost.id,coding:$('#coding').val(),typeName:$('#typeName').val(),describe:$('#describe').val()};
+											$.ajax({
+												url:'dateManage/updateSystemsetting2',
+												type:"post",
+												data:data,
+												success:function(result){
+													if(result==1){
+														var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+												    	tab.panel('refresh', 'systemData');
+													}else{
+														$.messager.alert({
+															title:'错误',
+															msg:'修改错误！',
+															icon:'info'
+														});
+													}
+												}
+											})
+										}
+									}		
+								}
+							]
+		    	})
+			}
+		})
 		
+    });  
+	
+	$("#data_state").bind('click',function(){
+		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		var data={id:cost.id};
+		$.ajax({
+			url:"dateManage/stateSystemsetting",
+			type:"post",
+			data:data,
+			success:function(result){
+				if(result==1){
+					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+			    	tab.panel('refresh', 'systemData');
+				}else{
+					$.messager.alert({
+						title:'错误',
+						msg:'删除错误！',
+						icon:'info'
+					});
+				}
+			}
+		})
 	})
 }
