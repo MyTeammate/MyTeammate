@@ -45,7 +45,6 @@ function data_tb(){
 										msg:'请填写必填项！',
 										icon:'info'
 									});
-									alert("ewr");
 								}else{
 									var data={coding:$('#coding').val(),typeName:$('#typeName').val(),describe:$('#describe').val()};
 									$.ajax({
@@ -64,5 +63,9 @@ function data_tb(){
 						}
 					]
     	})
-    });    
+    });   
+	
+	$("#data_delete").bind('click',function(){
+		
+	})
 }
