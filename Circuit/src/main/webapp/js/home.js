@@ -1,14 +1,10 @@
 $(function(){
-<<<<<<< HEAD
-	
-=======
 	/*$('#sy').tabs('add', {
 		options: {
 			title: 待办列表,
 			href: personalWork  // 新内容的URL
 		}
 	});*/
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
@@ -38,6 +34,7 @@ $(function(){
 						iconCls:node.iconCls,
 						href : "http://localhost:8080/Circuit/"+node.url,
 						onLoad:function(){
+							//orderInquiry();
 							if(node.text=="杆塔管理"){
 								tower();
 							}else if(node.text=="待办列表"){
@@ -51,16 +48,10 @@ $(function(){
 							}else if(node.text=="数据字典"){
 								data_tb();
 							}
-<<<<<<< HEAD
-							if(node.text=="路线管理"){
-								line();
-							}
-=======
 							if(node.text=="消缺任务制定与分配"){
 								eliminate();
 							}
 							
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 						}
 					});
 				}
@@ -84,17 +75,4 @@ function move($text,$url){
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
 	tab.panel('refresh',$url);
 }
-
-function addTabs($text,$url){
-	//添加一个未选中状态的选项卡面板
-	$('#tabs').tabs('add',{
-		title: $text,
-		selected: true,
-		href: $url
-		//...
-	});
-}
-
-
-
 
