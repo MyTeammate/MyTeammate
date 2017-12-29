@@ -50,7 +50,9 @@ public class InspectionController {
 	/*
 	 * 所有线路
 	 */
-	//public List<>
+	public List<Thread> getAllThread(){
+		return inspectionService.getAllThread();
+	}
 	
 	/*
 	 * 分页查询所有巡检数据

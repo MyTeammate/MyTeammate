@@ -16,6 +16,11 @@ public interface InspectionDao {
 	 */
 	public List<Systemparam> getInspectionParam();
 	
+	/**获取所有线路
+	 * @return
+	 */
+	public List<Thread> getAllThread();
+	
 	/**得到分页的总条数
 	 * @return
 	 */

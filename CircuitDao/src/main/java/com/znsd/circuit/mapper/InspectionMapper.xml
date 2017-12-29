@@ -11,6 +11,9 @@
 		WHERE coding='INSPECTION_STATE' AND
 		delete_flag='否' AND state='启用')
 	</select>
+	<select id="getAllThread" resultType="Thread">
+		
+	</select>
 	<select id="getInspectionPageCount" resultType="Integer">
 		SELECT
 		count(1)
