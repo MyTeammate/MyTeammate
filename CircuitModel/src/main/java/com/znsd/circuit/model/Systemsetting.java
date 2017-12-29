@@ -9,7 +9,7 @@ public class Systemsetting {
 	private String createDate;//创建日期
 	private String updateDate;//修改日期
 	private String delete_flag;//是否删除
-	private String remark;//备注
+	private String remark;//备注 
 	public Systemsetting() {
 		super();
 
