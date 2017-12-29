@@ -18,7 +18,7 @@
 	                   线路编号：<input  />&nbsp;&nbsp;&nbsp;&nbsp;
 	                   线路状态：<select></select>&nbsp;&nbsp;&nbsp;&nbsp;
 	                   <a href="javascript:onclick=find()" class="easyui-linkbutton" data-options="text:'查   询',plain:false"></a>
-			<a href="javascript:onclick=move('增加路线','auLine')" class="easyui-linkbutton" style="float: right;" data-options="iconCls:'icon-add',text:'增加路线',plain:false"></a>
+			<a href="javascript:onclick=move('增加线路','auThread')" class="easyui-linkbutton" style="float: right;" data-options="iconCls:'icon-add',text:'增加线路',plain:false"></a>
 		</div>
 	<script type="text/javascript" src="js/thread.js"></script>
 </body>
