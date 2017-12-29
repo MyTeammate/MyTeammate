@@ -18,7 +18,7 @@ body {
 		任务编号：<input type="text" id="flaw_taskcoding" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		线路编号：<input type="text" id="flaw_linecoding" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		任务状态：<select id="flaw_taskstatus" class="easyui-combobox" name="dept"
-			style="width: 80px;">
+			style="width: 80px;"> 
 			<option value="请选择">请选择</option>
 		</select>
 		<br/>
@@ -26,7 +26,7 @@ body {
 		下发时间：<input id="flaw_startdate" type="text" class="easyui-datebox">-
 		<input id="flaw_enddate" type="text" class="easyui-datebox">
 		<a href="#" onclick="search_eliminate()	" class="easyui-linkbutton" iconCls="icon-search">查询</a>
-		<a href="javascript:onclick=goto()" class="easyui-linkbutton" style="">制定消缺任务</a>
+		<a href="javascript:onclick=gotoanthor()" class="easyui-linkbutton" style="">制定消缺任务</a>
 	</div>
 	<hr/>
 	<div style="margin-left: 120px;margin-top:20px;width:1000px;height:800px;">

@@ -26,7 +26,7 @@ function eliminate() {
 }
 
 function search_eliminate() {
-	alert(333);
+	
 	/*
 	 * var taskcoding = $("#flaw_taskcoding").val(); var linecoding =
 	 * $("#flaw_linecoding").val(); var taskstatus =
@@ -37,6 +37,6 @@ function search_eliminate() {
 	 */
 
 }
-function goto(){
+function gotoanthor(){
 	move("制定消缺任务","http://localhost:8080/Circuit/eliminate/addeliminateflaw");
 }
