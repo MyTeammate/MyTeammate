@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>杆塔管理</title>
 </head>
 <body>
 
       <p>电力巡检系统>>   杆塔管理</p>
-       <div style="margin-left: 120px;margin-top:20px;width:1000px;height:800px;">
+       <div style="margin-left: 120px;margin-top:20px;width:1100px;height:800px;">
                       
           <table id="tower"  >
 	
@@ -28,7 +28,7 @@
         <form id="towerForm"  class="easyui-form" method="post">
 	          <table style="margin-left: 20px;margin-top: 20px;line-height: 50px;">
 	             <tr>
-	                <td>杆塔编号：<input name="coding" style="width:100px;" class="easyui-validatebox" data-options="required:true"  onchange="validate(this)"/><span id="towerMsg"></span></td>
+	                <td>杆塔编号：<input name="coding" style="width:100px;" class="easyui-validatebox" data-options="required:true"  onchange="validateTower(this)"/><span id="towerMsg"></span></td>
 	             </tr>
 	             <tr>
 	                 <td>&nbsp;&nbsp;&nbsp;&nbsp;启用：<input type="radio" checked="true" value="0" name="state"/>&nbsp;&nbsp;&nbsp;&nbsp;禁用：<input type="radio" value="1" name="state"/></td>
@@ -36,9 +36,9 @@
 	             <tr>
 	                <td>
 		                &nbsp;&nbsp;&nbsp;&nbsp;
-		                <input type="button" onclick="close()" value="取 消">
+		                <a  href="javascript:closeTower()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取 消</a> 
 		                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                <input type="button" onclick="smt()" value="提 交">
+		                 <a  href="javascript:smtTower()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提  交</a>
 	                </td>
 	             </tr>
 	          </table>

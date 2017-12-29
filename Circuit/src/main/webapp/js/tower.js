@@ -1,5 +1,6 @@
-var towerFlaf;
+var towerFlaf ="";
 function tower(){
+	closeTower();
 	$('#tower').datagrid({    
 	    url:'http://192.168.16.250:7070/tower/getTowerData',    
 	    columns:[[    
@@ -18,16 +19,14 @@ function tower(){
 
 	});  
 }
-function find(){
-	alert(123)
-}
 
 function addTower(){
 	$('#addTower').window('open');  // open a window    
 }
 
 
-function validate(node){
+function validateTower(node){
+	towerFlaf = "";
 	$("#towerMsg").empty();
 	$.ajax({
 		url:"checkTowerCoding",
@@ -37,8 +36,8 @@ function validate(node){
 		},
 		cache:false,
 		success:function(result){
-			towerFlaf = result;
 			if(result=="false"){
+				towerFlaf = "false";
 				$("#towerMsg").html("杆塔编号已被占用");
 				$("#towerMsg").css("color","red");
 			}
@@ -47,10 +46,11 @@ function validate(node){
 }
 
 
-function smt() {
+function smtTower() {
 	$('#towerForm').form('submit', {
 		url: "addTower",
 		onSubmit: function(){
+		
 			var isValid = $(this).form('validate');
 			if (!isValid){
 				return false;
@@ -63,8 +63,13 @@ function smt() {
 			move('杆塔管理','intoTower');
 			
 			$.messager.alert('提示','增加成功！');
+			closeTower();
 		}
 	});
 
 
+}
+
+function closeTower(){
+	$('#addTower').window('close');
 }

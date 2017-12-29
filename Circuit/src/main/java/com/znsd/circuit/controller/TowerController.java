@@ -27,11 +27,7 @@ public class TowerController {
 		return "towerManage";		
 	}
 	
-	/**
-	 * Ğ£Ñé¸ËËş±àºÅÊÇ·ñ´æÔÚ
-	 * @param coding
-	 * @return
-	 */
+	
 	@RequestMapping("/checkTowerCoding")
 	@ResponseBody
 	public String checkTowerCoding(@RequestParam("coding")String coding){
@@ -41,22 +37,17 @@ public class TowerController {
 	}
 	
 	
-	/**
-	 * ²åÈëĞÂµÄ¸ËËş¼ÇÂ¼
-	 * @param tower
-	 * @return
-	 */
+
 	@RequestMapping("/addTower")
 	@ResponseBody
-	public String addTower(Tower tower,HttpSession session){
+	public void addTower(Tower tower,HttpSession session){
 		String datetime = new DateTime().getDateTime();
 		User user = (User) session.getAttribute("user");
 		tower.setCreateDate(datetime);
 		tower.setUpdateDate(datetime);
 		tower.setCreateById(1);
-		tower.setDeleteFlag("·ñ");
+		tower.setDeleteFlag("å¦");
 		towerService.insertTower(tower);
-		return null;
 	}
 	
 	

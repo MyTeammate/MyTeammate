@@ -32,6 +32,9 @@ $(function(){
 							if(node.text=="杆塔管理"){
 								tower();
 							}
+							if(node.text=="路线管理"){
+								line();
+							}
 						}
 					});
 				}
@@ -57,6 +60,16 @@ function move($text,$url){
 	
 	tab.panel('refresh',$url);
 
+}
+
+function addTabs($text,$url){
+	//添加一个未选中状态的选项卡面板
+	$('#tabs').tabs('add',{
+		title: $text,
+		selected: true,
+		href: $url
+		//...
+	});
 }
 
 

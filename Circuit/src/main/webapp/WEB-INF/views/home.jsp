@@ -15,6 +15,9 @@
 	src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	  <script type="text/javascript" src="js/home.js"></script>
 	  <script type="text/javascript" src="js/tower.js"></script>
+	  <script type="text/javascript" src="js/line.js"></script>
+	  <script type="text/javascript" src="js/thread.js"></script>
+
 
 </head>
 
