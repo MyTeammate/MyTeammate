@@ -13,7 +13,7 @@
 		INNER JOIN t_inspectionstaff i ON c.inspectionstaffId=i.id
 	</select>
 	
-	<select id="selectFlaw" resultType="" parameterType="Map">
+	<select id="selectFlaw" resultType="Flaw" parameterType="Map">
 		SELECT `name` as flawname,state FROM t_flaw
 	</select>
 </mapper>
