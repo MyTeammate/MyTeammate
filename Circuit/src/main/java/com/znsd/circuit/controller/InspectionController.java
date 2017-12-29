@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.service.InspectionService;
 
 @Controller
@@ -50,8 +51,8 @@ public class InspectionController {
 	/*
 	 * 所有线路
 	 */
-	public List<Thread> getAllThread(){
-		return null;
+	public List<Threads> getAllThread(){
+		return inspectionService.getAllThread();
 	}
 	
 	/*

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Threads;
 
 public interface InspectionService {
 	
@@ -15,6 +16,11 @@ public interface InspectionService {
 	 * @return
 	 */
 	public List<Systemparam> getInspectionParam();
+	
+	/**获取所有线路
+	 * @return
+	 */
+	public List<Threads> getAllThread();
 	
 	/**得到分页的总条数
 	 * @return

@@ -11,6 +11,7 @@ import com.znsd.circuit.dao.InspectionDao;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.service.InspectionService;
 
 @Service
@@ -41,6 +42,11 @@ public class InspectionServiceImpl implements InspectionService{
 		List<Inspection> list = inspectionDao.getInspectionPage(map);
 		page.setData(list);
 		return page;
+	}
+
+	@Override
+	public List<Threads> getAllThread() {
+		return inspectionDao.getAllThread();
 	}
 
 	

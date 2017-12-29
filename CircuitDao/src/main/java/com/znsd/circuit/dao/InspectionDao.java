@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Threads;
 
 @MapperScan
 public interface InspectionDao {
@@ -19,7 +20,7 @@ public interface InspectionDao {
 	/**获取所有线路
 	 * @return
 	 */
-	public List<Thread> getAllThread();
+	public List<Threads> getAllThread();
 	
 	/**得到分页的总条数
 	 * @return
