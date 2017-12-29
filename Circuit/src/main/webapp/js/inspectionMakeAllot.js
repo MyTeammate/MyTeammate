@@ -1,5 +1,9 @@
+/*
+ * 巡检管理 >> 巡检任务制定与分配主页
+ */
+
 $(function() {
-	
+
 	/*
 	 * 模糊查询日期验证
 	 */
@@ -29,8 +33,7 @@ $(function() {
 			message : '选择有误！'
 		}
 	});
-	
-	
+
 	/*
 	 * 工具栏巡检任务状态下拉列表
 	 */
@@ -59,84 +62,143 @@ $(function() {
 	 * 所有巡检任务
 	 */
 	$("#makeAllot_datagrid").datagrid({
-		url:"getInspectionPage",
-		method:"POST",
-		width:950,
-		height:450,
-		straiped:true,
-		rownumbers:true,
-		pagination:true,
-		pageSize:5,
-		pageList:[1,5,10,15,20],
-		pageNumber:1, 
-		toolbar:'#makeAllot_tool',
-		columns:[[
-			    {
-			    	field:'sid',
-			    	title:'自动编号',
-			    	width:50,
-			    	checkbox:true,
-			    },
-			    {
-			    	field:'sname',
-			    	title:'任务编号',
-			    	width:70,
-			    },
-			    {
-			    	field:'stype',
-			    	title:'任务名称',
-			    	width:120,
-			    },	
-			    {
-			    	field:'sstatus',
-			    	title:'巡检线路',
-			    	width:80,
-			    },
-			    {
-			    	field:'slastTime',
-			    	title:'起始杆号',
-			    	width:75,
-			    },
-			    {
-			    	field:'screater',
-			    	title:'终止杆号',
-			    	width:75,
-			    },
-			    {
-			    	field:'shandler',
-			    	title:'下发人',
-			    	width:70,
-			    },
-			    {
-			    	field:'sallot',
-			    	title:'下发时间',
-			    	width:70,
-			    },
-			    {
-			    	field:'sallot',
-			    	title:'任务状态',
-			    	width:50,
-			    },
-			    {
-			    	field:'sallot',
-			    	title:'任务完成时间',
-			    	width:70,
-			    },
-			    {
-			    	field:'sallot',
-			    	title:'任务是否取消',
-			    	width:30,
-			    },
-			    {
-			    	field:'sallot',
-			    	title:'操作',
-			    	width:150,
-			    }
-		]],
-		emptyMsg:'<h2>无数据</h2>',
-		loadFilter:function(data){
+		url : "getInspectionPage",
+		method : "POST",
+		width : 980,
+		/*
+		 *  
+		 */
+		/*height:450,
+		fit:true,
+		fitColumns:true,*/
+		singleSelect:true, //只能选择一行
+		rownumbers : true,
+		pagination : true,
+		pageSize : 5,
+		pageList : [ 1, 5, 10, 15, 20 ],
+		pageNumber : 1,
+		toolbar : '#makeAllot_tool',
+		columns : [ [ {
+			field : 'id',
+			title : '自动编号',
+			width : 50,
+			checkbox : true,
+		}, {
+			field : 'coding',
+			title : '任务编号',
+			width : 80,
+			align:"center",
+		}, {
+			field : 'name',
+			title : '任务名称',
+			width : 120,
+			align:"center",
+		}, {
+			field : 'thread',
+			title : '巡检线路',
+			width : 80,
+			align:"center",
+		}, {
+			field : 'startTower',
+			title : '起始杆号',
+			width : 75,
+			align:"center",
+		}, {
+			field : 'endTower',
+			title : '终止杆号',
+			width : 75,
+			align:"center",
+		}, {
+			field : 'creater',
+			title : '下发人',
+			width : 70,
+			align:"center",
+		}, {
+			field : 'createDate',
+			title : '下发时间',
+			width : 80,
+			align:"center",
+		}, {
+			field : 'state',
+			title : '任务状态',
+			width : 55,
+			align:"center",
+			formatter:function(value,row,index){
+				var fontColor='';
+				if(value=='待分配'){
+					fontColor='#FF9900';
+				}else if(value=='已分配'){
+					fontColor='#0033FF';
+				}else if(value=='执行中'){
+					fontColor='#FF33CC'
+				}else if(value=='已完成'){
+					fontColor='#009900';
+				}else if(value=='已取消'){
+					fontColor='#EE0000';
+				}
+				return  '<span style="color:'+fontColor+'">'+value+'</span>';
+			 }
+		}, {
+			field : 'actualDate',
+			title : '任务完成时间',
+			width : 90,
+			align:"center",
+		}, {
+			field : 'operate',
+			title : '操作',
+			width : 180,
+			align:"center",
+			formatter:function(value,row,index){
+				var oper='';
+				if(row.state=='待分配'){
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:allotInspection('+row.id+')" style="text-decoration:none;">分配任务</a>｜<a href="javascript:updateInspection('+row.id+')" style="text-decoration:none;">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
+				}else if(row.state=='已分配'){
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
+				}else{ // if(row.state=='执行中' || row.state=='已完成' || row.state=='已取消')
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜<a style="color:#CDC5BF">取消</a></span>';
+				}
+				return oper;
+			 }
+		} ] ],
+		emptyMsg : '<h2>无数据</h2>',
+		loadFilter : function(data) {
 			return data;
-		} 
-		});
-	
+		}
+	});
 });
+
+/*
+ * 制定巡检任务
+ */
+function makeInspection(){
+	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+	tab.panel('refresh', 'makeInspection');
+}
+
+/*
+ * 查看巡检任务
+ */
+function lookInspection(id){
+	
+}
+
+/*
+ * 分配巡检任务
+ */
+function allotInspection(id){
+	
+}
+
+/*
+ * 修改巡检任务
+ */
+function updateInspection(id){
+	
+}
+
+/*
+ * 取消巡检任务
+ */
+function cancelInspection(id){
+	
+}
