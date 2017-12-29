@@ -51,7 +51,7 @@ public class InspectionController {
 	 * 所有线路
 	 */
 	public List<Thread> getAllThread(){
-		return inspectionService.getAllThread();
+		return null;
 	}
 	
 	/*
