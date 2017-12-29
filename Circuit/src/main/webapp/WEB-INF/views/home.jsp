@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
 <title>电力巡检</title>
 <link rel="stylesheet" type="text/css"
 	href="easyui/themes/default/easyui.css" />
@@ -12,6 +14,7 @@
 <script type="text/javascript" src="easyui/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+<<<<<<< HEAD
 <script type="text/javascript" src="js/home.js"></script>
 <script type="text/javascript" src="js/tower.js"></script>
 <script type="text/javascript" src="js/perWork.js"></script>
@@ -19,11 +22,25 @@
 <script type="text/javascript" src="js/taskE.js"></script>
 <script type="text/javascript" src="js/perFile.js"></script>
 <script type="text/javascript" src="js/perSave.js"></script>
+=======
+	  <script type="text/javascript" src="js/home.js"></script>
+	  <script type="text/javascript" src="js/tower.js"></script>
+	  <script type="text/javascript" src="js/flaw_manager.js"></script>
+	  <script type="text/javascript" src="js/perWork.js"></script>
+	  <script type="text/javascript" src="js/taskP.js"></script>
+	  <script type="text/javascript" src="js/taskE.js"></script>
+	  <script type="text/javascript" src="js/systemData.js"></script>
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 </head>
 
+<<<<<<< HEAD
 <body class="easyui-layout">
 	<div
 		data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
+=======
+<body class="easyui-layout" style=" width:1439px;height:1000px">
+    <div data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 		style="height: 60px; background: #ccc;">
 		<div class="logo">电力巡检§</div>
 		<div class="logout">
@@ -34,11 +51,18 @@
 	<div
 		data-options="region:'west',title:'     导             航',split:true,iconCls:'icon-world'"
 		style="width: 180px; padding: 10px;">
+<<<<<<< HEAD
 		<ul id="nav"></ul>
 	</div>
 	<div data-options="region:'center'"
 		style="overflow: hidden; background: #eee;">
 		<div id="tabs" class="easyui-tabs">
+=======
+        <ul id="nav"></ul>
+    </div>   
+    <div data-options="region:'center'" style="overflow: hidden; background: #eee;">
+        <div id="tabs" class="easyui-tabs" style="height:750px">
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">

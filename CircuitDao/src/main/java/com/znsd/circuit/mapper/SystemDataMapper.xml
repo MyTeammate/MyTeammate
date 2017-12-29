@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.SystemDataDao">
+   <select id="listSystemsetting" resultType="Systemsetting">
+       select id,coding,`name`,remark,state from t_systemsetting
+       GROUP BY id
+	   order by id desc
+       limit #{pageIndex},#{pageSize}
+   </select>
+   
+   <select id="systemsettingCount" resultType="int">
+       select count(1) from t_systemsetting
+   </select>
+   
+   <insert id="addSystemsetting" parameterType="Systemsetting">
+       insert into t_systemsetting (coding,name,createBy,createDate,remark) values (#{coding},#{name},#{createBy},#{createDate},#{remark});
+   </insert>
+</mapper>
