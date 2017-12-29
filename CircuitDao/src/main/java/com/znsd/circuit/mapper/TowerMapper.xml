@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.znsd.circuit.dao.TowerDao">
+          <select id="checkCoding" parameterType="java.lang.String"  resultType="Tower">
+                   select id,coding,lineId,state from t_tower where coding = #{coding}
+          </select>
+          
+          <insert id="insertTower" parameterType="Tower">
+               insert into t_tower 
+               (coding,lineId,state,createById,createDate,updateDate,delete_flag,remark) values
+               (#{coding},null,#{state},#{createById},#{createDate},#{updateDate},#{deleteFlag},#{remark})
+          </insert>
+          
+          <select id="getAllTowerData" parameterType="java.lang.String" resultType="Tower" >
+              select id,coding,lineId,state from t_tower
+              where lineId  is null
+              <if test="coding!=null">
+                and coding like #{coding}
+              </if>
+          </select>
+          
+          <update id="updateTowerLineId" parameterType="Tower">
+               update t_tower set lineId = #{lineId} where id=#{id}
+          </update>
+         
+ </mapper>
