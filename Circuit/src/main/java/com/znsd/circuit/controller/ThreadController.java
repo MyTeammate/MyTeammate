@@ -36,4 +36,10 @@ public class ThreadController {
 		return "threadManage";
 	}
 	
+	
+	@RequestMapping("/auThread")
+	public String auLine() {
+		return "auThread";
+	}
+	
 }

@@ -1,14 +1,13 @@
 $(function(){
-<<<<<<< HEAD
+
 	
-=======
+
 	/*$('#sy').tabs('add', {
 		options: {
 			title: 待办列表,
 			href: personalWork  // 新内容的URL
 		}
 	});*/
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	$("#nav").tree({
 		url : 'homeController/homeNav',
 		animate:true,
@@ -51,16 +50,16 @@ $(function(){
 							}else if(node.text=="数据字典"){
 								data_tb();
 							}
-<<<<<<< HEAD
+
 							if(node.text=="路线管理"){
 								line();
 							}
-=======
+
 							if(node.text=="消缺任务制定与分配"){
 								eliminate();
 							}
 							
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
+
 						}
 					});
 				}
@@ -90,7 +89,8 @@ function addTabs($text,$url){
 	$('#tabs').tabs('add',{
 		title: $text,
 		selected: true,
-		href: $url
+		href: $url,
+		closable:true
 		//...
 	});
 }
