@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.znsd.circuit.dao.LineDao">
+    <select  id="pageSelectLine" parameterType="java.util.Map"  resultType="Line">
+           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state from t_line t
+           <if test="line.coding!=null and line.coding!=''">
+              where t.coding=#{line.coding}
+           </if>
+           order by t.id desc limit #{page},#{row}
+    </select>
+    
+    
+    <select id="getLineTotal" parameterType="java.util.Map" resultType="int">
+             select count(1) from t_line t
+           <if test="line.coding!=null and line.coding!=''">
+              where t.coding=#{line.coding}
+           </if>   
+    </select>
+    
+    <select id="checkCoding" parameterType="java.lang.String" resultType="Line">
+           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state  from t_line where coding=#{coding}
+    </select>
+    
+    <insert id="insertLine" parameterType="Line" useGeneratedKeys="true" keyProperty="id">
+     insert into t_line (coding,name,length,return_way,date,startTower,endTower,
+     redix,state,createById,createDate,updateDate,delete_flag,remark) values
+     (#{coding},#{name},#{length},#{returnWay},#{date},#{startTower},#{endTower},#{redix},#{state},
+     #{createById},#{createDate},#{updateDate},#{deleteFlag},#{remark})
+    </insert>
+    <select id="getLineAllTowers" resultType="Tower" parameterType="Line">
+         select id,coding,lineId,state from t_tower where coding BETWEEN #{startTower} and #{endTower}
+    </select>
+    
+ </mapper>
