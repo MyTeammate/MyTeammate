@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.FlawDao;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.service.FlawService;
 
 @Service
@@ -27,6 +28,12 @@ public class FlawServiceImpl implements FlawService{
 	@Override
 	public List<Flaw> selectFlaw(int id){
 		return flawDao.selectFlaw(id);
+	}
+
+	@Override
+	public Pager<Flaw> servicePage(int pageIndex, int pageSize, Flaw flaw) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

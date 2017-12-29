@@ -29,6 +29,28 @@ public class SystemDataServiceImpl implements SystemDataService{
 	public int addSystemsetting(Systemsetting system) {
 		return systemDataDao.addSystemsetting(system);
 	}
+
+	@Override
+	public int deleteSystemsetting(int id) {
+		return systemDataDao.deleteSystemsetting(id);
+	}
+
+	@Override
+	public Systemsetting updateSystemsetting(int id) {
+		return systemDataDao.updateSystemsetting(id);
+	}
+
+	@Override
+	public int updateSystemsetting2(Systemsetting system) {
+		return systemDataDao.updateSystemsetting2(system);
+	}
+
+	@Override
+	public int stateSystemsetting(Map<String,Object> map) {
+		return systemDataDao.stateSystemsetting(map);
+	}
+	
+	
 	
 	
 }
