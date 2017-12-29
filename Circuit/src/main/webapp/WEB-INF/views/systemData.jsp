@@ -7,10 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table style="padding-left: 20px;top:50px;left:40px;width:500px;background-color: red">   
-	    <tr style="height:25px;">
-	      <th>系统管理 > > 数据字典</th>
-	    </tr>
+    <div style="padding-left: 20px; padding-top: 15px;line-height:20px">系统管理>>数据字典</div>
+    <div style="border:1px solid #c0c0c0;"></div>
+	<table style="margin-left: 200px;margin-top:20px;left:40px;width:630px;">   
 	    <tr style="height:30px;float:right">
 		   <th>
 		    <a id="data_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增</a> 
@@ -22,9 +21,12 @@
 	    <tr>
 	      <th>
 	        <table id="data_tb">
+	        	
 		    </table>
 	      </th>
 	    </tr>
-	</table>  
+	</table>
+	<table id="data_add_option">
+	</table>
 </body>
 </html>
