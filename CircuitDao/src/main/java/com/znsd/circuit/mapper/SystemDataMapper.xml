@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.SystemDataDao">
+   <select id="listSystemsetting" resultType="Systemsetting">
+       select id,coding,`name`,remark,state from t_systemsetting
+       where delete_flag='否'
+       GROUP BY id
+	   order by id desc
+       limit #{pageIndex},#{pageSize}
+   </select>
+   
+   <select id="systemsettingCount" resultType="int">
+       select count(1) from t_systemsetting where delete_flag='否'
+   </select>
+   
+   <insert id="addSystemsetting" parameterType="Systemsetting">
+       insert into t_systemsetting (coding,name,createBy,createDate,remark) values (#{coding},#{name},#{createBy},#{createDate},#{remark});
+   </insert>
+   
+   <update id="deleteSystemsetting" parameterType="int">
+       update t_systemsetting set delete_flag='是' where id=#{id} 
+   </update>
+   
+   <select id="updateSystemsetting" resultType="Systemsetting">
+       select id,coding,`name`,remark,state from t_systemsetting
+       where delete_flag='否' and id=#{id}
+   </select>
+   
+   <update id="updateSystemsetting2" parameterType="Systemsetting">
+       update t_systemsetting set coding=#{coding},name=#{name},remark=#{remark},updateDate=#{updateDate} where id=#{id} 
+   </update>
+   
+   <update id="stateSystemsetting" parameterType="Map">
+       update t_systemsetting set state=#{state} where id=#{id} 
+   </update>
+</mapper>

@@ -5,9 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>巡检任务制定与分配</title>
+<style type="text/css">
+	.noline{
+		text-decoration: none;
+		list-style: none;
+	}
+</style>
 </head>
 <body>
-	<div id="makeAllot_Content" style="padding:10px;height:350px;">
+	<div id="makeAllot_Content" style="padding:10px;height:450px;">
 		<p>巡检任务管理>>巡检任务制定与分配</p>
 		<div id="makeAllot_tool" style="padding-left:25px;">
 			<p>
@@ -23,14 +29,13 @@
 			</p>
 			<hr/>
 			<p class="makeAllot_listing" style="text-align:right;padding-right:45px;">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-serve-add" plain="true" onclick="makeAllot_onclick.add()">制定巡检任务</a>
+				<a href="javascript:makeInspection()" class="easyui-linkbutton" iconCls="icon-serve-add" plain="true">制定巡检任务</a>
 				<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="makeAllot_onclick.modified()">修改</a>
 				<a href="#" class="easyui-linkbutton" iconCls="icon-delete" plain="true" onclick="makeAllot_onclick.remove()">删除</a>
 				<a href="#" class="easyui-linkbutton" iconCls="icon-serve-look" plain="true" onclick="makeAllot_onclick.look()">查看</a>
 			</p>
-			
 		</div>
-		<!-- <table id="makeAllot_datagrid"></table> -->
+		<table id="makeAllot_datagrid" style="height:auto;width:900px;"></table>
 	</div>
 	<script type="text/javascript" src="js/inspectionMakeAllot.js"></script>
 </body>
