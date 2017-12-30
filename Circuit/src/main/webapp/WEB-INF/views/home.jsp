@@ -25,6 +25,8 @@
 <script type="text/javascript" src="js/perSave.js"></script>
 <script type="text/javascript" src="js/flaw_manager.js"></script>
 <script type="text/javascript" src="js/systemData.js"></script>
+
+
 </head>
 <body class="easyui-layout" style="width: 1439px; height: 1000px">
 	<div

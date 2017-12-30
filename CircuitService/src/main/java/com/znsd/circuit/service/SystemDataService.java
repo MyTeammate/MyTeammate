@@ -14,4 +14,16 @@ public interface SystemDataService {
     
   //添加数据字典数据
     public int addSystemsetting(Systemsetting system);
+    
+  //删除选择数据
+    public int deleteSystemsetting(int id);
+    
+  //根据id查询数据字典数据
+    public Systemsetting updateSystemsetting(int id);
+    
+  //数据字典修改数据
+    public int updateSystemsetting2(Systemsetting system);
+    
+  //启用禁用选择数据
+    public int stateSystemsetting(Map<String,Object> map);
 }

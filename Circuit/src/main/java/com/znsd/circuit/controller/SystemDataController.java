@@ -24,23 +24,25 @@ import com.znsd.circuit.service.SystemDataService;
 @RequestMapping("/dateManage")
 public class SystemDataController {
 	@Autowired
-	private SystemDataService sytemDataService;
+	private SystemDataService systemDataService;
 	
+	//数据字典分页
 	@ResponseBody
 	@RequestMapping("/listSystemsetting")
 	public Map<String,Object> listSystemsetting(@RequestParam("page") int page, @RequestParam("rows") int rows){
 		Map<String, Object> map = new HashMap<String, Object>();
-		int count = sytemDataService.systemsettingCount();
+		int count = systemDataService.systemsettingCount();
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
-		List<Systemsetting> listSystem=sytemDataService.listSystemsetting(map);
+		List<Systemsetting> listSystem=systemDataService.listSystemsetting(map);
 		Map<String,Object> map2=new HashMap<String,Object>();
 		map2.put("rows",listSystem);
 		map2.put("total",count);
 		return map2;
 	}
 	
+	//数据字典添加数据
 	@ResponseBody
 	@RequestMapping("/addSystemsetting")
 	public int addSystemsetting(HttpSession session,String coding,String typeName,String describe){
@@ -55,9 +57,55 @@ public class SystemDataController {
 		String time=format.format(date);
 		system.setCreateDate(time);
 		System.out.println(system);
-		int i=sytemDataService.addSystemsetting(system);
+		int i=systemDataService.addSystemsetting(system);
 		System.out.println(i);
 		return i;
 	}
+	
+	//数据字典删除数据
+	@ResponseBody
+	@RequestMapping("/deleteSystemsetting")
+	public int deleteSystemsetting(int id){
+		return systemDataService.deleteSystemsetting(id);
+	}
+	
+	//查询数据字典根据id数据
+	@ResponseBody
+	@RequestMapping("/updateSystemsetting")
+	public Systemsetting updateSystemsetting(int id){
+		return systemDataService.updateSystemsetting(id);
+	}
     
+	//数据字典修改数据
+	@ResponseBody
+	@RequestMapping("/updateSystemsetting2")
+	public int updateSystemsetting2(int id,String coding,String typeName,String describe){
+		Systemsetting system=new Systemsetting();
+		system.setId(id);
+		system.setCoding(coding);
+		system.setName(typeName);
+		system.setRemark(describe);
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		String time=format.format(date);
+		system.setUpdateDate(time);
+		return systemDataService.updateSystemsetting2(system);
+	}
+	
+	//数据字典启用禁用
+		@ResponseBody
+		@RequestMapping("/stateSystemsetting")
+		public int stateSystemsetting(int id){
+			Map<String,Object> map=new HashMap<String,Object>();
+			Systemsetting system=systemDataService.updateSystemsetting(id);
+			String state="";
+			if("启用".equals(system.getState())){
+				state="禁用";
+			}else{
+				state="启用";
+			}
+			map.put("id",id);
+			map.put("state",state);
+			return systemDataService.stateSystemsetting(map);
+		}
 }

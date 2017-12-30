@@ -3,23 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.InspectionDao">
-	<select id="getInspectionParam" resultType="Systemparam">
+	<select id="getSystemParam" resultType="Systemparam"
+		parameterType="String">
 		SELECT id,settingName
 		FROM t_systemparam where
 		settingid
-		= (select id FROM t_systemsetting
-		WHERE coding='INSPECTION_STATE' AND
+		=
+		(select id FROM t_systemsetting
+		WHERE coding=#{coding} AND
 		delete_flag='否' AND state='启用')
 	</select>
 	<select id="getAllThread" resultType="Threads">
-		SELECT id,name from t_thread
+		SELECT id,name from
+		t_thread where state='0'
+	</select>
+	<select id="getThreadTower" resultType="Threads" parameterType="int">
+		SELECT startTower,endTower FROM t_thread WHERE id=#{id}
+	</select>
+	<select id="getInspectionStaff" resultType="User" parameterType="String">
+		SELECT u.id,u.name,r.coding FROM t_user u
+		LEFT JOIN t_user_role ur ON u.id=ur.userId
+		left JOIN t_role r ON
+		ur.roleId=r.id
+		WHERE u.state='0' and r.coding=#{coding}
+	</select>
+	<select id="getInspectionId" resultType="int" parameterType="int">
+		SELECT id FROM t_inspection WHERE taskId=#{id}
 	</select>
 	<select id="getInspectionPageCount" resultType="Integer">
 		SELECT
 		count(1)
 		from t_inspection i
 		INNER JOIN t_task t ON i.taskId=t.id
-		INNER JOIN t_thread th ON i.threadId=th.id
+		INNER JOIN
+		t_thread th ON i.threadId=th.id
 		INNER JOIN t_user u on t.createdBy=u.id
 		INNER JOIN t_systemparam sy on
 		t.state=sy.id
@@ -28,14 +45,48 @@
 	<select id="getInspectionPage" resultType="Inspection"
 		parameterType="Map">
 		SELECT
-		i.id,t.coding,t.name,th.name as thread,th.startTower,th.endTower,u.userName as creater,t.date as createDate,sy.settingName as state,t.actualDate,t.delete_flag
-		from t_inspection i
+		t.id,t.coding,t.name,th.name as
+		thread,th.startTower,th.endTower,u.userName as creater,t.date as
+		createDate,sy.settingName as state,t.actualDate,t.delete_flag
+		from
+		t_inspection i
 		INNER JOIN t_task t ON i.taskId=t.id
-		INNER JOIN t_thread th ON i.threadId=th.id
+		INNER JOIN t_thread
+		th ON i.threadId=th.id
 		INNER JOIN t_user u on t.createdBy=u.id
-		INNER JOIN t_systemparam sy on
+		INNER
+		JOIN t_systemparam sy on
 		t.state=sy.id
 		WHERE t.type='巡检任务'
+		ORDER BY
+		t.createdDate
 		LIMIT #{pageIndex},#{pageSize}
 	</select>
+	<insert id="addTask" parameterType="Inspection"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		t_task(name,taskMan,type,coding,state,date,predictDate,description,createdBy,createdDate,updatedBy,updatedDate,delete_flag,remark)
+		VALUES(#{name},#{creater},'巡检任务',#{coding},4,#{createDate},NOW(),'',${creater},NOW(),#{creater},NOW(),'否',#{remark});
+	</insert>
+	<insert id="addInspection" parameterType="Inspection">
+		INSERT INTO
+		t_inspection(taskId,threadId,remark)VALUES(#{id},#{thread},#{remark})
+	</insert>
+	<insert id="addInspectionStaff" parameterType="Map">
+		INSERT INTO
+		t_inspectionstaff(inspectionId,userId,isReceipter,createdBy,createdDate,updatedBy,updatedDate,delete_flag)
+		VALUES(#{inspectionId},#{userId},#{isReceipter},#{creater},NOW(),#{creater},NOW(),'否');
+	</insert>
+	<update id="updateInspectionState" parameterType="Map">
+		UPDATE t_task SET state=(SELECT id
+		FROM t_systemparam where
+		settingid
+		= (select id FROM t_systemsetting
+		WHERE coding=#{coding} AND
+		delete_flag='否' AND state='启用')
+		AND settingName=#{settingName}) WHERE id=#{taskId}
+	</update>
+	<update id="updateInspectionDate" parameterType="Map">
+		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW() WHERE id=#{taskId}
+	</update>
 </mapper>
