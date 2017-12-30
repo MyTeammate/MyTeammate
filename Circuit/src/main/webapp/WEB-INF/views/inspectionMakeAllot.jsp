@@ -10,6 +10,25 @@
 		text-decoration: none;
 		list-style: none;
 	}
+	#temp{
+	   background-color: #000;
+	   opacity: 0.3;
+	   width: 100%;
+	   height: 100%;
+	   z-index: 2;
+	}
+	#bigdiv{
+	  background-color: rgb(255,255,255);
+	  width: 400px;
+	  height: 250px;
+	  z-index: 3;
+	}
+	#main{
+	  background-color: rgb(255,255,255);
+	  width: 100%;
+	  height: 100%;
+	  z-index: 1;
+	}
 </style>
 </head>
 <body>
@@ -30,12 +49,31 @@
 			<hr/>
 			<p class="makeAllot_listing" style="text-align:right;padding-right:45px;">
 				<a href="javascript:makeInspection()" class="easyui-linkbutton" iconCls="icon-serve-add" plain="true">制定巡检任务</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="makeAllot_onclick.modified()">修改</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-delete" plain="true" onclick="makeAllot_onclick.remove()">删除</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-serve-look" plain="true" onclick="makeAllot_onclick.look()">查看</a>
 			</p>
 		</div>
 		<table id="makeAllot_datagrid" style="height:auto;width:900px;"></table>
+	</div>
+	<div id="temp"></div>
+	<div id="main"></div>
+	<div id="bigdiv" style="background-color:#F7F7F7; border: 1px solid #ccc;width: 305px;height: 195px;position: relative;bottom:350px;left: 440px;display: none;">
+	<p style="margin: 0px 0px 0px 0px;font-size: 12px;"><strong>选择巡检员</strong></p>
+	<p style="margin: 10px 0px 0px 0px;font-size: 12px;">&nbsp;&nbsp;待选巡检员</p>
+	
+   	<select id="fb_list" multiple="multiple" style="text-align: center; height:120px;width:128px"></select> 
+	<p style="margin: 0px 0px 0px 0px;font-size: 12px;position: relative;top: -135px;left: 180px;">&nbsp;&nbsp;已选巡检员</p>
+   <div style="position: relative;left: 170px;bottom: 135px;">
+   <select id="select_list" multiple="multiple"
+	style="text-align: center; height:120px;width:128px"></select>
+   </div>
+	<br/>
+	<p style="position: relative;bottom: 155px;">
+	<a href="#" onclick="hid()" class="easyui-linkbutton" style="float: right;">返回</a>
+	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+	</p>
+	<p style="position: relative;bottom: 250px;left: 127px;">
+	<a href="#" id="add" class="easyui-linkbutton" style="width: 40px;">+</a></p>
+	<p style="position: relative;bottom: 245px;left: 127px;">
+	<a href="#" id="delete" class="easyui-linkbutton"style="width: 40px;">&nbsp;-&nbsp;</a></p>
 	</div>
 	<script type="text/javascript" src="js/inspectionMakeAllot.js"></script>
 </body>

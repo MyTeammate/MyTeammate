@@ -15,14 +15,13 @@ public class Eliminate {
 	private String taskStatus;
 	private String flag;
 	private String wancdate;
-	private String operation;//操作
+	//private String operation;//操作
 	public Eliminate() {
 		super();
 		
 	}
 	public Eliminate(int id, int taskId, String workBills, int mId, String remark, Task task, String taskcoding,
-			String taskName, String xiafaMan, String xiafaDate, String taskStatus, String flag, String wancdate,
-			String operation) {
+			String taskName, String xiafaMan, String xiafaDate, String taskStatus, String flag, String wancdate) {
 		super();
 		this.id = id;
 		this.taskId = taskId;
@@ -37,7 +36,6 @@ public class Eliminate {
 		this.taskStatus = taskStatus;
 		this.flag = flag;
 		this.wancdate = wancdate;
-		this.operation = operation;
 	}
 	public int getId() {
 		return id;
@@ -117,19 +115,18 @@ public class Eliminate {
 	public void setWancdate(String wancdate) {
 		this.wancdate = wancdate;
 	}
-	public String getOperation() {
-		return operation;
-	}
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Eliminate [id=" + id + ", taskId=" + taskId + ", workBills=" + workBills + ", mId=" + mId + ", remark="
 				+ remark + ", task=" + task + ", taskcoding=" + taskcoding + ", taskName=" + taskName + ", xiafaMan="
 				+ xiafaMan + ", xiafaDate=" + xiafaDate + ", taskStatus=" + taskStatus + ", flag=" + flag
-				+ ", wancdate=" + wancdate + ", operation=" + operation + "]";
+				+ ", wancdate=" + wancdate + "]";
 	}
+	
+	
 	
 	
 	

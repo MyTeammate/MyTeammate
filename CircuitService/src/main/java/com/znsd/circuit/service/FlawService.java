@@ -7,10 +7,13 @@ import com.znsd.circuit.model.Pager;
 
 public interface FlawService {
 
-	List<Flaw> getFlawAll(int id,String flawname, int state);
+	public List<Flaw> getFlawAll(int id,String flawname, int state);
 
-	List<Flaw> selectFlaw(int id);
+	public List<Flaw> selectFlaw(int id);
+	
+	public int getFlawPageCount();
 
-	Pager<Flaw> servicePage(int pageIndex, int pageSize, Flaw flaw);
+	public Pager<Flaw> getFlawPage(int pageIndex, int pageSize);
+
 
 }

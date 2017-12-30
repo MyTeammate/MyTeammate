@@ -20,8 +20,17 @@ public class Inspection {
 	private String state; //任务状态
 	private String actualDate; //任务完成时间
 	private String delete_flag; //任务是否取消
+	private String remark; // 任务备注
 	
 	private List<User> inspectionUsers; // 被分配的巡检人员
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public int getId() {
 		return id;
@@ -118,5 +127,15 @@ public class Inspection {
 	public void setInspectionUsers(List<User> inspectionUsers) {
 		this.inspectionUsers = inspectionUsers;
 	}
+
+	@Override
+	public String toString() {
+		return "Inspection [id=" + id + ", coding=" + coding + ", name=" + name + ", thread=" + thread + ", startTower="
+				+ startTower + ", endTower=" + endTower + ", creater=" + creater + ", createDate=" + createDate
+				+ ", state=" + state + ", actualDate=" + actualDate + ", delete_flag=" + delete_flag + ", remark="
+				+ remark + ", inspectionUsers=" + inspectionUsers + "]";
+	}
+
+	
 	
 }
