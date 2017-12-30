@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.FlawNotarizeDao">
+	<select id="getFlawNotAll" resultType="Flawnot" parameterType="Map">
+		SELECT c.taskId as tasknumber,h.coding as threadcoding,o.coding as towercoding,
+				f.`name` as flawname,c.serviceAbility as flawConfirmserviceAbility,
+				c.flawDesc as flawConfirmflawDesc,c.discoverDate as flawConfirmdiscoverDate,
+				i.userId as inspectionstaffuserId,c.flowGrade as flawConfirmflowGrade 
+		FROM t_flawConfirm c
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_inspectionstaff i ON c.inspectionstaffId=i.id
+	</select>
+</mapper>
