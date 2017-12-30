@@ -29,7 +29,7 @@ body {
 		<a href="javascript:onclick=gotoanthor()" class="easyui-linkbutton" style="">制定消缺任务</a>
 	</div>
 	<hr/>
-	<div style="margin-left: 120px;margin-top:20px;width:1000px;height:800px;">
+	<div style="margin-left: 120px;margin-top:20px;width:1000px;height:600px;">
 	<table id="flaw_manager">
 	</table>
 	</div>
