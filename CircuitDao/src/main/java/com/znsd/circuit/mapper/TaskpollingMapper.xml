@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.TaskpollingDao">
+	<select id="selelectTaskPoll" parameterType="java.util.Map"
+		resultType="Taskpolling">
+		SELECT tf.id id, t.coding coding,t.`name` tanem,h.coding
+		threadCoding,h.startTower startTower,h.endTower engTower
+		FROM
+		t_flawconfirm tf ,t_task t,t_thread h WHERE tf.taskId=t.id AND
+		tf.threadId=h.id
+		limit #{pageIndex},#{pageSize}
+	</select>
+
+	<select id="getTsakCount" resultType="int">
+		SELECT COUNT(1) FROM t_flawconfirm tf ,t_task
+		t,t_thread h WHERE tf.taskId=t.id AND tf.threadId=h.id
+	</select>
+</mapper>
