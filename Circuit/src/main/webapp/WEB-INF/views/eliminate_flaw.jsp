@@ -25,6 +25,7 @@ body {
 		下发人：&nbsp;&nbsp;&nbsp;<input type="text" id="flaw_xiapeople" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		下发时间：<input id="flaw_startdate" type="text" class="easyui-datebox">-
 		<input id="flaw_enddate" type="text" class="easyui-datebox">
+		
 		<a href="#" onclick="search_eliminate()	" class="easyui-linkbutton" iconCls="icon-search">查询</a>
 		<a href="javascript:onclick=gotoanthor()" class="easyui-linkbutton" style="">制定消缺任务</a>
 	</div>

@@ -1,5 +1,4 @@
 package com.znsd.circuit.dao;
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +6,9 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
+import com.znsd.circuit.util.MyFlaw;
 
 @MapperScan
 public interface EliminateDao {
@@ -53,5 +54,45 @@ public interface EliminateDao {
 	/**
 	 * 查询出缺陷确认表中的数据
 	 */
-	//public List<Flaw>
+	public List<MyFlaw> getAllMyFlaw(Map map);
+	
+	/**
+	 * 统计缺陷确认的总条数
+	 */
+	public int getCountByEliminate();
+	/**
+	 * 查询出缺陷确认表中的数据通过所选的id进行查找
+	 */
+	public MyFlaw getAllMyFlawById(int id);
+	
+   /**
+    * 新增任务表中的任务
+    */
+	public int insertTask(Map<String,Object> map);
+	
+	/**
+	 * 新增消缺表中的数据
+	 */
+	public int insertEliminate(Eliminate eliminate);
+	
+	/**
+	 * 新增消缺人员分配表的数据
+	 */
+	public int insertFlawStaff(Map<String,Object> map);
+	
+	/**
+	 * 新增消缺缺陷记录表中的数据
+	 */
+	public int insertEliminateRecord(Map<String,Object> map);
+	
+	/**
+	 * 通过任务编码拿到即时插入的id
+	 */
+	public Task selectTaskById(String coding);
 }
+
+
+
+
+
+

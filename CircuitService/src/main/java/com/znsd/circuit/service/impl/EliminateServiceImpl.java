@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.znsd.circuit.dao.EliminateDao;
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
+import com.znsd.circuit.util.MyFlaw;
 
 @Service
 public class EliminateServiceImpl implements EliminateService {
@@ -51,6 +53,45 @@ public class EliminateServiceImpl implements EliminateService {
 	public int updateTaskstatus(int id) {
 		
 		return eliminateDao.updateTaskstatus(id);
+	}
+	@Override
+	public List<MyFlaw> getAllMyFlaw(Map map) {
+		
+		return eliminateDao.getAllMyFlaw(map);
+	}
+	@Override
+	public int getCountByEliminate() {
+		return eliminateDao.getCountByEliminate();
+	}
+	@Override
+	public MyFlaw getAllMyFlawById(int id) {
+		
+		return eliminateDao.getAllMyFlawById(id);
+	}
+	@Override
+	public int insertTask(Map<String, Object> map) {
+		
+		return eliminateDao.insertTask(map);
+	}
+	@Override
+	public int insertEliminate(Eliminate eliminate) {
+		
+		return eliminateDao.insertEliminate(eliminate);
+	}
+	@Override
+	public int insertFlawStaff(Map<String, Object> map) {
+		
+		return eliminateDao.insertFlawStaff(map);
+	}
+	@Override
+	public int insertEliminateRecord(Map<String, Object> map) {
+		
+		return eliminateDao.insertEliminateRecord(map);
+	}
+	@Override
+	public Task selectTaskById(String coding) {
+		
+		return eliminateDao.selectTaskById(coding);
 	}
 	
 	
