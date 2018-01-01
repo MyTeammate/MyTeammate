@@ -1,6 +1,6 @@
 $(function() {
 	$("#flaw_datagrid").datagrid({
-		url : '../getflawpage',
+		url : 'getflawpage',
 		width : 950,
 		height : 500,
 		// total:5,

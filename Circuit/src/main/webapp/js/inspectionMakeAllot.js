@@ -151,7 +151,7 @@ $(function() {
 			formatter:function(value,row,index){
 				var oper='';
 				if(row.state=='待分配'){
-					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:allotInspection('+row.id+')" style="text-decoration:none;">分配任务</a>｜<a href="javascript:updateInspection('+row.id+')" style="text-decoration:none;">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:showallotInspection('+row.id+')" style="text-decoration:none;">分配任务</a>｜<a href="javascript:updateInspection('+row.id+')" style="text-decoration:none;">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
 				}else if(row.state=='已分配'){
 					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
 				}else{ // if(row.state=='执行中' || row.state=='已完成' || row.state=='已取消')
@@ -165,7 +165,104 @@ $(function() {
 			return data;
 		}
 	});
+	
+	getInspectionStaff(); // 获取所有可用巡检员
+	
+	$("#add").click(function(){
+		  if($("#fb_list option:selected").length>0) {
+		   $("#fb_list option:selected").each(function(){
+		    $("#select_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		    
+		    $(this).remove();
+		   })
+		  }else {
+		   alert("请选择要添加的数据！");
+		  }
+		 });
+		 
+		 $("#delete").click(function() {
+		   if($("#select_list option:selected").length>0) {
+		    $("#select_list option:selected").each(function(){
+		     $("#fb_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		      $(this).remove();
+		    })
+		   }else {
+		    alert("请选择要删除的数据！");
+		   }
+		 });
 });
+
+var taskId='';
+
+function  allot_staffs(){
+	var staffs = $.map($("#select_list option:not(:selected)"),
+            function(ele){return ele.value} 
+         ).join(",");
+	 $("#bigdiv").hide(500);
+	 if(staffs==''){
+		 $.messager.alert({
+				title:'分配失败',
+				msg:'<h3 style="color: red;"> 请选择巡检人员 ！</h3>',
+				icon:'warning',
+				timeout:500,
+			})
+	 }else{
+		 $.ajax({
+			 url:'allotInspection',
+			 type:"POST",
+			 data:{
+				 taskId: taskId,
+				 users:staffs
+			 },
+			 success:function(result){
+				 if(result==true){
+					 $.messager.show({
+						title:'提示',
+						msg:'巡检任务分配成功',
+						timeout:500,
+						showType:"slide",
+						style:{
+						}
+					});
+				 }else{
+					$.messager.alert({
+						title:'分配失败',
+						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+						icon:'warning',
+					})
+				 }
+				 $('#makeAllot_datagrid').datagrid('reload');
+			 }
+		 });
+	 }
+}
+
+function hid() {
+	$("#bigdiv").hide(600);
+}
+
+
+/*
+ * 获取所有可用巡检员
+ */
+function getInspectionStaff(){
+	$.ajax({
+		url : "getInspectionStaff",
+		type : "post",
+		success : function(data) {
+			$("#fb_list").html("");
+			var str = "";
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
+					str += "<option value='" + data[i].id
+							+ "' name='options'>" + data[i].name
+							+ "</option>"
+				}
+			}
+			$("#fb_list").append(str);
+		}
+	});
+}
 
 /*
  * 制定巡检任务
@@ -179,14 +276,15 @@ function makeInspection(){
  * 查看巡检任务
  */
 function lookInspection(id){
-	
+	alert(id);
 }
 
 /*
  * 分配巡检任务
  */
-function allotInspection(id){
-	
+function showallotInspection(id){
+	$("#bigdiv").show(1000);
+	taskId=id;
 }
 
 /*
@@ -200,5 +298,36 @@ function updateInspection(id){
  * 取消巡检任务
  */
 function cancelInspection(id){
-	
+	console.log('cancel');
+	$.messager.confirm('确定','您确定要取消所选的巡检任务吗？',function(f){
+		if(f){
+			$.ajax({
+				url : "cancelInspection",
+				type : "post",
+				data:{
+					taskId:id
+				},
+				success:function(result){
+					if(result){
+						 $.messager.show({
+							title:'提示',
+							msg:'取消成功',
+							timeout:500,
+							showType:"fade",
+							style:{
+							}
+						});
+					}else{
+						$.messager.alert({
+							title:'取消失败',
+							msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+							icon:'warning',
+						})
+					}
+					//刷新数据表格
+					$('#makeAllot_datagrid').datagrid('reload');
+				}
+			})
+		}
+	});
 }

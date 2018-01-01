@@ -9,14 +9,14 @@
 		<result column="workBills" property="workBills" />
 		<result column="mId" property="mId" />
 		<result column="remark" property="remark" />
-		<result column="taskcoding" property="taskcoding"/>
-		<result column="taskName" property="taskName"/>
-		<result column="xiafaMan" property="xiafaMan"/>
-		<result column="xiafaDate" property="xiafaDate"/>
-		<result column="taskStatus" property="taskStatus"/>
-		<result column="wancdate" property="wancdate"/>
-		<result column="flag" property="flag"/>
-		<result column="actualDate" property="actualDate"/>
+		<result column="taskcoding" property="taskcoding" />
+		<result column="taskName" property="taskName" />
+		<result column="xiafaMan" property="xiafaMan" />
+		<result column="xiafaDate" property="xiafaDate" />
+		<result column="taskStatus" property="taskStatus" />
+		<result column="wancdate" property="wancdate" />
+		<result column="flag" property="flag" />
+		<result column="actualDate" property="actualDate" />
 		<association property="task" javaType="Task" column="taskId">
 			<id column="id" property="id" />
 			<result column="name" property="name" />
@@ -36,13 +36,34 @@
 			</association>
 		</association>
 	</resultMap>
+	<resultMap type="Systemparam" id="SystemparamMap">
+		<id column="id" property="id" />
+		<result column="settingId" property="settingId" />
+		<result column="settingName" property="settingName" />
+	</resultMap>
+	<resultMap type="com.znsd.circuit.util.MyFlaw" id="MyFlawMap">
+		<id column="id" property="id" />
+		<result column="flawDesc" property="flawDesc" />
+		<result column="coding" property="towerCoding" />
+		<result column="threadCoding" property="threadCoding" />
+		<result column="name" property="findUser" />
+		<result column="settingName" property="flawGrade" />
+		<result column="discoverDate" property="findDate" />
+		<result column="flawType" property="flawType" />
+	</resultMap>
 	<select id="getAllTask" resultMap="eliminateMap" parameterType="java.util.Map">
-		select e.id,e.mid,e.taskId,t.coding as taskcoding,t.name as taskName,e.workBills,t.id,t.taskMan
+		select e.id,e.mid,e.taskId,t.coding as taskcoding,t.name as
+		taskName,e.workBills,t.id,t.taskMan
 		xiafaid,
-		u.name as xiafaMan,t.date as xiafaDate,t.state as taskStatus,t.actualDate as wancdate,t.delete_flag,t.type,t.predictDate,t.remark,t.delete_flag as flag
-		from t_eliminate e,t_task t,t_user u where e.taskId=t.id
-		and t.taskMan=u.id
-		limit #{pageIndex},#{pageSize}
+		u.name as xiafaMan,t.date
+		as xiafaDate,p.settingName as taskStatus,t.actualDate as
+		wancdate,t.delete_flag,t.type,t.predictDate,t.remark,t.delete_flag as
+		flag
+		from t_eliminate e,t_task t,t_user u,t_systemparam p where
+		e.taskId=t.id
+		and t.taskMan=u.id and p.id=t.state
+		limit
+		#{pageIndex},#{pageSize}
 	</select>
 	<select id="getCount" resultType="int">
 		select count(1)
@@ -50,4 +71,90 @@
 		e,t_task t,t_user u where e.taskId=t.id
 		and e.mId=u.id
 	</select>
+	<select id="getAllBills" resultMap="SystemparamMap"
+		parameterType="java.lang.String">
+		SELECT id,settingId,settingName
+		FROM t_systemparam where
+		settingid = (select id FROM t_systemsetting
+		WHERE coding=#{coding} AND
+		delete_flag='否' AND state='启用')
+	</select>
+	<select id="getAllLineUser" resultType="User">
+		select id,name from
+		t_user u where u.id in(select userId from t_user_role
+		where roleId =3)
+	</select>
+	<select id="getAlleliminateUser" resultType="User">
+		select id,name from
+		t_user u where u.id in(select userId from t_user_role
+		where roleId =2)
+	</select>
+	<select id="getAllUserEliminate" resultType="User"
+		parameterType="int">
+		select id,name from t_user where id=#{0}
+	</select>
+	<update id="updateTaskstatus" parameterType="int">
+		update t_task set
+		state=8 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<select id="getAllMyFlaw" resultMap="MyFlawMap" parameterType="java.util.Map">
+		select
+		tf.id,tf.flawDesc,tw.coding,th.coding as
+		threadCoding,tu.name,ts.settingName,tf.discoverDate,tfw.name as
+		flawType
+		from t_flawconfirm tf,t_tower tw,t_thread th,t_user
+		tu,t_systemparam
+		ts,t_flaw tfw
+		where tf.towerId=tw.id and
+		tf.threadId=th.id and tf.userId=tu.id and
+		tf.flowGrade=ts.id and
+		tf.flawId=tfw.id limit
+		#{pageIndex},#{pageSize}
+	</select>
+
+	<select id="getCountByEliminate" resultType="int">
+		select count(1)
+		from
+		t_flawconfirm tf,t_tower tw,t_thread th,t_user tu,t_systemparam
+		ts,t_flaw tfw
+		where tf.towerId=tw.id and tf.threadId=th.id and
+		tf.userId=tu.id and
+		tf.flowGrade=ts.id and tf.flawId=tfw.id
+	</select>
+	<select id="getAllMyFlawById" resultMap="MyFlawMap"
+		parameterType="int">
+		select
+		tf.id,tf.flawDesc,tw.coding,th.coding as
+		threadCoding,tu.name,ts.settingName,tf.discoverDate,tfw.name as
+		flawType
+		from t_flawconfirm tf,t_tower tw,t_thread th,t_user
+		tu,t_systemparam
+		ts,t_flaw tfw
+		where tf.towerId=tw.id and
+		tf.threadId=th.id and tf.userId=tu.id and
+		tf.flowGrade=ts.id and
+		tf.flawId=tfw.id and tf.id=#{0}
+	</select>
+	<insert id="insertTask" parameterType="java.util.Map">
+		insert into
+		t_task(name,taskMan,type,coding,state,date,description,createdBy,createdDate,updatedBy,updatedDate,remark)
+		values(#{taskname},#{taskman},"消缺任务",#{taskcoding},4,#{date},#{taskDesc},#{taskman},#{time},#{taskman},#{time},#{taskRemark});
+	</insert>
+	<select id="selectTaskById" parameterType="java.lang.String"
+		resultType="Task">
+		select * from t_task where coding=#{0};
+	</select>
+	<insert id="insertEliminate" parameterType="Eliminate" useGeneratedKeys="true" keyProperty="id">
+		insert into t_eliminate(taskId,workBills,mId,remark)
+		VALUES(#{taskId},#{workBills},#{mId},#{remark});
+	</insert>
+	<insert id="insertFlawStaff" parameterType="java.util.Map">
+		insert into
+		t_flawstaff(eliminateId,userId,isReceipter,createdBy,createdDate,updatedBy,updatedDate,remark)
+		values(#{eid},#{userId},#{isReceipter},#{createBy},#{createDate},#{updatedBy},#{updateDate},'懒得加备注');
+	</insert>
+	<insert id="insertEliminateRecord" parameterType="java.util.Map">
+	insert into t_eliminate_record(xtaskid,yetid) values(#{xtaskid},#{yetid})
+	</insert>
 </mapper>

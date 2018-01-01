@@ -43,8 +43,6 @@ $(function(){
 								taskP();
 							}else if(node.text=="消缺记录统计"){
 								taskE();
-							}else if(node.text=="消缺任务制定与分配"){
-								inspectionMakeAllot();
 							}else if(node.text=="数据字典"){
 								data_tb();
 								parameter_tb();

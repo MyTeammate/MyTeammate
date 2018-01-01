@@ -56,6 +56,7 @@ public class HomeController {
 			Map<String,Object> map2=new HashMap<String,Object>();
 			map2.put("id",user.getId());
 			map2.put("time",time);
+			session.setAttribute("date",time);
 			homeService.loginDate(map2);
 			return true;
 		}else{

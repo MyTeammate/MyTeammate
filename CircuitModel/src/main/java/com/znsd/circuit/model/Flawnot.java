@@ -1,115 +1,106 @@
 package com.znsd.circuit.model;
 
 public class Flawnot {
-	private int taskId;				//任务编号
-	private int threadId;			//线路表的主键id
-	private int towerId;			//杆塔表的主键id
-	private int flawId;				//缺陷表的主键id
-	private int inspectionstaffId;	//巡检表id
-	private String isTrouble;		//有无故障
-	private String discoverDate;	//发现时间
-	private int userId;				//发布的巡检员
-	private String flawDesc;		//缺陷描述
-	private String serviceAbility;	//完好率
-	private int flowGrade;			//缺陷等级
-	private String remark;			//备注
+	private int id;
+	private int tasknumber;				//任务编号
+	private int threadcoding;			//线路表的主键id
+	private int towercoding;			//杆塔表的主键id
+	private int flawname;				//缺陷表的主键id
+	private String flawConfirmdiscoverDate;	//发现时间
+	private int inspectionstaffuserId;				//发布的巡检员
+	private String flawConfirmflawDesc;		//缺陷描述
+	private String flawConfirmserviceAbility;	//完好率
+	private int flawConfirmflowGrade;			//缺陷等级
 	public Flawnot() {
 		super();
 	}
-	public int getTaskId() {
-		return taskId;
+	
+	public int getId() {
+		return id;
 	}
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public int getThreadId() {
-		return threadId;
+
+	public int getTasknumber() {
+		return tasknumber;
 	}
-	public void setThreadId(int threadId) {
-		this.threadId = threadId;
+	public void setTasknumber(int tasknumber) {
+		this.tasknumber = tasknumber;
 	}
-	public int getTowerId() {
-		return towerId;
+	public int getThreadcoding() {
+		return threadcoding;
 	}
-	public void setTowerId(int towerId) {
-		this.towerId = towerId;
+	public void setThreadcoding(int threadcoding) {
+		this.threadcoding = threadcoding;
 	}
-	public int getFlawId() {
-		return flawId;
+	public int getTowercoding() {
+		return towercoding;
 	}
-	public void setFlawId(int flawId) {
-		this.flawId = flawId;
+	public void setTowercoding(int towercoding) {
+		this.towercoding = towercoding;
 	}
-	public int getInspectionstaffId() {
-		return inspectionstaffId;
+	public int getFlawname() {
+		return flawname;
 	}
-	public void setInspectionstaffId(int inspectionstaffId) {
-		this.inspectionstaffId = inspectionstaffId;
+	public void setFlawname(int flawname) {
+		this.flawname = flawname;
 	}
-	public String getIsTrouble() {
-		return isTrouble;
+	public String getFlawConfirmdiscoverDate() {
+		return flawConfirmdiscoverDate;
 	}
-	public void setIsTrouble(String isTrouble) {
-		this.isTrouble = isTrouble;
+	public void setFlawConfirmdiscoverDate(String flawConfirmdiscoverDate) {
+		this.flawConfirmdiscoverDate = flawConfirmdiscoverDate;
 	}
-	public String getDiscoverDate() {
-		return discoverDate;
+	public int getInspectionstaffuserId() {
+		return inspectionstaffuserId;
 	}
-	public void setDiscoverDate(String discoverDate) {
-		this.discoverDate = discoverDate;
+	public void setInspectionstaffuserId(int inspectionstaffuserId) {
+		this.inspectionstaffuserId = inspectionstaffuserId;
 	}
-	public int getUserId() {
-		return userId;
+	public String getFlawConfirmflawDesc() {
+		return flawConfirmflawDesc;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setFlawConfirmflawDesc(String flawConfirmflawDesc) {
+		this.flawConfirmflawDesc = flawConfirmflawDesc;
 	}
-	public String getFlawDesc() {
-		return flawDesc;
+	public String getFlawConfirmserviceAbility() {
+		return flawConfirmserviceAbility;
 	}
-	public void setFlawDesc(String flawDesc) {
-		this.flawDesc = flawDesc;
+	public void setFlawConfirmserviceAbility(String flawConfirmserviceAbility) {
+		this.flawConfirmserviceAbility = flawConfirmserviceAbility;
 	}
-	public String getServiceAbility() {
-		return serviceAbility;
+	public int getFlawConfirmflowGrade() {
+		return flawConfirmflowGrade;
 	}
-	public void setServiceAbility(String serviceAbility) {
-		this.serviceAbility = serviceAbility;
+	public void setFlawConfirmflowGrade(int flawConfirmflowGrade) {
+		this.flawConfirmflowGrade = flawConfirmflowGrade;
 	}
-	public int getFlowGrade() {
-		return flowGrade;
+
+	public Flawnot(int id, int tasknumber, int threadcoding, int towercoding, int flawname,
+			String flawConfirmdiscoverDate, int inspectionstaffuserId, String flawConfirmflawDesc,
+			String flawConfirmserviceAbility, int flawConfirmflowGrade) {
+		super();
+		this.id = id;
+		this.tasknumber = tasknumber;
+		this.threadcoding = threadcoding;
+		this.towercoding = towercoding;
+		this.flawname = flawname;
+		this.flawConfirmdiscoverDate = flawConfirmdiscoverDate;
+		this.inspectionstaffuserId = inspectionstaffuserId;
+		this.flawConfirmflawDesc = flawConfirmflawDesc;
+		this.flawConfirmserviceAbility = flawConfirmserviceAbility;
+		this.flawConfirmflowGrade = flawConfirmflowGrade;
 	}
-	public void setFlowGrade(int flowGrade) {
-		this.flowGrade = flowGrade;
-	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+
 	@Override
 	public String toString() {
-		return "Flawnot [taskId=" + taskId + ", threadId=" + threadId + ", towerId=" + towerId + ", flawId=" + flawId
-				+ ", inspectionstaffId=" + inspectionstaffId + ", isTrouble=" + isTrouble + ", discoverDate="
-				+ discoverDate + ", userId=" + userId + ", flawDesc=" + flawDesc + ", serviceAbility=" + serviceAbility
-				+ ", flowGrade=" + flowGrade + ", remark=" + remark + "]";
-	}
-	public Flawnot(int taskId, int threadId, int towerId, int flawId, int inspectionstaffId, String isTrouble,
-			String discoverDate, int userId, String flawDesc, String serviceAbility, int flowGrade, String remark) {
-		super();
-		this.taskId = taskId;
-		this.threadId = threadId;
-		this.towerId = towerId;
-		this.flawId = flawId;
-		this.inspectionstaffId = inspectionstaffId;
-		this.isTrouble = isTrouble;
-		this.discoverDate = discoverDate;
-		this.userId = userId;
-		this.flawDesc = flawDesc;
-		this.serviceAbility = serviceAbility;
-		this.flowGrade = flowGrade;
-		this.remark = remark;
+		return "Flawnot [id=" + id + ", tasknumber=" + tasknumber + ", threadcoding=" + threadcoding + ", towercoding="
+				+ towercoding + ", flawname=" + flawname + ", flawConfirmdiscoverDate=" + flawConfirmdiscoverDate
+				+ ", inspectionstaffuserId=" + inspectionstaffuserId + ", flawConfirmflawDesc=" + flawConfirmflawDesc
+				+ ", flawConfirmserviceAbility=" + flawConfirmserviceAbility + ", flawConfirmflowGrade="
+				+ flawConfirmflowGrade + "]";
 	}
 	
 	
