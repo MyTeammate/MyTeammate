@@ -28,6 +28,12 @@
        where delete_flag='否' and id=#{id}
    </select>
    
+   <select id="updateSystemsetting3" resultType="Systemsetting">
+       select id,coding,`name`,remark,state from t_systemsetting
+       where delete_flag='否' and coding=#{coding}
+   </select>
+   
+   
    <update id="updateSystemsetting2" parameterType="Systemsetting">
        update t_systemsetting set coding=#{coding},name=#{name},remark=#{remark},updateDate=#{updateDate} where id=#{id} 
    </update>
