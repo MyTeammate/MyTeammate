@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.EliminateDao;
 import com.znsd.circuit.model.Eliminate;
+import com.znsd.circuit.model.Flawstaff;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
@@ -25,9 +26,9 @@ public class EliminateServiceImpl implements EliminateService {
 		return eliminateDao.getAllTask(map);
 	}
 	@Override
-	public int getCount() {
+	public int getCount(Map map) {
 		
-		return eliminateDao.getCount();
+		return eliminateDao.getCount(map);
 	}
 	@Override
 	public List<Systemparam> getAllBills(String bills) {
@@ -40,9 +41,9 @@ public class EliminateServiceImpl implements EliminateService {
 		return eliminateDao.getAllLineUser();
 	}
 	@Override
-	public List<User> getAlleliminateUser() {
+	public List<User> getAlleliminateUser(String coding) {
 		
-		return eliminateDao.getAlleliminateUser();
+		return eliminateDao.getAlleliminateUser(coding);
 	}
 	@Override
 	public User getAllUserEliminate(int id) {
@@ -92,6 +93,16 @@ public class EliminateServiceImpl implements EliminateService {
 	public Task selectTaskById(String coding) {
 		
 		return eliminateDao.selectTaskById(coding);
+	}
+	@Override
+	public int deleteFlawStaff(int eliminateId) {
+		
+		return eliminateDao.deleteFlawStaff(eliminateId);
+	}
+	@Override
+	public int insertintoFlawStaff(Flawstaff flawStaff) {
+		
+		return eliminateDao.insertintoFlawStaff(flawStaff);
 	}
 	
 	

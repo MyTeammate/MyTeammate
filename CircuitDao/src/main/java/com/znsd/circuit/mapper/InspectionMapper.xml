@@ -27,8 +27,25 @@
 		ur.roleId=r.id
 		WHERE u.state='0' and r.coding=#{coding}
 	</select>
+	<!-- 通过巡检task的id获取inspection的id  -->
 	<select id="getInspectionId" resultType="int" parameterType="int">
 		SELECT id FROM t_inspection WHERE taskId=#{id}
+	</select>
+	<!-- 通过巡检task的id获取inspection的threadId -->
+	<select id="getThreaddByTask" resultType="Threads" parameterType="int">	
+		SELECT ins.threadId as id,coding,th.name FROM t_inspection ins
+		left JOIN t_thread th on ins.threadId=th.id
+		 WHERE ins.taskId=#{id}
+	</select>
+	<!-- 通过线路threadId获取Tower  -->
+	<select id="getTowerByThread" resultType="Tower" parameterType="int">
+		select id,coding,lineId,state from t_tower where coding BETWEEN 
+		(SELECT startTower FROM t_thread WHERE id=#{id}) 
+		and 
+		(SELECT endTower FROM t_thread WHERE id=#{id})
+	</select>
+	<select id="getAllFlaw" resultType="Flaw">
+		SELECT id,name as flawname FROM t_flaw WHERE state=0
 	</select>
 	<select id="getInspectionPageCount" resultType="Integer">
 		SELECT
@@ -44,20 +61,29 @@
 	</select>
 	<select id="getInspectionPage" resultType="Inspection"
 		parameterType="Map">
-		SELECT
+		SELECT DISTINCT
 		t.id,t.coding,t.name,th.name as
 		thread,th.startTower,th.endTower,u.userName as creater,t.date as
 		createDate,sy.settingName as state,t.actualDate,t.delete_flag
 		from
 		t_inspection i
-		INNER JOIN t_task t ON i.taskId=t.id
-		INNER JOIN t_thread
+		left JOIN t_inspectionstaff ins ON i.id=ins.inspectionId
+		left JOIN t_task t ON i.taskId=t.id
+		left JOIN t_thread
 		th ON i.threadId=th.id
-		INNER JOIN t_user u on t.createdBy=u.id
-		INNER
+		left JOIN t_user u on t.createdBy=u.id
+		left
 		JOIN t_systemparam sy on
 		t.state=sy.id
-		WHERE t.type='巡检任务'
+		WHERE t.type='巡检任务' 
+		<if test="operate == 'execute'">
+			and t.state not in (SELECT id FROM t_systemparam where settingid
+		= (select id FROM t_systemsetting
+		WHERE coding='inspection_state' AND
+		delete_flag='否' AND state='启用')
+AND settingName='待分配' OR settingName='已取消')
+			AND ins.userId=#{userId} AND ins.isReceipter='是'
+		</if>
 		ORDER BY
 		t.createdDate
 		LIMIT #{pageIndex},#{pageSize}

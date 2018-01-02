@@ -61,15 +61,53 @@
 		flag
 		from t_eliminate e,t_task t,t_user u,t_systemparam p where
 		e.taskId=t.id
-		and t.taskMan=u.id and p.id=t.state
+		and t.taskMan=u.id and p.id=t.state and u.id=#{userid} and 1=1
+	
+		<if test="taskcoding!=null &amp;&amp; taskcoding!=''">
+			and t.coding like #{taskcoding}
+		</if>
+		<if test="workbills!=null &amp;&amp;workbills!=''">
+		   and e.workBills like #{workbills}
+		</if>
+		<if test="taskstatus!=null &amp;&amp;taskstatus!=''">
+		   and p.settingName like #{taskstatus}
+		</if>
+		<if test="xiapeople!=null &amp;&amp;xiapeople!=''">
+		   and u.name like #{xiapeople}
+		</if>
+		<if test="startdate!=null &amp;&amp;startdate!=''">
+		   and t.date &gt; #{startdate}
+		</if>
+		<if test="enddate!=null &amp;&amp;enddate!=''">
+		   and t.date &lt; #{enddate}
+		</if>
+		ORDER BY t.date desc
 		limit
 		#{pageIndex},#{pageSize}
 	</select>
-	<select id="getCount" resultType="int">
+	<select id="getCount" resultType="int" parameterType="java.util.Map">
 		select count(1)
-		from t_eliminate
-		e,t_task t,t_user u where e.taskId=t.id
-		and e.mId=u.id
+		from t_eliminate e,t_task t,t_user u,t_systemparam p where
+		e.taskId=t.id
+		and t.taskMan=u.id and p.id=t.state
+		<if test="taskcoding!=null &amp;&amp; taskcoding!=''">
+			and t.coding like #{taskcoding}
+		</if>
+		<if test="workbills!=null &amp;&amp;workbills!=''">
+		   and e.workBills like #{workbills}
+		</if>
+		<if test="taskstatus!=null &amp;&amp;taskstatus!=''">
+		   and p.settingName like #{taskstatus}
+		</if>
+		<if test="xiapeople!=null &amp;&amp;xiapeople!=''">
+		   and u.name like #{xiapeople}
+		</if>
+		<if test="startdate!=null &amp;&amp;startdate!=''">
+		   and t.date &gt; #{startdate}
+		</if>
+		<if test="enddate!=null &amp;&amp;enddate!=''">
+		   and t.date &lt; #{enddate}
+		</if>
 	</select>
 	<select id="getAllBills" resultMap="SystemparamMap"
 		parameterType="java.lang.String">
@@ -84,10 +122,15 @@
 		t_user u where u.id in(select userId from t_user_role
 		where roleId =3)
 	</select>
-	<select id="getAlleliminateUser" resultType="User">
-		select id,name from
+	<select id="getAlleliminateUser" resultType="User" parameterType="java.lang.String">
+		<!-- select id,name from
 		t_user u where u.id in(select userId from t_user_role
-		where roleId =2)
+		where roleId =2 and state=0) -->
+		SELECT u.id,u.name,r.coding FROM t_user u
+		LEFT JOIN t_user_role ur ON u.id=ur.userId
+		left JOIN t_role r ON
+		ur.roleId=r.id
+		WHERE u.state='0' and r.coding=#{0}
 	</select>
 	<select id="getAllUserEliminate" resultType="User"
 		parameterType="int">
@@ -106,7 +149,7 @@
 		from t_flawconfirm tf,t_tower tw,t_thread th,t_user
 		tu,t_systemparam
 		ts,t_flaw tfw
-		where tf.towerId=tw.id and
+		where tf.id not in (select yetid from t_eliminate_record) and tf.towerId=tw.id and
 		tf.threadId=th.id and tf.userId=tu.id and
 		tf.flowGrade=ts.id and
 		tf.flawId=tfw.id limit
@@ -139,15 +182,15 @@
 	<insert id="insertTask" parameterType="java.util.Map">
 		insert into
 		t_task(name,taskMan,type,coding,state,date,description,createdBy,createdDate,updatedBy,updatedDate,remark)
-		values(#{taskname},#{taskman},"消缺任务",#{taskcoding},4,#{date},#{taskDesc},#{taskman},#{time},#{taskman},#{time},#{taskRemark});
+		values(#{taskname},#{taskman},"消缺任务",#{taskcoding},#{status},#{date},#{taskDesc},#{taskman},#{time},#{taskman},#{time},#{taskRemark})
 	</insert>
 	<select id="selectTaskById" parameterType="java.lang.String"
 		resultType="Task">
-		select * from t_task where coding=#{0};
+		select * from t_task where coding=#{0}
 	</select>
 	<insert id="insertEliminate" parameterType="Eliminate" useGeneratedKeys="true" keyProperty="id">
 		insert into t_eliminate(taskId,workBills,mId,remark)
-		VALUES(#{taskId},#{workBills},#{mId},#{remark});
+		VALUES(#{taskId},#{workBills},#{mId},#{remark})
 	</insert>
 	<insert id="insertFlawStaff" parameterType="java.util.Map">
 		insert into
@@ -156,5 +199,13 @@
 	</insert>
 	<insert id="insertEliminateRecord" parameterType="java.util.Map">
 	insert into t_eliminate_record(xtaskid,yetid) values(#{xtaskid},#{yetid})
+	</insert>
+	<delete id="deleteFlawStaff" parameterType="int">
+	delete from t_flawstaff where eliminateId=#{0}
+	</delete>
+	<insert id="insertintoFlawStaff" parameterType="Flawstaff">
+	insert into t_flawstaff(eliminateId,userId,isReceipter,createdBy,createdDate,
+	updatedBy,updatedDate) values(#{eliminateId},#{userId},#{isReceipter},
+	#{createdBy},#{createdDate},#{updatedBy},#{updatedDate})
 	</insert>
 </mapper>
