@@ -5,6 +5,7 @@ function data_tb(){
 		pagination : true,
 		pageNumber : 1,
 		pageSize : 1,
+		singleSelect:true,
 		rownumbers : true,
 		pagination : true,
 		pageList : [ 1, 2, 3, 4 ],
@@ -58,7 +59,7 @@ function data_tb(){
 											}else{
 												$.messager.alert({
 													title:'错误',
-													msg:'添加错误！',
+													msg:'添加错误,配置类型编码不能重复！',
 													icon:'info'
 												});
 											}
@@ -73,6 +74,13 @@ function data_tb(){
 	
 	$("#data_delete").bind('click',function(){
 		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		if(cost==null){
+			$.messager.alert({
+				title:'提示',
+				msg:'请选择一行进行操作！',
+				icon:'info'
+			});
+    	}else{
 		var data={id:cost.id};
 		$.ajax({
 			url:"dateManage/deleteSystemsetting",
@@ -91,17 +99,25 @@ function data_tb(){
 				}
 			}
 		})
+    	}
 	})
 	
 	$("#data_update").bind('click',function(){
 		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		if(cost==null){
+			$.messager.alert({
+				title:'提示',
+				msg:'请选择一行进行操作！',
+				icon:'info'
+			});
+    	}else{
 		var data={id:cost.id};
 		$.ajax({
 			url:"dateManage/updateSystemsetting",
 			type:"post",
 			data:data,
 			success:function(result){
-				$('#data_add_option').html("<tr><td style='float:right'>配置类型编码：</td><td><input type='text' id='coding' value='"+result.coding+"'/><span style='color: red'>*</span></td><td></td></tr><tr><td style='float:right'>配置类型名称：</td><td><input type='text' id='typeName' value='"+result.name+"'/><span style='color: red'>*</span></td></tr><tr><td style='float:right'>描述：</td><td><input type='text' id='describe' value='"+result.remark+"'/><span style='color: red'>*</span></td></tr>");
+				$('#data_add_option').html("<tr><td style='float:right'>配置类型编码：</td><td><input type='text' id='coding' readonly='readonly' value='"+result.coding+"'/><span style='color: red'>*</span></td><td></td></tr><tr><td style='float:right'>配置类型名称：</td><td><input type='text' id='typeName' value='"+result.name+"'/><span style='color: red'>*</span></td></tr><tr><td style='float:right'>描述：</td><td><input type='text' id='describe' value='"+result.remark+"'/><span style='color: red'>*</span></td></tr>");
 		    	$('#data_add_option').dialog({
 		    		width:360,
 		    		height:120,
@@ -153,11 +169,19 @@ function data_tb(){
 		    	})
 			}
 		})
+    	}
 		
     });  
 	
 	$("#data_state").bind('click',function(){
 		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		if(cost==null){
+			$.messager.alert({
+				title:'提示',
+				msg:'请选择一行进行操作！',
+				icon:'info'
+			});
+    	}else{
 		var data={id:cost.id};
 		$.ajax({
 			url:"dateManage/stateSystemsetting",
@@ -176,5 +200,29 @@ function data_tb(){
 				}
 			}
 		})
+    	}
+	})
+	
+	
+	$("#data_query").bind('click',function(){
+		var cost=$('#data_tb').datagrid('getSelected');   //获取当前行数据   
+		if(cost==null){
+			$.messager.alert({
+				title:'提示',
+				msg:'请选择一行进行操作！',
+				icon:'info'
+			});
+    	}else{
+    		var data={id:cost.id};
+    		$.ajax({
+    			url:"dateManage/querySystemsetting",
+    			type:"post",
+    			data:data,
+    			success:function(result){
+    				var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+    		    	tab.panel('refresh', 'systemParam');
+    			}
+    		})
+    	}
 	})
 }

@@ -43,6 +43,9 @@ $(function(){
 								taskE();
 							}else if(node.text=="数据字典"){
 								data_tb();
+								parameter_tb();
+							}else if(node.text=="用户管理"){
+								user_tb();
 							}
 							if(node.text=="消缺任务制定与分配"){
 								eliminate();

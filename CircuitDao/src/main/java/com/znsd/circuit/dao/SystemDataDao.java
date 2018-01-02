@@ -24,6 +24,9 @@ public interface SystemDataDao {
     //根据id查询数据字典数据
     public Systemsetting updateSystemsetting(int id);
     
+    //根据coding查询数据字典数据
+    public Systemsetting updateSystemsetting3(String coding);
+    
     //数据字典修改数据
     public int updateSystemsetting2(Systemsetting system);
     
