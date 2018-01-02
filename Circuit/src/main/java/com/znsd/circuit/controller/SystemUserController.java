@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.SystemUserService;
 
@@ -36,11 +37,37 @@ public class SystemUserController {
 			User user = (User) iterator.next();
 			if(user.getLoginDate()==null){
 				user.setLoginDate("新用户，暂未登录");
+			}else{
+				String time=user.getLoginDate();
+		    	if(time.contains(".")){
+		    		 time=time.substring(0,time.indexOf("."));
+		    	}
+		    	user.setLoginDate(time);
 			}
 		}
 		Map<String,Object> map2=new HashMap<String,Object>();
 		map2.put("rows",listUser);
 		map2.put("total",count);
 		return map2;
+	}
+	
+	//查询有哪些角色
+	@ResponseBody
+	@RequestMapping("/select")
+	public List<Systemrole> selectSysteUser(){
+		System.out.println("123");
+		List<Systemrole> s=systemUserService.selectSysteUser();
+		for (Iterator iterator = s.iterator(); iterator.hasNext();) {
+			Systemrole systemrole = (Systemrole) iterator.next();
+			System.out.println("systemrole"+systemrole);
+		}
+		return s;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/add")
+	public int addSysteUser(int id){
+		
+		return 0;
 	}
 }

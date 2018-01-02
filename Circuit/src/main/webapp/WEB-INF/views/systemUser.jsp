@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,7 +31,38 @@
 	      </th>
 	    </tr>
 	</table>
-	<table id="user_add_option">
-	</table>
+	<!-- <div style="display:none"> -->
+		<table id="user_add_option">
+		
+		   <!-- <tr>
+		     <td style='float:right;'>用户账号：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>用户名称：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>密码：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>角色：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>入职时间：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>离职时间：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr>
+		   <tr>
+		     <td style='float:right;'>使用状态：</td>
+		     <td><input type='text' id='0' name='param' /></td>
+		   </tr> -->
+		</table>
+	<!-- </div> -->
 </body>
 </html>
