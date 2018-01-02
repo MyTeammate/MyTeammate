@@ -1,5 +1,7 @@
 package com.znsd.circuit.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,6 +11,14 @@ public class SetController {
     @RequestMapping("/home")
 	public String home(){
 		return "home";
+				
+	}
+    
+  //注销
+    @RequestMapping("/logout")
+	public String logout(HttpSession session){
+    	session.removeAttribute("user");
+		return "login";
 				
 	}
     
@@ -22,5 +32,17 @@ public class SetController {
     @RequestMapping("/systemData")
     public String systemData(){
     	return "systemData";
+    }
+    
+  //数据字典参数页面
+    @RequestMapping("/systemParam")
+    public String systemParam(){
+    	return "systemParam";
+    }
+    
+  //用户管理页面
+    @RequestMapping("/systemUser")
+    public String systemUser(){
+    	return "systemUser";
     }
 }

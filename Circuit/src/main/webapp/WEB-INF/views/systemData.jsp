@@ -14,7 +14,7 @@
 		   <th>
 		    <a id="data_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增</a> 
 		    <a id="data_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut'">删除</a>  
-		    <a id="data_state" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-delete'">禁用</a> 
+		    <a id="data_state" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-delete'">启用/禁用</a> 
 		    <a id="data_update" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">修改</a>  
 		    <a id="data_query" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-customers'">配置参数</a>   
 	   	   </th>

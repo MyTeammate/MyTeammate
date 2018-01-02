@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.SystemParamDao">
+    <select id="systemparamCount" resultType="int">
+        select count(1) from t_systemparam sp
+		LEFT JOIN t_systemsetting st
+		on sp.settingId=st.id
+		where st.id=#{id} and sp.delete_flag='否'
+    </select>
+    
+    <select id="listSystemparam" resultType="Systemparam">
+        select sp.id as id,sp.settingName as settingName from t_systemparam sp
+		LEFT JOIN t_systemsetting st
+		on sp.settingId=st.id
+		where st.id=#{systemsettingId} and sp.delete_flag='否'
+		GROUP BY sp.id
+	    order by sp.id desc
+        limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="querySystemparam" parameterType="map" resultType="Systemparam">
+        select id,settingName from t_systemparam where settingName=#{settingName} and settingId=#{settingId}
+    </select>
+    
+    <insert id="addSystemparam" parameterType="Systemparam">
+        insert into t_systemparam (settingId,settingName,createBy,createDate,remark) values (#{settingId},#{settingName},#{createBy},#{createDate},#{remark});
+    </insert>
+    
+    <update id="deleteSystemparam" parameterType="int">
+        update t_systemparam set delete_flag='是' where id=#{id} 
+    </update>
+    
+    <update id="updateSystemparam" parameterType="map">
+        update t_systemparam set settingName=#{name} where id=#{id} 
+    </update>
+</mapper>
