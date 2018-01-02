@@ -29,7 +29,7 @@ $(function(){
 		editable : false,// 不可编辑，只能选择
 		panelHeight : 'auto',
 		required : true,
-	    missingMessage : '请选择问题类型',
+	    missingMessage : '请选择巡检线路',
 		url : 'getAllThread',
 		onSelect: function(rec){ 
         	$('#startTowerCoding').val('');
@@ -49,7 +49,37 @@ $(function(){
 	
 	initDate(); // 系统当前时间
 	
+	$("#add").click(function(){
+		  if($("#fb_list option:selected").length>0) {
+		   $("#fb_list option:selected").each(function(){
+		    $("#select_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		    
+		    $(this).remove();
+		   })
+		  }else {
+		   alert("请选择要添加的数据！");
+		  }
+		 });
+		 
+		 $("#delete").click(function() {
+		   if($("#select_list option:selected").length>0) {
+		    $("#select_list option:selected").each(function(){
+		     $("#fb_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		      $(this).remove();
+		    })
+		   }else {
+		    alert("请选择要删除的数据！");
+		   }
+		 });
+	
 });
+
+/*
+ * 显示选择巡检人员div
+ */
+function show(){
+	$("#bigdiv").show(1000);
+}
 
 $.extend($.fn.validatebox.defaults.rules, {
 	// 巡检任务编号
@@ -69,6 +99,16 @@ function initDate(){
 	var date = new Date();
 	var value = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
 	$("#createInspectionDate").val(value);
+}
+
+/*
+ * 选择巡检人员点击保存
+ */
+function save_staffs(){
+	var staffs = $.map($("#select_list option:not(:selected)"),
+            function(ele){return ele.value} 
+         ).join(",");
+	$("textarea[name=inspectionStaff]").text(staffs);
 }
 
 /*

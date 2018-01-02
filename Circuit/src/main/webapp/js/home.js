@@ -12,7 +12,6 @@ $(function(){
 		cascadeCheck:false,
 		onlyLeafCheck:true,
 		onLoadSuccess : function(node, data) {
-			console.log(data);
 			if (data) {
 				$(data).each(function(index, value) {	
 					 if (this.state == "closed"&&this.nid==0) {
@@ -22,7 +21,6 @@ $(function(){
 			}
 		}, 
 		onClick : function(node) {
-			console.log(node);
 			if (node.url) { 
 				console.log($("#tabs"))
 				if ($("#tabs").tabs('exists', node.text)) {
