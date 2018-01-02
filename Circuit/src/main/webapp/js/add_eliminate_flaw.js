@@ -232,7 +232,8 @@ $(function() {
 												+ "'>" + $(this).text()
 												+ "</option");
 								$(this).remove();
-							})
+							});
+					$("#select_user").html("");
 				} else {
 					alert("请选择要删除的数据！");
 				}
@@ -357,6 +358,7 @@ function taskSave() {
 	var str = $.map($("#select_user option:not(:selected)"), function(ele) {
 		return ele.value
 	}).join(",");// 已经选择的消缺员id
+	console.log(str);
 	var row = $('#add_flaw').datagrid('getSelections');
 	var alstr = "";
 	for (var i = 0; i < row.length; i++) {
@@ -366,7 +368,7 @@ function taskSave() {
 			str, alstr);
 	if (taskcoding == "" || taskname == "" || taskbills == ""
 			|| taskbills == "请选择" || mid == "请选择" || mid == ""
-			|| taskDesc == "" || taskRemark == "" || str == "" || alstr == "") {
+			|| taskDesc == "" || taskRemark == "" || alstr == "") {
 		$.messager.alert({
 			title : '警告操作',
 			msg : '<h3 style="color: red;">请将资料补充完整!</h3>',

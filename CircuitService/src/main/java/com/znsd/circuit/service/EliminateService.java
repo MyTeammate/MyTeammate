@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.znsd.circuit.model.Eliminate;
+import com.znsd.circuit.model.Flawstaff;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
@@ -22,7 +23,7 @@ public interface EliminateService {
 	 * 
 	 * @return
 	 */
-	public int getCount();
+	public int getCount(Map map);
 
 	/**
 	 * 查询出消缺任务的单据
@@ -41,7 +42,7 @@ public interface EliminateService {
 	 * 
 	 * @return
 	 */
-	public List<User> getAlleliminateUser();
+	public List<User> getAlleliminateUser(String coding);
 
 	/**
 	 * 通过id查到消缺员
@@ -92,4 +93,18 @@ public interface EliminateService {
 	 * 通过任务编码拿到即时插入的id
 	 */
 	public Task selectTaskById(String coding);
+	
+	/**
+	  * 先删除已有的消缺员
+	  * @param eliminateId
+	  * @return
+	  */
+	public int deleteFlawStaff(int eliminateId);
+	/**
+	 * 再插入数据
+	 * @param eliminateId
+	 * @param userId
+	 * @return
+	 */
+	public int insertintoFlawStaff(Flawstaff flawStaff);
 }
