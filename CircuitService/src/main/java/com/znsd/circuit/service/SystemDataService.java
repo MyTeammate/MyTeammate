@@ -3,6 +3,7 @@ package com.znsd.circuit.service;
 import java.util.List;
 import java.util.Map;
 
+import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Systemsetting;
 
 public interface SystemDataService {
@@ -29,4 +30,7 @@ public interface SystemDataService {
     
   //启用禁用选择数据
     public int stateSystemsetting(Map<String,Object> map);
+    
+    //获取配置参数
+    public List<Systemparam> getSystemParamDh(String key);
 }

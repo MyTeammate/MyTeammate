@@ -4,25 +4,56 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.znsd.circuit.dao.TowerDao">
           <select id="checkCoding" parameterType="java.lang.String"  resultType="Tower">
-                   select id,coding,lineId,state from t_tower where coding = #{coding}
+                   select id,coding,lineId,state from t_tower where coding = #{coding} and delete_flag = '否'
           </select>
           
           <insert id="insertTower" parameterType="Tower">
                insert into t_tower 
                (coding,lineId,state,createById,createDate,updateDate,delete_flag,remark) values
-               (#{coding},null,#{state},#{createById},#{createDate},#{updateDate},#{deleteFlag},#{remark})
+               (#{coding},#{lineId},#{state},#{createById},#{createDate},#{updateDate},#{deleteFlag},#{remark})
           </insert>
           
-          <select id="getAllTowerData" parameterType="java.lang.String" resultType="Tower" >
+          <select id="getAllTowerData" parameterType="Line" resultType="Tower" >
               select id,coding,lineId,state from t_tower
               where lineId  is null
-              <if test="coding!=null">
-                and coding like #{coding}
-              </if>
+
+                <if test="line.id!=null">
+                     or lineId = #{line.id}
+                </if>
+                <if test="line.coding!=null">
+                   and coding like #{line.coding}
+                </if>
+                 and delete_flag = '否' and state != 1
+             
           </select>
           
           <update id="updateTowerLineId" parameterType="Tower">
                update t_tower set lineId = #{lineId} where id=#{id}
+          </update>
+          
+          <select id="getLineTowersById" parameterType="int" resultType="Tower">
+                select id,coding,lineId,state from t_tower where lineId = #{id} and delete_flag='否'
+          </select>
+          
+          
+          <select id="getTowerByLikeCoding" parameterType="java.lang.String" resultType="Tower">
+               select id,coding,lineId,state from t_tower where coding like #{coding} and delete_flag='否'
+          </select>
+          
+           <update id="setTowerState" parameterType="Tower">
+               update t_tower set state = #{tower.state} where id=#{tower.id}
+          </update>
+          
+          <select id="getTowerById" parameterType="int" resultType="Tower">
+               select id,coding,lineId,state from t_tower where id=#{id} and delete_flag='否'
+          </select>
+          
+          <update id="setDeleteFlag" parameterType="int">
+                update t_tower set delete_flag = '是' where id=#{id}
+          </update>
+          
+          <update id="updateTower" parameterType="Tower">
+              update t_tower set coding=#{tower.coding},lineId=#{tower.lineId},state=#{tower.state} where id=#{tower.id}
           </update>
          
  </mapper>

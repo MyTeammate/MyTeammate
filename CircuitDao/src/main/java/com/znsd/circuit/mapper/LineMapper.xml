@@ -4,23 +4,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.znsd.circuit.dao.LineDao">
     <select  id="pageSelectLine" parameterType="java.util.Map"  resultType="Line">
-           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state from t_line t
-           <if test="line.coding!=null and line.coding!=''">
-              where t.coding=#{line.coding}
+           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state from t_line t where
+           <if test="line.coding!=null">
+               t.coding like #{line.coding} and
            </if>
+           <if test="line.stateString!=null">
+                 t.state = #{line.state} and    
+           </if>
+           t.delete_flag = '否'
            order by t.id desc limit #{page},#{row}
     </select>
     
     
     <select id="getLineTotal" parameterType="java.util.Map" resultType="int">
-             select count(1) from t_line t
-           <if test="line.coding!=null and line.coding!=''">
-              where t.coding=#{line.coding}
-           </if>   
+             select count(1) from t_line t where
+          <if test="line.coding!=null and line.coding!=''">
+               t.coding like #{line.coding} and
+           </if>
+           <if test="line.stateString!=null">
+                 t.state=#{line.state} and    
+           </if>
+           t.delete_flag = '否'  
     </select>
     
     <select id="checkCoding" parameterType="java.lang.String" resultType="Line">
-           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state  from t_line where coding=#{coding}
+           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state 
+            from t_line where coding=#{coding} and delete_flag = '否'
     </select>
     
     <insert id="insertLine" parameterType="Line" useGeneratedKeys="true" keyProperty="id">
@@ -32,5 +41,28 @@
     <select id="getLineAllTowers" resultType="Tower" parameterType="Line">
          select id,coding,lineId,state from t_tower where coding BETWEEN #{startTower} and #{endTower}
     </select>
+    
+    <select id="getLineById" parameterType="int" resultType="Line">
+         select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state,remark from t_line where id = #{id} and delete_flag = '否'
+    </select>
+    
+    
+    <update id="updateLine" parameterType="Line">
+       update t_line set  coding=#{coding},name=#{name},length=#{length},return_Way=#{returnWay},date=#{date},startTower=#{startTower},endTower=#{endTower},redix=#{redix},state=#{state},
+       updateDate=#{updateDate},remark=#{remark}  where  id = #{id}
+    </update>
+    
+    
+    <update id="setDeleteFlag" parameterType="int">
+          update t_line set delete_flag='是' where id=#{id}
+    </update>
+    
+    <update id="setStateFlag" parameterType="Line">
+           update t_line set state=#{line.state} where id=#{line.id}
+    </update>
+ 
+     <select id="selectListLine" resultType="Line">
+           select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state,remark from t_line where delete_flag='否' AND state=0
+     </select>
     
  </mapper>
