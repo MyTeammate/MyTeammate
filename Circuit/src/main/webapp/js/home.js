@@ -12,7 +12,6 @@ $(function(){
 		cascadeCheck:false,
 		onlyLeafCheck:true,
 		onLoadSuccess : function(node, data) {
-			console.log(data);
 			if (data) {
 				$(data).each(function(index, value) {	
 					 if (this.state == "closed"&&this.nid==0) {
@@ -22,7 +21,6 @@ $(function(){
 			}
 		}, 
 		onClick : function(node) {
-			console.log(node);
 			if (node.url) { 
 				console.log($("#tabs"))
 				if ($("#tabs").tabs('exists', node.text)) {
@@ -45,6 +43,9 @@ $(function(){
 								taskE();
 							}else if(node.text=="数据字典"){
 								data_tb();
+								parameter_tb();
+							}else if(node.text=="用户管理"){
+								user_tb();
 							}
 							if(node.text=="消缺任务制定与分配"){
 								eliminate();

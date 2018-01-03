@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.SystemUserDao">
+    <select id="systemUserCount" resultType="int">
+        select count(1) from t_user where delete_flag='否'
+    </select>
+    
+    <select id="listSystemUser" resultType="User" parameterType="map">
+        select tu.id,tu.userName,tu.`password`,tu.`name`,tr.id as roleId,tr.`name` as roleName,tu.entryDate,tu.leaveDate,tu.email,tu.loginDate,tu.state from t_user tu
+		LEFT JOIN t_user_role tur
+		on tu.id=tur.userId
+		LEFT JOIN t_role tr
+		on tur.roleId=tr.id
+		where tu.delete_flag='否'
+		GROUP BY id
+		order by id desc
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <select id="selectSysteUser" resultType="SystemRole">
+        select id,coding,`name`,state,createBy,updatedDate from t_role
+    </select>
+</mapper>

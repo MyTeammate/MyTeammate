@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.TaskpollingDao">
+	<select id="selelectTaskPoll" parameterType="java.util.Map"
+		resultType="Taskpolling">
+		SELECT distinct t.coding coding, t.`name` tanem,h.coding
+		threadCoding,h.startTower startTower,h.endTower engTower
+		FROM
+		t_flawconfirm tf ,t_task t,t_thread h WHERE tf.taskId=t.id AND
+		tf.threadId=h.id
+		limit #{pageIndex},#{pageSize}
+	</select>
+
+	<select id="getTsakCount" resultType="int">
+		SELECT
+		COUNT(DISTINCT(t.coding)) FROM
+		t_flawconfirm tf ,t_task
+		t,t_thread h
+		WHERE tf.taskId=t.id AND
+		tf.threadId=h.id
+	</select>
+
+	<select id="selectTaskTower" resultType="Taskpolling">
+		SELECT distinct
+		t.coding
+		coding,t.`name` tanem,h.coding
+		threadCoding
+		FROM
+		t_flawconfirm tf
+		,t_task
+		t,t_thread h,t_tower
+		w,t_systemparam
+		s,t_flaw
+		a WHERE
+		tf.taskId=t.id AND
+		tf.threadId=h.id AND
+		tf.towerId=w.id and
+		s.id=tf.flowGrade AND
+		tf.flawId=a.id AND
+		t.coding=#{coding}
+	</select>
+
+	<select id="getselTaskCount" resultType="int">
+		SELECT COUNT(1)
+		FROM
+		t_flawconfirm tf ,t_task t,t_thread h,t_tower
+		w,t_systemparam
+		s,t_flaw
+		a
+		WHERE tf.taskId=t.id AND
+		tf.threadId=h.id AND
+		tf.towerId=w.id and
+		s.id=tf.flowGrade AND tf.flawId=a.id AND
+		t.coding=#{coding}
+	</select>
+
+	<select id="selectTower" parameterType="java.util.Map"
+		resultType="Taskpolling">
+		SELECT w.coding
+		towerCoding,s.settingName
+		settingName,a.`name`
+		flawtype,tf.discoverDate discoverDate,tf.flawDesc
+		flawDesc
+		FROM
+		t_flawconfirm tf ,t_task t,t_thread h,t_tower
+		w,t_systemparam
+		s,t_flaw
+		a WHERE tf.taskId=t.id AND
+		tf.threadId=h.id AND
+		tf.towerId=w.id and
+		s.id=tf.flowGrade AND tf.flawId=a.id AND
+		t.coding=#{coding} ORDER BY tf.discoverDate DESC limit
+		#{pageIndex},#{pageSize}
+	</select>
+</mapper>

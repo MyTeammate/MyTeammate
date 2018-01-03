@@ -31,10 +31,10 @@
 					<td class="leftText">终止杆号：</td>
 					<td><input type="text" id="endTowerCoding" readonly="readonly"/></td>
 				</tr>
-				<!-- <tr>
+				<tr>
 					<td class="leftText">巡检员：</td>
 					<td><textarea cols="20" rows="3" maxlength="250" readonly="readonly" name="inspectionStaff" placeholder="点击右边头像选择巡检员"/></textarea><a href="#" onclick="show()" class="easyui-linkbutton" iconCls="icon-user"></a></td>
-				</tr> -->
+				</tr>
 				<tr>
 					<td class="leftText">下发人：</td>
 					<td><input type="text" value="${user.name}" readonly="readonly" style="border:none;color:#A1A1A1;"/></td>
@@ -59,6 +59,26 @@
 				</tr>
 			</table>
 		</form>
+	</div>
+	<div id="bigdiv" style="background-color:#F7F7F7; border: 1px solid #ccc;width: 305px;height: 195px;position: relative;bottom:350px;left: 440px;display: none;">
+	<p style="margin: 0px 0px 0px 0px;font-size: 12px;"><strong>选择巡检员</strong></p>
+	<p style="margin: 10px 0px 0px 0px;font-size: 12px;">&nbsp;&nbsp;待选巡检员</p>
+	
+   	<select id="fb_list" multiple="multiple" style="text-align: center; height:120px;width:128px"></select> 
+	<p style="margin: 0px 0px 0px 0px;font-size: 12px;position: relative;top: -135px;left: 180px;">&nbsp;&nbsp;已选巡检员</p>
+   <div style="position: relative;left: 170px;bottom: 135px;">
+   <select id="select_list" multiple="multiple"
+	style="text-align: center; height:120px;width:128px"></select>
+   </div>
+	<br/>
+	<p style="position: relative;bottom: 155px;">
+	<a href="#" onclick="hid()" class="easyui-linkbutton" style="float: right;">返回</a>
+	<a href="javascript:onclick=save_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+	</p>
+	<p style="position: relative;bottom: 250px;left: 127px;">
+	<a href="#" id="add" class="easyui-linkbutton" style="width: 40px;">+</a></p>
+	<p style="position: relative;bottom: 245px;left: 127px;">
+	<a href="#" id="delete" class="easyui-linkbutton"style="width: 40px;">&nbsp;-&nbsp;</a></p>
 	</div>
 	<style type="text/css">
 		#content table{

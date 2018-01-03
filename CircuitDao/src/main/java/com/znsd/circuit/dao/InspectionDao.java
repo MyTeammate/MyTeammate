@@ -5,15 +5,17 @@ import java.util.Map;
 
 import org.mybatis.spring.annotation.MapperScan;
 
+import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
+import com.znsd.circuit.model.Tower;
 import com.znsd.circuit.model.User;
 
 @MapperScan
 public interface InspectionDao {
 	
-	/**获取启用状态下的巡检任务巡检状态
+	/**获取启用状态下的所有任务状态
 	 * @return
 	 */
 	public List<Systemparam> getSystemParam(String coding);
@@ -39,6 +41,23 @@ public interface InspectionDao {
 	 * @return
 	 */
 	public int getInspectionId(int taskId);
+	
+	/**通过巡检task的id获取inspection的threadId
+	 * @param taskId
+	 * @return
+	 */
+	public Threads getThreaddByTask(int taskId);
+	
+	/**通过线路id得到下面所有杆塔，包括禁用的
+	 * @param threadId
+	 * @return
+	 */
+	public List<Tower> getTowerByThread(int threadId);
+	
+	/**所有启用状态下的缺陷
+	 * @return
+	 */
+	public List<Flaw> getAllFlaw();
 	
 	/**得到分页的总条数
 	 * @return
