@@ -26,4 +26,22 @@ public class TaskpollingServiceImpl implements TaskpollingService {
 		return taskpollingDao.getTsakCount();
 	}
 
+	@Override
+	public Taskpolling selectTaskTower(String coding) {
+		return taskpollingDao.selectTaskTower(coding);
+	}
+
+	
+	public List<Taskpolling> selectTower(Map<String, Object> map,String t) {
+		map.put("coding", t);
+		return taskpollingDao.selectTower(map);
+	}
+	
+	@Override
+	public int getselTaskCount(String coding){
+		return taskpollingDao.getselTaskCount(coding);
+	}
+
+	
+
 }

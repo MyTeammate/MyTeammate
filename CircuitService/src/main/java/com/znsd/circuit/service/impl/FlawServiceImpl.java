@@ -53,5 +53,10 @@ public class FlawServiceImpl implements FlawService{
 		return flawDao.getFlawPageCount();
 	}
 
+	@Override
+	public boolean flawadd(Flaw flaw) {
+		return flawDao.flawadd(flaw);
+	}
+
 
 }

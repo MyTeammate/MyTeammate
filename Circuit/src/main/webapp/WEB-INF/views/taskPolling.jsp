@@ -15,11 +15,6 @@
 			<div style="padding: 0 60px 0 230px">
 				任务编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
 				线路编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				<!-- 有无故障：<select id="yn" class="easyui-combobox" panelHeight="auto"
-					name="dept" style="width: 50px;">
-					<option value="3">&nbsp;</option>
-					<option value="0">有</option>
-					<option value="1">无</option> -->
 				</select>&nbsp; 巡检时间：<input type="text" class="easyui-datebox"
 					style="width: 100px">&nbsp;-&nbsp; <input type="text"
 					class="easyui-datebox" style="width: 100px" />&nbsp;&nbsp; 
