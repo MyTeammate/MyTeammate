@@ -17,12 +17,13 @@
 			</div>
 			<hr />
 			<div style="padding: 0 60px 0 230px">
-				杆塔编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				缺陷级别：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				</select>&nbsp; 发现时间：<input type="text" class="easyui-datebox"
+				杆塔编号：<input type="text" id="gan" class="easyui-textbox"
+					style="width: 100px" />&nbsp; 缺陷级别：<input type="text" id="que"
+					class="easyui-textbox" style="width: 100px" />&nbsp; &nbsp; 发现时间：<input
+					type="text" id="staterDate" class="easyui-datebox"
 					style="width: 100px">&nbsp;-&nbsp; <input type="text"
-					class="easyui-datebox" style="width: 100px" />&nbsp;&nbsp; <a
-					type="button" class="easyui-linkbutton" iconCls="icon-magnifier"
+					id="endDate" class="easyui-datebox" style="width: 100px" />&nbsp;&nbsp;
+				<a type="button" class="easyui-linkbutton" iconCls="icon-magnifier"  onclick="plListidTwo()"
 					style="width: 60px; height: 25px; background-image: url('image/wx_icps.png');">查询</a>
 			</div>
 			<div style="padding: 5px 60px 0 830px;">

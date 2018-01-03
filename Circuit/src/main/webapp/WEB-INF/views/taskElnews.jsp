@@ -15,17 +15,17 @@
 			</div>
 			<hr />
 			<div style="padding: 0 60px 0 150px">
-				杆塔编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				缺陷级别：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
+				杆塔编号：<input type="text" id="gant" class="easyui-textbox" style="width: 100px" />&nbsp;
+				缺陷级别：<input type="text" id="quex" class="easyui-textbox" style="width: 100px" />&nbsp;
 				</select>&nbsp;有无故障：<select id="yn" class="easyui-combobox"
 					panelHeight="auto" name="dept" style="width: 50px;">
-					<option value="3">&nbsp;</option>
-					<option value="0">有</option>
-					<option value="1">无</option>
-				</select>&nbsp; 发现时间：<input type="text" class="easyui-datebox"
-					style="width: 100px">&nbsp;-&nbsp; <input type="text"
+					<option value="">&nbsp;</option>
+					<option value="有">有</option>
+					<option value="无">无</option>
+				</select>&nbsp; 消缺时间：<input type="text" id="staetx" class="easyui-datebox"
+					style="width: 100px">&nbsp;-&nbsp; <input type="text"  id="ends"
 					class="easyui-datebox" style="width: 100px" />&nbsp;&nbsp; <a
-					type="button" class="easyui-linkbutton" iconCls="icon-magnifier"
+					type="button"  onclick="taskSelt()" class="easyui-linkbutton" iconCls="icon-magnifier"
 					style="width: 60px; height: 25px; background-image: url('image/wx_icps.png');">查询</a>
 			</div>
 			<div style="padding: 5px 50px 0 850px;">

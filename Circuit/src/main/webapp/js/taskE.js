@@ -33,9 +33,9 @@ function taskE() {//消缺任务查询统计
 			align : "center",
 		} ] ],
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 5,
 		pagination : true,
-		pageList : [ 1, 5, 10, 15, 20 ],
+		pageList : [ 5, 10, 15, 20 ],
 		rownumbers : true,
 	});
 }
@@ -51,5 +51,14 @@ function selElId() {
 		}
 	});	
 	move("杆塔消缺信息","taskElnews");
+}
+
+
+function likeId(){	
+	$('#taskE').datagrid('reload',{
+		renTitles:$("#a").val(),
+		conteTitles:$("#b").val(),
+	});
+	
 }
 

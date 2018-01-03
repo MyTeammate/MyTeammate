@@ -11,23 +11,21 @@
 		<div style="height: 25px"></div>
 		<div>
 			<div style="padding: 0 50px 0 50px;">我的工作平台>>巡检记录统计</div>
+			<input type="hidden" id="vid" value="${user.id }">
 			<hr />
 			<div style="padding: 0 60px 0 230px">
-				任务编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				线路编号：<input type="text" class="easyui-textbox" style="width: 100px" />&nbsp;
-				</select>&nbsp; 巡检时间：<input type="text" class="easyui-datebox"
-					style="width: 100px">&nbsp;-&nbsp; <input type="text"
-					class="easyui-datebox" style="width: 100px" />&nbsp;&nbsp; 
-				<a type="button" class="easyui-linkbutton" iconCls="icon-magnifier"
+				任务编号：<input type="text" id="ren" class="easyui-textbox" style="width: 100px" />&nbsp;
+				线路编号：<input type="text" id="lu" class="easyui-textbox" style="width: 100px" />&nbsp;
+				&nbsp;&nbsp; 
+				<a type="button" class="easyui-linkbutton" iconCls="icon-magnifier" onclick="plListid()"
 					style="width: 60px; height: 25px; background-image: url('image/wx_icps.png');">查询</a>
-			</div>
-			<div style="padding: 5px 60px 0 830px;">
-				<a type="button" class="easyui-linkbutton"
+				&nbsp;&nbsp;&nbsp;&nbsp;	
+				<a type="button" class="easyui-linkbutton"  
 					iconCls="icon-page-white-excel"
 					style="width: 100px; height: 25px; background-image: url('image/wx_icps.png');">导出EXCEL</a>
 			</div>
 			<div
-				style="margin-left: 120px; margin-top: 10px; width: 960px; height: 100%">
+				style="margin-left: 120px; margin-top: 10px; width: 960px; height: 100%;">
 				<table id="taskP"></table>
 			</div>
 		</div>

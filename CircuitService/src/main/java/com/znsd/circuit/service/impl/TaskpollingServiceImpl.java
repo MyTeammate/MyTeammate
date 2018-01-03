@@ -18,6 +18,7 @@ public class TaskpollingServiceImpl implements TaskpollingService {
 
 	@Override
 	public List<Taskpolling> selelectTaskPoll(Map<String, Object> map) {
+		
 		return taskpollingDao.selelectTaskPoll(map);
 	}
 
