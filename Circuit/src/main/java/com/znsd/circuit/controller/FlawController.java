@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,25 @@ public class FlawController {
 	@RequestMapping("/flaw")
 	public String getflaw(){
 		return "flaw";
+	}
+	
+	//增加缺陷类型
+	@RequestMapping("/fstateadd")
+	public String getflawstateadd(){
+		return "fstateadd";
+	}
+
+	
+	@ResponseBody
+	@RequestMapping("/flawadd")
+	public boolean flawadd(HttpSession  session,Flaw flaw){
+		Map<String,Object> map = new HashMap<>();
+		map.put("state", true);
+		if (flawService.flawadd(flaw)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//缺陷类型设置表查询
