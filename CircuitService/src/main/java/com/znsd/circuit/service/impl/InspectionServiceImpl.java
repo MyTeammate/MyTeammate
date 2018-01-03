@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.InspectionDao;
+import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
+import com.znsd.circuit.model.Tower;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.InspectionService;
 import com.znsd.circuit.util.Pager;
@@ -32,13 +34,15 @@ public class InspectionServiceImpl implements InspectionService{
 	}
 	
 	@Override
-	public Pager<Inspection> getInspectionPage(int pageIndex,int pageSize) {
+	public Pager<Inspection> getInspectionPage(int pageIndex,int pageSize,int userId,String operate) {
 		Pager<Inspection> page = new Pager<>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);	
 		Map<String,Object> map = new HashMap<>();
 		map.put("pageIndex", (page.getPageIndex()-1)*page.getPageSize());
 		map.put("pageSize", page.getPageSize());
+		map.put("userId", userId);
+		map.put("operate", operate);
 		page.setSumSize(getInspectionPageCount());
 		List<Inspection> list = inspectionDao.getInspectionPage(map);
 		page.setData(list);
@@ -103,6 +107,21 @@ public class InspectionServiceImpl implements InspectionService{
 	@Override
 	public void updateInspectionDate(Map<String, Object> map) {
 		inspectionDao.updateInspectionDate(map);// creater/updatedBy taskId
+	}
+
+	@Override
+	public Threads getThreaddByTask(int taskId) {
+		return inspectionDao.getThreaddByTask(taskId);
+	}
+
+	@Override
+	public List<Tower> getTowerByThread(int threadId) {
+		return inspectionDao.getTowerByThread(threadId);
+	}
+
+	@Override
+	public List<Flaw> getAllFlaw() {
+		return inspectionDao.getAllFlaw();
 	}
 
 

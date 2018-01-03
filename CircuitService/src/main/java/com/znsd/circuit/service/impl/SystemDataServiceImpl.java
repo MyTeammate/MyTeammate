@@ -49,6 +49,11 @@ public class SystemDataServiceImpl implements SystemDataService{
 	public int stateSystemsetting(Map<String,Object> map) {
 		return systemDataDao.stateSystemsetting(map);
 	}
+
+	@Override
+	public Systemsetting updateSystemsetting3(String coding) {
+		return systemDataDao.updateSystemsetting3(coding);
+	}
 	
 	
 	
