@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,18 +10,18 @@
 table.hovertable {
 	font-family: verdana, arial, sans-serif;
 	/* font-size: 11px; */
-	color: #333333;
+	color: #d4e3e5;
 	border-width: 1px;
-	border-color: #999999;
+	border-color: #d4e3e5;
 	border-collapse: collapse;
 }
 
 table.hovertable th {
-	background-color: #c3dde0;
+	background-color: #d4e3e5;
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #a9c6c9;
+	border-color: #d4e3e5;
 }
 
 table.hovertable tr {
@@ -31,16 +32,12 @@ table.hovertable td {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #a9c6c9;
-}
-.tdstyle{
-font-size: 14px;
-font-weight: bold;
+	border-color: #d4e3e5;
 }
 </style>
 </head>
 <body>
-	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配>>查看缺任务</div>
+	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配>>查看消缺任务</div>
 	<hr />
 	<!-- <table style="border: 1px solid red;margin-left: 120px;margin-top:20px;width:800px;height:300px;">
 	<tr>
@@ -54,64 +51,78 @@ font-weight: bold;
 
 
 	<!-- Table goes in the document BODY -->
-	<table class="hovertable" style="border: 1px solid red;margin-left: 120px;margin-top:20px;width:800px;height:300px;">
+	<table class="hovertable" style="border: 1px solid #ccc;margin-left: 120px;margin-top:20px;width:800px;height:300px;">
 		<!-- <tr>
 			<th>Info Header 1</th>
 			<th>Info Header 2</th>
 			<th>Info Header 3</th>
 		</tr> -->
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle" style="font-size: 14px;font-weight: bold;">任务编码</td>
-			<td>Item 1B</td>
-			<td class="tdstyle">任务名称</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td class="tdstyle" style="font-size: 14px;font-weight: bold;border: 1px solid #ccc;">任务编码</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskCoding}</td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">任务名称</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskName}</td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">任务状态</td>
-			<td>Item 2B</td>
-			<td class="tdstyle">工作单据</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td class="tdstyle" style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;">任务状态</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskStatus}</td>
+			<td class="tdstyle" style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;">工作单据</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskBills}</td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">任务下发人</td>
-			<td>Item 3B</td>
-			<td class="tdstyle">任务下发时间</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td class="tdstyle" style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;">任务下发人</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskxiafaUser}</td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">任务下发时间</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskxiafaDate}</td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">任务负责人</td>
-			<td>Item 4B</td>
-			<td class="tdstyle">任务描述</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">任务负责人</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskfuzeUser}</td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">任务描述</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskDesc}</td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">消缺员</td>
-			<td>Item 5B</td>
-			<td class="tdstyle">任务完成时间</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">消缺员</td>
+			<td style="border: 1px solid #ccc;">
+	   <c:forEach items="${userList}" var="l">
+	    ${l.name},
+	    </c:forEach>
+	   </td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">任务完成时间</td>
+			<td style="border: 1px solid #ccc;">${seeEliminate.taskfinishDate}</td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">负责人审查意见</td>
-			<td>Item 5B</td>
-			<td class="tdstyle">完成情况描述</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">负责人审查意见</td>
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5"   readonly="readonly">
+			${seeEliminate.taskfuzeUserIdea}
+			</textarea></td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">完成情况描述</td>
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5" readonly="readonly">
+			${seeEliminate.taskCompletionDesc}
+			</textarea></td>
 		</tr>
-		<tr onmouseover="this.style.backgroundColor='#ffff66';"
-			onmouseout="this.style.backgroundColor='#d4e3e5';">
-			<td class="tdstyle">下发人审查意见</td>
-			<td>Item 5B</td>
-			<td>Item 5C</td>
-			<td>Item 1C</td>
+		<tr  >
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">下发人审查意见</td>
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5" readonly="readonly">
+			${seeEliminate.taskxiafaUserIdea}
+			</textarea></td>
+			<td style="border: 1px solid #ccc;"></td>
+			<td style="border: 1px solid #ccc;"></td>;
 		</tr>
 	</table>
-
-	<a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
-		style="margin-left: 120px;">返回</a>
+	<p style="font-size: 14px;font-weight: bold;margin-left: 120px;">缺陷信息列表</p>
+	<div style="border: 1px solid red;margin-left: 120px;width:800px;height:110px;">
+	
+	<table id="see_eliminate"></table>
+	</div>
+	<div style="border: 0px solid red;margin-left: 120px;margin-top:20px;width:800px;height:160px;">
+	<p style="font-weight: bold;">工作间断延期记载</p>
+	<p>无</p>
+	<p style="font-weight: bold;">工作终结报告</p>
+	<p>无</p>
+	<p><a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
+		style="margin-left: 120px;">返回</a></p>
+	</div>
+	
 </body>
 </html>

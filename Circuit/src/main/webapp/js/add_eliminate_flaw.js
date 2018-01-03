@@ -106,7 +106,6 @@ function save_xun() {
 	for (var i = 0; i < row.length; i++) {
 		str += row[i].id + ",";
 	}
-
 	$("#add_flaw")
 			.datagrid(
 					{
