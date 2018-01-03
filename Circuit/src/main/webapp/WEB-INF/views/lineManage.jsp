@@ -9,16 +9,17 @@
 </head>
 <body>
     <p>电力巡检系统>>   路线管理</p>
-       <div style="margin-left: 120px;margin-top:20px;width:1200px;height:800px;">
+        <div style="margin-left: 120px;margin-top:20px;width:1000px;">
                       
           <table id="line"  >
 	
          </table>
        </div>
-       <div id="lineTb">
-	                   路线编号：<input  />&nbsp;&nbsp;&nbsp;&nbsp;
-	                   线路状态：<select></select>&nbsp;&nbsp;&nbsp;&nbsp;
-	                   <a href="javascript:onclick=find()" class="easyui-linkbutton" data-options="text:'查   询',plain:false"></a>
+       <div id="lineTb" style="height:40px;padding-top: 15px;">
+	                   路线编号：<input id="lineCodingLike" class="easyui-textbox" />&nbsp;&nbsp;&nbsp;&nbsp;
+	                   线路状态：<input id="lineStateLike" class="easyui-combobox"   
+                              data-options="valueField:'settingName',textField:'settingName',url:'getSystemDataState?key=STATE'" /> &nbsp;&nbsp;&nbsp;&nbsp;
+	                   <a href="javascript:onclick=loadLine()" class="easyui-linkbutton" data-options="text:'查   询',plain:false"></a>
 			<a href="javascript:onclick=move('增加路线','auLine')" class="easyui-linkbutton" style="float: right;" data-options="iconCls:'icon-add',text:'增加路线',plain:false"></a>
 		</div>
        
