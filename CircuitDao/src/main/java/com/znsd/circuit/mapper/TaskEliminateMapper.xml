@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znsd.circuit.dao.TaskEliminateDao">
+	<select id="selectEliminate" parameterType="java.util.Map"
+		resultType="TaskEliminate">
+		SELECT distinct a.coding tcoding,a.`name` tename,h.coding
+		ethreadCoding,h.startTower
+		estartTower,
+		h.endTower tendTower
+		FROM
+		t_flawconfirm f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
+		is NOT NULL limit #{pageIndex},#{pageSize}
+	</select>
+
+	<select id="selectElCount" resultType="int">
+		SELECT
+		COUNT(DISTINCT(a.coding))
+		FROM t_flawconfirm f,t_eliminate_record
+		r,t_eliminate e,t_task a,t_thread
+		h,t_tower w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND wa.id=f.flawId
+		AND f.towerId=w.id AND
+		s.id=f.flowGrade AND a.actualDate is NOT NULL
+	</select>
+
+	<select id="selectElCoding" resultType="TaskEliminate">
+		SELECT distinct a.coding
+		tcoding,a.`name` tename,h.coding ethreadCoding
+		FROM t_flawconfirm
+		f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower
+		w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND r.xtaskid=e.taskId
+		AND r.xtaskid=a.id AND
+		h.id=f.threadId AND wa.id=f.flawId
+		AND
+		f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate is NOT NULL
+	</select>
+
+	<select id="selectElTower" parameterType="java.util.Map"
+		resultType="TaskEliminate">
+		SELECT w.coding etowerCoding,f.isTrouble
+		eisTrouble,s.settingName esettingName
+		,wa.`name`
+		eflawTname,a.actualDate
+		eactualDate,f.discoverDate
+		ediscoverDate,f.flawDesc eflawDesc
+		FROM
+		t_flawconfirm
+		f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower
+		w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId
+		AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND
+		f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
+		is NOT NULL AND
+		a.coding=#{tcoding} ORDER BY a.actualDate DESC
+		LIMIT
+		#{pageIndex},#{pageSize}
+	</select>
+
+	<select id="getselTowerCount" resultType="int">
+		SELECT COUNT(1)
+		FROM
+		t_flawconfirm f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
+		is NOT NULL AND
+		a.coding=#{tcoding}
+	</select>
+</mapper>
