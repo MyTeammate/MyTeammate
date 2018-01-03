@@ -13,7 +13,7 @@ $(function() {
 		pageNumber : 2,
 		toolbar : "#flaw_tool",
 		columns : [ [ {
-			field : 'flawname',
+			field : 'name',
 			title : '缺陷类型名称',
 			width : 200,
 			align: "center",
@@ -51,8 +51,8 @@ $(function() {
 	$('#fstateadd').dialog({
 		
 		width : 230,
-		height : 330,
-		top : 100,
+		height : 130,
+		top : 300,
 		title : '添加缺陷类型',
 		href : 'fstateadd',
 		modal : true,// 后面加一个不可编辑
@@ -93,6 +93,21 @@ $(function() {
 	
 });
 
+function fladd(){
+	$('#fladd').form('submit', {
+		url: "addfl",
+		onSubmit: function(){
+		
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				return false;
+			}
+			if(towerFlaf=="false"){
+				return false;
+			}
+		},
+	});
+}
 
 /*
  * 查看缺陷任务

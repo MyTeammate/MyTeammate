@@ -15,7 +15,7 @@ public interface FlawService {
 
 	public Pager<Flaw> getFlawPage(int pageIndex, int pageSize);
 
-	public boolean flawadd(Flaw flaw);
+	public void flawadd(Flaw flaw);
 
 
 }
