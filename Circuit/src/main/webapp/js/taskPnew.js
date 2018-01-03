@@ -29,9 +29,9 @@ $(function() {
 			align : "center",
 		} ] ],
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 5,
 		pagination : true,
-		pageList : [ 1, 5, 10, 15, 20 ],
+		pageList : [ 5, 10, 15, 20 ],
 		rownumbers : true
 	})
 })
@@ -39,4 +39,15 @@ $(function() {
 
 function testPo(){
 	move("巡检记录统计","taskPolling");
+}
+
+
+function plListidTwo() {
+	
+	$('#taskPnew').datagrid('reload',{
+		ganTitle:$('#gan').val(),
+		queTitle:$('#que').val(),
+		sTitle:$('#staterDate').val(),
+		eTitle:$('#endDate').val(),
+	});
 }

@@ -6,11 +6,20 @@
 	<select id="selelectTaskPoll" parameterType="java.util.Map"
 		resultType="Taskpolling">
 		SELECT distinct t.coding coding, t.`name` tanem,h.coding
-		threadCoding,h.startTower startTower,h.endTower engTower
+		threadCoding,h.startTower startTower,h.endTower
+		engTower
 		FROM
-		t_flawconfirm tf ,t_task t,t_thread h WHERE tf.taskId=t.id AND
+		t_flawconfirm tf ,t_task
+		t,t_thread h WHERE tf.taskId=t.id AND
 		tf.threadId=h.id
-		limit #{pageIndex},#{pageSize}
+		<if test="make!=null &amp;&amp; make!=''">
+			AND t.coding LIKE #{make}
+		</if>
+		<if test="title!=null &amp;&amp; title!=''">
+			AND h.coding LIKE #{title}
+		</if>
+		limit
+		#{pageIndex},#{pageSize}
 	</select>
 
 	<select id="getTsakCount" resultType="int">
@@ -67,11 +76,25 @@
 		t_flawconfirm tf ,t_task t,t_thread h,t_tower
 		w,t_systemparam
 		s,t_flaw
-		a WHERE tf.taskId=t.id AND
+		a
+		WHERE tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
 		s.id=tf.flowGrade AND tf.flawId=a.id AND
-		t.coding=#{coding} ORDER BY tf.discoverDate DESC limit
-		#{pageIndex},#{pageSize}
+		t.coding=#{coding}
+		<if test="gan!=null &amp;&amp; gan!=''">
+			AND w.coding LIKE #{gan}
+		</if>
+		<if test="que!=null &amp;&amp; que!=''">
+			AND s.settingName like #{que}
+		</if>
+		<if test="start!=null &amp;&amp; start!='' ">
+		   AND tf.discoverDate &gt;= #{start}
+		</if>
+		<if test="end!=null &amp;&amp; end!=''">
+		   AND tf.discoverDate &lt;= #{end}
+		</if>
+		ORDER BY tf.discoverDate DESC 
+		limit #{pageIndex},#{pageSize}
 	</select>
 </mapper>

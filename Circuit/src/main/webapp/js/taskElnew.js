@@ -2,9 +2,9 @@ $(function() {
 	var ts = $("#te").val();
 	$('#mEnews').datagrid({
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 5,
 		pagination : true,
-		pageList : [ 1, 5, 10, 15, 20 ],
+		pageList : [5, 10, 15, 20 ],
 		rownumbers : true,
 		url : "taskElTowerAllPost?tcoding="+ts,
 		columns : [ [ {
@@ -49,4 +49,14 @@ $(function() {
 
 function testEl() {
 	move("消缺记录统计", "taskEliminate");
+}
+
+function taskSelt(){	
+	$('#mEnews').datagrid('reload',{
+		gantTitle:$('#gant').val(),
+		quexTitle:$('#quex').val(),
+		seTitle:$('#yn').val(),
+		staTitle:$('#staetx').val(),
+		endTitle:$('#ends').val()
+	});
 }

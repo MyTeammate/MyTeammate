@@ -10,6 +10,7 @@ import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.util.MyFlaw;
+import com.znsd.circuit.util.SeeEliminate;
 
 @MapperScan
 public interface EliminateDao {
@@ -104,6 +105,20 @@ public interface EliminateDao {
 	 * @return
 	 */
 	public int insertintoFlawStaff(Flawstaff flawStaff);
+	
+	/**
+	 * 通过id查看消缺任务
+	 * @param eliminateId
+	 * @return
+	 */
+	public SeeEliminate seeEliminateById(int eliminateId);
+	
+	/**
+	 * 通过消缺id查到所有的用户
+	 * @param eliminateId
+	 * @return
+	 */
+	public List<User> getAllUserId(int eliminateId);
 }
 
 

@@ -17,7 +17,14 @@
 		h.id=f.threadId AND
 		wa.id=f.flawId
 		AND f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
-		is NOT NULL limit #{pageIndex},#{pageSize}
+		is NOT NULL
+		<if test="rent!=null &amp;&amp; rent!=''">
+			AND a.coding LIKE #{rent}
+		</if>
+		<if test="cont!=null &amp;&amp; cont!=''">
+			AND h.coding LIKE #{cont}
+		</if>
+		limit #{pageIndex},#{pageSize}
 	</select>
 
 	<select id="selectElCount" resultType="int">
@@ -49,7 +56,8 @@
 	<select id="selectElTower" parameterType="java.util.Map"
 		resultType="TaskEliminate">
 		SELECT w.coding etowerCoding,f.isTrouble
-		eisTrouble,s.settingName esettingName
+		eisTrouble,s.settingName
+		esettingName
 		,wa.`name`
 		eflawTname,a.actualDate
 		eactualDate,f.discoverDate
@@ -67,7 +75,23 @@
 		AND
 		f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
 		is NOT NULL AND
-		a.coding=#{tcoding} ORDER BY a.actualDate DESC
+		a.coding=#{tcoding}
+		<if test="gant!=null &amp;&amp; gant!=''">
+			AND w.coding LIKE #{gant}
+		</if>
+		<if test="quex!=null &amp;&amp; quex!=''">
+			AND s.settingName LIKE #{quex}
+		</if>
+		<if test="ist!=null &amp;&amp; ist!=''">
+			AND f.isTrouble LIKE #{ist}
+		</if>
+		<if test="start!=null &amp;&amp; start!=''">
+		AND a.actualDate &gt;= #{start}
+		</if>
+		<if test="entt!=null &amp;&amp; entt!='' ">
+		AND a.actualDate &lt;= #{entt}
+		</if>
+		ORDER BY a.actualDate DESC
 		LIMIT
 		#{pageIndex},#{pageSize}
 	</select>
