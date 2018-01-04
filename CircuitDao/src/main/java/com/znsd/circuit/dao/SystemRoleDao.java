@@ -18,4 +18,16 @@ public interface SystemRoleDao {
     
     //验证角色名称是否重复
     public Systemrole verifyName(String name);
+    
+    //增加角色
+    public int addRole(Systemrole role);
+    
+    //启用/禁用
+    public int stateRole(Map<String,Object> map);
+    
+    //修改角色
+    public int updateRole(Map<String,Object> map);
+    
+    //删除角色
+    public int deleteRole(int id);
 }

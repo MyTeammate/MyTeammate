@@ -1,5 +1,8 @@
 package com.znsd.circuit.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -66,5 +69,62 @@ public class SystemRoleController {
 			re=re+"2";
 		}
 		return re;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/addRole")
+	public int addRole(HttpSession session,String coding,String name){
+		User user=(User) session.getAttribute("user");
+		Systemrole role=new Systemrole();
+		role.setCoding(coding);
+		role.setName(name);
+		role.setCreateBy(user.getId());
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time=format.format(date);
+		role.setCreateDate(time);
+		role.setRemark("这是一个"+name);
+		return systemRoleService.addRole(role);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/stateRole")
+	public int stateRole(HttpSession session,int id,int state){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("id",id);
+		if(state==0){
+			map.put("state","1");
+		}else {
+			map.put("state","0");
+		}
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time=format.format(date);
+		User user=(User) session.getAttribute("user");
+		map.put("updatedBy",user.getId());
+		map.put("updatedDate",time);
+		return systemRoleService.stateRole(map);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/updateRole")
+	public int updateRole(HttpSession session,int id,String coding,String name){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("id",id);
+		map.put("coding",coding);
+		map.put("name",name);
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time=format.format(date);
+		User user=(User) session.getAttribute("user");
+		map.put("updatedBy",user.getId());
+		map.put("updatedDate",time);
+		return systemRoleService.updateRole(map);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/deleteRole")
+	public int deleteRole(int id){
+		return systemRoleService.deleteRole(id);
 	}
 }

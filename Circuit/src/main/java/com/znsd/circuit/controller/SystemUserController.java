@@ -84,7 +84,6 @@ public class SystemUserController {
 		user.setCreateDate(time);
 		int adduser=systemUserService.add(user);
 		if(adduser==1&&roleId!=0){
-			System.out.println("进来了");
 			User u2=systemUserService.queryUserName(userName);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("userId", u2.getId());

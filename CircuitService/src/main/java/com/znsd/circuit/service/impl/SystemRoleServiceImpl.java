@@ -35,4 +35,24 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	public Systemrole verifyName(String name) {
 		return systemRoleDao.verifyName(name);
 	}
+
+	@Override
+	public int addRole(Systemrole role) {
+		return systemRoleDao.addRole(role);
+	}
+
+	@Override
+	public int stateRole(Map<String, Object> map) {
+		return systemRoleDao.stateRole(map);
+	}
+
+	@Override
+	public int updateRole(Map<String, Object> map) {
+		return systemRoleDao.updateRole(map);
+	}
+
+	@Override
+	public int deleteRole(int id) {
+		return systemRoleDao.deleteRole(id);
+	}
 }
