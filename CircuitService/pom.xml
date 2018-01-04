@@ -18,12 +18,13 @@
 
 
   <dependencies>
-   
-    
-		<dependency>
-			<groupId>com.znsd.Circuit</groupId>
-			<artifactId>CircuitDao</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
+
+
+  <dependency>
+  	<groupId>com.znsd.Circuit</groupId>
+  	<artifactId>CircuitDao</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </dependency>
   </dependencies>
 </project>

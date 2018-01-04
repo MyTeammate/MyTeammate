@@ -53,6 +53,10 @@ $(function(){
 								eliminate();
 							}
 							
+							if(node.text=="路线管理"){
+								line();
+							}
+							
 						}
 					});
 				}

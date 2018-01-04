@@ -18,6 +18,6 @@ public interface FlawDao {
 
 	public List<Flaw> getFlawPage(Map<String, Object> map);
 
-	public boolean flawadd(Flaw flaw);
+	public Object flawadd(Flaw flaw);
 
 }

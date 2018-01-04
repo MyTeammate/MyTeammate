@@ -43,7 +43,7 @@ function eliminate() {
 						formatter : function(value, row, index) {
 								var oper = '';
 								if (row.taskStatus == '待分配') {
-									oper = '<span><a href="javaScript:lookInspection('
+									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
 											+ '<a href="javaScript:allotInspection('
@@ -89,7 +89,7 @@ function eliminate() {
 							}
 						} ] ],
 				toolbar : "#div_toolOne",
-				emptyMsg : '<h2 style="color:#FF3E96">您还未发布任何消缺任务</h2>',
+				emptyMsg : '<h2 style="color:#FF3E96">没有消缺任务哟</h2>',
 				
 			});
 	$('#flaw_taskstatus').combobox({
@@ -212,7 +212,7 @@ function cancelEminate(id) {
 		}
 	})
 }
-
+//模糊查询
 function search_eliminate() {
 
 	/*var taskcoding = $("#flaw_taskcoding").val();
@@ -237,9 +237,10 @@ function gotoanthor() {
 	move("制定消缺任务", "http://localhost:8080/Circuit/eliminate/addeliminateflaw");
 }
 
-function seeEliminate(id){
-	alert(id);
-	move("查看消缺任务", "http://localhost:8080/Circuit/eliminate/lookeliminateflaw?id="+id);
+function seeEliminate(eliminateId){
+	alert(eliminateId);
+	move("查看消缺任务", "http://localhost:8080/Circuit/eliminate/lookeliminateflaw?eliminateId="+eliminateId);
+	
 }
 function returntoshou() {
 	move("制定消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");

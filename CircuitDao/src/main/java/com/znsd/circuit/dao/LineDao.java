@@ -3,6 +3,7 @@ package com.znsd.circuit.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Line;
@@ -44,4 +45,40 @@ public interface LineDao {
 	 * @return
 	 */
 	public List<Tower> getLineAllTowers(Line line);
+	
+	
+	/**
+	 * 根据路线ID获取该条路线的信息
+	 * @param id
+	 * @return
+	 */
+	public Line getLineById(int id);
+	
+	
+	/**
+	 * 修改路线信息
+	 * @param line
+	 */
+	public void updateLine(Line line);
+	
+	
+	/**
+	 * 修改该条路线的状态为删除
+	 * @param id
+	 */
+	public void setDeleteFlag(@Param("id")int id);
+	
+	
+	/**
+	 * 修改该条路线的状态为禁用状态
+	 * @param id
+	 */
+	public void setStateFlag(@Param("line")Line line);
+	
+	
+	/**
+	 * 获取所以启用的路线
+	 * @return
+	 */
+	public List<Line> selectListLine();
 }

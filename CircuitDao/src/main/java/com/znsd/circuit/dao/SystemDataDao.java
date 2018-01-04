@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.annotation.MapperScan;
 
+import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Systemsetting;
 
 @MapperScan
@@ -32,4 +33,7 @@ public interface SystemDataDao {
     
   //启用禁用选择数据
     public int stateSystemsetting(Map<String,Object> map);
+    
+  //获取配置参数
+    public List<Systemparam> getSystemParamDh(String key);
 }

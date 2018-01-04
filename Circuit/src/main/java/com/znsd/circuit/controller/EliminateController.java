@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +25,7 @@ import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
 import com.znsd.circuit.service.InspectionService;
 import com.znsd.circuit.util.MyFlaw;
+import com.znsd.circuit.util.SeeEliminate;
 
 @Controller
 @RequestMapping("/eliminate")
@@ -85,12 +88,12 @@ public class EliminateController {
 			
 			map.put("startdate", startdate);
 			map.put("enddate", enddate);
-			System.out.println("//////"+map);
+			
 		}
 
 		int count = eliminateService.getCount(map);// 总条数
 		List<Eliminate> list = eliminateService.getAllTask(map);
-		System.out.println("，，，，，，，，，，，，，，" + list);
+		
 		maps.put("rows", list);
 		maps.put("total", count);
 		// }
@@ -215,7 +218,7 @@ public class EliminateController {
 			eliminateService.insertTask(map1);
 		}
 		
-		System.out.println("。。。。。。。。。。。。。" + taskcoding);
+		
 		Task task = eliminateService.selectTaskById(taskcoding);
 		int taskid = task.getId();
 		/*
@@ -287,7 +290,7 @@ public class EliminateController {
 		int loginId = user.getId();
 		int id = (int) session.getAttribute("idd");
 		eliminateService.deleteFlawStaff(id);
-		System.out.println("。。。。。。。。str。。。。。。。"+str);
+		
 		String[] s = str.split(",");
 		Flawstaff flawStaff = new Flawstaff();
 		for (int i = 0; i < s.length; i++) {
@@ -310,7 +313,16 @@ public class EliminateController {
 		return "true";
 	}
 	@RequestMapping("/lookeliminateflaw")
-	public String lookEliminate(Integer id) {
+	public String lookEliminate(Integer eliminateId,HttpServletRequest request,Model model) {
+		SeeEliminate seeEliminate = eliminateService.seeEliminateById(eliminateId);
+		//System.out.println("....."+seeEliminate);
+		User user = eliminateService.getAllUserEliminate(seeEliminate.getTaskfuzeId());
+		seeEliminate.setTaskfuzeUser(user.getName());
+		List<User> userList = eliminateService.getAllUserId(seeEliminate.getId());
+		System.out.println("。userlist。。。。"+userList);
+		model.addAttribute("userList",userList);
+		request.setAttribute("seeEliminate",seeEliminate);
+		
 		return "see_eliminate_task";
 	}
 }

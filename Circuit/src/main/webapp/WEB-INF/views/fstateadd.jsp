@@ -5,25 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>添加缺陷类型设置</title>
-<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
-<script type="text/javascript" src="easyui/jquery.min.js"></script>
-<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript"	src="easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="js/flawAdd.js"></script>
 </head>
 <body>
 	<table>
 		<tr>
-			<td>添加缺陷类型</td>
-		</tr>
-		<tr>
 			<td>缺陷类型名称：</td>
-			<td><input id="name" type="text" style="width:80px"></td>
+			<td><input id="name" type="text" name="name" style="width:110px"></td>
 		</tr>
 		<tr>
-			<td>启用状态：</td>
-			<td></td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用状态：</td>
+			<td>启用<input type="radio" value="0" name="state"/>&nbsp;&nbsp;不启用<input type="radio" value="1" name="state" /></td>
 		</tr>
 	</table>
 </body>

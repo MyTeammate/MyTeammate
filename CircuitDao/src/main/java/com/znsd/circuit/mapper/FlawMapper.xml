@@ -6,7 +6,7 @@
 	
 	
 	<select id="getFlawAll" resultType="Flaw" parameterType="Map">
-		SELECT `name` as flawname,state FROM t_flaw
+		SELECT `name` as name,state FROM t_flaw
 	</select>
 	
 	<select id="getFlawPageCount" resultType="int">
@@ -14,7 +14,13 @@
 	</select>
 	
 	<select id="getFlawPage" resultType="Flaw" parameterType="Map">
-		SELECT `name` as flawname,state FROM t_flaw LIMIT #{pageIndex},#{pageSize};
+		SELECT `name` as name,state FROM t_flaw LIMIT #{pageIndex},#{pageSize};
+	</select>
+	
+	<select id="flawadd" resultType="Flaw">
+		insert into t_flaw 
+		(name,state,createdBy,createdDate,updatedBy,updatedDate,delete_flag,remark) values
+		(#{name},#{state},#{createdBy},#{createdDate},#{updatedBy},#{updatedDate},#{delete_flag},#{remark})
 	</select>
 	
 </mapper>

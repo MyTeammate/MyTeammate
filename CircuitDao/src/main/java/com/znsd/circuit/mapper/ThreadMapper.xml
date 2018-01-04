@@ -8,11 +8,13 @@
           t.rank,t.startTower,t.endTower,t.redix,t.state,t.runningState from t_thread t inner join t_line l on t.lineId = l.id 
            where t.lineId = #{thread.lineId}
            <if test="thread.coding!=null and thread.coding!=''">
-              and t.coding=#{line.coding}
+              and t.coding like #{thread.coding}
            </if>
-           <if test="thread.runningState > 0">
-              and t.runningState = #{runningState}
+           <if test="thread.runningStateString!=null">
+              and t.runningState = #{thread.runningState}
            </if>
+           and t.delete_flag = '否'
+           and l.delete_flag = '否'
            order by t.id desc limit #{page},#{row}
     </select>
     
@@ -20,11 +22,58 @@
     <select  id="pageThreadTotal" parameterType="java.util.Map"  resultType="int">
           select count(1) from t_thread t
            where t.lineId = #{thread.lineId}
-           <if test="thread.coding!=null and thread.coding!=''">
-              and t.coding=#{line.coding}
+            <if test="thread.coding!=null and thread.coding!=''">
+              and t.coding like #{thread.coding}
            </if>
-           <if test="thread.runningState > 0">
-              and t.runningState = #{runningState}
+           <if test="thread.runningStateString!=null">
+              and t.runningState = #{thread.runningState}
            </if>
+           and t.delete_flag = '否'
+    </select>
+    
+    <select id="checkCoding" parameterType="Threads" resultType="Threads">
+           select t.id,t.coding,t.name,t.lineId,t.length,t.return_way as returnWay,
+          t.rank,t.startTower,t.endTower,t.redix,t.state,t.runningState  from t_thread t where coding=#{coding} and lineId=#{lineId} and t.delete_flag = '否'
+    </select>
+    <insert id="insertThread" parameterType="Threads"  useGeneratedKeys="true" keyProperty="id">
+            insert into t_thread (coding,name,lineId,length,return_way,rank,startTower,endTower,
+		     redix,state,runningState,createById,createDate,updateDate,delete_flag,remark) values
+		     (#{coding},#{name},#{lineId},#{length},#{returnWay},#{rank},#{startTower},#{endTower},#{redix},#{state},
+		     #{runningState},#{createById},#{createDate},#{updateDate},#{deleteFlag},#{remark})
+    </insert>
+    
+    <select id="getThreadById" parameterType="int" resultType="Threads">
+         select t.id,t.coding,t.name,t.lineId,l.name as lineName,t.length,t.return_way as returnWay,
+          t.rank,s.settingName as rankName,t.startTower,t.endTower,t.redix,t.state,t.runningState,t.remark from t_thread t inner join t_line l on t.lineId=l.id
+          inner join t_systemparam s on t.rank = s.id
+            where t.id=#{id} and t.delete_flag='否' and l.delete_flag='否'
+    </select>
+    
+    <update id="updateThread" parameterType="Threads" >
+            update t_thread set  coding=#{coding},name=#{name},length=#{length},return_Way=#{returnWay},rank=#{rank},startTower=#{startTower},endTower=#{endTower},redix=#{redix},state=#{state},
+       updateDate=#{updateDate},remark=#{remark}  where  id = #{id}
+    </update>
+    
+    <select id="findThreadTask" resultType="Threads" parameterType="int">
+           select t.id,t.coding,t.name,t.lineId,t.length,t.return_way as returnWay,
+          t.rank,t.startTower,t.endTower,t.redix,t.state,t.runningState
+           from t_thread t inner join t_inspection i on t.id = i.threadId
+			inner join t_task k on i.taskId = k.id  
+			inner join t_systemparam s on s.id=k.state 
+			where i.threadId=#{id} and s.settingName!='已完成' and s.settingName!='已取消'
+    </select>
+    
+    <update id="setDeleteFlag" parameterType="int">
+          update t_thread set delete_flag='是' where id=#{id}
+    </update>
+    
+    <update id="setStateFlag" parameterType="Threads">
+           update t_thread set state=#{threads.state} where id=#{threads.id}
+    </update>
+    
+    
+    <select id="findThreadsByLineId" resultType="Threads" parameterType="int">
+          select t.id,t.coding,t.name,t.lineId,t.length,t.return_way as returnWay,
+          t.rank,t.startTower,t.endTower,t.redix,t.state,t.runningState from t_thread t where t.lineId = #{lineId} AND t.delete_flag='否'
     </select>
 </mapper>
