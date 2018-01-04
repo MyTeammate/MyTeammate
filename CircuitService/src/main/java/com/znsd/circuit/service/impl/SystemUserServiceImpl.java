@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.SystemUserDao;
+import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.SystemUserService;
 
@@ -23,6 +24,11 @@ public class SystemUserServiceImpl implements SystemUserService{
 	@Override
 	public List<User> listSystemUser(Map<String, Object> map) {
 		return systemUserDao.listSystemUser(map);
+	}
+
+	@Override
+	public List<Systemrole> selectSysteUser() {
+		return systemUserDao.selectSysteUser();
 	}
     
 }

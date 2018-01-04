@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Flawnot;
 import com.znsd.circuit.model.Pager;
+import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.FlawFYService;
 import com.znsd.circuit.service.FlawNotService;
 import com.znsd.circuit.service.FlawService;
+import com.znsd.circuit.util.DateTime;
 
 
 @Controller
@@ -50,16 +53,52 @@ public class FlawController {
 		return "flaw";
 	}
 	
+	//增加缺陷类型
+	@RequestMapping("/fstateadd")
+	public String getflawstateadd(){
+		return "fstateadd";
+	}
+
+	
+	@ResponseBody
+	@RequestMapping("/flawadd")
+	public void flawadd(HttpSession  session,Flaw flaw){
+		String datetime = new DateTime().getDateTime();
+		User user = (User) session.getAttribute("user");
+		flaw.setCreatedDate(datetime);
+		flaw.setupdatedDate(datetime);
+		flaw.setCreatedBy(1);
+		flaw.setUpdatedBy(1);
+		flaw.setDelete_flag("是");
+		flaw.setRemark("萝卜抱");
+		flawService.flawadd(flaw);
+	}
+	
 	//缺陷类型设置表查询
 	@ResponseBody
 	@RequestMapping("/selectFlawAll")
 	public List<Flaw> getFlawAll(HttpServletRequest   request){
 		Flaw fl = new Flaw();
-		List<Flaw> listfl =flawService.getFlawAll(fl.getId(),fl.getFlawname(),fl.getState());
+		List<Flaw> listfl =flawService.getFlawAll(fl.getId(),fl.getname(),fl.getState());
 		request.setAttribute("listfl", listfl);
 		System.out.println("listfl:"+listfl);
 		return listfl;
 	}
+	
+	//添加缺陷类型
+	/*@ResponseBody
+	@RequestMapping("/fladd")
+	public void flawstateadd(HttpSession session,Flaw flaw){
+		String datetime = new DateTime().getDateTime();
+		User user = (User) session.getAttribute("user");
+		flaw.setCreatedDate(datetime);
+		flaw.setUpdateDate(datetime);
+		flaw.setCreatedBy(1);
+		flaw.setUpdatedBy(1);
+		flaw.setDelete_flag("是");
+		flaw.setRemark("萝卜抱");
+		flawService.getFladd(flaw);
+	}*/
 	
 	@ResponseBody
 	@RequestMapping("/getFlawNotarizeAll")

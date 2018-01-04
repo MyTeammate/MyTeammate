@@ -2,7 +2,7 @@ package com.znsd.circuit.model;
 
 public class Line {
 
-	 private int id;
+	 private Integer id;
 	 private String coding;
 	 private String name;
 	 private double length;
@@ -21,10 +21,11 @@ public class Line {
 	 private String operation;
 	 
 	 
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getCoding() {

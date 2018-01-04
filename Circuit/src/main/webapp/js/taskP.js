@@ -1,6 +1,6 @@
 function taskP() {// 巡检记录统计数据查询
 	$('#taskP').datagrid({
-		url:"taskPollingPost",
+		url : "taskPollingPost",
 		columns : [ [ {
 			field : 'coding',
 			title : '任务编号',
@@ -35,7 +35,28 @@ function taskP() {// 巡检记录统计数据查询
 		pageNumber : 1,
 		pageSize : 5,
 		pagination : true,
-		pageList : [ 1, 5, 10,15,20 ],
+		pageList : [ 5, 10, 15, 20 ],
 		rownumbers : true,
+		
+	});
+}
+
+function selId() {
+	var id = $("#taskP").datagrid('getSelected');
+	$.ajax({
+		url : "taskTowerPost",
+		type : "post",
+		data : {
+			"coding" : id.coding
+		}
+	});
+
+	move("杆塔信息", "taskPonew");
+}
+
+function plListid() {
+	$('#taskP').datagrid('reload',{
+		renTitle:$('#ren').val(),
+		conteTitle:$('#lu').val(),
 	});
 }

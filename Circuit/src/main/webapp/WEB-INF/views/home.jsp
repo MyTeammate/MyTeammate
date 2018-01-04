@@ -15,6 +15,8 @@
 <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/home.js"></script>
 <script type="text/javascript" src="js/tower.js"></script>
+<script type="text/javascript" src="js/line.js"></script>
+	  <script type="text/javascript" src="js/thread.js"></script>
 <script type="text/javascript" src="js/perWork.js"></script>
 <script type="text/javascript" src="js/taskP.js"></script>
 <script type="text/javascript" src="js/taskE.js"></script>
@@ -24,9 +26,11 @@
 <script type="text/javascript" src="js/systemData.js"></script>
 <script type="text/javascript" src="js/systemParam.js"></script>
 <script type="text/javascript" src="js/systemUser.js"></script>
-<script type="text/javascript" src="js/perSave.js"></script>
-<script type="text/javascript" src="js/flaw_manager.js"></script>
-<script type="text/javascript" src="js/systemData.js"></script>
+
+
+
+
+
 
 </head>
 <body class="easyui-layout" style="width: 1439px; height: 1000px">

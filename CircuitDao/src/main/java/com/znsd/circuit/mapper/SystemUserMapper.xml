@@ -18,4 +18,8 @@
 		order by id desc
 		limit #{pageIndex},#{pageSize}
     </select>
+    
+    <select id="selectSysteUser" resultType="SystemRole">
+        select id,coding,`name`,state,createBy,updatedDate from t_role
+    </select>
 </mapper>
