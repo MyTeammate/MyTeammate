@@ -134,6 +134,19 @@ public class InspectionServiceImpl implements InspectionService{
 	}
 
 	@Override
+	public Inspection getInspectionTaskById(int id) {
+		return inspectionDao.getInspectionTaskById(id);
+	}
+
+	@Override
+	public Flawconfirm getFlawInfoByTowerId(int towerId,int taskId) {
+		return inspectionDao.getFlawInfoByTowerId(towerId,taskId);
+	}
+
+	@Override
+	public List<User> getInspectionTackStaff(int taskId) {
+		return inspectionDao.getInspectionTackStaff(taskId);
+	}
 	public int checkFlawRecord(Flawconfirm fconfirm) {
 		return inspectionDao.checkFlawRecord(fconfirm);
 	}

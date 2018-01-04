@@ -1,0 +1,59 @@
+#inspectionParent{
+	margin-top:50px;
+	margin-left:100px;
+}
+#inspectionTop{
+	border: solid 1px black;
+	width: 850px;
+	height: 150px;
+	background-color: white;
+}
+
+#inspectionBottom{
+	margin-top: 20px;
+	width: 850px;
+	height: 320px;
+}
+
+#inspectionBottomLeft{
+	border: solid 1px black;
+	width: 200px;
+	float: left;
+	height: 320px;
+	background-color: white;
+	font-size: 13px;
+	overflow-y:scroll;
+}
+
+#inspectionBottomRight{
+	border: solid 1px black;	
+	margin-left: 260px;
+	width: 590px;
+	height: 320px;
+	background-color: white;
+}
+#inspectionU34{
+	position: absolute;
+	margin-left: 220px;
+	margin-top: 90px;
+}
+#inspectionTable{
+	margin-left: 30px;
+	font-size: 13px;
+}
+#inspectionBottomLeftDl{
+	margin-top: 10px;
+	margin-left: 30px;
+    line-height: 20px;
+}
+#inspectionBottomLeftDl dd{
+	cursor: pointer;
+	width:50px;
+}
+#inspectionBottomRightTable{
+	margin-left: 40px;
+}
+#inspectionP{
+	margin-top:30px;
+	margin-left: 100px;
+}
