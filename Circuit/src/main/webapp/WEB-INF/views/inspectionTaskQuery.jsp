@@ -18,7 +18,7 @@
     	<div id="inspectionTop">
     		<table id="inspectionTable" cellspacing="20"  >
     		      <tr>
-    		          <td><input id="inspectionTaskHdId" type="hidden" value="${inspection.task.id}" /<strong>任务编号：</strong>${inspection.task.coding}</td>
+    		          <td><input id="inspectionTaskHdId" type="hidden" value="${inspection.task.id}" /><strong>任务编号：</strong>${inspection.task.coding}</td>
     		          <td><strong>任务名称：</strong>${inspection.task.name}</td>
     		          <td><input id="inspectionHdThreadCoding" type="hidden" value="${threads.coding}" /><strong>巡检线路：</strong>${threads.name}</td>
     		          <td><strong>起始杆号：</strong>${threads.startTower}</td>
