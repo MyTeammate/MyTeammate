@@ -3,9 +3,11 @@ package com.znsd.circuit.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
@@ -94,4 +96,27 @@ public interface InspectionService {
 	 * @param updatedBy
 	 */
 	public void updateInspectionDate(Map<String, Object> map);
+	
+	
+	/**
+	 * 根据巡检任务id来获取这条巡检任务的详细信息
+	 * @param id
+	 * @return
+	 */
+	public Inspection getInspectionTaskById(int id);
+	
+	
+	/**
+	 * 根据ID获取某个杆塔的缺陷信息
+	 * @param towerId
+	 * @return
+	 */
+	public Flawconfirm getFlawInfoByTowerId(int towerId,int taskId);
+	
+	/**
+	 * 获取一条巡检任务执行的巡检员
+	 * @param taskId
+	 * @return
+	 */
+	public List<User> getInspectionTackStaff(int taskId);
 }

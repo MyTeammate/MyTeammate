@@ -13,8 +13,10 @@ public class Flawconfirm {
 	private int inspectionstaffId;//巡检表id
 	private Date discoverDate;//发现时间
 	private String isTrouble;//有无故障
+	private String flawType; //缺陷等级
 	private int userId;//由谁来确认缺陷等级（发布这个巡检任务的人）
 	private String flawDesc;//缺陷描述
+	private String receiptMan;//回执录入人
 	private String serviceAbility;//完好率
 	private int flowGrade;//缺陷等级
 	private String remark;//备注
@@ -144,6 +146,25 @@ public class Flawconfirm {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	
+	
+
+	public String getReceiptMan() {
+		return receiptMan;
+	}
+
+	public void setReceiptMan(String receiptMan) {
+		this.receiptMan = receiptMan;
+	}
+
+	public String getFlawType() {
+		return flawType;
+	}
+
+	public void setFlawType(String flawType) {
+		this.flawType = flawType;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.InspectionDao;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
@@ -122,6 +123,21 @@ public class InspectionServiceImpl implements InspectionService{
 	@Override
 	public List<Flaw> getAllFlaw() {
 		return inspectionDao.getAllFlaw();
+	}
+
+	@Override
+	public Inspection getInspectionTaskById(int id) {
+		return inspectionDao.getInspectionTaskById(id);
+	}
+
+	@Override
+	public Flawconfirm getFlawInfoByTowerId(int towerId,int taskId) {
+		return inspectionDao.getFlawInfoByTowerId(towerId,taskId);
+	}
+
+	@Override
+	public List<User> getInspectionTackStaff(int taskId) {
+		return inspectionDao.getInspectionTackStaff(taskId);
 	}
 
 

@@ -3,6 +3,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.InspectionDao">
+    <resultMap type="Inspection" id="inspectionTask">
+      <id column="id"  property="id" /> 
+      <id column="threadId" property="threadId"/>
+      <association property="threads" column="threadId" javaType="Threads">
+             <id column="id"  property="id" />
+             <result  column="name" property="name"/>
+             <result  column="coding" property="coding"/>
+             <result  column="endTower" property="endTower"/>
+            <result  column="startTower" property="startTower"/>
+         </association>
+         <association property="task" column="taskId" javaType="Task">
+             <id column="id"  property="id" />
+             <result  column="name" property="name"/>
+             <result  column="coding" property="coding"/>
+             <result  column="createdDate" property="createdDate"/>
+             <result  column="actualDate" property="actualDate"/>
+             <result  column="predictDate" property="predictDate"/>   
+               <result  column="remark" property="remark"/>
+                <result  column="state" property="stateInteger"/>
+                <association property="user" column="taskMan" javaType="User">
+                      <id column="id"  property="id" />
+                     <result  column="name" property="name"/>     
+               </association>
+         </association>  
+    </resultMap>
+
 	<select id="getSystemParam" resultType="Systemparam"
 		parameterType="String">
 		SELECT id,settingName
@@ -115,4 +141,27 @@ AND settingName='待分配' OR settingName='已取消')
 	<update id="updateInspectionDate" parameterType="Map">
 		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW() WHERE id=#{taskId}
 	</update>
+	
+	<select id="getInspectionTaskById" resultMap="inspectionTask" parameterType="int">
+	       select t.id,t.threadId,k.id,k.coding,k.name,h.id,h.name,h.startTower,h.endTower,u.name,k.createdDate
+			,k.state,k.actualDate,k.predictDate,k.remark 
+			from t_inspection t 
+			inner join t_task k on t.taskId = k.id 
+			inner join t_thread h on t.threadId = h.id
+			inner join t_user u on k.taskMan = u.id
+			where k.id = #{id}
+	</select>
+	
+	<select id="getFlawInfoByTowerId" parameterType="int" resultType="Flawconfirm">
+	     select t.towerId,t.flawId,t.flawGrade as flowGrade,t.discoverDate,t.isTrouble,serviceAbility,w.`name` as flawType,flawDesc,u.name as receiptMan 
+		from t_flawconfirm t inner join t_flaw w on t.flawId=w.id inner join t_user u on t.userId=u.id
+		where t.towerId = #{0} and t.taskId = #{1}
+	</select>
+	<select id="getInspectionTackStaff" parameterType="int" resultType="User">
+	    select u.id,u.name from t_task k inner join  t_inspection t on k.id=t.taskId
+		inner join t_inspectionstaff f 
+		on t.id = f.inspectionId 
+		inner join t_user u on f.userId = u.id
+		where taskId=#{taskId}
+	</select>
 </mapper>

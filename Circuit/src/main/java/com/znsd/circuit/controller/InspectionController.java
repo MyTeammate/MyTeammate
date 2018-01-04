@@ -10,17 +10,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.model.Tower;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.InspectionService;
+import com.znsd.circuit.service.SystemParamService;
+import com.znsd.circuit.service.ThreadService;
+import com.znsd.circuit.service.TowerService;
 import com.znsd.circuit.util.Pager;
 
 @Controller
@@ -28,6 +34,17 @@ public class InspectionController {
 	
 	@Autowired
 	private InspectionService inspectionService;
+	
+	@Autowired
+	private SystemParamService systemParamService;
+	
+	@Autowired
+	private ThreadService threadService;
+	
+	@Autowired
+	private TowerService towerService;
+	
+	
 	
 	/*
 	 * 进入 巡检任务 制定与分配页面
@@ -226,6 +243,37 @@ public class InspectionController {
 		inspectionService.updateInspectionState(map);
 		inspectionService.updateInspectionDate(map);
 		return true;
+	}
+	
+	
+	@RequestMapping("/inspectionTaskQuery")
+	public String inspectionTakQuery(@RequestParam("id")int id,Model model) {
+		Inspection inspection = inspectionService.getInspectionTaskById(id);
+		Systemparam sp = systemParamService.getSystemparamById(inspection.getTask().getStateInteger());
+		Task task = inspection.getTask();
+		task.setState(sp.getSettingName());
+		task.setCreatedDate(task.getCreatedDate().split(" ")[0]);
+		inspection.setTask(task);
+		Threads threads = threadService.getThreadById(inspection.getThreadId());
+		List<Tower> towers = inspectionService.getTowerByThread(inspection.getThreadId());
+		List<User> users =  inspectionService.getInspectionTackStaff(id);
+		if(users.size()==0) {
+			model.addAttribute("staffs", "无");
+		}else {
+			model.addAttribute("staffs", users);
+		}
+		model.addAttribute("threads", threads);
+		model.addAttribute("inspection", inspection);
+		model.addAttribute("towers", towers);
+		return "inspectionTaskQuery";
+	}
+	
+	@RequestMapping("/onclickTowerFlawInfo")
+	@ResponseBody
+	public Flawconfirm  onclickTowerFlawInfo(@RequestParam("towerCoding")String towerCoding,@RequestParam("taskId")int taskId) {
+		Tower tower = towerService.checkCoding(towerCoding);
+		Flawconfirm  fc = inspectionService.getFlawInfoByTowerId(tower.getId(),taskId);
+		return fc;
 	}
 	
 	

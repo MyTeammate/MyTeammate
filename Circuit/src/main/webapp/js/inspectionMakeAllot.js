@@ -276,7 +276,7 @@ function makeInspection(){
  * 查看巡检任务
  */
 function lookInspection(id){
-	alert(id);
+	move("查看巡检任务","inspectionTaskQuery?id="+id);
 }
 
 /*

@@ -44,6 +44,11 @@ public class SystemParamServiceImpl implements SystemParamService{
 	public int updateSystemparam(Map<String,Object> map) {
 		return systemParamDao.updateSystemparam(map);
 	}
+
+	@Override
+	public Systemparam getSystemparamById(int paramId) {
+		return systemParamDao.getSystemparamById(paramId);
+	}
 	
 
 }
