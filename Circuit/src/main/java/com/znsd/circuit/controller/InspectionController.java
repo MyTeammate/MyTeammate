@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
@@ -99,6 +100,7 @@ public class InspectionController {
 		int taskId = session.getAttribute("receiptId") == null ? 0 : (int)session.getAttribute("receiptId");
 		// 根据任务taskId获得线路
 		Threads thread = inspectionService.getThreaddByTask(taskId);
+		session.setAttribute("inspectionThreadId", thread.getId());
 		// 通过线路threadId获得所有杆塔
 		List<Tower> towers = inspectionService.getTowerByThread(thread.getId());
 		Map<String, Object> map = new HashMap<>();
@@ -136,16 +138,34 @@ public class InspectionController {
 	}
 	
 	/*
+	 * 得到杆塔缺陷
+	 */
+	@ResponseBody
+	@RequestMapping(value="getTowerFlaw")
+	public Flawconfirm getTowerFlaw(Flawconfirm flawconfirm,HttpSession session){
+		int taskId = (int)session.getAttribute("receiptId");
+		flawconfirm.setTaskId(taskId);
+		Flawconfirm f = inspectionService.getTowerFlaw(flawconfirm);
+		System.out.println("flawId:"+f);
+		return f;
+	}
+	
+	
+	/*
 	 * 分页查询所有巡检数据
 	 */
 	@ResponseBody
 	@RequestMapping(value="getInspectionPage")
-	public Map<String, Object> getInspectionPage(@RequestParam("page") int pageIndex,@RequestParam("rows")int pageSize,String operate,HttpSession session){
+	public Map<String, Object> getInspectionPage(@RequestParam("page") int pageIndex,@RequestParam("rows")int pageSize,String operate,
+			Inspection inspection,String startDate,String endDate,
+			HttpSession session){
 		User user = (User) session.getAttribute("user");
 		if(user==null){
 			return null;
 		}
-		Pager<Inspection> pager = inspectionService.getInspectionPage(pageIndex, pageSize,user.getId(),operate);
+		/*System.out.println("taskcoding:"+inspection.getCoding()+",threadcoding:"+inspection.getThread()+",state:"+inspection.getState());
+		System.out.println("creater:"+inspection.getCreater()+",startDate:"+startDate+",endDate:"+endDate);*/
+		Pager<Inspection> pager = inspectionService.getInspectionPage(pageIndex, pageSize,user.getId(),operate,inspection,startDate,endDate);
 		Map<String, Object> map = new HashMap<>();
 		map.put("total", pager.getSumSize());
 		map.put("rows", pager.getData());
@@ -219,7 +239,7 @@ public class InspectionController {
 			return false;
 		}
 		Map<String, Object> map = new HashMap<>();
-		map.put("coding", "INSPECTION_STATE");
+		map.put("coding", "TASK_STATE");
 		map.put("creater", user.getId());
 		map.put("taskId", taskId);
 		map.put("settingName", "执行中");
@@ -228,5 +248,60 @@ public class InspectionController {
 		return true;
 	}
 	
+	/*
+	 *  保存回执录入
+	 */
+	@ResponseBody
+	@RequestMapping(value="saveExecuteReceipt")
+	public boolean saveExecuteReceipt(Flawconfirm flawconfirm,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if(user==null){
+			return false;
+		}
+		/*if (flawconfirm.getFlawId()=="") {
+			flawconfirm.setFlawId(null);
+		}
+		if (flawconfirm.getFlawGrade()=="") {
+			flawconfirm.setFlawGrade(null);
+		}*/
+		flawconfirm.setUserId(user.getId());
+		int taskId = session.getAttribute("receiptId") == null ? 0:(int)session.getAttribute("receiptId");
+		int threadId = (int)session.getAttribute("inspectionThreadId");
+		flawconfirm.setTaskId(taskId);
+		flawconfirm.setThreadId(threadId);
+		if(inspectionService.checkFlawRecord(flawconfirm)>0){
+			// 修改
+			inspectionService.updateFlawConfirm(flawconfirm);
+			Map<String, Object> map = new HashMap<>();
+			map.put("creater", user.getId());
+			map.put("taskId", taskId);
+			inspectionService.updateInspectionDate(map);
+		}else{
+			// 第一次保存
+			inspectionService.saveInspectionFlaw(flawconfirm);
+		}
+		return true;
+	}
 	
+	/*
+	 * 巡检任务上传回执
+	 */
+	@ResponseBody
+	@RequestMapping(value="executeReceipt")
+	public boolean executeReceipt(HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if(user==null){
+			return false;
+		}
+		int taskId = session.getAttribute("receiptId") == null ? 0:(int)session.getAttribute("receiptId");
+		inspectionService.updateFlawRecord(taskId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("coding", "TASK_STATE");
+		map.put("creater", user.getId());
+		map.put("taskId", taskId);
+		map.put("settingName", "已完成");
+		inspectionService.updateInspectionState(map);
+		inspectionService.updateInspectionDate(map);
+		return true;
+	}
 }

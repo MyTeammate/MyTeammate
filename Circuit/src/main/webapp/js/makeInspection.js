@@ -72,6 +72,7 @@ $(function(){
 		   }
 		 });
 	
+		 getInspectionStaff(); // 获取所有可用巡检员
 });
 
 /*
@@ -91,6 +92,28 @@ $.extend($.fn.validatebox.defaults.rules, {
 		message : '任务编号格式不正确'
 	}
 });
+
+/*
+ * 获取所有可用巡检员
+ */
+function getInspectionStaff(){
+	$.ajax({
+		url : "getInspectionStaff",
+		type : "post",
+		success : function(data) {
+			$("#fb_list").html("");
+			var str = "";
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
+					str += "<option value='" + data[i].id
+							+ "' name='options'>" + data[i].name
+							+ "</option>"
+				}
+			}
+			$("#fb_list").append(str);
+		}
+	});
+}
 
 /*
  * 获取系统当前 年 月日
