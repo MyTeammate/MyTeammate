@@ -8,7 +8,7 @@ $(function() {
 	 * 模糊查询日期验证
 	 */
 	$('#inspectionBeginDate').datebox({
-		required : true,
+		//required : true,
 		editable : false,
 		validType : 'checkNow',
 		missingMessage : '请选择日期',
@@ -69,8 +69,8 @@ $(function() {
 		 *  
 		 */
 		/*height:450,
-		fit:true,
-		fitColumns:true,*/
+		fit:true,*/
+		fitColumns:true,
 		singleSelect:true, //只能选择一行
 		rownumbers : true,
 		pagination : true,
@@ -111,7 +111,7 @@ $(function() {
 		}, {
 			field : 'creater',
 			title : '下发人',
-			width : 70,
+			width : 110,
 			align:"center",
 		}, {
 			field : 'createDate',
@@ -166,6 +166,29 @@ $(function() {
 		}
 	});
 	
+	/*
+	 * 模糊查询
+	 */
+	inspection_onclick={
+			search:function(){
+				var startDate = $('#inspectionBeginDate').datebox('isValid');
+				var endDate = $('#inspectionEndDate').datebox('isValid');
+				if(startDate && endDate){
+					$("#makeAllot_datagrid").datagrid('reload', {
+						coding : $("#inspectionCoding").val(),
+						thread : $("#threadCoding").val(),
+						state : $("#inspectionState").combobox('getValue'),
+						creater : $("#taskCreater").val(),
+						startDate : $("#inspectionBeginDate").val(),
+						endDate : $("#inspectionEndDate").val()
+					});
+				}else{
+					console.log('日期验证不通过！');
+				}
+			}
+	}
+	
+	
 	getInspectionStaff(); // 获取所有可用巡检员
 	
 	$("#add").click(function(){
@@ -194,6 +217,9 @@ $(function() {
 
 var taskId='';
 
+/*
+ * 分配巡检任务
+ */
 function  allot_staffs(){
 	var staffs = $.map($("#select_list option:not(:selected)"),
             function(ele){return ele.value} 
@@ -280,7 +306,7 @@ function lookInspection(id){
 }
 
 /*
- * 分配巡检任务
+ * 显示分配巡检任务的div
  */
 function showallotInspection(id){
 	$("#bigdiv").show(1000);
@@ -298,7 +324,6 @@ function updateInspection(id){
  * 取消巡检任务
  */
 function cancelInspection(id){
-	console.log('cancel');
 	$.messager.confirm('确定','您确定要取消所选的巡检任务吗？',function(f){
 		if(f){
 			$.ajax({

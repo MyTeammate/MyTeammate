@@ -73,23 +73,51 @@
 	<select id="getAllFlaw" resultType="Flaw">
 		SELECT id,name as flawname FROM t_flaw WHERE state=0
 	</select>
-	<select id="getInspectionPageCount" resultType="Integer">
+	<select id="getInspectionPageCount" resultType="Integer" parameterType="Map">
 		SELECT
 		count(1)
 		from t_inspection i
-		INNER JOIN t_task t ON i.taskId=t.id
-		INNER JOIN
-		t_thread th ON i.threadId=th.id
-		INNER JOIN t_user u on t.createdBy=u.id
-		INNER JOIN t_systemparam sy on
+		left JOIN t_inspectionstaff ins ON i.id=ins.inspectionId
+		left JOIN t_task t ON i.taskId=t.id
+		left JOIN t_thread
+		th ON i.threadId=th.id
+		left JOIN t_user u on t.createdBy=u.id
+		left
+		JOIN t_systemparam sy on
 		t.state=sy.id
-		WHERE t.type='巡检任务'
+		WHERE t.type='巡检任务' 
+		<if test="operate == 'execute'">
+			and t.state not in (SELECT id FROM t_systemparam where settingid
+		= (select id FROM t_systemsetting
+		WHERE coding='inspection_state' AND
+		delete_flag='否' AND state='启用')
+AND settingName='待分配' OR settingName='已取消')
+			AND ins.userId=#{userId} AND ins.isReceipter='是'
+		</if>
+		<if test="coding != null and coding != ''">
+			and t.coding like #{coding}
+		</if>
+		<if test="thread != null and coding != ''">
+			and th.coding like #{thread}
+		</if>
+		<if test="state != '--请选择--' and state != null">
+			and t.state=#{state}
+		</if>
+		<if test="taskMan != null and taskMan != ''">
+			and u.name like #{taskMan}
+		</if>
+		<if test="startDate!=null &amp;&amp;startDate!=''">
+		   and t.date &gt; #{startDate}
+		</if>
+		<if test="endDate!=null &amp;&amp;endDate!=''">
+		   and t.date &lt; #{endDate}
+		</if>
 	</select>
 	<select id="getInspectionPage" resultType="Inspection"
 		parameterType="Map">
 		SELECT DISTINCT
 		t.id,t.coding,t.name,th.name as
-		thread,th.startTower,th.endTower,u.userName as creater,t.date as
+		thread,th.startTower,th.endTower,u.name as creater,t.date as
 		createDate,sy.settingName as state,t.actualDate,t.delete_flag
 		from
 		t_inspection i
@@ -110,8 +138,25 @@
 AND settingName='待分配' OR settingName='已取消')
 			AND ins.userId=#{userId} AND ins.isReceipter='是'
 		</if>
-		ORDER BY
-		t.createdDate
+		<if test="coding != null and coding != ''">
+			and t.coding like #{coding}
+		</if>
+		<if test="thread != null and coding != ''">
+			and th.coding like #{thread}
+		</if>
+		<if test="state != '--请选择--' and state != null">
+			and t.state=#{state}
+		</if>
+		<if test="taskMan != null and taskMan != ''">
+			and u.name like #{taskMan}
+		</if>
+		<if test="startDate!=null &amp;&amp;startDate!=''">
+		   and t.date &gt; #{startDate}
+		</if>
+		<if test="endDate!=null &amp;&amp;endDate!=''">
+		   and t.date &lt; #{endDate}
+		</if>
+		ORDER BY t.createdDate desc
 		LIMIT #{pageIndex},#{pageSize}
 	</select>
 	<insert id="addTask" parameterType="Inspection"
@@ -164,4 +209,39 @@ AND settingName='待分配' OR settingName='已取消')
 		inner join t_user u on f.userId = u.id
 		where taskId=#{taskId}
 	</select>
+	<select id="checkFlawRecord" resultType="int" parameterType="Flawconfirm">
+		SELECT count(1) FROM t_flaw_record fr 
+			LEFT JOIN t_flawconfirm fc ON fr.flawconfirmId=fc.id
+			WHERE fr.receiptState=0 AND fc.taskId=#{taskId} AND fc.towerId=#{towerId}
+	</select>
+	<insert id="saveFlawConfirm" parameterType="Flawconfirm" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade)
+			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade});
+	</insert>
+	<insert id="saveFlawRecord">
+		INSERT INTO t_flaw_record(taskId,flawconfirmId,receiptState,createdBy,createdDate,updatedBy,updatedDate,delete_flag)
+			values(#{taskId},#{id},0,#{userId},NOW(),#{userId},NOW(),'否');
+	</insert>
+	<update id="updateFlawConfirm" parameterType="Flawconfirm">
+		update t_flawconfirm SET id=id
+		<if test="flawId != null and flawId != ''">
+			,flawId=#{flawId}
+		</if>
+		<if test="flawGrade != null and flawGrade != ''">
+			,flawGrade=#{flawGrade}
+		</if>
+		<if test="serviceAbility != null and serviceAbility != ''">
+			,serviceAbility=#{serviceAbility}
+		</if>
+		<if test="flawDesc != null and flawDesc != ''">
+			,flawDesc=#{flawDesc}
+		</if> 
+		WHERE taskId=#{taskId} AND towerId=#{towerId}
+	</update>
+	<select id="getTowerFlaw" resultType="Flawconfirm" parameterType="Flawconfirm">
+		SELECT flawId,flawGrade,serviceAbility,discoverDate,flawDesc FROM t_flawconfirm WHERE towerId=#{towerId} AND taskId=#{taskId}
+	</select>
+	<update id="updateFlawRecord" parameterType="int">
+		update t_flaw_record set receiptState=1 where taskId=#{taskId}
+	</update>
 </mapper>

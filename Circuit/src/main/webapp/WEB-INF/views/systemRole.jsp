@@ -8,31 +8,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <div style="padding-left: 20px; padding-top: 15px;line-height:20px">系统管理>>数据字典</div>
+    <div style="padding-left: 20px; padding-top: 15px;line-height:20px">系统管理>>角色管理</div>
     <div style="border:1px solid #c0c0c0;"></div>
-	<table style="margin-left: 50px;margin-top:20px;left:40px;width:1026px;">   
+	<table style="margin-left: 170px;margin-top:20px;left:40px;width:867px;">   
 	    <tr style="height:30px;">
 		   <th>
 		    用户姓名：<input style="text" size="15"/>&nbsp;&nbsp;&nbsp;使用状况：
-		    <select id="user_cc" class="easyui-combobox" name="dept" style="width:80px;" data-options="panelMaxHeight:'70px',editable:false">   
+		    <select id="role_cc" class="easyui-combobox" name="dept" style="width:80px;" data-options="panelMaxHeight:'70px',editable:false">   
 			    <option value="--请选择--">--请选择--</option>   
-			    <option value="正常">正常</option>   
-			    <option value="冻结">冻结</option>     
+			    <option value="启用">正常</option>   
+			    <option value="未启用">冻结</option>     
 			</select>
-			<a id="user_query" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
-		    <a style="float:right" id="user_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加用户</a>    
+			<a id="role_query" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+		    <a style="float:right" id="role_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加角色</a>    
 	   	   </th>
 	    </tr>
 	    <tr>
 	      <th>
-	        <table id="user_tb">
+	        <table id="role_tb">
 	        	
 		    </table>
 	      </th>
 	    </tr>
 	</table>
 	<!-- <div style="display:none"> -->
-		<table id="user_add_option">
+		<table id="role_add_option">
 		
 		   <!-- <tr>
 		     <td style='float:right;'>用户账号：</td>
@@ -63,7 +63,7 @@
 		     <td><input type='text' id='0' name='param' /></td>
 		   </tr> -->
 		</table>
-		<table id="user_update_option"></table>
+		<table id="role_update_option"></table>
 	<!-- </div> -->
 </body>
 </html>

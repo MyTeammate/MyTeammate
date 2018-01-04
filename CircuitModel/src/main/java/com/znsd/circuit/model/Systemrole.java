@@ -1,11 +1,11 @@
 package com.znsd.circuit.model;
 
-public class Systemrole {
+public class Systemrole{
     private int id;            //id	
     private String coding;	   //角色编号
     private String name;	   //角色名称
     private int createBy;      //创建人
-    private int createName;    //创建人姓名
+    private String createName;    //创建人姓名
     private String createDate; //创建时间
     private int updateBy;      //修改人
     private String updatedDate;//修改时间
@@ -34,10 +34,10 @@ public class Systemrole {
 	public void setCreateBy(int createBy) {
 		this.createBy = createBy;
 	}
-	public int getCreateName() {
+	public String getCreateName() {
 		return createName;
 	}
-	public void setCreateName(int createName) {
+	public void setCreateName(String createName) {
 		this.createName = createName;
 	}
 	public String getCreateDate() {

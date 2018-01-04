@@ -29,7 +29,7 @@
 <script type="text/javascript" src="js/systemUser.js"></script>
 <script type="text/javascript" src="js/inspectionTaskQuery.js"></script>
 <link rel="stylesheet" href="css/inspectionTaskQuery.css" />
-
+<script type="text/javascript" src="js/systemRole.js"></script>
 
 
 
