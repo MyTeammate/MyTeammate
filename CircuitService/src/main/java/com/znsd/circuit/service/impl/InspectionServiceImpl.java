@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.InspectionDao;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
@@ -29,12 +30,12 @@ public class InspectionServiceImpl implements InspectionService{
 	}
 	
 	@Override
-	public int getInspectionPageCount() {
-		return inspectionDao.getInspectionPageCount();
+	public int getInspectionPageCount(Map<String,Object> map) {
+		return inspectionDao.getInspectionPageCount(map);
 	}
 	
 	@Override
-	public Pager<Inspection> getInspectionPage(int pageIndex,int pageSize,int userId,String operate) {
+	public Pager<Inspection> getInspectionPage(int pageIndex,int pageSize,int userId,String operate,Inspection inspection,String startDate,String endDate) {
 		Pager<Inspection> page = new Pager<>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);	
@@ -43,7 +44,15 @@ public class InspectionServiceImpl implements InspectionService{
 		map.put("pageSize", page.getPageSize());
 		map.put("userId", userId);
 		map.put("operate", operate);
-		page.setSumSize(getInspectionPageCount());
+		
+		map.put("coding", inspection.getCoding());
+		map.put("thread", inspection.getThread());
+		map.put("state", inspection.getState());
+		map.put("taskMan", inspection.getCreater());
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		
+		page.setSumSize(getInspectionPageCount(map));
 		List<Inspection> list = inspectionDao.getInspectionPage(map);
 		page.setData(list);
 		return page;
@@ -122,6 +131,37 @@ public class InspectionServiceImpl implements InspectionService{
 	@Override
 	public List<Flaw> getAllFlaw() {
 		return inspectionDao.getAllFlaw();
+	}
+
+	@Override
+	public int checkFlawRecord(Flawconfirm fconfirm) {
+		return inspectionDao.checkFlawRecord(fconfirm);
+	}
+
+	
+	@Override
+	public boolean updateFlawConfirm(Flawconfirm fconfirm) {
+		inspectionDao.updateFlawConfirm(fconfirm);
+		return true;
+	}
+
+	@Override
+	public Flawconfirm getTowerFlaw(Flawconfirm fconfirm) {
+		return inspectionDao.getTowerFlaw(fconfirm);
+	}
+
+	@Override
+	public boolean saveInspectionFlaw(Flawconfirm fconfirm) {
+		inspectionDao.saveFlawConfirm(fconfirm);
+		System.out.println("-------------------------flawconfirmid:"+fconfirm.getId());
+		inspectionDao.saveFlawRecord(fconfirm);
+		return true;
+	}
+
+	@Override
+	public void updateFlawRecord(int taskId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
