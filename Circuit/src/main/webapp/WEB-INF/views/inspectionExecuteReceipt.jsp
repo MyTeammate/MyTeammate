@@ -18,8 +18,8 @@
 			<p>
 				下发人：<input type="text" id="taskCreater">&nbsp;&nbsp;
 				<label>下发时间：</label><input class="easyui-datebox" id="inspectionBeginDate" style="width:120px;">
-				&nbsp;-&nbsp;<input class="easyui-datebox" required data-options="validType:'md[\'#inspectionBeginDate\']',editable:false" style="width:120px;">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="serve_onclick.search()">查询</a>
+				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate\']',editable:false" style="width:120px;" id="inspectionEndDate">
+				<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="inspection_onclick.search()">查询</a>
 			</p>
 			<hr/>
 		</div>

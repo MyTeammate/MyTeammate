@@ -1,5 +1,35 @@
 $(function(){
 	/*
+	 * 模糊查询日期验证
+	 */
+	$('#inspectionBeginDate').datebox({
+		//required : true,
+		editable : false,
+		validType : 'checkNow',
+		missingMessage : '请选择日期',
+	});
+	$.extend($.fn.validatebox.defaults.rules, {
+		checkNow : {
+			validator : function(value, param) {
+				var now = new Date();
+				var date = $.fn.datebox.defaults.parser(value);
+				return now >= date;
+			},
+			message : '所选时间不能超过当前时间！'
+		},
+		md : {
+			validator : function(value, param) {
+				var start = $(param[0]).datetimebox('getValue');
+				var now = new Date();
+				var start2 = $.fn.datebox.defaults.parser(value);
+				return now >= start2 && start <= value;
+				// 需要进行两个判断，先判断不能超过当前时间，再判断是否大于开始时间
+			},
+			message : '选择有误！'
+		}
+	});
+	
+	/*
 	 * 所有巡检任务
 	 */
 	$("#executeReceipt_datagrid").datagrid({
@@ -13,8 +43,8 @@ $(function(){
 		 *  
 		 */
 		/*height:450,
-		fit:true,
-		fitColumns:true,*/
+		fit:true,*/
+		fitColumns:true,
 		singleSelect:true, //只能选择一行
 		rownumbers : true,
 		pagination : true,
@@ -55,7 +85,7 @@ $(function(){
 		}, {
 			field : 'creater',
 			title : '下发人',
-			width : 70,
+			width : 110,
 			align:"center",
 		}, {
 			field : 'createDate',
@@ -105,6 +135,29 @@ $(function(){
 			return data;
 		}
 	});
+	
+	/*
+	 * 模糊查询
+	 */
+	inspection_onclick={
+			search:function(){
+				var startDate = $('#inspectionBeginDate').datebox('isValid');
+				var endDate = $('#inspectionEndDate').datebox('isValid');
+				if(startDate && endDate){
+					$("#executeReceipt_datagrid").datagrid('reload', {
+						operate:'execute',
+						coding : $("#inspectionCoding").val(),
+						thread : $("#threadCoding").val(),
+						state : $("#inspectionState").combobox('getValue'),
+						creater : $("#taskCreater").val(),
+						startDate : $("#inspectionBeginDate").val(),
+						endDate : $("#inspectionEndDate").val()
+					});
+				}else{
+					console.log('日期验证不通过！');
+				}
+			}
+	}
 })
 
 /*

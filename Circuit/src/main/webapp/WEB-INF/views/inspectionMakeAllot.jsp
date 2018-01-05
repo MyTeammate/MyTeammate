@@ -36,15 +36,15 @@
 		<p>巡检任务管理>>巡检任务制定与分配</p>
 		<div id="makeAllot_tool" style="padding-left:25px;">
 			<p>
-			      任务编号：<input type="text" id="inspectionCoding">&nbsp;&nbsp;
-			      线路编号：<input type="text" id="threadCoding">&nbsp;&nbsp;
+			      任务编号：<input type="text" class="textbox" style="height:22px;" id="inspectionCoding">&nbsp;&nbsp;
+			      线路编号：<input type="text" class="textbox" style="height:22px;" id="threadCoding">&nbsp;&nbsp;
 			      任务状态： <input type="text" id="inspectionState" style="width:120px;"/>&nbsp;&nbsp; 
 			</p>
 			<p>
-				下发人：<input type="text" id="taskCreater">&nbsp;&nbsp;
+				下发人：<input type="text" class="textbox" style="height:22px;" id="taskCreater">&nbsp;&nbsp;
 				<label>下发时间：</label><input class="easyui-datebox" id="inspectionBeginDate" style="width:120px;">
-				&nbsp;-&nbsp;<input class="easyui-datebox" required data-options="validType:'md[\'#inspectionBeginDate\']',editable:false" style="width:120px;">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="serve_onclick.search()">查询</a>
+				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate\']',editable:false" id="inspectionEndDate" style="width:120px;">
+				<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="inspection_onclick.search()">查询</a>
 			</p>
 			<hr/>
 			<p class="makeAllot_listing" style="text-align:right;padding-right:45px;">
