@@ -21,6 +21,15 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
+  <!-- 不拦截静态文件 -->  
+	<servlet-mapping>  
+	    <servlet-name>default</servlet-name>  
+	    <url-pattern>/js/*</url-pattern>  
+	    <url-pattern>/css/*</url-pattern>  
+	    <url-pattern>/image/*</url-pattern>  
+	    <url-pattern>/img/*</url-pattern>  
+	    <url-pattern>/fonts/*</url-pattern>  
+	</servlet-mapping>  
   <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
@@ -65,5 +74,6 @@
          org.springframework.web.context.ContextLoaderListener   
       </listener-class>  
   </listener>  
-
+  
+  
 </web-app>

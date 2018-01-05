@@ -32,12 +32,26 @@ function role_tb(){
             	  align:'center',
             	  formatter:function(value,row,index){
             		  var oper = '';
+            		  alert(row.coding);
             		  if(row.state=='0'){
-            			  oper = '<span><a href="javaScript:roleUpdate('
-								+ row.id
+            			  oper = '<span><a href="javaScript:roleState('
+								+ row.id+","+0
+								+ ')">禁用</a>｜'
+								+ '<a href="javaScript:roleUpdate('
+								+ row.id+','+row.coding+','+row.name+','+row.state
 								+ ')">修改</a>｜'
 								+ '<a href="javaScript:roleDelete('
-								+ row.id
+								+ row.id+','+row.state
+								+ ')">删除</a></sapn>';
+            		  }else{
+            			  oper = '<span><a href="javaScript:roleState('
+								+ row.id+","+1
+								+ ')">启用</a>｜'
+								+ '<a href="javaScript:roleUpdate('
+								+ row.id+','+row.coding+','+row.name+','+row.state
+								+ ')">修改</a>｜'
+								+ '<a href="javaScript:roleDelete('
+								+ row.id+','+row.state
 								+ ')">删除</a></sapn>';
             		  }
             		  return oper;
@@ -46,96 +60,104 @@ function role_tb(){
 		]]
 	})
 
+
 	$("#role_add").bind('click',function(){
-		$.ajax({
-			url:'userManage/select',
-			type:"post",
-			success:function(result){
-				var $op="";
-				for (var int = 0; int < result.length; int++) {
-					$op=$op+"<option value='"+result[int].id+"'>"+result[int].name+"</option>";
-				}
-				$('#role_add_option').html("" +
-						"<tr>" +
-						"<td style='float:right;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色编号：</td><td><input type='text' id='coding' name='param' /><span id='coding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
-						"</tr><tr>" +
-						"<td style='float:right;'>角色名称：</td><td><input type='text' id='name' name='param' /><span id='name2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
-						"</tr><tr>" +
-						"<td style='float:right;'>使用状态：</td><td>正常</td>" +
-						"</tr>");
-				$('#entryDate').datebox({    
-				    editable:false
-				});  
-			}
-		})
-		
-    		$('#role_add_option').dialog({
-    			/*closed:true,*/
-	    		width:400,
-	    		height:120,
-	    		inline:true,
-	    		left:320,
-	    		top:210,
-				title:'添加角色',
-				buttons:[
-							{
-								text:'取消',
-								width:60,
-								handler:function(){	
-								    $('#role_add_option').dialog('close');
-								}		
-							},
-							{
-								text:'确定',
-								width:60,
-								handler:function(){	
-									var coding=$('#coding').val();
-									var name=$('#name').val();
-									if(coding==""||name==""){
-										$.messager.alert({
-											title:'错误',
-											msg:'请填写必填项！',
-											icon:'info'
-										});
-									}else{
-											var data={coding:coding,name:name}
-											$.ajax({
-												url:'roleManage/verifyRole',
-												type:"post",
-												data:data,
-												success:function(result){
-													if(result=="11"){
-														
-													}else if(result=="12"){
-														$('#name2').html("已存在！");
-													}else if(result=="21"){
-														$('#coding2').html("已存在！");
-													}
+		$('#role_add_option').html("" +
+				"<tr>" +
+				"<td style='float:right;'>角色编号：</td><td style='width:250px'><input type='text' id='coding' name='param' /><span id='coding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
+				"</tr><tr>" +
+				"<td style='float:right;'>角色名称：</td><td><input type='text' id='name' name='param' /><span id='name2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
+				"</tr><tr>" +
+				"<td style='float:right;'>使用状态：</td><td>正常</td>" +
+				"</tr>"); 
+		$('#role_add_option').dialog({
+    		width:400,
+    		height:120,
+    		inline:true,
+    		left:320,
+    		top:210,
+			title:'添加角色',
+			buttons:[
+						{
+							text:'取消',
+							width:60,
+							handler:function(){	
+							    $('#role_add_option').dialog('close');
+							}		
+						},
+						{
+							text:'确定',
+							width:60,
+							handler:function(){	
+								var coding=$('#coding').val();
+								var name=$('#name').val();
+								if(coding==""||name==""){
+									$.messager.alert({
+										title:'错误',
+										msg:'请填写必填项！',
+										icon:'info'
+									});
+								}else{
+										var data={coding:coding,name:name}
+										$.ajax({
+											url:'roleManage/verifyRole',
+											type:"post",
+											data:data,
+											success:function(result){
+												if(result=="11"){
+													$('#name2').html("*");
+													$('#coding2').html("*");
+													$.ajax({
+														url:'roleManage/addRole',
+														type:"post",
+														data:data,
+														success:function(result){
+															if(result==1){
+																var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+														    	tab.panel('refresh', 'systemRole');
+															}else{
+																$.messager.alert({
+																	title:'错误',
+																	msg:'添加出错！',
+																	icon:'info'
+																});
+															}
+														}
+													})
+												}else if(result=="12"){
+													$('#name2').html("角色名称已存在！");
+													$('#coding2').html("*");
+												}else if(result=="21"){
+													$('#name2').html("*");
+													$('#coding2').html("角色编号已存在！");
+												}else if(result=="22"){
+													$('#name2').html("角色名称已存在！");
+													$('#coding2').html("角色编号已存在！");
 												}
-											})
-									}
-								}		
-							}
-						]
+											}
+										})
+								}
+							}		
+						}
+					]
 	    	})
     	
 	})
 }
 
-
 function roleState(id,state){
 	var data={id:id,state:state};
 	if(state==0){
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+		$.messager.confirm('确定','您确定要禁用所选的用户吗？',function(f){
 			if(f){
 				$.ajax({
-					url:'userManage/freezeUser',
+					url:'roleManage/stateRole',
 					type:"post",
 					data:data,
 					success:function(result){
 						if(result==1){
 							var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-					    	tab.panel('refresh', 'systemUser');
+					    	tab.panel('refresh', 'systemRole');
 						}else{
 							$.messager.alert({
 								title:'错误',
@@ -151,13 +173,13 @@ function roleState(id,state){
 		$.messager.confirm('确定','您确定要恢复所选的用户吗？',function(f){
 			if(f){
 				$.ajax({
-					url:'userManage/freezeUser',
+					url:'roleManage/stateRole',
 					type:"post",
 					data:data,
 					success:function(result){
 						if(result==1){
 							var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-					    	tab.panel('refresh', 'systemUser');
+					    	tab.panel('refresh', 'systemRole');
 						}else{
 							$.messager.alert({
 								title:'错误',
@@ -173,65 +195,26 @@ function roleState(id,state){
 	
 }
 
-function roleUpdate(id){
-	$.ajax({
-		url:'userManage/select',
-		type:"post",
-		success:function(result){
-			var $op="";
-			for (var int = 0; int < result.length; int++) {
-				$op=$op+"<option value='"+result[int].id+"'>"+result[int].name+"</option>";
-			}
+
+function roleUpdate(id,coding,name,state){
+	alert("1");
 			$('#role_update_option').html("" +
 					"<tr>" +
-					"<td style='float:right;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户账号：</td><td><input type='text' id='userName' name='param' /><span id='userName2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
+					"<td style='float:right;'>角色编号：</td><td style='width:250px'><input type='text' id='newCoding' name='param' /><span id='newCoding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
 					"</tr><tr>" +
-					"<td style='float:right;'>用户姓名：</td><td><input type='text' id='name' name='param' /><span id='name2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
+					"<td style='float:right;'>角色名称：</td><td><input type='text' id='newName' name='param' /><span id='newName2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
 					"</tr><tr>" +
-					"<td style='float:right;'>密码：</td><td><input type='passWord' id='passWord' name='param' /><span id='passWord2' style='font-size:8px;'>&nbsp;&nbsp;默认初始密码为123456</span></td>" +
-					"</tr><tr>" +
-					"<td style='float:right;'>角色：</td>" +
-					"<td>" +
-					"<select id='roleId' class='easyui-combobox' name='dept' style='width:90px;' data-options='panelMaxHeight:'120px',editable:false'>" +
-					"<option value='0'>--请选择--</option>" +
-					$op+
-					"</select><span id='roleId2' style='color:red'>&nbsp;&nbsp;*</span>" +
-					"</td>" +
-					"</tr><tr>" +
-					"<td style='float:right;'>入职时间：</td><td><input type='text' id='entryDate'/><span id='entryDate2' style='color:red'>&nbsp;&nbsp;*</span></td>" +
-					"</tr><tr>" +
-					"<td style='float:right;'>离职时间：</td><td><input type='text' id='leaveDate'/><span id='leaveDate2' style='color:red'>&nbsp;&nbsp;*</span></td>" +
-					"</tr><tr>" +
-					"<td style='float:right;'>使用状态：</td><td id='state'>正常</td>" +
-					"</tr>");
-			$('#entryDate').datebox({    
-			    editable:false
-			});
-			$('#leaveDate').datebox({    
-			    editable:false
-			});
-			var dataId={id:id};
-			$.ajax({
-				url:'userManage/userId',
-				type:"post",
-				data:dataId,
-				success:function(result){
-					alert("231423");
-					$('#userName').val(result.userName);
-					$('#name').val(result.name);
-					$('#passWord').val(result.passWord);
-					$('#roleId').val(result.roleId);
-					$('#entryDate').datebox('setValue', result.entryDate);
-					if(result.state==0){
-						$('#state').html("正常");
-					}else{
-						$('#state').html("冻结");
-					}
-					
-				}
-			})
-		}
-	})
+					"<td style='float:right;'>使用状态：</td><td id='newState'></td>" +
+					"</tr>"); 
+			$('#newCoding').val(coding);
+			$('#newName').val(name);
+			$('#newState').val(state);
+			alert("2");
+			if(state==0){
+				$('#newState').html("启用");
+			}else{
+				$('#newState').html("未启用");
+			}
 	
 		$('#role_update_option').dialog({
     		width:400,
@@ -245,95 +228,64 @@ function roleUpdate(id){
 							text:'取消',
 							width:60,
 							handler:function(){	
-							    $('#user_add_option').dialog('close');
+							    $('#role_update_option').dialog('close');
 							}		
 						},
 						{
 							text:'确定',
 							width:60,
 							handler:function(){	
-								var userName=$('#userName').val();
-								var name=$('#name').val();
-								var passWord=$('#passWord').val();
-								var roleId=$('#roleId').val();
-								var entryDate=$('#entryDate').val();
-								var leaveDate=$('#leaveDate').val();
+								var newCoding=$('#newCoding').val();
+								var newName=$('#newName').val();
 								var rUN="";
 								var rN="";
-								if(userName==""||name==""||roleId==""||entryDate==""){
+								if(coding==""||name==""){
 									$.messager.alert({
 										title:'错误',
 										msg:'请填写必填项！',
 										icon:'info'
 									});
 								}else{
-									var regUserName = /^[0-9A-Za-z]{4,12}$/;
-									if(!regUserName.exec(userName)){
-										$('#userName2').html("&nbsp;&nbsp;账号的长度为4-12位英文数字");
-										$('#userName2').css("color","red");
-									}else{
-										var data={id:id,userName:userName}
+										var data={coding:newCoding,name:newName}
 										$.ajax({
-											url:'userManage/queryUserName2',
+											url:'roleManage/verifyRole',
 											type:"post",
 											data:data,
 											success:function(result){
-												if(result=="success"){
-													rUN="success";
-													$('#userName2').html("&nbsp;&nbsp;*");
-												}else{
-													$('#userName2').html("&nbsp;&nbsp;用户账号已存在！");
-													$('#userName2').css("color","red");
-												}
-												
-												var regName=/^[A-Za-z\u4e00-\u9fa5]{2,12}$/;
-												if(!regName.exec(name)){
-													$('#name2').html("&nbsp;&nbsp;2-12个汉字或字母组成");
-													$('#name2').css("color","red");
-												}else{
-													var data={id:id,name:name};
+												if(result=="11"){
+													$('#newName2').html("*");
+													$('#newCoding2').html("*");
+													var newData={id:id,coding:newCoding,name:newName}
 													$.ajax({
-														url:'userManage/queryName2',
+														url:'roleManage/updateRole',
 														type:"post",
-														data:data,
+														data:newData,
 														success:function(result){
-															if(result=="success"){
-																rN="success";
-																$('#name2').html("&nbsp;&nbsp;*");
+															if(result==1){
+																var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+														    	tab.panel('refresh', 'systemRole');
 															}else{
-																$('#name2').html("&nbsp;&nbsp;用户姓名已存在！");
-																$('#name2').css("color","red");
+																$.messager.alert({
+																	title:'错误',
+																	msg:'修改出错！',
+																	icon:'info'
+																});
 															}
-															if(rUN=="success"&&rN=="success"){
-																$.messager.confirm('确定','您确定要修改所选的用户吗？',function(f){
-																	var dataUser={id:id,userName:userName,name:name,passWord:passWord,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
-																	$.ajax({
-																		url:'userManage/update',
-																		type:"post",
-																		data:dataUser,
-																		success:function(result){
-																			if(result==0){
-																				$.messager.alert({
-																					title:'错误',
-																					msg:'添加错误',
-																					icon:'info'
-																				});
-																			}else{
-																				var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-																		    	tab.panel('refresh', 'systemUser');
-																			}
-																		}
-																	})
-																})
-															}else{
-															}
-															
 														}
 													})
+												}else if(result=="12"){
+													$('#newName2').html("角色名称已存在！");
+													$('#newCoding2').html("*");
+												}else if(result=="21"){
+													$('#newName2').html("*");
+													$('#newCoding2').html("角色编号已存在！");
+												}else if(result=="22"){
+													$('#newName2').html("角色名称已存在！");
+													$('#newCoding2').html("角色编号已存在！");
 												}
 											}
 										})
-									}
+									
 								}
 							}		
 						}
@@ -341,26 +293,28 @@ function roleUpdate(id){
     	})
 }
 
+
 function roleDelete(id,state){
 	if(state==1){
-		$.messager.confirm('确定','您确定要删除所选的用户吗？',function(f){
-			var data={id:id};
-			$.ajax({
-				url:'userManage/delete',
-				type:"post",
-				data:data,
-				success:function(result){
-					
-				}
-			})
+		$.messager.confirm('确定','您确定要删除所选的角色吗？',function(f){
+			if(f){
+				var data={id:id};
+				$.ajax({
+					url:'roleManage/deleteRole',
+					type:"post",
+					data:data,
+					success:function(result){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemRole');
+					}
+				})
+			}
 		})
 	}else{
 		$.messager.alert({
 			title:'提示',
-			msg:'不能删除未离职的用户',
+			msg:'不能删除未禁用的角色',
 			icon:'info'
 		});
 	}
 }
-
- 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.SystemUserDao;
+import com.znsd.circuit.model.Systemlog;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.SystemUserService;
@@ -89,6 +90,26 @@ public class SystemUserServiceImpl implements SystemUserService{
 	@Override
 	public int delete(int id) {
 		return systemUserDao.delete(id);
+	}
+
+	@Override
+	public List<Systemlog> listSystemLog(Map<String, Object> map) {
+		return systemUserDao.listSystemLog(map);
+	}
+
+	@Override
+	public int systemLogCount() {
+		return systemUserDao.systemLogCount();
+	}
+
+	@Override
+	public int addLog(Systemlog log) {
+		return systemUserDao.addLog(log);
+	}
+
+	@Override
+	public int loginLog(Systemlog log) {
+		return systemUserDao.loginLog(log);
 	}
     
 }
