@@ -198,7 +198,7 @@ AND settingName='待分配' OR settingName='已取消')
 	</select>
 	
 	<select id="getFlawInfoByTowerId" parameterType="int" resultType="Flawconfirm">
-	     select t.towerId,t.flawId,t.flawGrade as flowGrade,t.discoverDate,t.isTrouble,serviceAbility,w.`name` as flawType,flawDesc,u.name as receiptMan 
+	     select t.towerId,t.flawId,t.flawGrade,t.discoverDate,t.isTrouble,serviceAbility,w.`name` as flawType,flawDesc,u.name as receiptMan 
 		from t_flawconfirm t inner join t_flaw w on t.flawId=w.id inner join t_user u on t.userId=u.id
 		where t.towerId = #{0} and t.taskId = #{1}
 	</select>

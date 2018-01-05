@@ -326,6 +326,8 @@ public class InspectionController {
 	public Flawconfirm  onclickTowerFlawInfo(@RequestParam("towerCoding")String towerCoding,@RequestParam("taskId")int taskId) {
 		Tower tower = towerService.checkCoding(towerCoding);
 		Flawconfirm  fc = inspectionService.getFlawInfoByTowerId(tower.getId(),taskId);
+		Systemparam sp = systemParamService.getSystemparamById(Integer.parseInt(fc.getFlawGrade()));
+		fc.setFlawGrade(sp.getSettingName());
 		return fc;
 	}
 	

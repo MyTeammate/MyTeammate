@@ -28,7 +28,9 @@
 <script type="text/javascript" src="js/systemParam.js"></script>
 <script type="text/javascript" src="js/systemUser.js"></script>
 <script type="text/javascript" src="js/inspectionTaskQuery.js"></script>
+<script type="text/javascript" src="js/roleDistribution.js"></script>
 <link rel="stylesheet" href="css/inspectionTaskQuery.css" />
+<link rel="stylesheet" href="css/roleConfig.css" />
 <script type="text/javascript" src="js/systemRole.js"></script>
 
 

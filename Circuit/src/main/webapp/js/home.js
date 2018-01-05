@@ -56,6 +56,9 @@ $(function(){
 							if(node.text=="路线管理"){
 								line();
 							}
+							if(node.text=="角色权限配置"){
+								roleDistribution();
+							}
 							
 						}
 					});
