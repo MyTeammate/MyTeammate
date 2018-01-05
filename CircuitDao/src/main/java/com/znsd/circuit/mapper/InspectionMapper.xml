@@ -71,11 +71,11 @@
 		(SELECT endTower FROM t_thread WHERE id=#{id})
 	</select>
 	<select id="getAllFlaw" resultType="Flaw">
-		SELECT id,name as flawname FROM t_flaw WHERE state=0
+		SELECT id,name FROM t_flaw WHERE state=0
 	</select>
 	<select id="getInspectionPageCount" resultType="Integer" parameterType="Map">
-		SELECT
-		count(1)
+	select count(1) from (
+		SELECT DISTINCT t.id
 		from t_inspection i
 		left JOIN t_inspectionstaff ins ON i.id=ins.inspectionId
 		left JOIN t_task t ON i.taskId=t.id
@@ -89,10 +89,13 @@
 		<if test="operate == 'execute'">
 			and t.state not in (SELECT id FROM t_systemparam where settingid
 		= (select id FROM t_systemsetting
-		WHERE coding='inspection_state' AND
+		WHERE coding='task_state' AND
 		delete_flag='否' AND state='启用')
 AND settingName='待分配' OR settingName='已取消')
-			AND ins.userId=#{userId} AND ins.isReceipter='是'
+			AND ins.userId=#{userId} <!-- AND ins.isReceipter='是' -->
+		</if>
+		<if test="operate == null">
+			and t.taskMan=#{userId}
 		</if>
 		<if test="coding != null and coding != ''">
 			and t.coding like #{coding}
@@ -112,6 +115,7 @@ AND settingName='待分配' OR settingName='已取消')
 		<if test="endDate!=null &amp;&amp;endDate!=''">
 		   and t.date &lt; #{endDate}
 		</if>
+		)insp
 	</select>
 	<select id="getInspectionPage" resultType="Inspection"
 		parameterType="Map">
@@ -133,10 +137,13 @@ AND settingName='待分配' OR settingName='已取消')
 		<if test="operate == 'execute'">
 			and t.state not in (SELECT id FROM t_systemparam where settingid
 		= (select id FROM t_systemsetting
-		WHERE coding='inspection_state' AND
+		WHERE coding='task_state' AND
 		delete_flag='否' AND state='启用')
 AND settingName='待分配' OR settingName='已取消')
-			AND ins.userId=#{userId} AND ins.isReceipter='是'
+			AND ins.userId=#{userId} <!-- AND ins.isReceipter='是' -->
+		</if>
+		<if test="operate == null">
+			and t.taskMan=#{userId}
 		</if>
 		<if test="coding != null and coding != ''">
 			and t.coding like #{coding}
@@ -156,14 +163,14 @@ AND settingName='待分配' OR settingName='已取消')
 		<if test="endDate!=null &amp;&amp;endDate!=''">
 		   and t.date &lt; #{endDate}
 		</if>
-		ORDER BY t.createdDate desc
+		ORDER BY t.updatedDate desc
 		LIMIT #{pageIndex},#{pageSize}
 	</select>
 	<insert id="addTask" parameterType="Inspection"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO
 		t_task(name,taskMan,type,coding,state,date,predictDate,description,createdBy,createdDate,updatedBy,updatedDate,delete_flag,remark)
-		VALUES(#{name},#{creater},'巡检任务',#{coding},4,#{createDate},NOW(),'',${creater},NOW(),#{creater},NOW(),'否',#{remark});
+		VALUES(#{name},#{creater},'巡检任务',#{coding},4,#{createDate},#{predictDate},'',${creater},NOW(),#{creater},NOW(),'否',#{remark});
 	</insert>
 	<insert id="addInspection" parameterType="Inspection">
 		INSERT INTO
@@ -184,7 +191,14 @@ AND settingName='待分配' OR settingName='已取消')
 		AND settingName=#{settingName}) WHERE id=#{taskId}
 	</update>
 	<update id="updateInspectionDate" parameterType="Map">
-		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW() WHERE id=#{taskId}
+		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW()
+		<if test="actualDate != null">
+			,set actualDate=now()
+		</if>
+		<if test="predictDate != null">
+			,set predictDate=now()
+		</if>
+		 WHERE id=#{taskId}
 	</update>
 	
 	<select id="getInspectionTaskById" resultMap="inspectionTask" parameterType="int">
@@ -244,4 +258,15 @@ AND settingName='待分配' OR settingName='已取消')
 	<update id="updateFlawRecord" parameterType="int">
 		update t_flaw_record set receiptState=1 where taskId=#{taskId}
 	</update>
+	<select id="checkInspectionReceipter" resultType="int" parameterType="Map">
+		SELECT count(1) FROM t_inspectionstaff inst inner JOIN t_inspection ins ON ins.id=inst.inspectionId 
+WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
+	</select>
+	<select id="getTaskState" resultType="String" parameterType="int">
+		SELECT settingName FROM t_systemparam WHERE id=(SELECT state from t_task where id=#{taskId})
+	</select>
+	<delete id="deleteInspectionStaff" parameterType="int">
+		DELETE FROM t_inspectionstaff WHERE inspectionId in(SELECT id FROM t_inspection WHERE taskId=#{taskId})
+	</delete>
+	<select id="checkInspectionCoding" ></select>
 </mapper>

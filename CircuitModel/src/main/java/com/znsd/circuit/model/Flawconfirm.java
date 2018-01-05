@@ -24,26 +24,6 @@ public class Flawconfirm {
 	public Flawconfirm() {
 		super();
 	}
-
-	public Flawconfirm(int id, String flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
-			String discoverDate, String isTrouble, int userId, String flawDesc, String serviceAbility, String flawGrade,
-			String remark) {
-		super();
-		this.id = id;
-		this.flawId = flawId;
-		this.towerId = towerId;
-		this.taskId = taskId;
-		this.threadId = threadId;
-		this.inspectionstaffId = inspectionstaffId;
-		this.discoverDate = discoverDate;
-		this.isTrouble = isTrouble;
-		this.userId = userId;
-		this.flawDesc = flawDesc;
-		this.serviceAbility = serviceAbility;
-		this.flawGrade = flawGrade;
-		this.remark = remark;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -167,12 +147,35 @@ public class Flawconfirm {
 		this.flawType = flawType;
 	}
 
+	
+	
+	public Flawconfirm(int id, String flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
+			String discoverDate, String isTrouble, String flawType, int userId, String flawDesc, String receiptMan,
+			String serviceAbility, String flawGrade, String remark) {
+		super();
+		this.id = id;
+		this.flawId = flawId;
+		this.towerId = towerId;
+		this.taskId = taskId;
+		this.threadId = threadId;
+		this.inspectionstaffId = inspectionstaffId;
+		this.discoverDate = discoverDate;
+		this.isTrouble = isTrouble;
+		this.flawType = flawType;
+		this.userId = userId;
+		this.flawDesc = flawDesc;
+		this.receiptMan = receiptMan;
+		this.serviceAbility = serviceAbility;
+		this.flawGrade = flawGrade;
+		this.remark = remark;
+	}
 	@Override
 	public String toString() {
 		return "Flawconfirm [id=" + id + ", flawId=" + flawId + ", towerId=" + towerId + ", taskId=" + taskId
 				+ ", threadId=" + threadId + ", inspectionstaffId=" + inspectionstaffId + ", discoverDate="
-				+ discoverDate + ", isTrouble=" + isTrouble + ", userId=" + userId + ", flawDesc=" + flawDesc
-				+ ", serviceAbility=" + serviceAbility + ", flawGrade=" + flawGrade + ", remark=" + remark + "]";
+				+ discoverDate + ", isTrouble=" + isTrouble + ", flawType=" + flawType + ", userId=" + userId
+				+ ", flawDesc=" + flawDesc + ", receiptMan=" + receiptMan + ", serviceAbility=" + serviceAbility
+				+ ", flawGrade=" + flawGrade + ", remark=" + remark + "]";
 	}
 
 }

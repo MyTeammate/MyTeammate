@@ -160,43 +160,87 @@ $(function(){
 	}
 })
 
+var receipterFlag='';
+function checkInspectionReceipter(id){
+	
+}
+
 /*
  * 执行 巡检任务
  */
 function executeInspection(id){
-	$.messager.confirm('确定','您确定要执行所选的巡检任务吗？',function(f){
-		if(f){
-			$.ajax({
-				url : "executeInspection",
-				type : "post",
-				data:{
-					taskId:id
-				},
-				success:function(result){
-					if(result){
-						 $.messager.show({
-							title:'提示',
-							msg:'执行成功',
-							timeout:500,
-							showType:"fade",
-							style:{
+	
+	$.ajax({
+		url:"checkInspectionReceipter",
+		type:"POST",
+		data:{
+			taskId:id
+		},
+		success:function(result){
+			if(result == true){
+				$.messager.confirm('确定','您确定要执行所选的巡检任务吗？',function(f){
+					if(f){
+						$.ajax({
+							url : "executeInspection",
+							type : "post",
+							data:{
+								taskId:id
+							},
+							success:function(result){
+								if(result){
+									 $.messager.show({
+										title:'提示',
+										msg:'执行成功',
+										timeout:500,
+										showType:"fade",
+										style:{
+										}
+									});
+								}else{
+									$.messager.alert({
+										title:'执行失败',
+										msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+										icon:'warning',
+									})
+								}
+								//刷新数据表格
+								$('#executeReceipt_datagrid').datagrid('reload');
 							}
-						});
-					}else{
-						$.messager.alert({
-							title:'执行失败',
-							msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
-							icon:'warning',
 						})
 					}
-					//刷新数据表格
-					$('#executeReceipt_datagrid').datagrid('reload');
-				}
-			})
+				});
+			}else{
+				$.messager.alert({
+					title:'执行失败',
+					msg:'<h3 style="color: red;">权限不够，需要权限：负责人！</h3>',
+					icon:'warning',
+				})
+			}
 		}
-	});
+	})
 }
 
+/*
+ * 点击  回执录入  操作
+ */
 function receiptInspection(id){
-	move('巡检任务回执录入','receiptInspection?taskId='+id);
+	$.ajax({
+		url:"checkInspectionReceipter",
+		type:"POST",
+		data:{
+			taskId:id
+		},
+		success:function(result){
+			if(result == true){
+				move('巡检任务回执录入','receiptInspection?taskId='+id);
+			}else{
+				$.messager.alert({
+					title:'回执录入失败',
+					msg:'<h3 style="color: red;">权限不够，需要权限：负责人！</h3>',
+					icon:'warning',
+				})
+			}
+		},
+	})
+	
 }

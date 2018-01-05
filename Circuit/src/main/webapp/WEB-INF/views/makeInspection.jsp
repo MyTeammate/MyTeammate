@@ -44,6 +44,10 @@
 					<td><input type="text" readonly="readonly" style="border:none;color:#A1A1A1;" id="createInspectionDate" name="createDate"/></td>
 				</tr>
 				<tr>
+					<td class="leftText">预计日期：</td>
+					<td><input class="easyui-datebox" style="width:120px;" name="predictDate"></td>
+				</tr>
+				<tr>
 					<td  class="leftText">备注：</td>
 					<td>
 						<textarea cols="25" rows="6" maxlength="250" name="remark">无</textarea>

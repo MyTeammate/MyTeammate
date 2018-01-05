@@ -24,7 +24,7 @@ $(function(){
 	
 	$("#inspectionFlawType").combobox({
 		valueField : 'id',
-		textField : 'flawname',
+		textField : 'name',
 		editable : false,// 不可编辑，只能选择
 		panelHeight : 'auto',
 		required : true,
@@ -122,6 +122,14 @@ function initDate(){
 var towerId='';
 
 /*
+ * 在id是string的情况下隐藏span，然后通过选择器获取
+ */
+function sf(e,id){
+	console.log($(e));
+	console.log($(e).parent().prev("span")[0].innerText);
+}
+
+/*
  * 点左边出右边
  */
 function showFlaw(e,id){
@@ -153,7 +161,7 @@ function showFlaw(e,id){
 			towerId:id
 		},
 		success:function(data){
-			//console.log("flowId:"+data.flawId+",serviceAbility:"+data.serviceAbility+",flawDesc:"+data.flawDesc);
+			console.log("flowId:"+data.flawId+",flawGrade:"+data.flawGrade+",serviceAbility:"+data.serviceAbility+",flawDesc:"+data.flawDesc);
 			$("#inspectionFlawType").combobox('select',data.flawId);
 			$("#inspectionFlawGrade").combobox('select',data.flawGrade);
 			
@@ -224,7 +232,7 @@ function saveExecuteReceipt(){
 		data:{
 			flawId:flawType,
 			towerId:towerId,
-			flowGrade:flawGrade,
+			flawGrade:flawGrade,
 			serviceAbility:serviceAbility,
 			discoverDate:date,
 			flawDesc:description,
@@ -251,6 +259,9 @@ function saveExecuteReceipt(){
 	})
 }
 
+/*
+ *  点击上传回执  
+ */
 function executeReceipt(){
 	$.ajax({
 		url:"executeReceipt",

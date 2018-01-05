@@ -26,6 +26,14 @@ public class TaskeliminateController {
 		return "taskElnews";
 	}
 
+	/**
+	 * 查询消缺任务
+	 * @param page
+	 * @param rows
+	 * @param renTitles
+	 * @param conteTitles
+	 * @return
+	 */
 	@RequestMapping("/selectAllEliminPost")
 	@ResponseBody
 	public Map<String, Object> selectAllEliminPost(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -58,6 +66,12 @@ public class TaskeliminateController {
 		return maps;
 	}
 
+	/**
+	 * 获取消缺任务ID
+	 * @param session
+	 * @param tcoding
+	 * @return
+	 */
 	@RequestMapping("/taskElTowerPost")
 	public String taskElTowerPost(HttpSession session, @RequestParam("tcoding") String tcoding) {
 		TaskEliminate task = taskEliminateService.selectElCoding(tcoding);
@@ -65,6 +79,18 @@ public class TaskeliminateController {
 		return "taskElnews";
 	}
 
+	/**
+	 * 查询每个消缺任务下面的所有任务杆塔
+	 * @param page
+	 * @param rows
+	 * @param tcoding
+	 * @param gantTitle
+	 * @param quexTitle
+	 * @param seTitle
+	 * @param staTitle
+	 * @param endTitle
+	 * @return
+	 */
 	@RequestMapping("/taskElTowerAllPost")
 	@ResponseBody
 	public Map<String, Object> taskElTowerAllPost(@RequestParam("page") int page, @RequestParam("rows") int rows,

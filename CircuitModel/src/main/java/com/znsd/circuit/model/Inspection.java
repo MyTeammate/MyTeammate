@@ -19,6 +19,7 @@ public class Inspection {
 	private String creater; //下发人
 	private String createDate; //下发时间
 	private String state; //任务状态
+	private String predictDate; //任务预计完成时间
 	private String actualDate; //任务完成时间
 	private String delete_flag; //任务是否取消
 	private String remark; // 任务备注
@@ -27,6 +28,15 @@ public class Inspection {
 	
 	private List<User> inspectionUsers; // 被分配的巡检人员
 	
+	
+	public String getPredictDate() {
+		return predictDate;
+	}
+
+	public void setPredictDate(String predictDate) {
+		this.predictDate = predictDate;
+	}
+
 	public String getRemark() {
 		return remark;
 	}

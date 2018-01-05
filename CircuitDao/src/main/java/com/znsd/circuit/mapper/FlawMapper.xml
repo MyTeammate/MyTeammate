@@ -4,23 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.FlawDao">
 	
-	
 	<select id="getFlawAll" resultType="Flaw" parameterType="Map">
-		SELECT `name` as name,state FROM t_flaw
+		SELECT `name` as name,state FROM t_flaw where delete_flag='否'
 	</select>
 	
 	<select id="getFlawPageCount" resultType="int">
-		SELECT COUNT(1) FROM t_flaw;
+		SELECT COUNT(1) FROM t_flaw where  delete_flag='否';
 	</select>
 	
 	<select id="getFlawPage" resultType="Flaw" parameterType="Map">
-		SELECT `name` as name,state FROM t_flaw LIMIT #{pageIndex},#{pageSize};
+		SELECT `name` as name,state,id FROM t_flaw where  delete_flag='否'  LIMIT #{pageIndex},#{pageSize};
 	</select>
 	
-	<select id="flawadd" resultType="Flaw">
+	<!-- 增加缺陷类型 -->
+	<insert id="flawadd" parameterType="Map">
 		insert into t_flaw 
 		(name,state,createdBy,createdDate,updatedBy,updatedDate,delete_flag,remark) values
 		(#{name},#{state},#{createdBy},#{createdDate},#{updatedBy},#{updatedDate},#{delete_flag},#{remark})
+	</insert>
+	
+	<!-- 修改缺陷类型 -->
+	<update id="updateflawstate" parameterType="Flaw">
+		update t_flaw set name=#{name},state=#{state},updatedBy=#{updatedBy},updatedDate=now() where id=#{id}
+	</update>
+	
+	<!-- 修改，删除需要的id查询 -->
+	<select id="fupdate" resultType="Flaw" parameterType="int">
+		SELECT id,`name`,state FROM `t_flaw` where id=#{id};
 	</select>
+	
+	<!-- 删除缺陷类型 -->
+	<update id="deleteflawstate" parameterType="Map">
+		update t_flaw set delete_flag=#{delete_flag},updatedBy=#{updatedBy},updatedDate=now() where id=#{id}
+	</update>
 	
 </mapper>

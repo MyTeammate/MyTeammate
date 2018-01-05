@@ -117,6 +117,7 @@ public interface InspectionDao {
 	 */
 	public List<User> getInspectionTackStaff(@Param("taskId")int taskId);
 	
+
 	/* start 回执录入 */
 	
 	/**判断是否已保存过该杆塔缺陷
@@ -147,11 +148,27 @@ public interface InspectionDao {
 	 */
 	public Flawconfirm getTowerFlaw(Flawconfirm fconfirm);  //towerId taskId
 	
-	
 	/**巡检任务上传回执（修改状态）
 	 * @param taskId
 	 */
 	public void updateFlawRecord(int taskId);
 	
+	/**判断是否是回执录入人
+	 * @param map
+	 * @return
+	 */
+	public int checkInspectionReceipter(Map<String, Object> map);
+	 
 	/*  end 回执录入   */
+	
+	/**得到任务的状态
+	 * @param taskId
+	 * @return
+	 */
+	public String getTaskState(int taskId);
+	
+	/**已分配状态下的取消操作
+	 * @param taskId
+	 */
+	public void deleteInspectionStaff(int taskId);
 }
