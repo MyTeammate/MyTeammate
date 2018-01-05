@@ -7,6 +7,7 @@ public class Task {
 	private String type;// 任务类型
 	private String coding;// 任务编号
 	private String state;// 任务状态
+	private int stateInteger;//任务状态int
 	private String date;// 任务下发日期
 	private String actualDate;// 实际完成时间
 	private String predictDate;// 预计完成时间
@@ -180,6 +181,15 @@ public class Task {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public int getStateInteger() {
+		return stateInteger;
+	}
+
+	public void setStateInteger(int stateInteger) {
+		this.stateInteger = stateInteger;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class Inspection {
 	private String coding; //任务编号
 	private String name; //任务名称
 	private String thread; //巡检线路
+	private int threadId;//巡检线路Id
 	private String startTower; //起始杆号
 	private String endTower; //终止杆号
 	private String creater; //下发人
@@ -22,6 +23,8 @@ public class Inspection {
 	private String actualDate; //任务完成时间
 	private String delete_flag; //任务是否取消
 	private String remark; // 任务备注
+	private Task task;  //任务对象
+	private Threads threads; //线路对象
 	
 	private List<User> inspectionUsers; // 被分配的巡检人员
 	
@@ -136,6 +139,37 @@ public class Inspection {
 
 	public void setInspectionUsers(List<User> inspectionUsers) {
 		this.inspectionUsers = inspectionUsers;
+	}
+	
+	
+
+	public Task getTask() {
+		return task;
+	}
+
+	public Threads getThreads() {
+		return threads;
+	}
+
+	public void setThreads(Threads threads) {
+		this.threads = threads;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+	
+	
+	
+
+
+
+	public int getThreadId() {
+		return threadId;
+	}
+
+	public void setThreadId(int threadId) {
+		this.threadId = threadId;
 	}
 
 	@Override

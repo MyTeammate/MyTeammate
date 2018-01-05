@@ -63,6 +63,7 @@
 		     <td><input type='text' id='0' name='param' /></td>
 		   </tr> -->
 		</table>
+		<table id="user_update_option"></table>
 	<!-- </div> -->
 </body>
 </html>

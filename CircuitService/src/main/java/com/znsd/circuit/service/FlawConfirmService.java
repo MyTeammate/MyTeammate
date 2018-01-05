@@ -5,7 +5,7 @@ import java.util.List;
 import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Flawnot;
 
-public interface FlawNotService {
+public interface FlawConfirmService {
 	
 	List<Flawnot> selectFlawNotarize(int id);
 

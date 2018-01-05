@@ -5,18 +5,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.znsd.circuit.dao.FlawNotarizeDao;
+import com.znsd.circuit.dao.FlawConfirmDao;
 import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Flawnot;
-import com.znsd.circuit.service.FlawNotService;
+import com.znsd.circuit.service.FlawConfirmService;
 
 @Service
-public class FlawNotServiceImpl implements FlawNotService{
+public class FlawConfirmServiceImpl implements FlawConfirmService{
 	
 	@Autowired
-	private FlawNotarizeDao flawNotarizeDao;
+	private FlawConfirmDao flawConfirmDao;
 
 	@Override
+	public List<Flawnot> selectFlawNotarize(int id) {
+		return null;
+	}
+
+	@Override
+	public List<Flawnot> getFlawNotAll(int id, int tasknumber, int threadcoding, int towercoding, int flawname,
+			String flawConfirmserviceAbility, String flawConfirmflawDesc, String flawConfirmdiscoverDate,
+			int inspectionstaffuserId, int flawConfirmflowGrade) {
+		return null;
+	}
+
+	/*@Override
 	public List<Flawnot> getFlawNotAll(int id,int tasknumber, int threadcoding, int towercoding, int flawname,
 			String flawConfirmserviceAbility, String flawConfirmflawDesc, String flawConfirmdiscoverDate,
 			int inspectionstaffuserId, int flawConfirmflowGrade) {
@@ -37,6 +49,6 @@ public class FlawNotServiceImpl implements FlawNotService{
 	@Override
 	public List<Flawnot> selectFlawNotarize(int id){
 		return flawNotarizeDao.selectFlawNotarize(id);
-	}
+	}*/
 	
 }

@@ -16,8 +16,8 @@
 		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
 		h.id=f.threadId AND
 		wa.id=f.flawId
-		AND f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
-		is NOT NULL
+		AND f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
+		is NOT NULL AND f.confirmstate=0
 		<if test="rent!=null &amp;&amp; rent!=''">
 			AND a.coding LIKE #{rent}
 		</if>
@@ -36,7 +36,7 @@
 		WHERE f.id=r.yetid AND r.xtaskid=e.taskId AND r.xtaskid=a.id AND
 		h.id=f.threadId AND wa.id=f.flawId
 		AND f.towerId=w.id AND
-		s.id=f.flowGrade AND a.actualDate is NOT NULL
+		s.id=f.flawGrade AND a.actualDate is NOT NULL
 	</select>
 
 	<select id="selectElCoding" resultType="TaskEliminate">
@@ -50,7 +50,7 @@
 		AND r.xtaskid=a.id AND
 		h.id=f.threadId AND wa.id=f.flawId
 		AND
-		f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate is NOT NULL
+		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate is NOT NULL 
 	</select>
 
 	<select id="selectElTower" parameterType="java.util.Map"
@@ -73,9 +73,9 @@
 		h.id=f.threadId AND
 		wa.id=f.flawId
 		AND
-		f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
+		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
 		is NOT NULL AND
-		a.coding=#{tcoding}
+		a.coding=#{tcoding} AND f.confirmstate=0
 		<if test="gant!=null &amp;&amp; gant!=''">
 			AND w.coding LIKE #{gant}
 		</if>
@@ -105,7 +105,7 @@
 		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
 		h.id=f.threadId AND
 		wa.id=f.flawId
-		AND f.towerId=w.id AND s.id=f.flowGrade AND a.actualDate
+		AND f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
 		is NOT NULL AND
 		a.coding=#{tcoding}
 	</select>

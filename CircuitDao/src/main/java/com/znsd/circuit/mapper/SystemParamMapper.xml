@@ -20,6 +20,11 @@
         limit #{pageIndex},#{pageSize}
     </select>
     
+    <select id="getSystemparamById" resultType="Systemparam" parameterType="int">
+         select sp.id,sp.settingName from t_systemparam sp
+		  where sp.id=#{id}
+    </select>
+    
     <select id="querySystemparam" parameterType="map" resultType="Systemparam">
         select id,settingName from t_systemparam where settingName=#{settingName} and settingId=#{settingId}
     </select>
