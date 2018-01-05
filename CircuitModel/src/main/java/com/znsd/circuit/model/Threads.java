@@ -10,9 +10,11 @@ public class Threads {
 	private double length;
 	private double returnWay;
 	private int rank;
+	 private String rankName;
 	 private String startTower;
 	 private String endTower;
 	 private int redix;
+	
 	 private int state;
 	 private String runningStateString;
 	 private int runningState;
@@ -150,6 +152,13 @@ public class Threads {
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
+	public String getRankName() {
+		return rankName;
+	}
+	public void setRankName(String rankName) {
+		this.rankName = rankName;
+	}
+	
 	 
 	 
 }

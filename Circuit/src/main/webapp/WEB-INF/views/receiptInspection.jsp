@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>回执录入</title>
 </head>
-<body style="padding-left:145px;margin-top:45px;">
+<body style="padding-left:145px;margin-top:45px; ">
 	<p style="padding-top:35px;padding-left:25px;">巡检任务管理>>巡检任务执行与回执>>巡检任务回执录入</p>
 	<div style="padding:25px;margin-left:35px;font-size:14px;">
 		<div id="receiptLeft">
@@ -25,18 +25,19 @@
 			<img alt="" src="image/u34.png">
 		</div>
 		<div id="receiptRight" style="display: block;">
-			<table>
+		<form id="receipt_form">
+			<table id="receipt_table">
 				<tr>
 					<td class="leftText">线路编号：</td>
 					<td id="threadCoding" style="color:#A1A1A1;"></td>
 				</tr>
 				<tr>
-					<td class="leftText">杆塔编号：</td>
-					<td></td>
+					<td class="leftText" >杆塔编号：</td>
+					<td id="towerCoding"></td>
 				</tr>
 				<tr>
 					<td class="leftText">缺陷类型：</td>
-					<td><input type="text" id="inspectionFlawType" /></td>
+					<td><input type="text" id="inspectionFlawType" name="flawId" /></td>
 				</tr>
 				<tr>
 					<td class="leftText">缺陷级别：</td>
@@ -50,9 +51,7 @@
 				            <div class="progress_bg">
 				                <div class="progress_bar"></div>
 				            </div>
-				            <!-- <span class="text">0%</span> -->
 				            <div class="progress_btn"></div>
-				            <!-- <div class="text">0%</div> -->
 				        </div>
 					</td>
 				</tr>
@@ -71,14 +70,15 @@
 					</td>
 				</tr>
 			</table>
+			</form>
 		</div>
 		
 		<p style="padding:25px;">
-			<input type="button" value="上传回执" class="bbb"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="上传回执" class="bbb" onClick="executeReceipt()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<span style="padding-left:"></span>
-			<input type="button" value="保存" class="bbb"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="保存" class="bbb" onClick="saveExecuteReceipt()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<span style="width:50px;"></span>
-			<input type="button" value="返回" class="bbb"/>
+			<input type="button" value="返回" class="bbb" onClick="backExecuteReceipt()"/>
 		</p>
 	</div>
 	<style type="text/css">

@@ -126,6 +126,7 @@ public interface EliminateDao {
 	 * @return
 	 */
 	public List<MyFlaw> seeEliminateBytaskId(int taskid);
+
 	/**
 	 * 消缺执行与回执的任务分页
 	 * @param map
@@ -233,6 +234,7 @@ public interface EliminateDao {
 	public int update_all(Map<String,Object> map);
 	
 	
+
 }
 
 

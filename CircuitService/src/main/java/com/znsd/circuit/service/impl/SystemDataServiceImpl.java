@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.SystemDataDao;
+import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Systemsetting;
 import com.znsd.circuit.service.SystemDataService;
 
@@ -55,7 +56,10 @@ public class SystemDataServiceImpl implements SystemDataService{
 		return systemDataDao.updateSystemsetting3(coding);
 	}
 	
-	
+	@Override
+	public List<Systemparam> getSystemParamDh(String key) {
+		return systemDataDao.getSystemParamDh(key);
+	}
 	
 	
 }

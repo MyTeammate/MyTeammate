@@ -20,9 +20,9 @@ public class FlawServiceImpl implements FlawService{
 	
 	//数据显示
 	@Override
-	public List<Flaw> getFlawAll(int id,String flawname,int state){
+	public List<Flaw> getFlawAll(int id,String name,int state){
 		Flaw f = new Flaw();
-		f.setFlawname(flawname);
+		f.setname(name);
 		f.setState(state);
 		List<Flaw> list=flawDao.getFlawAll(f);
 		return list;
@@ -54,8 +54,24 @@ public class FlawServiceImpl implements FlawService{
 	}
 
 	@Override
-	public boolean flawadd(Flaw flaw) {
-		return flawDao.flawadd(flaw);
+	public void flawadd(Flaw flaw) {
+		flawDao.flawadd(flaw);
+		
+	}
+
+	@Override
+	public boolean updateflawstate(Flaw flaw) {
+		return flawDao.updateflawstate(flaw);
+	}
+
+	@Override
+	public Flaw fupdate(int id) {
+		return flawDao.fupdate(id);
+	}
+
+	@Override
+	public void deleteflawstate(Map<String, Object> map) {
+		flawDao.deleteflawstate(map);
 	}
 
 
