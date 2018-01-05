@@ -69,7 +69,7 @@ public class TaskpollingController {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
 			maps.put("rows", list);
-			maps.put("total", count);
+			maps.put("total", list.size());
 		}
 
 		return maps;
