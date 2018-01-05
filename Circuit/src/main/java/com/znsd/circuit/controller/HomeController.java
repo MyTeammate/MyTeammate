@@ -40,15 +40,14 @@ public class HomeController {
     }
 	
 	@ResponseBody
-	@RequestMapping("/login")
-	public boolean login(HttpSession session,HttpServletResponse response,String userName,String passWord){
+	@RequestMapping("/defined")
+	public boolean login(HttpSession session,HttpServletResponse response,String userName,String passWord,String logId){
 		response.setContentType("text/html;charset=UTF-8"); 
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("userName",userName);
 		map.put("passWord",passWord);
 		User user=homeService.login(map);
 		if(user!=null){
-			System.out.println(user);
 			session.setAttribute("user",user);
 			Date date=new Date();
 			DateFormat format=new SimpleDateFormat("yyyy-MM-dd");

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SetController {
@@ -18,6 +19,15 @@ public class SetController {
     @RequestMapping("/logout")
 	public String logout(HttpSession session){
     	session.removeAttribute("user");
+		return "login";
+				
+	}
+    
+    
+  //注销
+    @ResponseBody
+    @RequestMapping("/prepareLogout")
+	public String prepareLogout(int logId){
 		return "login";
 				
 	}
@@ -51,4 +61,12 @@ public class SetController {
     public String systemRole(){
     	return "systemRole";
     }
+    
+  //用户管理日志
+    @RequestMapping("/systemLog")
+    public String systemLog(){
+    	return "systemLog";
+    }
+    
+  
 }

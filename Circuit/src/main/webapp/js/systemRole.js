@@ -32,6 +32,7 @@ function role_tb(){
             	  align:'center',
             	  formatter:function(value,row,index){
             		  var oper = '';
+            		  alert(row.coding);
             		  if(row.state=='0'){
             			  oper = '<span><a href="javaScript:roleState('
 								+ row.id+","+0
@@ -195,6 +196,7 @@ function roleState(id,state){
 }
 
 function roleUpdate(id,coding,name,state){
+	alert("1");
 			$('#role_update_option').html("" +
 					"<tr>" +
 					"<td style='float:right;'>角色编号：</td><td style='width:250px'><input type='text' id='newCoding' name='param' /><span id='newCoding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
@@ -206,6 +208,7 @@ function roleUpdate(id,coding,name,state){
 			$('#newCoding').val(coding);
 			$('#newName').val(name);
 			$('#newState').val(state);
+			alert("2");
 			if(state==0){
 				$('#newState').html("启用");
 			}else{
@@ -292,16 +295,18 @@ function roleUpdate(id,coding,name,state){
 function roleDelete(id,state){
 	if(state==1){
 		$.messager.confirm('确定','您确定要删除所选的角色吗？',function(f){
-			var data={id:id};
-			$.ajax({
-				url:'roleManage/deleteRole',
-				type:"post",
-				data:data,
-				success:function(result){
-					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-			    	tab.panel('refresh', 'systemRole');
-				}
-			})
+			if(f){
+				var data={id:id};
+				$.ajax({
+					url:'roleManage/deleteRole',
+					type:"post",
+					data:data,
+					success:function(result){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemRole');
+					}
+				})
+			}
 		})
 	}else{
 		$.messager.alert({

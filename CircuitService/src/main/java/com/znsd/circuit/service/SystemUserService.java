@@ -3,6 +3,7 @@ package com.znsd.circuit.service;
 import java.util.List;
 import java.util.Map;
 
+import com.znsd.circuit.model.Systemlog;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 
@@ -51,4 +52,16 @@ public interface SystemUserService {
     
     //删除用户
     public int delete(int id);
+    
+  //日志分页查询
+    public List<Systemlog> listSystemLog(Map<String, Object> map);
+    
+  //分页总数量
+    public int systemLogCount();
+    
+  //操作日志
+    public int addLog(Systemlog log);
+    
+  //日志记录登陆或注销
+    public int loginLog(Systemlog log);
 }

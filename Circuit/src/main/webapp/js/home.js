@@ -32,6 +32,14 @@ $(function(){
 						iconCls:node.iconCls,
 						href : "http://localhost:8080/Circuit/"+node.url,
 						onLoad:function(){
+							var data={logId:node.id};
+							$.ajax({
+								url:'userManage/addLog',
+								type:"post",
+								data:data,
+								success:function(result){
+								}
+							})
 							//orderInquiry();
 							if(node.text=="杆塔管理"){
 								tower();
@@ -46,6 +54,7 @@ $(function(){
 								parameter_tb();
 							}else if(node.text=="用户管理"){
 								user_tb();
+								log_tb();
 							}else if(node.text=="角色管理"){
 								role_tb();
 							}
@@ -63,6 +72,18 @@ $(function(){
 			}
 		}
 	}); 
+	var logId=10000;
+	var dataOut={logId:logId};
+	$('#logout').bind('click',function(){
+		$.ajax({
+			url:'prepareLogout',
+			type:"post",
+			data:dataOut,
+			success:function(result){
+				window.location.href=""+result+""; 
+			}
+		})
+	})
 })
 
 //更改一个面板（跳面板）

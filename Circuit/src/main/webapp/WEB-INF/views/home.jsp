@@ -30,7 +30,7 @@
 <script type="text/javascript" src="js/inspectionTaskQuery.js"></script>
 <link rel="stylesheet" href="css/inspectionTaskQuery.css" />
 <script type="text/javascript" src="js/systemRole.js"></script>
-
+<script type="text/javascript" src="js/systemLog.js"></script>
 
 
 
@@ -42,7 +42,7 @@
 		style="height: 60px; background: #ccc;">
 		<div class="logo">电力巡检§</div>
 		<div class="logout">
-			您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="logout">&nbsp;&nbsp;退出</a>
+			您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="#" id="logout">&nbsp;&nbsp;退出</a>
 		</div>
 		<div class="logout">当前权限：${user.roleName}</div>
 	</div>   
