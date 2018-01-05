@@ -59,5 +59,20 @@ public class FlawServiceImpl implements FlawService{
 		
 	}
 
+	@Override
+	public boolean updateflawstate(Flaw flaw) {
+		return flawDao.updateflawstate(flaw);
+	}
+
+	@Override
+	public Flaw fupdate(int id) {
+		return flawDao.fupdate(id);
+	}
+
+	@Override
+	public void deleteflawstate(Map<String, Object> map) {
+		flawDao.deleteflawstate(map);
+	}
+
 
 }

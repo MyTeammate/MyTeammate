@@ -19,5 +19,13 @@ public interface FlawDao {
 	public List<Flaw> getFlawPage(Map<String, Object> map);
 
 	public Object flawadd(Flaw flaw);
+	
+	public boolean updateflawstate(Flaw flaw);
 
+	public Flaw fupdate(int id);
+
+	public boolean deleteflawstate(Map<String, Object> map);
+
+
+	
 }

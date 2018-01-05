@@ -11,7 +11,7 @@ public class Flawconfirm {
 	private int taskId;//任务表的主键id
 	private int threadId;//线路表的主键id
 	private int inspectionstaffId;//巡检表id
-	private Date discoverDate;//发现时间
+	private String discoverDate;//发现时间
 	private String isTrouble;//有无故障
 	private int userId;//由谁来确认缺陷等级（发布这个巡检任务的人）
 	private String flawDesc;//缺陷描述
@@ -24,7 +24,7 @@ public class Flawconfirm {
 	}
 
 	public Flawconfirm(int id, int flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
-			Date discoverDate, String isTrouble, int userId, String flawDesc, String serviceAbility, int flowGrade,
+			String discoverDate, String isTrouble, int userId, String flawDesc, String serviceAbility, int flowGrade,
 			String remark) {
 		super();
 		this.id = id;
@@ -90,11 +90,11 @@ public class Flawconfirm {
 		this.inspectionstaffId = inspectionstaffId;
 	}
 
-	public Date getDiscoverDate() {
+	public String getDiscoverDate() {
 		return discoverDate;
 	}
 
-	public void setDiscoverDate(Date discoverDate) {
+	public void setDiscoverDate(String discoverDate) {
 		this.discoverDate = discoverDate;
 	}
 

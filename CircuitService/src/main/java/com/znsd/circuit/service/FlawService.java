@@ -1,6 +1,7 @@
 package com.znsd.circuit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Pager;
@@ -17,5 +18,11 @@ public interface FlawService {
 
 	public void flawadd(Flaw flaw);
 
+	public boolean updateflawstate(Flaw flaw);
+	
+	public void deleteflawstate(Map<String, Object> map);
+	
+	public Flaw fupdate(int id);
 
+	
 }
