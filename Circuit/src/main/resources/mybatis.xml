@@ -10,7 +10,7 @@
 		<!-- 指定单独一个类的别名 -->
 		<!-- <typeAlias type="com.lxit.ssm.entities.Student" alias="stu"/> -->
 	</typeAliases>
-	<!-- <plugins>
+	  <!-- <plugins>
 	  	<plugin interceptor="com.znsd.circuit.plugins.MyInterceptor">
 	  		<property name="Sunday" value="sunny"/>
 	  	</plugin>

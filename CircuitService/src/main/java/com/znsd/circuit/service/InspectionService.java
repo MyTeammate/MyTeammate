@@ -74,7 +74,7 @@ public interface InspectionService {
 	 * @param ins
 	 * @param userId
 	 */
-	public boolean makeInspection(Inspection ins);
+	public int makeInspection(Inspection ins);
 	
 	/**分配巡检任务
 	 * @param userId
@@ -137,5 +137,22 @@ public interface InspectionService {
 	 */
 	public void updateFlawRecord(int taskId);
 	
+	/**判断是否是回执录入人
+	 * @param map
+	 * @return
+	 */
+	public int checkInspectionReceipter(Map<String, Object> map);  //taskId userId
+	
 	/*  end 回执录入   */
+	
+	/**得到任务的状态
+	 * @param taskId
+	 * @return
+	 */
+	public String getTaskState(int taskId);
+	
+	/**已分配状态下的取消操作
+	 * @param taskId
+	 */
+	public void deleteInspectionStaff(int taskId);
 }
