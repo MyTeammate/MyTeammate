@@ -18,8 +18,7 @@ import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Flawnot;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.model.User;
-import com.znsd.circuit.service.FlawFYService;
-import com.znsd.circuit.service.FlawNotService;
+import com.znsd.circuit.service.FlawConfirmService;
 import com.znsd.circuit.service.FlawService;
 import com.znsd.circuit.util.DateTime;
 
@@ -32,7 +31,7 @@ public class FlawController {
 	private FlawService flawService;
 	
 	@Autowired
-	private FlawNotService flawNotService;
+	private FlawConfirmService flawNotService;
 	
 	
 	//等级确认
@@ -58,7 +57,12 @@ public class FlawController {
 	public String getflawstateadd(){
 		return "fstateadd";
 	}
-
+	
+	//修改缺陷类型
+	@RequestMapping("/updateFlaw")
+	public String getupdateFlaw(){
+		return "updateFlaw";
+	}
 	
 	@ResponseBody
 	@RequestMapping("/flawadd")
@@ -69,9 +73,47 @@ public class FlawController {
 		flaw.setupdatedDate(datetime);
 		flaw.setCreatedBy(1);
 		flaw.setUpdatedBy(1);
-		flaw.setDelete_flag("是");
+		flaw.setDelete_flag("否");
 		flaw.setRemark("萝卜抱");
 		flawService.flawadd(flaw);
+	}
+	
+	//修改缺陷类型
+	@ResponseBody
+	@RequestMapping("/updatefla")
+	public boolean updateflawstate(HttpSession  session,Flaw flaw){
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return false;
+		} 
+		flaw.setUpdatedBy(user.getId());
+		flawService.updateflawstate(flaw);
+		return true;
+	}
+	
+	//删除缺陷类型
+	@ResponseBody
+	@RequestMapping("/deleteFlawState")
+	public boolean deleteFlawState(int id,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if(user==null){
+			return false;
+		}
+		Map<String,Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("delete_flag","是");
+		map.put("updatedBy", user.getId());
+		System.out.println("============="+id);
+		flawService.deleteflawstate(map);
+		return true;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/lookupdate")
+	public Flaw lookFlaw(int id){
+		Flaw f = flawService.fupdate(id);	//查询到要修改的id
+		return f;
 	}
 	
 	//缺陷类型设置表查询
@@ -84,21 +126,6 @@ public class FlawController {
 		System.out.println("listfl:"+listfl);
 		return listfl;
 	}
-	
-	//添加缺陷类型
-	/*@ResponseBody
-	@RequestMapping("/fladd")
-	public void flawstateadd(HttpSession session,Flaw flaw){
-		String datetime = new DateTime().getDateTime();
-		User user = (User) session.getAttribute("user");
-		flaw.setCreatedDate(datetime);
-		flaw.setUpdateDate(datetime);
-		flaw.setCreatedBy(1);
-		flaw.setUpdatedBy(1);
-		flaw.setDelete_flag("是");
-		flaw.setRemark("萝卜抱");
-		flawService.getFladd(flaw);
-	}*/
 	
 	@ResponseBody
 	@RequestMapping("/getFlawNotarizeAll")
