@@ -3,9 +3,11 @@ package com.znsd.circuit.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Threads;
@@ -62,7 +64,7 @@ public interface InspectionDao {
 	/**得到分页的总条数
 	 * @return
 	 */
-	public int getInspectionPageCount();
+	public int getInspectionPageCount(Map<String,Object> map);
 	
 	/**分页查询
 	 * @param map
@@ -92,4 +94,64 @@ public interface InspectionDao {
 	 */
 	public void updateInspectionDate(Map<String, Object> map);
 	
+	
+	/**
+	 * 根据巡检任务id来获取这条巡检任务的详细信息
+	 * @param id
+	 * @return
+	 */
+	public Inspection getInspectionTaskById(@Param("id")int id);
+	
+	
+	/**
+	 * 根据ID获取某个杆塔的缺陷信息
+	 * @param towerId
+	 * @return
+	 */
+	public Flawconfirm getFlawInfoByTowerId(int towerId,int taskId);
+	
+	/**
+	 * 获取一条巡检任务执行的巡检员
+	 * @param taskId
+	 * @return
+	 */
+	public List<User> getInspectionTackStaff(@Param("taskId")int taskId);
+	
+	/* start 回执录入 */
+	
+	/**判断是否已保存过该杆塔缺陷
+	 * @param fconfirm
+	 * @return
+	 */
+	public int checkFlawRecord(Flawconfirm fconfirm); //taskId towerId
+	
+	/**第一次保存某任务下的杆塔缺陷
+	 * @param fconfirm
+	 * @return
+	 */
+	public int saveFlawConfirm(Flawconfirm fconfirm);
+	
+	/**增加巡检记录
+	 * @param fconfirm
+	 */
+	public void saveFlawRecord(Flawconfirm fconfirm); //taskId flawconfirmId userId
+	
+	/**修改（再次保存）
+	 * @param fconfirm
+	 */
+	public void updateFlawConfirm(Flawconfirm fconfirm);
+	
+	/**通过杆塔和编号得到杆塔缺陷
+	 * @param fconfirm
+	 * @return
+	 */
+	public Flawconfirm getTowerFlaw(Flawconfirm fconfirm);  //towerId taskId
+	
+	
+	/**巡检任务上传回执（修改状态）
+	 * @param taskId
+	 */
+	public void updateFlawRecord(int taskId);
+	
+	/*  end 回执录入   */
 }

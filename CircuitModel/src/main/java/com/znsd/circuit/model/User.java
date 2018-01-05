@@ -15,6 +15,10 @@ public class User {
     private String email;		 //电子邮箱
     private String loginDate;    //最后一次登录时间
     private int state;           //用户状态
+    private int createBy;        //创建人
+    private String createDate;   //创建时间
+    private int updatedBy;        //修改人
+    private String updatedDate;   //修改时间
 	public int getId() {
 		return id;
 	}
@@ -99,12 +103,38 @@ public class User {
 	public void setState(int state) {
 		this.state = state;
 	}
+	public int getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(int createBy) {
+		this.createBy = createBy;
+	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", name=" + name + ", roleId="
 				+ roleId + ", roleName=" + roleName + ", sex=" + sex + ", age=" + age + ", entryDate=" + entryDate
 				+ ", leaveDate=" + leaveDate + ", phone=" + phone + ", email=" + email + ", loginDate=" + loginDate
-				+ ", state=" + state + "]";
+				+ ", state=" + state + ", createBy=" + createBy + ", createDate=" + createDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
+	
 	
 }

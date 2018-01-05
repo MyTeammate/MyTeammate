@@ -2,9 +2,9 @@ package com.znsd.circuit.model;
 
 public class Tower {
 
-	private int id;
+	private Integer id;
 	private String coding;
-	private int lineId;
+	private Integer lineId;
 	private String lineName;
 	//private Line line;
 	private int state;
@@ -17,24 +17,15 @@ public class Tower {
 	private String remark;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getCoding() {
 		return coding;
 	}
 	public void setCoding(String coding) {
 		this.coding = coding;
 	}
-	public int getLineId() {
-		return lineId;
-	}
-	public void setLineId(int lineId) {
-		this.lineId = lineId;
-	}
+   
+	
 	/*public Line getLine() {
 		return line;
 	}
@@ -43,6 +34,18 @@ public class Tower {
 	}*/
 	
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getLineId() {
+		return lineId;
+	}
+	public void setLineId(Integer lineId) {
+		this.lineId = lineId;
+	}
 	public int getState() {
 		return state;
 	}

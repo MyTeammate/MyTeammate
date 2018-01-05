@@ -14,6 +14,7 @@ import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
 import com.znsd.circuit.util.MyFlaw;
+import com.znsd.circuit.util.SeeEliminate;
 
 @Service
 public class EliminateServiceImpl implements EliminateService {
@@ -103,6 +104,15 @@ public class EliminateServiceImpl implements EliminateService {
 	public int insertintoFlawStaff(Flawstaff flawStaff) {
 		
 		return eliminateDao.insertintoFlawStaff(flawStaff);
+	}
+	@Override
+	public SeeEliminate seeEliminateById(int eliminateId) {
+		return eliminateDao.seeEliminateById(eliminateId);
+	}
+	@Override
+	public List<User> getAllUserId(int eliminateId) {
+		
+		return eliminateDao.getAllUserId(eliminateId);
 	}
 	
 	

@@ -6,42 +6,24 @@ import java.util.Date;
 public class Flawconfirm {
 
 	private int id;//缺陷确认表主键自增id
-	private int flawId;//缺陷表的主键id
+	private String flawId;//缺陷表的主键id
 	private int towerId;//杆塔表的主键id
 	private int taskId;//任务表的主键id
 	private int threadId;//线路表的主键id
-	private int inspectionstaffId;//巡检表id
-	private Date discoverDate;//发现时间
+	private int inspectionstaffId;//巡检人员分配表id
+	private String discoverDate;//发现时间
 	private String isTrouble;//有无故障
+	private String flawType; //缺陷等级
 	private int userId;//由谁来确认缺陷等级（发布这个巡检任务的人）
 	private String flawDesc;//缺陷描述
+	private String receiptMan;//回执录入人
 	private String serviceAbility;//完好率
-	private int flowGrade;//缺陷等级
+	private String flawGrade;//缺陷等级
 	private String remark;//备注
 
 	public Flawconfirm() {
 		super();
 	}
-
-	public Flawconfirm(int id, int flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
-			Date discoverDate, String isTrouble, int userId, String flawDesc, String serviceAbility, int flowGrade,
-			String remark) {
-		super();
-		this.id = id;
-		this.flawId = flawId;
-		this.towerId = towerId;
-		this.taskId = taskId;
-		this.threadId = threadId;
-		this.inspectionstaffId = inspectionstaffId;
-		this.discoverDate = discoverDate;
-		this.isTrouble = isTrouble;
-		this.userId = userId;
-		this.flawDesc = flawDesc;
-		this.serviceAbility = serviceAbility;
-		this.flowGrade = flowGrade;
-		this.remark = remark;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -50,11 +32,11 @@ public class Flawconfirm {
 		this.id = id;
 	}
 
-	public int getFlawId() {
+	public String getFlawId() {
 		return flawId;
 	}
 
-	public void setFlawId(int flawId) {
+	public void setFlawId(String flawId) {
 		this.flawId = flawId;
 	}
 
@@ -90,11 +72,11 @@ public class Flawconfirm {
 		this.inspectionstaffId = inspectionstaffId;
 	}
 
-	public Date getDiscoverDate() {
+	public String getDiscoverDate() {
 		return discoverDate;
 	}
 
-	public void setDiscoverDate(Date discoverDate) {
+	public void setDiscoverDate(String discoverDate) {
 		this.discoverDate = discoverDate;
 	}
 
@@ -130,12 +112,12 @@ public class Flawconfirm {
 		this.serviceAbility = serviceAbility;
 	}
 
-	public int getFlowGrade() {
-		return flowGrade;
+	public String getFlawGrade() {
+		return flawGrade;
 	}
 
-	public void setFlowGrade(int flowGrade) {
-		this.flowGrade = flowGrade;
+	public void setFlawGrade(String flawGrade) {
+		this.flawGrade = flawGrade;
 	}
 
 	public String getRemark() {
@@ -145,13 +127,55 @@ public class Flawconfirm {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	
+	
 
+	public String getReceiptMan() {
+		return receiptMan;
+	}
+
+	public void setReceiptMan(String receiptMan) {
+		this.receiptMan = receiptMan;
+	}
+
+	public String getFlawType() {
+		return flawType;
+	}
+
+	public void setFlawType(String flawType) {
+		this.flawType = flawType;
+	}
+
+	
+	
+	public Flawconfirm(int id, String flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
+			String discoverDate, String isTrouble, String flawType, int userId, String flawDesc, String receiptMan,
+			String serviceAbility, String flawGrade, String remark) {
+		super();
+		this.id = id;
+		this.flawId = flawId;
+		this.towerId = towerId;
+		this.taskId = taskId;
+		this.threadId = threadId;
+		this.inspectionstaffId = inspectionstaffId;
+		this.discoverDate = discoverDate;
+		this.isTrouble = isTrouble;
+		this.flawType = flawType;
+		this.userId = userId;
+		this.flawDesc = flawDesc;
+		this.receiptMan = receiptMan;
+		this.serviceAbility = serviceAbility;
+		this.flawGrade = flawGrade;
+		this.remark = remark;
+	}
 	@Override
 	public String toString() {
 		return "Flawconfirm [id=" + id + ", flawId=" + flawId + ", towerId=" + towerId + ", taskId=" + taskId
 				+ ", threadId=" + threadId + ", inspectionstaffId=" + inspectionstaffId + ", discoverDate="
-				+ discoverDate + ", isTrouble=" + isTrouble + ", userId=" + userId + ", flawDesc=" + flawDesc
-				+ ", serviceAbility=" + serviceAbility + ", flowGrade=" + flowGrade + ", remark=" + remark + "]";
+				+ discoverDate + ", isTrouble=" + isTrouble + ", flawType=" + flawType + ", userId=" + userId
+				+ ", flawDesc=" + flawDesc + ", receiptMan=" + receiptMan + ", serviceAbility=" + serviceAbility
+				+ ", flawGrade=" + flawGrade + ", remark=" + remark + "]";
 	}
 
 }

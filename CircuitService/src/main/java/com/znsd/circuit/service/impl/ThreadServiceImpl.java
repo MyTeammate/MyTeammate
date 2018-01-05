@@ -28,17 +28,64 @@ public class ThreadServiceImpl implements ThreadService {
 		
 		params.put("page", (page-1)*rows);
 		params.put("row", rows);
+		if(thread.getCoding()!=null&&!thread.getCoding().equals("")) {
+			thread.setCoding("%"+thread.getCoding()+"%");
+		}
+		
 		params.put("thread", thread);
+		
 		List<Threads> threads = threadDao.pageSelectThread(params);
 		int total = threadDao.pageThreadTotal(params);
 		for (Threads ts : threads) {
 			ts.setStateString(ts.getState()==0?"启用":"禁用");
 			ts.setRunningStateString(ts.getRunningState()==0?"正常":"维修中");
-			ts.setOperation(operation.getOperation(ts.getState()));
+			ts.setOperation(operation.getOperation(ts.getState(),"Thread"));
 		}
 		params.put("rows", threads);
 		params.put("total", total);
 		
 		return params;
+	}
+
+	@Override
+	public Threads checkCoding(Threads threads) {
+		return threadDao.checkCoding(threads);
+	}
+
+	@Override
+	public int insertThread(Threads threads) {
+		threadDao.insertThread(threads);
+		
+		return threads.getId();
+	}
+
+	@Override
+	public Threads getThreadById(int id) {
+		return threadDao.getThreadById(id);
+	}
+
+	@Override
+	public void updateThread(Threads threads) {
+		 threadDao.updateThread(threads);   		
+	}
+
+	@Override
+	public List<Threads> findThreadTask(int id) {
+		return threadDao.findThreadTask(id);
+	}
+
+	@Override
+	public void setDeleteFlag(int id) {
+		threadDao.setDeleteFlag(id);
+	}
+
+	@Override
+	public void setStateFlag(Threads threads) {
+		threadDao.setStateFlag(threads);
+	}
+
+	@Override
+	public List<Threads> findThreadsByLineId(int lineId) {
+		return threadDao.findThreadsByLineId(lineId);
 	}
 }

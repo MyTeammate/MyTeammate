@@ -45,4 +45,10 @@ public class SetController {
     public String systemUser(){
     	return "systemUser";
     }
+    
+  //用户管理页面
+    @RequestMapping("/systemRole")
+    public String systemRole(){
+    	return "systemRole";
+    }
 }

@@ -47,7 +47,7 @@ public class SystemDataController {
 	@RequestMapping("/addSystemsetting")
 	public int addSystemsetting(HttpSession session,String coding,String typeName,String describe){
 		Systemsetting s=this.updateSystemsetting3(coding);
-		if(coding.equals(s.getCoding())){
+		if(s!=null){
 			return 0;
 		}else{
 			User user=(User)session.getAttribute("user");

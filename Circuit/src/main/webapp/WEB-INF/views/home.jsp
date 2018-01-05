@@ -9,12 +9,15 @@
 	href="easyui/themes/default/easyui.css" />
 <title>电力巡检</title>
 <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+
 <link rel="stylesheet" type="text/css" href="css/home.css" />
 <script type="text/javascript" src="easyui/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/home.js"></script>
 <script type="text/javascript" src="js/tower.js"></script>
+<script type="text/javascript" src="js/line.js"></script>
+	  <script type="text/javascript" src="js/thread.js"></script>
 <script type="text/javascript" src="js/perWork.js"></script>
 <script type="text/javascript" src="js/taskP.js"></script>
 <script type="text/javascript" src="js/taskE.js"></script>
@@ -24,7 +27,9 @@
 <script type="text/javascript" src="js/systemData.js"></script>
 <script type="text/javascript" src="js/systemParam.js"></script>
 <script type="text/javascript" src="js/systemUser.js"></script>
-
+<script type="text/javascript" src="js/inspectionTaskQuery.js"></script>
+<link rel="stylesheet" href="css/inspectionTaskQuery.css" />
+<script type="text/javascript" src="js/systemRole.js"></script>
 
 
 
