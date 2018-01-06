@@ -530,4 +530,12 @@
 	<insert id="insertintoRecord" parameterType="int">
 	insert into t_eliminate_record(xtaskid,yetid) values(#{0},#{1});
 	</insert>
+	
+	<update id="updateEliminate" parameterType="java.util.Map">
+	update t_eliminate set workBills=#{workBills},mid=#{taskMan} where id=#{eliminateId}
+	</update>
+	<update id="updateTask" parameterType="java.util.Map">
+	update t_task set coding=#{update_taskcoding},name=#{update_taskname},
+	description=#{update_taskDesc},remark=#{update_taskRemark} where id=#{taskid}
+	</update>
 </mapper>

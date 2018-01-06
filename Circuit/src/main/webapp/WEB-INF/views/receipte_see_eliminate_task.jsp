@@ -95,27 +95,24 @@ table.hovertable td {
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">负责人审查意见</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5"   readonly="readonly">${seeEliminate.taskfuzeUserIdea}</textarea></td>
+			<textarea cols="30" rows="5"   readonly="readonly">${seeEliminate.taskfuzeUserIdea}</textarea>
+			</td>
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">完成情况描述</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskCompletionDesc}</textarea></td>
+			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskCompletionDesc}</textarea>
+			</td>
 		</tr>
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">下发人审查意见</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskxiafaUserIdea}</textarea></td>
+			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskxiafaUserIdea}</textarea>
+			</td>
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">审核是否通过</td>
-			<td style="border: 1px solid #ccc;">
-			<%-- <c:if test="${seeEliminate.taskPassed==0}">
-			<option value="0">通过</option>
-			</c:if>
-			<c:if test="${seeEliminate.taskPassed==1}">
-			<option value="1">不通过</option>
-			</c:if> --%></td>
+			<td style="border: 1px solid #ccc;"></td>;
 		</tr>
 	</table>
 	<p style="font-size: 14px;font-weight: bold;margin-left: 120px;">缺陷信息列表
-	<a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
+	<a href="javascript:onclick=returntoReceipt()" class="easyui-linkbutton"
 		style="margin-left: 2px;">返回</a>
 	</p>
 
@@ -128,6 +125,7 @@ table.hovertable td {
 	<p><textarea cols="123" rows="5" id="work_record">${seeEliminate.extensionRecord}</textarea></p>
 	<p style="font-weight: bold;">工作终结报告</p>
 	<p><textarea cols="123" rows="5" id="final_report">${seeEliminate.finalReport}</textarea></p>
+	
 	</div>
 	<script type="text/javascript" src="js/seeEliminate_details.js"></script>
 </body>

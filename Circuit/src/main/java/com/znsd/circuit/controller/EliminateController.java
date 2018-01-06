@@ -53,14 +53,26 @@ public class EliminateController {
 	@RequestMapping("/getAll")
 	@ResponseBody
 	public Map<String, Object> getAll(@RequestParam("page") int page, @RequestParam("rows") int rows, String taskcoding,
-			String workbills, String taskstatus, String xiapeople, String startdate, String enddate,HttpSession session) {
+			String workbills, String taskstatus, String xiapeople, String startdate, String enddate,
+			HttpSession session, String operate) {
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		User user = (User) session.getAttribute("user");
-		int taskman = user.getId();
+		int taskman=0;
+		if(user!=null) {
+		 taskman = user.getId();
+		}
+		
+		// 找到角色对象
+		Systemrole systemRole = eliminateService.selectRoleByUserId(taskman);
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
 		map.put("userid", taskman);
+		map.put("operate", operate);
+		// 塞角色编码
+		map.put("coding", systemRole.getCoding());
+		//map.put("taskman", taskman);
 		Map<String, Object> maps = new HashMap<String, Object>();
 		// Map<String, Object> map2 = new HashMap<String, Object>();
 		/*
@@ -75,22 +87,22 @@ public class EliminateController {
 		if ("" != taskcoding || null != taskcoding || "" != workbills || null != workbills || "" != taskstatus
 				|| null != taskstatus || "" != xiapeople || null != xiapeople || "" != startdate || null != startdate
 				|| "" != enddate || null != enddate) {
-			if("" != taskcoding && null != taskcoding) {
+			if ("" != taskcoding && null != taskcoding) {
 				map.put("taskcoding", "%" + taskcoding + "%");
 			}
-			if("" != workbills && null != workbills) {
+			if ("" != workbills && null != workbills) {
 				map.put("workbills", "%" + workbills + "%");
 			}
-			if("" != xiapeople && null != xiapeople) {
+			if ("" != xiapeople && null != xiapeople) {
 				map.put("xiapeople", "%" + xiapeople + "%");
 			}
-			if(taskstatus!="请选择") {
+			if (taskstatus != "请选择") {
 				map.put("taskstatus", taskstatus);
 			}
-			
+
 			map.put("startdate", startdate);
 			map.put("enddate", enddate);
-			
+
 		}
 
 		int count = eliminateService.getCount(map);// 总条数
@@ -130,7 +142,6 @@ public class EliminateController {
 	// 查询消缺员
 	@RequestMapping("/getEliminateUser")
 	@ResponseBody
-
 	public List<User> getEliminateUser(Integer id, HttpSession session) {
 		//消缺任务的id
 		session.setAttribute("idd", id);
@@ -214,24 +225,16 @@ public class EliminateController {
 		map1.put("taskRemark", taskRemark);
 		map1.put("time", time);
 		map1.put("taskDesc", taskDesc);
-
 		map1.put("status", 4);
 		eliminateService.insertTask(map1);
 		/*if (str == "" || str == null) {
 			map1.put("status", 4);
-
-		if(str==""||str==null) {
-			map1.put("status",4);
 			eliminateService.insertTask(map1);
-
 		} else {
 			map1.put("status", 5);
 			
 		}*/
-		/*}else {
-			map1.put("status",5);
-			eliminateService.insertTask(map1);
-		}*/
+
 		Task task = eliminateService.selectTaskById(taskcoding);
 		int taskid = task.getId();
 		/*
@@ -246,12 +249,8 @@ public class EliminateController {
 		eliminateService.insertEliminate(eliminate);
 		/*int eid = eliminate.getId();
 		Map<String, Object> map2 = new HashMap<>();
-
 		map2.put("eid", eid);*/
 		/*if (str != "" || str != null) {
-
-		map2.put("eid", eid);
-		if(str!=""||str!=null) {
 			String[] st = str.split(",");
 			for (int i = 0; i < st.length; i++) {
 				String string = st[i];
@@ -263,18 +262,18 @@ public class EliminateController {
 					int id = Integer.parseInt(string);
 					map2.put("eid", eid);
 					map2.put("userId", id);
-					map2.put("isReceipter", 0);
+					map2.put("isReceipter", "是");
 					eliminateService.insertFlawStaff(map2);
 				} else {
 					int id = Integer.parseInt(string);
 					map2.put("eid", eid);
 					map2.put("userId", id);
-					map2.put("isReceipter", 1);
+					map2.put("isReceipter", "否");
 					eliminateService.insertFlawStaff(map2);
 				}
 			}
-		}
 		}*/
+
 		Map<String, Object> map3 = new HashMap<>();
 		String[] als = alstr.split(",");
 		for (String string : als) {
@@ -291,10 +290,11 @@ public class EliminateController {
 		// map1.put("taskbills",taskbills);
 		return "true";
 	}
-@RequestMapping("/getAllstatus")
+	
+	@RequestMapping("/getAllstatus")
 	@ResponseBody
-	public List<Systemparam> getAllStatus() {
-		return inspectionService.getSystemParam("TASK_STATE");
+	public List<Systemparam> getAllStatus(String coding) {
+		return inspectionService.getSystemParam(coding);
 	}
 	
 	//已经存在的消缺员
@@ -307,16 +307,11 @@ public class EliminateController {
 	}
 
 	//分配消缺员
-
-	//分配的状态下 再分配消缺员
-
 	@RequestMapping("/updateEliminateUserById")
 	@ResponseBody
 	public String updateEliminateUserById(String str,HttpSession session) {
-
 		int id = (int) session.getAttribute("idd");
 		System.out.println("。。。    id。"+id+"str........+"+str);
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String time = sdf.format(new Date());
 		User user = (User) session.getAttribute("user");
@@ -329,10 +324,10 @@ public class EliminateController {
 		for (int i = 0; i < s.length; i++) {
 			String string = s[i];
 			int userid = Integer.parseInt(string);
-			
-			if(i==0) {
+
+			if (i == 0) {
 				flawStaff.setIsReceipter("是");
-			}else {
+			} else {
 				flawStaff.setIsReceipter("否");
 			}
 			flawStaff.setCreatedBy(loginId);
@@ -357,16 +352,17 @@ public class EliminateController {
 		return "true";
 	}
 	@RequestMapping("/lookeliminateflaw")
-	public String lookEliminate(Integer eliminateId,HttpServletRequest request,Model model) {
+	public String lookEliminate(Integer eliminateId, HttpServletRequest request, Model model, HttpSession session) {
 		SeeEliminate seeEliminate = eliminateService.seeEliminateById(eliminateId);
-		//System.out.println("....."+seeEliminate);
+		// System.out.println("....."+seeEliminate);
 		User user = eliminateService.getAllUserEliminate(seeEliminate.getTaskfuzeId());
 		seeEliminate.setTaskfuzeUser(user.getName());
 		List<User> userList = eliminateService.getAllUserId(seeEliminate.getId());
-		System.out.println("。userlist。。。。"+userList);
-		model.addAttribute("userList",userList);
-		request.setAttribute("seeEliminate",seeEliminate);
-		
+		// 保存任务id 用来获取当前任务的所有缺陷
+		session.setAttribute("eliminateId", seeEliminate.getTaskId());
+		model.addAttribute("userList", userList);
+		request.setAttribute("seeEliminate", seeEliminate);
+
 		return "see_eliminate_task";
 	}
 
@@ -731,6 +727,20 @@ public class EliminateController {
 		@ResponseBody
 		public String update_task_eliminate(String update_taskcoding,String update_taskname,String taskbills,Integer taskMan,
 				String update_taskDesc,String update_taskRemark,Integer taskid,Integer eliminateId) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("workBills",taskbills);
+			map.put("taskMan", taskMan);
+			map.put("eliminateId", eliminateId);
+			int i = eliminateService.updateEliminate(map);
+			System.out.println("。。。。。。。。。。。。map"+map);
+			System.out.println("。。。。。。。。。。。。。。。i。"+i);
+			Map<String,Object> map1 = new HashMap<String,Object>();
+			map1.put("update_taskcoding", update_taskcoding);
+			map1.put("update_taskname", update_taskname);
+			map1.put("update_taskDesc", update_taskDesc);
+			map1.put("update_taskRemark", update_taskRemark);
+			map1.put("taskid",taskid);
+			eliminateService.updateTask(map1);
 			return "true";
 			
 		}

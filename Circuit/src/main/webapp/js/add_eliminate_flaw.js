@@ -151,7 +151,24 @@ function taskSave_update(){
 			taskid:taskid
 		},
 		success:function(data){
-			
+			if(data=="true"){
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改成功!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+				move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+			}
 		}
 		
 	})

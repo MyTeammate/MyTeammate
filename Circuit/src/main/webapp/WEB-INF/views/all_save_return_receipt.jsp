@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查看消缺任务</title>
+<title>回执录入</title>
 <style type="text/css">
 table.hovertable {
 	font-family: verdana, arial, sans-serif;
@@ -38,7 +38,7 @@ table.hovertable td {
 
 </head>
 <body>
-	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配>>查看消缺任务</div>
+	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务执行与回执>>审核</div>
 	<hr />
 	<!-- <table style="border: 1px solid red;margin-left: 120px;margin-top:20px;width:800px;height:300px;">
 	<tr>
@@ -52,6 +52,7 @@ table.hovertable td {
 
 
 	<!-- Table goes in the document BODY -->
+	<input value="${save_eliminateId}" id="all_save_eliminateId" type="hidden"/>
 	<table class="hovertable" style="border: 1px solid #ccc;margin-left: 120px;margin-top:20px;width:800px;height:300px;">
 		<!-- <tr>
 			<th>Info Header 1</th>
@@ -95,27 +96,28 @@ table.hovertable td {
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">负责人审查意见</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5"   readonly="readonly">${seeEliminate.taskfuzeUserIdea}</textarea></td>
+			<textarea cols="30" rows="5" id="all_fuze_receipte">${seeEliminate.taskfuzeUserIdea}</textarea></td>
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">完成情况描述</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskCompletionDesc}</textarea></td>
+			<textarea cols="30" rows="5" id="success_desc" readonly="readonly">${seeEliminate.taskCompletionDesc}</textarea></td>
 		</tr>
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">下发人审查意见</td>
 			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskxiafaUserIdea}</textarea></td>
-			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">审核是否通过</td>
-			<td style="border: 1px solid #ccc;">
-			<%-- <c:if test="${seeEliminate.taskPassed==0}">
+			<textarea cols="30" rows="5" id="all_xiafa_receipte">${seeEliminate.taskxiafaUserIdea}</textarea></td>
+			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle" >审核是否通过</td>
+			<td style="border: 1px solid #ccc;"><select id="all_pass_select">	
 			<option value="0">通过</option>
-			</c:if>
-			<c:if test="${seeEliminate.taskPassed==1}">
 			<option value="1">不通过</option>
-			</c:if> --%></td>
+
+			
+			</select></td>;
 		</tr>
 	</table>
 	<p style="font-size: 14px;font-weight: bold;margin-left: 120px;">缺陷信息列表
-	<a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
+	<a href="javascript:onclick=save_receipte_all()" class="easyui-linkbutton"
+		style="margin-left: 2px;">保存</a>
+		<a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
 		style="margin-left: 2px;">返回</a>
 	</p>
 
@@ -129,6 +131,7 @@ table.hovertable td {
 	<p style="font-weight: bold;">工作终结报告</p>
 	<p><textarea cols="123" rows="5" id="final_report">${seeEliminate.finalReport}</textarea></p>
 	</div>
+	<script type="text/javascript" src="js/eliminate_execution_receipt.js"></script>
 	<script type="text/javascript" src="js/seeEliminate_details.js"></script>
 </body>
 </html>
