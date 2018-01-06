@@ -15,17 +15,16 @@
  
      //连接成功建立的回调方法
      websocket.onopen = function () {
-         $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
-        	    if (r){    
-        	    	perWork();    
-        	    }    
-        	});
+         
      }
      
      //接收到消息的回调方法
      websocket.onmessage = function (event) {
-    	 alert(123)
-         alert(event.data);
+    	 $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
+     	    if (r){    
+     	    	perWork();    
+     	    }    
+     	});
      }
  
  
