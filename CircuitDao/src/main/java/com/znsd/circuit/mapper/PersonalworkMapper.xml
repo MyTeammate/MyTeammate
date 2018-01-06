@@ -5,17 +5,17 @@
  <mapper namespace="com.znsd.circuit.dao.PersonalworkDao">
  
      <insert id="arriveWork" parameterType="Personalwork">
-         insert into t_backlog (name,taskId,userId,backDate,isAccomplish) values (#{personalwork.name},#{personalwork.taskId},#{personalwork.userId},#{personalwork.backDate},#{personalwork.isAccomplish})
+         insert into t_backlog (name,taskId,userId,backDate,isAccomplish,type) values (#{personalwork.name},#{personalwork.taskId},#{personalwork.userId},#{personalwork.backDate},#{personalwork.isAccomplish},#{personalwork.type})
      </insert>
      
      <select id="selectMyWork"  parameterType="java.util.Map" resultType="Personalwork">
-         select t.name,k.type,t.taskId,t.userId,t.backDate,t.isAccomplish from t_backlog t inner join t_task k on t.taskId = k.id
+         select t.id,t.name,t.type,t.taskId,t.userId,t.backDate,t.isAccomplish from t_backlog t 
         where t.isAccomplish=#{isAccomplish} AND t.userId=#{userId}
          order by t.id desc  limit #{page},#{rows}
      </select>
      
      <select id="getTaskTowerFlawInfo" parameterType="int" resultType="Flawconfirm">
-         select tfr.taskId,tt.id as towerId,tt.coding as towerCoding,th.id as threadId,th.name as threadName,tk.taskMan
+         select tf.id,tfr.taskId,tt.id as towerId,tt.coding as towerCoding,th.id as threadId,th.name as threadName,tk.taskMan
 		 from t_flaw_record tfr inner join 
 		t_flawconfirm tf on tfr.flawconfirmId = tf.id
 		inner join t_tower tt on tf.towerId = tt.id
@@ -30,4 +30,19 @@
          select count(1) from t_backlog t
          where t.isAccomplish=#{isAccomplish} AND t.userId=#{userId}
      </select>
+     
+     <select id="getThreadBytaskId" parameterType="int" resultType="Threads">
+           select tt.id,tt.name,t.state from t_task t inner join t_inspection ti on t.id = ti.taskId
+		inner join t_thread tt on ti.threadId = tt.id
+		where t.id = #{taskId}
+     </select>
+     
+     
+       <select id="getFlawconfirmById" parameterType="int" resultType="Flawconfirm">
+            select id,flawId,towerId,taskId,threadId,confirmstate from t_flawconfirm where id = #{id}
+     </select>
+     
+     <update id="setAccomplish" parameterType="Personalwork">
+          update t_backlog set isAccomplish=#{personalwork.isAccomplish}  where id=#{personalwork.id}
+     </update>
  </mapper>

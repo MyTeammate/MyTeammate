@@ -92,6 +92,7 @@ public class InspectionController {
 		Task task = inspection.getTask();
 		task.setState(sp.getSettingName());
 		task.setCreatedDate(task.getCreatedDate().split(" ")[0]);
+		task.setId(id);
 		inspection.setTask(task);
 		Threads threads = threadService.getThreadById(inspection.getThreadId());
 		List<Tower> towers = inspectionService.getTowerByThread(inspection.getThreadId());
@@ -233,17 +234,26 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "saveInspection")
-	public boolean saveInspection(Inspection inspection,String ids, HttpSession session) {
+	public Map<String,Object> saveInspection(Inspection inspection,String ids, HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			return false;
+			map.put("flag", false);
 		}
 		inspection.setCreater(user.getId() + "");
 		int taskId = inspectionService.makeInspection(inspection);
 		if(!ids.equals("")){
+			
 			allotInspection(taskId, ids,session);
+			String[] s = ids.split(",");
+			int id = Integer.parseInt(s[0]);
+			map.put("userId",id);
+			map.put("distribution", true);
+		}else {
+			map.put("distribution", false);
 		}
-		return true;
+		map.put("flag", true);
+		return map;
 	}
 
 	/*
@@ -251,10 +261,11 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "allotInspection")
-	public boolean allotInspection(int taskId, String users, HttpSession session) {
+	public Map<String,Object> allotInspection(int taskId, String users, HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			return false;
+			map.put("flag", false);
 		}
 		String[] s = users.split(",");
 		int[] userId = new int[s.length];
@@ -263,7 +274,21 @@ public class InspectionController {
 			userId[count++] = Integer.parseInt(s[i]);
 		}
 		inspectionService.allotInspection(taskId, userId, user.getId());
-		return true;
+		
+	
+		Personalwork personalwork = new Personalwork();
+		personalwork.setTaskId(taskId);
+		personalwork.setIsAccomplish(0);
+		personalwork.setUserId(userId[0]);
+		Threads thread =  personalworkService.getThreadBytaskId(taskId);
+		personalwork.setName(thread.getName()+"巡检任务执行");
+		personalwork.setBackDate(new DateTime().getDateTime());
+		personalwork.setType("巡检任务");
+		personalworkService.arriveWork(personalwork);
+		
+		map.put("userId", userId[0]);
+		map.put("flag", true);
+		return map;
 	}
 	
 	/*
@@ -376,6 +401,11 @@ public class InspectionController {
 		if(fc!=null&&fc.getFlawGrade()!=null) {
 			Systemparam sp = systemParamService.getSystemparamById(Integer.parseInt(fc.getFlawGrade()));
 			fc.setFlawGrade(sp.getSettingName());
+		}else {
+			if(fc!=null) {
+				fc.setFlawGrade("无");
+			}
+			
 		}
 		
 		
@@ -409,11 +439,13 @@ public class InspectionController {
 		personalwork.setTaskId(taskId);
 		personalwork.setIsAccomplish(0);
 		personalwork.setBackDate(new DateTime().getDateTime());
+		personalwork.setType("缺陷确认任务");
 		List<Flawconfirm> ffs = personalworkService.getTaskTowerFlawInfo(taskId);
 		if(ffs.size()>0) {
 			for (Flawconfirm flawconfirm : ffs) {
 				personalwork.setName(flawconfirm.getThreadName()+"杆塔编号"+flawconfirm.getTowerCoding()+"缺陷等级确认");
 				personalwork.setUserId(flawconfirm.getTaskMan());
+				personalwork.setTaskId(flawconfirm.getId());
 				map.put("userId",personalwork.getUserId());
 				personalworkService.arriveWork(personalwork);
 			}

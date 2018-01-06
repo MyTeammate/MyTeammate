@@ -280,8 +280,10 @@ public class EliminateController {
 	public List<Systemparam> getAllStatus() {
 		return inspectionService.getSystemParam("TASK_STATE");
 	}
+	
+	
 	//分配的状态下 再分配消缺员
-	@RequestMapping("/updateEliminateUserById")
+	@RequestMapping("/updateEliminateUserById") 
 	@ResponseBody
 	public String updateEliminateUserById(String str,HttpSession session) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

@@ -241,7 +241,9 @@ function  allot_staffs(){
 				 users:staffs
 			 },
 			 success:function(result){
-				 if(result==true){
+				 console.log(result)
+				 if(result.flag==true){
+					 websocket.send(result.userId)
 					 $.messager.show({
 						title:'提示',
 						msg:'巡检任务分配成功',

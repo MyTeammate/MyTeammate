@@ -21,8 +21,8 @@
      //接收到消息的回调方法
      websocket.onmessage = function (event) {
     	 $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
-     	    if (r){    
-     	    	perWork();    
+     	    if (r){  
+     	    	move('待办任务','personalWork');
      	    }    
      	});
      }
@@ -160,3 +160,11 @@ function move($text,$url){
 	tab.panel('refresh',$url);
 }
 
+function addTabs($text,$url){
+	// 添加一个未选中状态的选项卡面板
+	$('#tabs').tabs('add',{
+		title: $text,
+		href: $url,
+		closable:true, 
+	});
+}
