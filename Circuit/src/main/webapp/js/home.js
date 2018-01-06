@@ -124,6 +124,10 @@ $(function(){
 								roleDistribution();
 							}
 							
+							if(node.text=="消缺查询"){
+								eliminatequery();
+							}
+							
 						}
 					});
 				}
