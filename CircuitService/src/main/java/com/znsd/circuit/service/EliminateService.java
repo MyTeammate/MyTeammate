@@ -11,6 +11,7 @@ import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.util.MyFlaw;
 import com.znsd.circuit.util.SeeEliminate;
+import com.znsd.circuit.util.UpdateWait;
 
 public interface EliminateService {
 	/**
@@ -237,4 +238,67 @@ public interface EliminateService {
 	 */
 	public int update_all(Map<String,Object> map);
 	
+	/**
+	 * 修改状态为已分配
+	 * @param eliminate
+	 * @return
+	 */
+	public int update_allocated (int eliminate);
+	
+	/**
+	 * 已经存在消缺分配表中的人员
+	 * @param id
+	 * @return
+	 */
+	public List<User> existUserById(int id);
+	
+	/**
+	 * 分配时取消人员的时候 往数据库中删除
+	 * @param userId
+	 * @return
+	 */
+	public int removethis(Map<String,Object> map);
+	
+	
+	/**
+	 * 通过id
+	 * 查询出我要修改的缺陷任务
+	 * @param id
+	 * @return
+	 */
+	public UpdateWait select_update_wait(int id);
+	
+	/**
+	 * 移除选择的缺陷
+	 * @param id
+	 * @return
+	 */
+	public int delete_record(Integer id);
+	
+	/**
+	 * 通过任务id查询出每个任务所对应的缺陷
+	 * @return
+	 */
+	public List<MyFlaw> update_EliminateBytaskId(int taskid);
+	
+	/**	插入到记录表的缺陷
+	 * @param taskId
+	 * @param yetid
+	 * @return
+	 */
+	public int insertintoRecord(int taskId,int yetid);
+	
+	/**
+	 * 修改消缺表
+	 * @param map
+	 * @return
+	 */
+	public int updateEliminate(Map<String,Object> map);
+	
+	/**
+	 * 修改任务表
+	 * @param map
+	 * @return
+	 */
+	public int updateTask(Map<String,Object> map);
 }

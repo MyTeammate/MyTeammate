@@ -56,7 +56,7 @@ function eliminate() {
 											+ '<a href="javaScript:fenpeiEliminate('
 											+ row.id
 											+ ')">分配任务</a>｜'
-											+ '<a href="javaScript:updateInspection('
+											+ '<a href="javaScript:update_wait('
 											+ row.id
 											+ ')">修改</a>｜'
 											+ '<a href="javaScript:cancelEminate('
@@ -104,7 +104,7 @@ function eliminate() {
 									+ row.id
 									+ ')">查看</a>｜'
 									+ '<a style="color:#CDC5BF">回执录入</a>｜<a style="color:#CDC5BF">执行</a>｜'
-									+ '<a href="javaScript:seeEliminate_receipte('
+									+ '<a href="javaScript:update_return_Eliminate_receipte('
 									+ row.id
 									+ ')">修改</a></span>';
 						}
@@ -121,6 +121,18 @@ function eliminate() {
 		textField : 'settingName',
 		width : 154,
 	});
+	/*$('#update_taskbills').combobox({
+		url : 'eliminate/getBills',
+		valueField : 'id',
+		textField : 'settingName',
+		width : 154,
+	});
+	$('#update_taskMan').combobox({
+		url : 'eliminate/getLineUser',
+		valueField : 'id',
+		textField : 'name',
+		width : 154,
+	});*/
 	/*$.ajax({
 		url:"eliminate/getAllstatus",
 		type:"post",
@@ -138,6 +150,41 @@ function eliminate() {
 		}
 	});*/
 }
+function update_wait(id){
+	
+	move("修改任务","http://localhost:8080/Circuit/eliminate/update_wait_eliminate?id="+id);
+}
+
+
+//已驳回的状态下修改
+function update_return_Eliminate_receipte(id){
+	$.ajax({
+		url : "eliminate/execu_updateTaskStatusReturnById?id=" + id,
+		type : "post",
+		success : function(data) {
+			if (data=="true") {
+				/*$('#eliminate_execution_receipt').datagrid('reload');*/
+				move("修改回执", "http://localhost:8080/Circuit/eliminate/execu_updateTaskStatusReturn?id="+id);
+			}else if (data=="false"){
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: red;">你没有权限执行!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+				});
+			}
+		}
+	});
+}
+
 
 //审核任务
 function audit_eliminate(eliminateId){
@@ -156,6 +203,21 @@ function audit_eliminate(eliminateId){
 				}else if(data=="task"){
 					//下发人
 					move("审核", "http://localhost:8080/Circuit/eliminate/xiafa_details?eliminateId="+eliminateId);
+				}else{
+					$.messager.show({
+						title : '友好提示您',
+						msg : '<h3 style="color: red;">你没有权限执行!</h3>',
+						showType : 'show',
+						timeout : 3000,
+						width : 260,
+						height : 120,
+						style : {
+							right : '',
+							top : document.body.scrollTop
+									+ document.documentElement.scrollTop,
+							bottom : ''
+						}
+					});
 				}
 			}
 	});
@@ -163,7 +225,22 @@ function audit_eliminate(eliminateId){
 
 //分配任务
 function fenpeiEliminate(id){
-	$("#fenpeidiv").show(1000);
+	$.ajax({
+		url:"eliminate/existUser?id="+id,
+		type : "post",
+		success:function(data){
+			$("#select_list").html("");
+			var ss="";
+			if(data){
+				alert(data);
+				for (var i = 0; i < data.length; i++) {
+					ss+="<option value='" + data[i].id + "' name='options'>"
+					+ data[i].name + "</option>";
+				}
+				$("#select_list").append(ss);
+			}
+		}
+	});
 	$.ajax({
 		url : "eliminate/getEliminateUser?id="+id,
 		type : "post",
@@ -171,14 +248,30 @@ function fenpeiEliminate(id){
 			$("#fb_list").html("");
 			var str = "";
 			if (data) {
+				
 				for (var i = 0; i < data.length; i++) {
-					str += "<option value='" + data[i].id + "' name='options'>"
-							+ data[i].name + "</option>"
+					if($("#select_list option:not(:selected)").val()==""){
+						str += "<option value='" + data[i].id + "' name='options'>"
+						+ data[i].name + "</option>"
+					}
+					
+					//console.log($("#select_list option:not(:selected)").text());
+					if($("#select_list option:not(:selected)").length>0){
+						$("#select_list option:not(:selected)").each(
+								function() {
+									if(data[i].id!=$(this).val()){
+										str += "<option value='" + data[i].id + "' name='options'>"
+										+ data[i].name + "</option>"
+									}
+								});
+					}	
 				}
 			}
 			$("#fb_list").append(str);
+			
 		}
 	});
+	$("#fenpeidiv").show(1000);
 	$("#add").click(
 			function() {
 				if ($("#fb_list option:selected").length > 0) {
@@ -190,12 +283,12 @@ function fenpeiEliminate(id){
 												+ "</option");
 
 								$(this).remove();
-							})
+							});
 				} else {
 					alert("请选择要添加的数据！");
 				}
 			});
-
+		
 	$("#delete").click(
 			function() {
 				if ($("#select_list option:selected").length > 0) {
@@ -206,6 +299,13 @@ function fenpeiEliminate(id){
 												+ "'>" + $(this).text()
 												+ "</option");
 								$(this).remove();
+								$.ajax({
+									url:"eliminate/removethis?userId="+$(this).val(),
+									type:"post",
+									success:function(){
+										
+									}
+								});
 							});
 					$("#select_user").html("");
 				} else {

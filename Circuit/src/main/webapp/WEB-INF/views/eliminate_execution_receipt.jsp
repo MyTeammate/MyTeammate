@@ -29,6 +29,7 @@
 		<table id="eliminate_execution_receipt">
 		</table>
 	</div>
+	<script type="text/javascript" src="js/flaw_manager.js"></script>
 <script type="text/javascript" src="js/eliminate_execution_receipt.js"></script>
 </body>
 </html>

@@ -19,7 +19,6 @@ body {
 		工作单据：<input type="text" id="flaw_workbills" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		任务状态：<select id="flaw_taskstatus" class="easyui-combobox" name="dept"
 			style="width: 80px;"> 
-			<option value="请选择">请选择</option>
 		</select>
 		<br/>
 		下发人：&nbsp;&nbsp;&nbsp;<input type="text" id="flaw_xiapeople" class="textbox" name="votem" style="width: 220px; height: 22px;" />

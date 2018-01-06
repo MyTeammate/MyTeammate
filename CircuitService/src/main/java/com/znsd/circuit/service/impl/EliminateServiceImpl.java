@@ -16,6 +16,7 @@ import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
 import com.znsd.circuit.util.MyFlaw;
 import com.znsd.circuit.util.SeeEliminate;
+import com.znsd.circuit.util.UpdateWait;
 
 @Service
 public class EliminateServiceImpl implements EliminateService {
@@ -199,6 +200,51 @@ public class EliminateServiceImpl implements EliminateService {
 	public int update_all(Map<String, Object> map) {
 		
 		return eliminateDao.update_all(map);
+	}
+	@Override
+	public int update_allocated(int eliminate) {
+		
+		return eliminateDao.update_allocated(eliminate);
+	}
+	@Override
+	public List<User> existUserById(int id) {
+		
+		return eliminateDao.existUserById(id);
+	}
+	@Override
+	public int removethis(Map<String,Object> map) {
+		
+		return eliminateDao.removethis(map);
+	}
+	@Override
+	public UpdateWait select_update_wait(int id) {
+		
+		return eliminateDao.select_update_wait(id);
+	}
+	@Override
+	public int delete_record(Integer id) {
+		
+		return eliminateDao.delete_record(id);
+	}
+	@Override
+	public List<MyFlaw> update_EliminateBytaskId(int taskid) {
+		
+		return eliminateDao.update_EliminateBytaskId(taskid);
+	}
+	@Override
+	public int insertintoRecord(int taskId, int yetid) {
+		
+		return eliminateDao.insertintoRecord(taskId, yetid);
+	}
+	@Override
+	public int updateEliminate(Map<String, Object> map) {
+		
+		return eliminateDao.updateEliminate(map);
+	}
+	@Override
+	public int updateTask(Map<String, Object> map) {
+		
+		return eliminateDao.updateTask(map);
 	}
 	
 	

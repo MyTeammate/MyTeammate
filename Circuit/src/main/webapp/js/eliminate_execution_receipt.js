@@ -69,7 +69,7 @@ $(function(){
 							+ row.id
 							+ ')">查看</a>｜'
 							+ '<a style="color:#CDC5BF">回执录入</a>｜<a style="color:#CDC5BF">执行</a>｜'
-							+ '<a href="javaScript:seeEliminate_receipte('
+							+ '<a href="javaScript:update_return_Eliminate_receipte('
 							+ row.id
 							+ ')">修改</a></span>';
 				}else if (row.taskStatus == '待审核') {
@@ -105,7 +105,7 @@ function search_receipt(){
 }
 function return_receipt_entry(id){
 	$.ajax({
-		url : "eliminate/execu_updateTaskStatusById?id=" + id,
+		url : "eliminate/execu_updateTaskStatusById?id="+ id,
 		type : "post",
 		success : function(data) {
 			if (data=="true") {
@@ -131,6 +131,44 @@ function return_receipt_entry(id){
 	});
 	
 }
+//已驳回状态下重新修改回执
+function update_return_save_receipt(){
+	var return_success_desc = $("#return_success_desc").val();
+	var return_work_record = $("#return_work_record").val();
+	var return_final_report = $("#return_final_report").val();
+	var return_save_eliminateId = $("#return_save_eliminateId").val();
+	$.ajax({
+		url:"eliminate/update_eliminate_receipte_return",
+		data:{
+			return_success_desc:return_success_desc,
+			return_work_record:return_work_record,
+			return_final_report:return_final_report,
+			return_save_eliminateId:return_save_eliminateId,
+		},
+		type : "post",
+		success:function(data){
+			if(data=="true"){
+				
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: red;">修改成功!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+				});
+				move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+			}
+		}
+			});
+}
+
 
 //下发人审查意见
 function save_receipte_xiafa(){
