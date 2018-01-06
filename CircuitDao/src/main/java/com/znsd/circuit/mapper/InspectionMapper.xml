@@ -98,12 +98,12 @@ AND settingName='待分配' OR settingName='已取消')
 			and t.taskMan=#{userId}
 		</if>
 		<if test="coding != null and coding != ''">
-			and t.coding like #{coding}
+			and t.coding like '%${coding}%'
 		</if>
-		<if test="thread != null and coding != ''">
-			and th.coding like #{thread}
+		<if test="thread != null and thread != ''">
+			and th.coding like '%${thread}%'
 		</if>
-		<if test="state != '--请选择--' and state != null">
+		<if test="state != '' and state != null">
 			and t.state=#{state}
 		</if>
 		<if test="taskMan != null and taskMan != ''">
@@ -284,4 +284,80 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 		update t_inspection set threadId=#{thread} where taskId=#{id}
 	</update>
 	<select id="checkInspectionCoding" ></select>
+	<select id="getInspectionFlawCount" resultType="int" parameterType="Map">
+		SELECT count(1)
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		<if test="taskCoding != null and taskCoding != ''">
+			and t.coding like #{taskCoding}
+		</if>
+		<if test="threadCoding != null and threadCoding != ''">
+			and h.coding like #{threadCoding}
+		</if>
+		<if test="flawType != null and flawType != ''">
+			and c.flawId=${flawType}
+		</if>
+		<if test="flawGrade != null and flawGrade != ''">
+			and c.flawGrade=${flawGrade}
+		</if>
+		<if test="discoverDate != null and discoverDate != ''">
+			and c.discoverDate &gt; #{discoverDate}
+		</if>
+		<if test="endDiscover != null and endDiscover != ''">
+			and c.discoverDate &lt; #{endDiscover}
+		</if>
+		<if test="date != null and date != ''">
+			and t.date &gt; #{date}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and t.date &lt; #{endDate}
+		</if>
+	</select>
+	<select id="getAllInspectionFlaw" resultType="FlawQuery" parameterType="Map">
+		SELECT t.coding AS taskCoding,h.coding AS threadCoding,o.coding AS towerCoding,sys.settingName as flawGrade,
+		f.`name` AS flawType,u.name as receipter,c.discoverDate,u2.name AS creater,t.date,c.serviceAbility,c.flawDesc
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		<if test="taskCoding != null and taskCoding != ''">
+			and t.coding like '%${taskCoding}%'
+		</if>
+		<if test="threadCoding != null and threadCoding != ''">
+			and h.coding like '%${threadCoding}%'
+		</if>
+		<if test="flawType != null and flawType != ''">
+			and c.flawId=${flawType}
+		</if>
+		<if test="flawGrade != null and flawGrade != ''">
+			and c.flawGrade=${flawGrade}
+		</if>
+		<if test="discoverDate != null and discoverDate != ''">
+			and c.discoverDate &gt; #{discoverDate}
+		</if>
+		<if test="endDiscover != null and endDiscover != ''">
+			and c.discoverDate &lt; #{endDiscover}
+		</if>
+		<if test="date != null and date != ''">
+			and t.date &gt; #{date}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and t.date &lt; #{endDate}
+		</if>
+		limit #{pageIndex},#{pageSize}
+	</select>
 </mapper>

@@ -111,7 +111,7 @@ $(function() {
 		}, {
 			field : 'creater',
 			title : '下发人',
-			width : 110,
+			width : 120,
 			align:"center",
 		}, {
 			field : 'createDate',
@@ -316,7 +316,7 @@ function showallotInspection(id){
 }
 
 /*
- * 修改巡检任务
+ * 跳转 修改巡检任务页面
  */
 function updateInspection(id){
 	move("修改巡检任务","updateInspection?id="+id);
@@ -357,4 +357,68 @@ function cancelInspection(id){
 			})
 		}
 	});
+}
+
+/*
+ * 获取任务被分配人员
+ */
+function updateallotInspection(id){
+	taskId=id;
+	$.ajax({
+		url:"getInspectionTaskStaff",
+		type:"POST",
+		data:{
+			taskId:id
+		},
+		success:function(data){
+			$("#bigdiv").show(1000);
+		}
+	})
+}
+
+/*
+ *  提交 修改分配人员
+ */
+function update_staffs(){
+	var staffs = $.map($("#select_list option:not(:selected)"),
+            function(ele){return ele.value} 
+         ).join(",");
+	 $("#bigdiv").hide(500);
+	 if(staffs==''){
+		 $.messager.alert({
+				title:'修改分配失败',
+				msg:'<h3 style="color: red;"> 请选择巡检人员 ！</h3>',
+				icon:'warning',
+				timeout:500,
+			})
+	 }else{
+		 console.log("taskId:"+taskId);
+		/* $.ajax({
+			 url:'updateAllotInspection',
+			 type:"POST",
+			 data:{
+				 taskId: taskId,
+				 users:staffs
+			 },
+			 success:function(result){
+				 if(result==true){
+					 $.messager.show({
+						title:'提示',
+						msg:'修改分配成功',
+						timeout:500,
+						showType:"slide",
+						style:{
+						}
+					});
+				 }else{
+					$.messager.alert({
+						title:'修改分配失败',
+						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+						icon:'warning',
+					})
+				 }
+				 $('#makeAllot_datagrid').datagrid('reload');
+			 }
+		 });*/
+	 }
 }

@@ -102,7 +102,7 @@
     	
     </div>
     <p id="inspectionP">
-   <a href="javascript:onclick=void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-rotate-clockwise',text:'返回',plain:false">返回</a>
+   <a href="javascript:onclick=move('巡检任务管理','${lookInspection }')" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-rotate-clockwise',text:'返回',plain:false">返回</a>
 </p>
 </body>
 </html>
