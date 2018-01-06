@@ -38,7 +38,7 @@ function eliminate() {
 						/*
 						 * {field : 'flag',title : '任务是否取消',width : 82,align :
 						 * 'center'},
-						 */
+						 */  
 						{field : 'operation',title : '操作',width : 170,align : 'center',
 						formatter : function(value, row, index) {
 								var oper = '';
@@ -46,7 +46,7 @@ function eliminate() {
 									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
-											+ '<a href="javaScript:allotInspection('
+											+ '<a href="javaScript:fenpeiEliminate('
 											+ row.id
 											+ ')">分配任务</a>｜'
 											+ '<a href="javaScript:update_wait('
