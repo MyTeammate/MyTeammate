@@ -239,6 +239,13 @@ public class InspectionController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("total", pager.getSumSize());
 		map.put("rows", pager.getData());
+		
+		if("execute".equals(operate)){
+			session.setAttribute("lookInspection", "inspectionExecuteReceipt");
+		}else{
+			session.setAttribute("lookInspection", "inspectionMakeAllot");
+		}
+		
 		return map;
 	}
 
@@ -467,6 +474,9 @@ public class InspectionController {
 		return true;
 	}
 	
+	/*
+	 * 缺陷查询
+	 */
 	@ResponseBody
 	@RequestMapping(value="getAllInspectionFlaw")
 	public Map<String,Object> getAllInspectionFlaw(@RequestParam("page") int pageIndex,@RequestParam("rows") int pageSize
@@ -482,11 +492,37 @@ public class InspectionController {
 		map.put("pageSize", pageSize);
 		map.put("creater", creater);
 		
+		System.out.println(flawQuery.toString());
+		map.put("taskCoding",flawQuery.getTaskCoding() );
+		map.put("threadCoding", flawQuery.getThreadCoding());
+		if (!"--请选择--".equals(flawQuery.getFlawType())) {
+			map.put("flawType", flawQuery.getFlawType());
+		}
+		if (!"--请选择--".equals(flawQuery.getFlawGrade())) {
+			map.put("flawGrade", flawQuery.getFlawGrade());
+		}
+		map.put("discoverDate",flawQuery.getDiscoverDate());
+		map.put("endDiscover", endDiscover);
+		map.put("date", flawQuery.getDate());
+		map.put("endDate",endDate);
+		
 		int count = inspectionService.getInspectionFlawCount(map);// 总条数
 		List<FlawQuery> list = inspectionService.getAllInspectionFlaw(map);
 		
 		map.put("rows", list);
 		map.put("total", count);
 		return map;
+	}
+	
+	/*
+	 * 得到某任务被分配的所有人员
+	 */
+	@ResponseBody
+	@RequestMapping(value="getInspectionTaskStaffs")
+	public List<User> getInspectionTaskStaffs(int taskId,HttpSession session){
+		System.out.println("getInspectionTaskStaffs");
+		List<User> staffs = inspectionService.getInspectionTackStaff(taskId);
+		session.setAttribute("updateStaff","修改巡检分配人员");
+		return staffs;
 	}
 }

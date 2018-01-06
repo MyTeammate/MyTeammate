@@ -6,7 +6,6 @@ $(function() {
 		pagination : true,
 		pageList : [5, 10, 15, 20 ],
 		rownumbers : true,
-		nowrap:false,
 		url : "taskElTowerAllPost?tcoding="+ts,
 		columns : [ [ {
 			field : 'etowerCoding',
