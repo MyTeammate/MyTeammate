@@ -160,11 +160,6 @@ $(function(){
 	}
 })
 
-var receipterFlag='';
-function checkInspectionReceipter(id){
-	
-}
-
 /*
  * 执行 巡检任务
  */
@@ -221,7 +216,7 @@ function executeInspection(id){
 }
 
 /*
- * 点击  回执录入  操作
+ * 点击  回执录入  操作  跳面板
  */
 function receiptInspection(id){
 	$.ajax({
@@ -257,13 +252,7 @@ function updateReceiptInspection(id){
 		},
 		success:function(result){
 			if(result == true){
-				$.ajax({
-					url:"addUpdateReceiptFlag",
-					type:"POST",
-					success:function(result){
-						move('巡检任务回执录入','receiptInspection?taskId='+id);
-					}
-				});
+				move('修改回执录入','updateReceiptInspection?taskId='+id);
 			}else{
 				$.messager.alert({
 					title:'修改回执录入失败',

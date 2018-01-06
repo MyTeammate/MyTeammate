@@ -68,7 +68,13 @@
 	<br/>
 	<p style="position: relative;bottom: 155px;">
 	<a href="#" onclick="hid()" class="easyui-linkbutton" style="float: right;">返回</a>
+<<<<<<< HEAD
 	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+=======
+	
+	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+		
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	</p>
 	<p style="position: relative;bottom: 250px;left: 127px;">
 	<a href="#" id="add" class="easyui-linkbutton" style="width: 40px;">+</a></p>
