@@ -16,6 +16,14 @@ function log_tb(){
               {field:'createDate',title:'操作时间',width:200,align:'center'},
 		]]
 	})
+	$('#log_query').bind('click',function(){
+		var uentryDate=$('#uentryDate').val();
+		var uentryDate2=$('#uentryDate2').val();
+		$('#log_tb').datagrid('reload',{
+			uentryDate:uentryDate,
+			uentryDate2:uentryDate2
+		});
+	})
 	
 	$('#uentryDate').datebox({    
 	    editable:false

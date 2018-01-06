@@ -66,32 +66,14 @@ function user_tb(){
               },
 		]]
 	})
-	
-	
-	/*$('#user_add_option').html("" +
-				"<tr>" +
-				"<td style='float:right;'>用户账号：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>用户名称：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>密码：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>角色：</td><td><select id='user_cc' class='easyui-combobox' name='dept' style='width:80px;' data-options='panelMaxHeight:'70px',editable:false'><option value='--请选择--'>--请选择--</option><option value='正常'>正常</option><option value='冻结'>冻结</option></select></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>入职时间：</td><td><input type='text' id='entryDate'/></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>离职时间：</td><td><input type='text' id='leaveDate'/></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>使用状态：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr>");
-		$('#entryDate').datebox({    
-		    required:true,
-		    editable:false
-		});  
-		$('#leaveDate').datebox({    
-		    required:true,
-		    editable:false
-		});  */
+	$('#user_query').bind('click',function(){
+		var u_name=$('#user_name').val();
+		var u_cc=$('#user_cc').val();
+		$('#user_tb').datagrid('reload',{
+			name:u_name,
+			state:u_cc
+		});
+	})
 
 	$("#user_add").bind('click',function(){
 		$.ajax({
@@ -123,8 +105,33 @@ function user_tb(){
 						"<td style='float:right;'>使用状态：</td><td>正常</td>" +
 						"</tr>");
 				$('#uentryDate').datebox({    
-				    editable:false
-				});  
+				    editable:false,
+					editable : false,
+					validType : 'checkNow',
+					missingMessage : '请选择日期',
+				});
+				$.extend($.fn.validatebox.defaults.rules, {
+					checkNow : {
+						validator : function(value, param) {
+							var now = new Date();
+							var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
+							var date = $.fn.datebox.defaults.parser(value);
+							var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+							return newNow <= newDate;
+						},
+						message : '所选时间不能低于当前时间！'
+					}/*,
+					md : {
+						validator : function(value, param) {
+							var start = $(param[0]).datetimebox('getValue');
+							var now = new Date();
+							var start2 = $.fn.datebox.defaults.parser(value);
+							return now >= start2 && start <= value;
+							// 需要进行两个判断，先判断不能超过当前时间，再判断是否大于开始时间
+						},
+						message : '选择有误！'
+					}*/
+				});
 			}
 		})
 		
@@ -300,8 +307,6 @@ function userUpdate(id){
 					"</tr><tr>" +
 					"<td style='float:right;'>用户姓名：</td><td><input type='text' id='name' name='param' /><span id='name2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
 					"</tr><tr>" +
-					"<td style='float:right;'>密码：</td><td><input type='passWord' id='passWord' name='param' /><span id='passWord2' style='font-size:8px;'>&nbsp;&nbsp;默认初始密码为123456</span></td>" +
-					"</tr><tr>" +
 					"<td style='float:right;'>角色：</td>" +
 					"<td>" +
 					"<select id='roleId' class='easyui-combobox' name='dept' style='width:90px;' data-options='panelMaxHeight:'120px',editable:false'>" +
@@ -320,8 +325,23 @@ function userUpdate(id){
 			    editable:false
 			});
 			$('#leaveDate').datebox({    
-			    editable:false
+				editable:false,
+				editable : false,
+				validType : 'checkNow',
+				missingMessage : '请选择日期',
 			});
+			$.extend($.fn.validatebox.defaults.rules, {
+				checkNow : {
+					validator : function(value, param) {
+						var now = new Date();
+						var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
+						var date = $.fn.datebox.defaults.parser(value);
+						var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+						return newNow <= newDate;
+					},
+					message : '所选时间不能低于当前时间！'
+				}
+			})
 			var dataId={id:id};
 			$.ajax({
 				url:'userManage/userId',
@@ -330,9 +350,9 @@ function userUpdate(id){
 				success:function(result){
 					$('#userName').val(result.userName);
 					$('#name').val(result.name);
-					$('#passWord').val(result.passWord);
 					$('#roleId').val(result.roleId);
 					$('#entryDate').datebox('setValue', result.entryDate);
+					$('#leaveDate').datebox('setValue', result.leaveDate);
 					if(result.state==0){
 						$('#state').html("正常");
 					}else{
@@ -366,7 +386,6 @@ function userUpdate(id){
 							handler:function(){	
 								var userName=$('#userName').val();
 								var name=$('#name').val();
-								var passWord=$('#passWord').val();
 								var roleId=$('#roleId').val();
 								var entryDate=$('#entryDate').val();
 								var leaveDate=$('#leaveDate').val();
@@ -419,7 +438,7 @@ function userUpdate(id){
 															if(rUN=="success"&&rN=="success"){
 																$.messager.confirm('确定','您确定要修改所选的用户吗？',function(f){
 																	if(f){
-																		var dataUser={id:id,userName:userName,name:name,passWord:passWord,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
+																		var dataUser={id:id,userName:userName,name:name,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
 																		$.ajax({
 																			url:'userManage/update',
 																			type:"post",

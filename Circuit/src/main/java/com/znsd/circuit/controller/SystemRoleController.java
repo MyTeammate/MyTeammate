@@ -28,12 +28,15 @@ public class SystemRoleController {
 	
 	@ResponseBody
 	@RequestMapping("/listSystemRole")
-    public Map<String,Object> listSystemRole(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows){
+    public Map<String,Object> listSystemRole(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows,String name,String state){
 		Map<String, Object> map = new HashMap<String, Object>();
-		int count = systemRoleService.systemRoleCount();
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
+		map.put("state",state);
+		map.put("name",name);
+		int count = systemRoleService.systemRoleCount(map);
+		System.out.println("要模糊查询的条件："+state+","+name);
 		List<Systemrole> listRole=systemRoleService.listSystemRole(map);
 		for (Iterator iterator = listRole.iterator(); iterator.hasNext();) {
 			Systemrole role = (Systemrole) iterator.next();
@@ -56,14 +59,18 @@ public class SystemRoleController {
 	//验证角色编号和角色名称是否重复
 	@ResponseBody
 	@RequestMapping("/verifyRole")
-	public String verifyRole(String coding,String name){
+	public String verifyRole(int id,String coding,String name){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("id",id);
+		map.put("coding",coding);
+		map.put("name",name);
 		String re="";
-		if(systemRoleService.verifyCoding(coding)==null){
+		if(systemRoleService.verifyCoding(map)==null){
 			re=re+"1";
 		}else{
 			re=re+"2";
 		}
-		if(systemRoleService.verifyName(name)==null){
+		if(systemRoleService.verifyName(map)==null){
 			re=re+"1";
 		}else{
 			re=re+"2";
@@ -126,5 +133,25 @@ public class SystemRoleController {
 	@RequestMapping("/deleteRole")
 	public int deleteRole(int id){
 		return systemRoleService.deleteRole(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/queryRole")
+	public Systemrole queryRole(int id){
+		return systemRoleService.queryRole(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/likeRole")
+	public List<Systemrole> likeRole(String name,String state){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("state",state);
+		map.put("name",name);
+		List<Systemrole> list=systemRoleService.likeRole(map);
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Systemrole systemrole = (Systemrole) iterator.next();
+			System.out.println("`````````````````"+systemrole);
+		}
+		return list;
 	}
 }

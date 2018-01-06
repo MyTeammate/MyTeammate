@@ -3,8 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.SystemRoleDao">
-    <select id="systemRoleCount" resultType="int">
+    <select id="systemRoleCount" resultType="int" parameterType="Map">
         select count(1) from t_role where delete_flag='否'
+         <if test="name!=null &amp;&amp; name!=''">
+			and	name LIKE '%${name}%'
+		</if>
+		<if test="state!=null &amp;&amp; state!='' &amp;&amp; state!='00'">
+			and state = #{state}
+		</if>
     </select>
     
     <select id="listSystemRole" resultType="Systemrole" parameterType="map">
@@ -12,17 +18,23 @@
 		LEFT JOIN t_user tu
 		on tu.id=tr.createBy
 		where tr.delete_flag='否'
-		GROUP BY id
-		order by id desc
+		 <if test="name!=null &amp;&amp; name!=''">
+			and	tr.name LIKE '%${name}%'
+		</if>
+		<if test="state!=null &amp;&amp; state!='' &amp;&amp; state!='00'">
+			and tr.state = #{state}
+		</if>
+		GROUP BY tr.id
+		order by tr.id desc
 		limit #{pageIndex},#{pageSize}
     </select>
     
-    <select id="verifyCoding" resultType="Systemrole" parameterType="String">
-        select id,coding,name,state,createBy,updatedDate from t_role where coding=#{coding}
+    <select id="verifyCoding" resultType="Systemrole" parameterType="map">
+        select id,coding,name,state,createBy,updatedDate from t_role where coding=#{coding} and id!=#{id}
     </select>
     
-    <select id="verifyName" resultType="Systemrole" parameterType="String">
-        select id,coding,name,state,createBy,updatedDate from t_role where name=#{name}
+    <select id="verifyName" resultType="Systemrole" parameterType="map">
+        select id,coding,name,state,createBy,updatedDate from t_role where name=#{name} and id!=#{id}
     </select>
     
     <insert id="addRole" parameterType="Systemrole">
@@ -40,4 +52,20 @@
     <update id="deleteRole" parameterType="int">
         update t_role set delete_flag='是' where id=#{id}
     </update>
+    
+    <select id="queryRole" resultType="Systemrole" parameterType="int">
+        select id,coding,name,state,createBy,updatedDate from t_role where id=#{id}
+    </select>
+    
+    <select id="likeRole" resultType="Systemrole" parameterType="map">
+        select id,coding,name,state,createBy,updatedDate from t_role 
+        <where> 
+        <if test="name!=null &amp;&amp; name!=''">
+			name LIKE '%${make}%'
+		</if>
+		<if test="state!=null &amp;&amp; state!='' &amp;&amp; state!='00'">
+			state = #{state}
+		</if>
+		</where>
+    </select>
 </mapper>

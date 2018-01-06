@@ -101,7 +101,7 @@ function parameter_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+		$.messager.confirm('确定','您确定要删除所选的参数吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({

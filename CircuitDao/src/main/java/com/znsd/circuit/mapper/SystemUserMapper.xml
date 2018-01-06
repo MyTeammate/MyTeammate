@@ -5,6 +5,12 @@
 <mapper namespace="com.znsd.circuit.dao.SystemUserDao">
     <select id="systemUserCount" resultType="int">
         select count(1) from t_user where delete_flag='否'
+        <if test="name!=null &amp;&amp; name!=''">
+			and	name LIKE '%${name}%'
+		</if>
+		<if test="state!=null &amp;&amp; state!='' &amp;&amp; state!='00'">
+			and state = #{state}
+		</if>
     </select>
     
     <select id="listSystemUser" resultType="User" parameterType="map">
@@ -14,8 +20,14 @@
 		LEFT JOIN t_role tr
 		on tur.roleId=tr.id
 		where tu.delete_flag='否'
-		GROUP BY id
-		order by id desc
+		<if test="name!=null &amp;&amp; name!=''">
+			and	tu.name LIKE '%${name}%'
+		</if>
+		<if test="state!=null &amp;&amp; state!='' &amp;&amp; state!='00'">
+			and tu.state = #{state}
+		</if>
+		GROUP BY tu.id
+		order by tu.id desc
 		limit #{pageIndex},#{pageSize}
     </select>
     
@@ -59,7 +71,10 @@
     </select>
     
     <update id="freezeSysteUser" parameterType="map">
-        update t_user set state=#{newState},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
+        update t_user set leaveDate=#{updatedDate},state=#{newState},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
+    </update>
+    <update id="freezeSysteUser2" parameterType="map">
+        update t_user set leaveDate=#{leaveDate},state=#{newState},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
     </update>
     
     <select id="IdSysteUser" parameterType="int" resultType="User">
@@ -90,7 +105,7 @@
     </select>
     
     <update id="update" parameterType="user">
-        update t_user set userName=#{userName},passWord=#{passWord},name=#{name},entryDate=#{entryDate},leaveDate=#{leaveDate},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id} 
+        update t_user set userName=#{userName},name=#{name},entryDate=#{entryDate},leaveDate=#{leaveDate},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id} 
     </update>
     
     <update id="addRoleId2" parameterType="Map">
@@ -101,15 +116,28 @@
         update t_user set delete_flag='是' where id=#{id}
     </update>
     
-    <select id="systemLogCount" resultType="int">
+    <select id="systemLogCount" resultType="int" parameterType="map">
         select count(1) from t_log where delete_flag='否'
+        <if test="uentryDate!=null &amp;&amp; uentryDate!=''">
+			and	createDate &gt; #{uentryDate}
+		</if>
+		<if test="uentryDate2!=null &amp;&amp; uentryDate2!=''">
+			and createDate &lt; #{uentryDate2}
+		</if>
+        
     </select>
     
     <select id="listSystemLog" resultType="Systemlog" parameterType="map">
-        select tl.id,tl.userId,tu.userName,tl.logMessage,tl.createDate,tl.updatedDate,tl.remark from t_log tl
+        select tl.id,tl.userId,tu.userName,tl.logMessage,tl.createDate,tl.remark from t_log tl
 		LEFT JOIN t_user tu
 		on tl.userId=tu.id
 		where tl.delete_flag='否'
+		<if test="uentryDate!=null &amp;&amp; uentryDate!=''">
+			and	tl.createDate &gt; #{uentryDate}
+		</if>
+		<if test="uentryDate2!=null &amp;&amp; uentryDate2!=''">
+			and tl.createDate &lt; #{uentryDate2}
+		</if>
 		GROUP BY tl.id
 		order by tl.id desc
 		limit #{pageIndex},#{pageSize}
