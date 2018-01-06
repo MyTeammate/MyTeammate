@@ -32,13 +32,7 @@
 <link rel="stylesheet" href="css/inspectionTaskQuery.css" />
 <link rel="stylesheet" href="css/roleConfig.css" />
 <script type="text/javascript" src="js/systemRole.js"></script>
-
-<script type="text/javascript" src="js/flaw_query.js"></script>
-
-
-
 <script type="text/javascript" src="js/systemLog.js"></script>
-
 
 
 
