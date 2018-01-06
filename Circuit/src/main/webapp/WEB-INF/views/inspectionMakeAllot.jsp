@@ -69,15 +69,9 @@
 	<br/>
 	<p style="position: relative;bottom: 155px;">
 	<a href="#" onclick="hid()" class="easyui-linkbutton" style="float: right;">返回</a>
-	${updateStaff }
-	<c:choose>
-		<c:when test="${updateStaff == null }">
-			<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
-		</c:when>
-		<c:otherwise>
-			<a href="javascript:onclick=update_staffs()" class="easyui-linkbutton" style="float: right;">修改</a>
-		</c:otherwise>
-	</c:choose>
+	
+	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+		
 	</p>
 	<p style="position: relative;bottom: 250px;left: 127px;">
 	<a href="#" id="add" class="easyui-linkbutton" style="width: 40px;">+</a></p>
