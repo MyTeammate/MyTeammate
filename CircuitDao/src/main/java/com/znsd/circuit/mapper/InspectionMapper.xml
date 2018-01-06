@@ -284,4 +284,32 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 		update t_inspection set threadId=#{thread} where taskId=#{id}
 	</update>
 	<select id="checkInspectionCoding" ></select>
+	<select id="getInspectionFlawCount" resultType="int" parameterType="Map">
+		SELECT count(1)
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+	</select>
+	<select id="getAllInspectionFlaw" resultType="FlawQuery" parameterType="Map">
+		SELECT t.coding AS taskCoding,h.coding AS threadCoding,o.coding AS towerCoding,sys.settingName as flawGrade,
+		f.`name` AS flawType,u.name as receipter,c.discoverDate,u2.name AS creater,t.date,c.serviceAbility,c.flawDesc
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		limit #{pageIndex},#{pageSize}
+	</select>
 </mapper>

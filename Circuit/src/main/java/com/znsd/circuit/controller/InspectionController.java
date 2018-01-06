@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.FlawQuery;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
@@ -49,7 +51,10 @@ public class InspectionController {
 	 * 进入 巡检任务 制定与分配页面
 	 */
 	@RequestMapping(value = "inspectionMakeAllot")
-	public String intoMakeAllot() {
+	public String intoMakeAllot(Model model) {
+		model.addAttribute("updateInspection",null);
+		model.addAttribute("inspectionStaffs",null);
+		model.addAttribute("inspection",null);
 		return "inspectionMakeAllot";
 	}
 
@@ -57,7 +62,8 @@ public class InspectionController {
 	 * 进入 巡检任务 任务执行与回执
 	 */
 	@RequestMapping(value = "inspectionExecuteReceipt")
-	public String intoExecuteReceipt() {
+	public String intoExecuteReceipt(Model model) {
+		model.addAttribute("updateReceiptFlag", null);
 		return "inspectionExecuteReceipt";
 	}
 
@@ -114,6 +120,14 @@ public class InspectionController {
 		model.addAttribute("inspectionStaffs",inspectionStaffs);
 		model.addAttribute("inspection",inspection);
 		return "makeInspection";
+	}
+	
+	/*
+	 * 进入  缺陷查询 页面
+	 */
+	@RequestMapping(value="flawQuery")
+	public String intoFlawQuery(){
+		return "flawQuery";
 	}
 	
 	
@@ -420,8 +434,31 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping
-	public boolean addUpdateReceiptFlag(HttpSession session){
-		session.setAttribute("updateReceiptFlag", "修改回执录入");
+	public boolean addUpdateReceiptFlag(Model model){
+		model.addAttribute("updateReceiptFlag", "修改回执录入");
 		return true;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getAllInspectionFlaw")
+	public Map<String,Object> getAllInspectionFlaw(@RequestParam("page") int pageIndex,@RequestParam("rows") int pageSize
+			,FlawQuery flawQuery,String endDiscover,String endDate,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return null;
+		}
+		int creater = user.getId();
+		pageIndex = (pageIndex - 1) * pageSize;
+		Map<String, Object> map = new HashMap<>();
+		map.put("pageIndex", pageIndex);
+		map.put("pageSize", pageSize);
+		map.put("creater", creater);
+		
+		int count = inspectionService.getInspectionFlawCount(map);// 总条数
+		List<FlawQuery> list = inspectionService.getAllInspectionFlaw(map);
+		
+		map.put("rows", list);
+		map.put("total", count);
+		return map;
 	}
 }
