@@ -53,14 +53,14 @@ public class TaskeliminateController {
 			if (conteTitles != "" && conteTitles != null) {
 				map.put("cont", "%" + conteTitles + "%");
 			}
-			System.out.println("----**" + map);
+			
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectEliminate(map);
 		for (TaskEliminate eliminate : list) {
 			eliminate.setEdescription("<a href='javascript:onclick=selElId()'>查看</a>");
 		}
-		System.out.println(list);
+		
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
@@ -103,7 +103,7 @@ public class TaskeliminateController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(tcoding + "///");
 		int count = taskEliminateService.getselTowerCount(tcoding);
-		System.out.println(count + "****");
+		
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
@@ -126,7 +126,7 @@ public class TaskeliminateController {
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectElTower(map, tcoding);
-		System.out.println("=====" + list);
+		
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
