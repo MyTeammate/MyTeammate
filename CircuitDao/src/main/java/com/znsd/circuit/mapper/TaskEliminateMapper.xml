@@ -17,7 +17,7 @@
 		h.id=f.threadId AND
 		wa.id=f.flawId
 		AND f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
-		is NOT NULL AND f.confirmstate=0
+		is NOT NULL
 		<if test="rent!=null &amp;&amp; rent!=''">
 			AND a.coding LIKE #{rent}
 		</if>
@@ -50,7 +50,7 @@
 		AND r.xtaskid=a.id AND
 		h.id=f.threadId AND wa.id=f.flawId
 		AND
-		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate is NOT NULL 
+		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate is NOT NULL
 	</select>
 
 	<select id="selectElTower" parameterType="java.util.Map"
@@ -75,7 +75,7 @@
 		AND
 		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
 		is NOT NULL AND
-		a.coding=#{tcoding} AND f.confirmstate=0
+		a.coding=#{tcoding}
 		<if test="gant!=null &amp;&amp; gant!=''">
 			AND w.coding LIKE #{gant}
 		</if>

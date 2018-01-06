@@ -124,6 +124,7 @@ public interface EliminateService {
 	 * @return
 	 */
 	public List<User> getAllUserId(int eliminateId);
+
 	
 	/**
 	 * 通过任务id查询出每个任务所对应的缺陷

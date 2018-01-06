@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.mybatis.spring.annotation.MapperScan;
 
+import com.znsd.circuit.model.Systemlog;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 
 @MapperScan
 public interface SystemUserDao {
 	//分页总数量
-    public int systemUserCount();
+    public int systemUserCount(Map<String, Object> map);
     
     //分页查询
     public List<User> listSystemUser(Map<String, Object> map);
@@ -37,6 +38,9 @@ public interface SystemUserDao {
     //冻结用户
     public int freezeSysteUser(Map<String,Object> map);
     
+  //冻结用户
+    public int freezeSysteUser2(Map<String,Object> map);
+    
     //根据id查询用户信息
     public User IdSysteUser(int id);
     
@@ -54,4 +58,18 @@ public interface SystemUserDao {
     
   //删除用户
     public int delete(int id);
+    
+  //日志分页查询
+    public List<Systemlog> listSystemLog(Map<String, Object> map);
+    
+  //分页总数量
+    public int systemLogCount(Map<String, Object> map);
+    
+    //操作日志
+    public int addLog(Systemlog log);
+    
+  //日志记录登陆或注销
+    public int loginLog(Systemlog log);
+    
+    
 }

@@ -35,7 +35,6 @@ table.hovertable td {
 	border-color: #d4e3e5;
 }
 </style>
-
 </head>
 <body>
 	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配>>查看消缺任务</div>
@@ -94,11 +93,13 @@ table.hovertable td {
 		</tr>
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">负责人审查意见</td>
-			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5"   readonly="readonly">${seeEliminate.taskfuzeUserIdea}</textarea></td>
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5"   readonly="readonly">
+			${seeEliminate.taskfuzeUserIdea}
+			</textarea></td>
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">完成情况描述</td>
-			<td style="border: 1px solid #ccc;">
-			<textarea cols="30" rows="5" readonly="readonly">${seeEliminate.taskCompletionDesc}</textarea></td>
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5" readonly="readonly">
+			${seeEliminate.taskCompletionDesc}
+			</textarea></td>
 		</tr>
 		<tr  >
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle">下发人审查意见</td>
@@ -112,23 +113,27 @@ table.hovertable td {
 			<c:if test="${seeEliminate.taskPassed==1}">
 			<option value="1">不通过</option>
 			</c:if> --%></td>
-		</tr>
-	</table>
-	<p style="font-size: 14px;font-weight: bold;margin-left: 120px;">缺陷信息列表
-	<a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
-		style="margin-left: 2px;">返回</a>
-	</p>
 
-	<div style="border: 1px solid #ccc;margin-left: 120px;width:800px;height:110px;">
+			<td style="border: 1px solid #ccc;"><textarea cols="30" rows="5" readonly="readonly">
+			${seeEliminate.taskxiafaUserIdea}
+			</textarea></td>
+			<td style="border: 1px solid #ccc;"></td>
+			<td style="border: 1px solid #ccc;"></td>;
+</tr>
+	</table>
+	<p style="font-size: 14px;font-weight: bold;margin-left: 120px;">缺陷信息列表</p>
+	<div style="border: 1px solid red;margin-left: 120px;width:800px;height:110px;">
 	
 	<table id="see_eliminate"></table>
 	</div>
 	<div style="border: 0px solid red;margin-left: 120px;margin-top:20px;width:800px;height:160px;">
 	<p style="font-weight: bold;">工作间断延期记载</p>
-	<p><textarea cols="123" rows="5" id="work_record">${seeEliminate.extensionRecord}</textarea></p>
+	<p>无</p>
 	<p style="font-weight: bold;">工作终结报告</p>
-	<p><textarea cols="123" rows="5" id="final_report">${seeEliminate.finalReport}</textarea></p>
+	<p>无</p>
+	<p><a href="javascript:onclick=returntoshou()" class="easyui-linkbutton"
+		style="margin-left: 120px;">返回</a></p>
 	</div>
-	<script type="text/javascript" src="js/seeEliminate_details.js"></script>
+	
 </body>
 </html>

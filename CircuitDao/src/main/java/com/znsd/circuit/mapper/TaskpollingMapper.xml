@@ -28,7 +28,7 @@
 		t_flawconfirm tf ,t_task
 		t,t_thread h
 		WHERE tf.taskId=t.id AND
-		tf.threadId=h.id
+		tf.threadId=h.id AND tf.confirmstate=0
 	</select>
 
 	<select id="selectTaskTower" resultType="Taskpolling">
@@ -48,7 +48,7 @@
 		tf.towerId=w.id and
 		s.id=tf.flawGrade AND
 		tf.flawId=a.id AND
-		t.coding=#{coding}
+		t.coding=#{coding} AND tf.confirmstate=0
 	</select>
 
 	<select id="getselTaskCount" resultType="int">
@@ -62,7 +62,7 @@
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
 		s.id=tf.flawGrade AND tf.flawId=a.id AND
-		t.coding=#{coding}
+		t.coding=#{coding} AND tf.confirmstate=0
 	</select>
 
 	<select id="selectTower" parameterType="java.util.Map"

@@ -26,14 +26,6 @@ public class TaskeliminateController {
 		return "taskElnews";
 	}
 
-	/**
-	 * 查询消缺任务
-	 * @param page
-	 * @param rows
-	 * @param renTitles
-	 * @param conteTitles
-	 * @return
-	 */
 	@RequestMapping("/selectAllEliminPost")
 	@ResponseBody
 	public Map<String, Object> selectAllEliminPost(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -53,25 +45,19 @@ public class TaskeliminateController {
 			if (conteTitles != "" && conteTitles != null) {
 				map.put("cont", "%" + conteTitles + "%");
 			}
-			System.out.println("----**" + map);
+			
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectEliminate(map);
 		for (TaskEliminate eliminate : list) {
 			eliminate.setEdescription("<a href='javascript:onclick=selElId()'>查看</a>");
 		}
-		System.out.println(list);
+		
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
 	}
 
-	/**
-	 * 获取消缺任务ID
-	 * @param session
-	 * @param tcoding
-	 * @return
-	 */
 	@RequestMapping("/taskElTowerPost")
 	public String taskElTowerPost(HttpSession session, @RequestParam("tcoding") String tcoding) {
 		TaskEliminate task = taskEliminateService.selectElCoding(tcoding);
@@ -79,18 +65,6 @@ public class TaskeliminateController {
 		return "taskElnews";
 	}
 
-	/**
-	 * 查询每个消缺任务下面的所有任务杆塔
-	 * @param page
-	 * @param rows
-	 * @param tcoding
-	 * @param gantTitle
-	 * @param quexTitle
-	 * @param seTitle
-	 * @param staTitle
-	 * @param endTitle
-	 * @return
-	 */
 	@RequestMapping("/taskElTowerAllPost")
 	@ResponseBody
 	public Map<String, Object> taskElTowerAllPost(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -103,7 +77,7 @@ public class TaskeliminateController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(tcoding + "///");
 		int count = taskEliminateService.getselTowerCount(tcoding);
-		System.out.println(count + "****");
+		
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
@@ -126,7 +100,7 @@ public class TaskeliminateController {
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectElTower(map, tcoding);
-		System.out.println("=====" + list);
+		
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;

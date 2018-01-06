@@ -36,7 +36,7 @@ function inspectionBottomLeftDd(node){
 						      '</tr>'+
 						      '<tr>'+
 						          '<td><strong>缺陷类型：</strong>'+result.flawType+'</td>'+
-						          '<td><strong>缺陷级别：</strong>'+result.flowGrade+'</td>'+
+						          '<td><strong>缺陷级别：</strong>'+result.flawGrade+'</td>'+
 						      '</tr>'+
 						      '<tr>'+
 						          '<td colspan="2"><strong>缺陷描述：</strong>'+result.flawDesc+'</td>'+

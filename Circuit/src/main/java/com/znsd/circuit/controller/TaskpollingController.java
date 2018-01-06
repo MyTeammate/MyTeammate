@@ -25,14 +25,6 @@ public class TaskpollingController {
 		return "taskPonew";
 	}
 
-	/**
-	 * 查询巡检任务
-	 * @param page
-	 * @param rows
-	 * @param conteTitle
-	 * @param renTitle
-	 * @return
-	 */
 	@RequestMapping("/taskPollingPost")
 	@ResponseBody
 	public Map<String, Object> taskPollingPost(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -47,7 +39,7 @@ public class TaskpollingController {
 		if (conteTitle != "" && conteTitle != null) {
 			map.put("title", "%" + conteTitle + "%");
 			List<Taskpolling> list1 = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list1);
+			
 			for (Taskpolling polling : list1) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -56,7 +48,7 @@ public class TaskpollingController {
 		} else if (renTitle != "" && renTitle != null) {
 			map.put("make", "%" + renTitle + "%");
 			List<Taskpolling> list2 = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list2);
+			
 			for (Taskpolling polling : list2) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -64,7 +56,7 @@ public class TaskpollingController {
 			maps.put("total", list2.size());
 		} else {
 			List<Taskpolling> list = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list);
+			
 			for (Taskpolling polling : list) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -75,12 +67,6 @@ public class TaskpollingController {
 		return maps;
 	}
 
-	/**
-	 * 获取巡检任务的id
-	 * @param session
-	 * @param coding
-	 * @return
-	 */
 	@RequestMapping("/taskTowerPost")
 	public String taskTowerPost(HttpSession session, @RequestParam("coding") String coding) {
 		Taskpolling task = taskpollingService.selectTaskTower(coding);
@@ -88,17 +74,6 @@ public class TaskpollingController {
 		return "taskPonew";
 	}
 
-	/**
-	 * 查询每个巡检任务下面的所有任务杆塔
-	 * @param page
-	 * @param rows
-	 * @param coding
-	 * @param ganTitle
-	 * @param queTitle
-	 * @param sTitle
-	 * @param eTitle
-	 * @return
-	 */
 	@RequestMapping("/towerTask")
 	@ResponseBody
 	public Map<String, Object> towerTask(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -123,11 +98,11 @@ public class TaskpollingController {
 
 			map.put("start", sTitle);
 			map.put("end", eTitle);
-			System.out.println(map);
+			
 		}
 		//int count = taskpollingService.getselTaskCount(coding);
 		List<Taskpolling> list = taskpollingService.selectTower(map, coding);
-		System.out.println(list);
+		
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;

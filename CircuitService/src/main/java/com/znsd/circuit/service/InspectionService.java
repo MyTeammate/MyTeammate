@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.FlawQuery;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
@@ -75,7 +76,7 @@ public interface InspectionService {
 	 * @param ins
 	 * @param userId
 	 */
-	public boolean makeInspection(Inspection ins);
+	public int makeInspection(Inspection ins);
 	
 	/**分配巡检任务
 	 * @param userId
@@ -160,5 +161,46 @@ public interface InspectionService {
 	 */
 	public void updateFlawRecord(int taskId);
 	
+	/**判断是否是回执录入人
+	 * @param map
+	 * @return
+	 */
+	public int checkInspectionReceipter(Map<String, Object> map);  //taskId userId
+	
 	/*  end 回执录入   */
+	
+	/**得到任务的状态
+	 * @param taskId
+	 * @return
+	 */
+	public String getTaskState(int taskId);
+	
+	/**已分配状态下的取消操作
+	 * @param taskId
+	 */
+	public void deleteInspectionStaff(int taskId);
+	
+	/**获取要修改的原始数据
+	 * @param taskId
+	 * @return
+	 */
+	public Inspection getUpdateInspectionInfo(int taskId);
+	
+	/**修改巡检任务
+	 * @param inspection
+	 */
+	public void updateInspection(Inspection inspection);
+	public void updateInspectionThread(Inspection inspection);
+	
+	/**缺陷查询的总条数
+	 * @param map
+	 * @return
+	 */
+	public int getInspectionFlawCount(Map<String, Object> map);
+	
+	/**巡检任务管理 -- >缺陷查询
+	 * @param map
+	 * @return
+	 */
+	public List<FlawQuery> getAllInspectionFlaw(Map<String, Object> map);
 }

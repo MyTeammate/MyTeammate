@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.InspectionDao;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.FlawQuery;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
 import com.znsd.circuit.model.Systemparam;
@@ -74,10 +75,11 @@ public class InspectionServiceImpl implements InspectionService{
 	}
 
 	@Override
-	public boolean makeInspection(Inspection ins) {
+	public int makeInspection(Inspection ins) {
 		inspectionDao.addTask(ins);
+		int taskId = ins.getId();
 		inspectionDao.addInspection(ins);
-		return true;
+		return taskId;
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class InspectionServiceImpl implements InspectionService{
 			map.put("userId", userId[i]);		
 			inspectionDao.addInspectionStaff(map);
 		}
-		map.put("coding", "INSPECTION_STATE");
+		map.put("coding", "TASK_STATE");
 		map.put("taskId", taskId);
 		map.put("settingName", "已分配");
 		inspectionDao.updateInspectionState(map);// coding taskId settingName
@@ -166,15 +168,53 @@ public class InspectionServiceImpl implements InspectionService{
 	@Override
 	public boolean saveInspectionFlaw(Flawconfirm fconfirm) {
 		inspectionDao.saveFlawConfirm(fconfirm);
-		System.out.println("-------------------------flawconfirmid:"+fconfirm.getId());
 		inspectionDao.saveFlawRecord(fconfirm);
 		return true;
 	}
 
 	@Override
 	public void updateFlawRecord(int taskId) {
-		// TODO Auto-generated method stub
-		
+		inspectionDao.updateFlawRecord(taskId);
+	}
+
+	@Override
+	public int checkInspectionReceipter(Map<String, Object> map) {
+		return inspectionDao.checkInspectionReceipter(map);
+	}
+	
+	@Override
+	public String getTaskState(int taskId) {
+		return inspectionDao.getTaskState(taskId);
+	}
+
+	@Override
+	public void deleteInspectionStaff(int taskId) {
+		inspectionDao.deleteInspectionStaff(taskId);
+	}
+
+	@Override
+	public Inspection getUpdateInspectionInfo(int taskId) {
+		return inspectionDao.getUpdateInspectionInfo(taskId);
+	}
+
+	@Override
+	public void updateInspection(Inspection inspection) {
+		inspectionDao.updateInspection(inspection);
+	}
+
+	@Override
+	public void updateInspectionThread(Inspection inspection) {
+		inspectionDao.updateInspectionThread(inspection);
+	}
+
+	@Override
+	public List<FlawQuery> getAllInspectionFlaw(Map<String, Object> map) {
+		return inspectionDao.getAllInspectionFlaw(map);
+	}
+
+	@Override
+	public int getInspectionFlawCount(Map<String, Object> map) {
+		return inspectionDao.getInspectionFlawCount(map);
 	}
 
 

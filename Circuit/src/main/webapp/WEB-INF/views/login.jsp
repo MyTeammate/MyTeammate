@@ -55,9 +55,10 @@
 					is_show();
 					return false;
 				}else{
-					var data={userName:u.val(),passWord:p.val()};
+					var logId="9999";
+					var data={userName:u.val(),passWord:p.val(),logId:logId};
 					$.ajax({
-						url:"homeController/login",
+						url:"homeController/defined",
 						type:"post",
 						data:data,
 						success:function(result){
