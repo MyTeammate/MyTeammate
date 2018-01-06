@@ -1,3 +1,4 @@
+
 var $lineId;
 var $lineName;
 var threadFlagThread = "";
@@ -58,6 +59,7 @@ $(function(){
 })
 
 function addTherad(){
+	websocket.send("asdas")
 	move('增加线路','thread/auThread?lineId='+$lineId+'&lineName='+$lineName);
 
 }

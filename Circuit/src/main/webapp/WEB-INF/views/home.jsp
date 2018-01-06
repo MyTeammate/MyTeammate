@@ -36,7 +36,6 @@
 
 
 
-
 </head>
 <body class="easyui-layout" style="width: 1439px; height: 1000px">
 	<div
