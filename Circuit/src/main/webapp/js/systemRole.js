@@ -11,7 +11,7 @@ function role_tb(){
 		pageList : [ 1, 2, 3, 4 ],
 		columns:[[
 		      {field:'id',checkbox:true},
-              {field:'coding',title:'角编号',width:110,align:'center'},
+              {field:'coding',title:'角色编号',width:110,align:'center'},
               {field:'name',title:'角色名称',width:110,align:'center'},
               {field:'createName',title:'创建人',width:80,align:'center'},
               {field:'updatedDate',title:'更新时间',width:170,align:'center'},
@@ -32,13 +32,12 @@ function role_tb(){
             	  align:'center',
             	  formatter:function(value,row,index){
             		  var oper = '';
-            		  alert(row.coding);
             		  if(row.state=='0'){
             			  oper = '<span><a href="javaScript:roleState('
 								+ row.id+","+0
 								+ ')">禁用</a>｜'
 								+ '<a href="javaScript:roleUpdate('
-								+ row.id+','+row.coding+','+row.name+','+row.state
+								+ row.id
 								+ ')">修改</a>｜'
 								+ '<a href="javaScript:roleDelete('
 								+ row.id+','+row.state
@@ -48,7 +47,7 @@ function role_tb(){
 								+ row.id+","+1
 								+ ')">启用</a>｜'
 								+ '<a href="javaScript:roleUpdate('
-								+ row.id+','+row.coding+','+row.name+','+row.state
+								+ row.id
 								+ ')">修改</a>｜'
 								+ '<a href="javaScript:roleDelete('
 								+ row.id+','+row.state
@@ -143,6 +142,16 @@ function role_tb(){
 	    	})
     	
 	})
+	
+	
+	$('#role_query').bind('click',function(){
+		var r_name=$('#role_name').val();
+		var r_cc=$('#role_cc').val();
+		$('#role_tb').datagrid('reload',{
+			name:r_name,
+			state:r_cc
+		});
+	})
 }
 
 function roleState(id,state){
@@ -196,8 +205,13 @@ function roleState(id,state){
 }
 
 
-function roleUpdate(id,coding,name,state){
-	alert("1");
+function roleUpdate(id){
+		var dataId={id:id}
+		$.ajax({
+			url:'roleManage/queryRole',
+			type:"post",
+			data:dataId,
+			success:function(result){
 			$('#role_update_option').html("" +
 					"<tr>" +
 					"<td style='float:right;'>角色编号：</td><td style='width:250px'><input type='text' id='newCoding' name='param' /><span id='newCoding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
@@ -206,11 +220,10 @@ function roleUpdate(id,coding,name,state){
 					"</tr><tr>" +
 					"<td style='float:right;'>使用状态：</td><td id='newState'></td>" +
 					"</tr>"); 
-			$('#newCoding').val(coding);
-			$('#newName').val(name);
-			$('#newState').val(state);
-			alert("2");
-			if(state==0){
+			$('#newCoding').val(result.coding);
+			$('#newName').val(result.name);
+			$('#newState').val(result.state);
+			if(result.state==0){
 				$('#newState').html("启用");
 			}else{
 				$('#newState').html("未启用");
@@ -239,14 +252,14 @@ function roleUpdate(id,coding,name,state){
 								var newName=$('#newName').val();
 								var rUN="";
 								var rN="";
-								if(coding==""||name==""){
+								if(newCoding==""||newName==""){
 									$.messager.alert({
 										title:'错误',
 										msg:'请填写必填项！',
 										icon:'info'
 									});
 								}else{
-										var data={coding:newCoding,name:newName}
+										var data={id:id,coding:newCoding,name:newName}
 										$.ajax({
 											url:'roleManage/verifyRole',
 											type:"post",
@@ -291,6 +304,8 @@ function roleUpdate(id,coding,name,state){
 						}
 					]
     	})
+		}
+	})
 }
 
 

@@ -81,7 +81,7 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+		$.messager.confirm('确定','您确定要删除所选的数据类型吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({
@@ -186,7 +186,11 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+    	var makr='启用'; 
+    	if(cost.state=='启用'){
+    		makr='禁用';
+    	}
+		$.messager.confirm('确定','您确定要'+makr+'所选的数据类型吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({

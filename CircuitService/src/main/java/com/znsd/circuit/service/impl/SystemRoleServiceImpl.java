@@ -17,8 +17,8 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	private SystemRoleDao systemRoleDao;
 
 	@Override
-	public int systemRoleCount() {
-		return systemRoleDao.systemRoleCount();
+	public int systemRoleCount(Map<String, Object> map) {
+		return systemRoleDao.systemRoleCount(map);
 	}
 
 	@Override
@@ -27,12 +27,43 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	}
 
 	@Override
-	public Systemrole verifyCoding(String coding) {
-		return systemRoleDao.verifyCoding(coding);
+	public Systemrole verifyCoding(Map<String, Object> map) {
+		return systemRoleDao.verifyCoding(map);
 	}
 
 	@Override
-	public Systemrole verifyName(String name) {
-		return systemRoleDao.verifyName(name);
+	public Systemrole verifyName(Map<String, Object> map) {
+		return systemRoleDao.verifyName(map);
 	}
+
+	@Override
+	public int addRole(Systemrole role) {
+		return systemRoleDao.addRole(role);
+	}
+
+	@Override
+	public int stateRole(Map<String, Object> map) {
+		return systemRoleDao.stateRole(map);
+	}
+
+	@Override
+	public int updateRole(Map<String, Object> map) {
+		return systemRoleDao.updateRole(map);
+	}
+
+	@Override
+	public int deleteRole(int id) {
+		return systemRoleDao.deleteRole(id);
+	}
+
+	@Override
+	public Systemrole queryRole(int id) {
+		return systemRoleDao.queryRole(id);
+	}
+
+	@Override
+	public List<Systemrole> likeRole(Map<String,Object> map) {
+		return systemRoleDao.likeRole(map);
+	}
+
 }

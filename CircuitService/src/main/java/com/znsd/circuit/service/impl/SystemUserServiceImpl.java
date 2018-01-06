@@ -18,8 +18,8 @@ public class SystemUserServiceImpl implements SystemUserService{
 	private SystemUserDao systemUserDao;
 
 	@Override
-	public int systemUserCount() {
-		return systemUserDao.systemUserCount();
+	public int systemUserCount(Map<String, Object> map) {
+		return systemUserDao.systemUserCount(map);
 	}
 
 	@Override
@@ -98,8 +98,8 @@ public class SystemUserServiceImpl implements SystemUserService{
 	}
 
 	@Override
-	public int systemLogCount() {
-		return systemUserDao.systemLogCount();
+	public int systemLogCount(Map<String, Object> map) {
+		return systemUserDao.systemLogCount(map);
 	}
 
 	@Override
@@ -110,6 +110,11 @@ public class SystemUserServiceImpl implements SystemUserService{
 	@Override
 	public int loginLog(Systemlog log) {
 		return systemUserDao.loginLog(log);
+	}
+
+	@Override
+	public int freezeSysteUser2(Map<String, Object> map) {
+		return systemUserDao.freezeSysteUser2(map);
 	}
     
 }
