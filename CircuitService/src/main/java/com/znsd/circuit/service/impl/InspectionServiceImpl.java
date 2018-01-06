@@ -48,7 +48,9 @@ public class InspectionServiceImpl implements InspectionService{
 		
 		map.put("coding", inspection.getCoding());
 		map.put("thread", inspection.getThread());
-		map.put("state", inspection.getState());
+		if(!"--请选择--".equals(inspection.getState())){
+			map.put("state", inspection.getState());
+		}
 		map.put("taskMan", inspection.getCreater());
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);

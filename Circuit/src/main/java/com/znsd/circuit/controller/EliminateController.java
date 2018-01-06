@@ -727,20 +727,8 @@ public class EliminateController {
 		@ResponseBody
 		public String update_task_eliminate(String update_taskcoding,String update_taskname,String taskbills,Integer taskMan,
 				String update_taskDesc,String update_taskRemark,Integer taskid,Integer eliminateId) {
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("workBills",taskbills);
-			map.put("taskMan", taskMan);
-			map.put("eliminateId", eliminateId);
-			int i = eliminateService.updateEliminate(map);
-			System.out.println("。。。。。。。。。。。。map"+map);
-			System.out.println("。。。。。。。。。。。。。。。i。"+i);
-			Map<String,Object> map1 = new HashMap<String,Object>();
-			map1.put("update_taskcoding", update_taskcoding);
-			map1.put("update_taskname", update_taskname);
-			map1.put("update_taskDesc", update_taskDesc);
-			map1.put("update_taskRemark", update_taskRemark);
-			map1.put("taskid",taskid);
-			eliminateService.updateTask(map1);
+			
+			
 			return "true";
 			
 		}

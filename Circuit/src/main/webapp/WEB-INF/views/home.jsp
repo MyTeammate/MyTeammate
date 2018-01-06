@@ -32,26 +32,20 @@
 <link rel="stylesheet" href="css/inspectionTaskQuery.css" />
 <link rel="stylesheet" href="css/roleConfig.css" />
 <script type="text/javascript" src="js/systemRole.js"></script>
-
-<script type="text/javascript" src="js/flaw_query.js"></script>
-
-
-
 <script type="text/javascript" src="js/systemLog.js"></script>
 
 
 
-
 </head>
-<body class="easyui-layout" style="width: 1439px; height: 1000px">
+<body class="easyui-layout" style="width: 1439px; height: 1000px"  onload="showtime();">
 	<div
 		data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
-		style="height: 60px; background: #ccc;">
-		<div class="logo">电力巡检§</div>
+		style="height: 75px; background: #ccc;">
+		<div class="logo" style="font-size:29px;color:#0000E3">电力巡检§</div>
 		<div class="logout">
-			您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="#" id="logout">&nbsp;&nbsp;退出</a>
+			<span id="time" style="font-size:24px;text-align: center;color:#CF9E9E"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前权限：${user.roleName}&nbsp;&nbsp;您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="#" id="logout">&nbsp;&nbsp;退出</a>
 		</div>
-		<div class="logout">当前权限：${user.roleName}</div>
+		<!-- <div class="logout"></div> -->
 	</div>   
 
 	<div data-options="region:'west',title:'     导             航',split:true,iconCls:'icon-world'"

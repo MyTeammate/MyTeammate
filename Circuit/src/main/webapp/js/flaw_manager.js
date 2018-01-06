@@ -242,6 +242,7 @@ function fenpeiEliminate(id){
 		}
 	});
 	$.ajax({
+		
 		url : "eliminate/getEliminateUser?id="+id,
 		type : "post",
 		success : function(data) {

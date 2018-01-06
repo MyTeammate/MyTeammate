@@ -11,17 +11,17 @@
 		<p>巡检任务管理>>缺陷查询</p>
 		<div id="flawQuery_tool" style="padding-left:25px;">
 			<p>
-			      任务编号：<input type="text" class="textbox" style="height:22px;" id="inspectionCoding">&nbsp;&nbsp;
+			      任务编号：<input type="text" class="textbox" style="height:22px;" id="taskCoding">&nbsp;&nbsp;
 			      线路编号：<input type="text" class="textbox" style="height:22px;" id="threadCoding">&nbsp;&nbsp;
 			      缺陷类型： <input type="text" id="inspectionFlawType" name="flawId" />&nbsp;&nbsp;
 			      缺陷级别 ： <input type="text" id="inspectionFlawGrade" />
 			</p>
 			<p>
-				<label>下发时间：</label><input class="easyui-datebox" id="inspectionBeginDate1" name="flawQueryBegin" style="width:120px;">
-				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate1\']',editable:false" style="width:120px;" name="flawQueryEnd">&nbsp;&nbsp;
+				<label>下发时间：</label><input class="easyui-datebox" id="inspectionBeginDate1" style="width:120px;">
+				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate1\']',editable:false" style="width:120px;" id="flawQueryEnd1">&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;
-				<label>发现时间：</label><input class="easyui-datebox" id="inspectionBeginDate2" name="flawQueryBegin" style="width:120px;">
-				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate2\']',editable:false" style="width:120px;" name="flawQueryEnd">
+				<label>发现时间：</label><input class="easyui-datebox" id="inspectionBeginDate2" style="width:120px;">
+				&nbsp;-&nbsp;<input class="easyui-datebox" data-options="validType:'md[\'#inspectionBeginDate2\']',editable:false" style="width:120px;" id="flawQueryEnd2">
 				&nbsp;&nbsp;&nbsp;
 				<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="flawQuery_onclick.search()">查询</a>
 			</p>

@@ -70,6 +70,5 @@ public interface SystemUserDao {
     
   //日志记录登陆或注销
     public int loginLog(Systemlog log);
-    
-    
+ 
 }
