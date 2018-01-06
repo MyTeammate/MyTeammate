@@ -17,8 +17,8 @@ public class HomeServiceImpl implements HomeService{
 	private HomeDao homeDao;
 
 	@Override
-	public List<Power> selectAllPower(Integer nid) {
-		return homeDao.selectAllPower(nid);
+	public List<Power> selectAllPower(Map<String,Object> map) {
+		return homeDao.selectAllPower(map);
 	}
 
 	@Override

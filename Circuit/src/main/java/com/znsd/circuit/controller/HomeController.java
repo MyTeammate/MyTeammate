@@ -30,9 +30,12 @@ public class HomeController {
 	//树形菜单查询
 	@ResponseBody
 	@RequestMapping("/homeNav")
-    public List<Power> homeNav(Integer id){
+    public List<Power> homeNav(HttpSession session,Integer id){
 		Integer nid = id == null ? 0 : id;
-		List<Power> listPower=homeService.selectAllPower(nid);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("nid",nid);
+		map.put("userId",((User)session.getAttribute("user")).getId());
+		List<Power> listPower=homeService.selectAllPower(map);
     	return listPower;
     }
 	
