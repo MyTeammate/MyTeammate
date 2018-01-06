@@ -12,7 +12,7 @@ body {
 </style>
 </head>
 <body>
-	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制定与分配</div>
+	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配</div>
 	<div id="div_toolOne"
 		style="text-align: left;">
 		任务编号：<input type="text" id="flaw_taskcoding" class="textbox" name="votem" style="width: 220px; height: 22px;" />
@@ -54,6 +54,5 @@ body {
 	<p style="position: relative;bottom: 245px;left: 127px;">
 	<a href="#" id="delete" class="easyui-linkbutton"style="width: 40px;">&nbsp;-&nbsp;</a></p>
 	</div>
-	<script type="text/javascript" src="js/eliminate_execution_receipt.js"></script>
 </body>
 </html>

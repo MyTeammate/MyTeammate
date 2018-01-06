@@ -65,4 +65,5 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	public List<Systemrole> likeRole(Map<String,Object> map) {
 		return systemRoleDao.likeRole(map);
 	}
+
 }

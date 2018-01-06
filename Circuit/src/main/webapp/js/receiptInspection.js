@@ -122,14 +122,6 @@ function initDate(){
 var towerId='';
 
 /*
- * 在id是string的情况下隐藏span，然后通过选择器获取
- */
-function sf(e,id){
-	console.log($(e));
-	console.log($(e).parent().prev("span")[0].innerText);
-}
-
-/*
  * 点左边出右边
  */
 function showFlaw(e,id){
@@ -161,7 +153,7 @@ function showFlaw(e,id){
 			towerId:id
 		},
 		success:function(data){
-			console.log("flowId:"+data.flawId+",flawGrade:"+data.flawGrade+",serviceAbility:"+data.serviceAbility+",flawDesc:"+data.flawDesc);
+			//console.log("flowId:"+data.flawId+",serviceAbility:"+data.serviceAbility+",flawDesc:"+data.flawDesc);
 			$("#inspectionFlawType").combobox('select',data.flawId);
 			$("#inspectionFlawGrade").combobox('select',data.flawGrade);
 			
@@ -212,6 +204,7 @@ function saveExecuteReceipt(){
 	// 杆塔id,缺陷类型,缺陷级别,完好率,发现时间，缺陷描述
 	var flawType=$("#inspectionFlawType").combobox('getValue');
 	var flawGrade=$("#inspectionFlawGrade").combobox('getValue');
+	//alert(flawGrade)
 	var serviceAbility=$('.text').text();
 	var sb=serviceAbility.replace('%','');
 	var date=$("#receiptInspectionDate").val();
@@ -242,7 +235,7 @@ function saveExecuteReceipt(){
 			if(result==true){
 				 $.messager.show({
 					title:'提示',
-					msg:'巡检任务分配成功',
+					msg:'回执录入保存成功',
 					timeout:200,
 					showType:"slide",
 					style:{
@@ -260,14 +253,18 @@ function saveExecuteReceipt(){
 }
 
 /*
- *  点击上传回执  
+ * 执行上传回执
  */
 function executeReceipt(){
 	$.ajax({
 		url:"executeReceipt",
 		type:"POST",
 		success:function(result){
-			if(result==true){
+			console.log(result)
+			if(result.flag==true){
+				if(result.userId){
+					websocket.send(result.userId)
+				}
 				 $.messager.show({
 					title:'提示',
 					msg:'上传回执成功',
@@ -276,6 +273,7 @@ function executeReceipt(){
 					style:{
 					}
 				});
+				move('巡检任务执行与回执','inspectionExecuteReceipt'); 
 			}else{
 				$.messager.alert({
 					title:'上传回执失败',

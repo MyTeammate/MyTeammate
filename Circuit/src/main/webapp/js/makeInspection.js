@@ -3,7 +3,7 @@
  */
 
 $(function(){
-
+	
 	$("#taskCoding").validatebox({
 		required : true,
 		validType : 'checkCoding',
@@ -175,6 +175,9 @@ function checkMakeInspection(){
 	}
 }
 
+/*
+ * 提交 巡检任务信息
+ */
 function saveInspection(){
 	if(checkMakeInspection()){
 		var staffs = $.map($("#select_list option:not(:selected)"),
@@ -201,6 +204,48 @@ function saveInspection(){
 				}else{
 					$.messager.alert({
 						title:'保存失败',
+						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+						icon:'warning',	
+					})
+				}
+				//刷新数据表格
+				//$('#serve_datagrid').datagrid('reload');
+			}
+		})
+	}else{
+		$.messager.alert({
+			title:'警告操作',
+			msg:'<h3 style="color: red;">请正确完善信息再提交！</h3>',
+			icon:'warning',
+		})
+	}
+}
+
+/*
+ * 提交修改
+ */
+function updateInspectionTask(){
+	if(checkMakeInspection()){
+		$.ajax({
+			url:'updateInspectionTask',
+			type:"POST",
+			data:{
+				id:$("input[name=inspectionId]").val(),
+				coding:$("#taskCoding").val(),
+				name:$('#taskName').val(),
+				thread:$("#inspectionThread").val(),
+				createDate:$("#createInspectionDate").val(),
+				remark:$("textarea[name=remark]").val(),
+				predictDate:$("input[name=predictDate]").val(),
+			},
+			//data:$("#inspection_save_form").serialize(),
+			success:function(result){
+				if(result==true){
+					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+					tab.panel('refresh', 'inspectionMakeAllot');
+				}else{
+					$.messager.alert({
+						title:'修改失败',
 						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
 						icon:'warning',	
 					})

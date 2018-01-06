@@ -123,7 +123,7 @@ $(function(){
 				if(row.state=='已分配'){
 					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">回执录入</a>｜<a href="javascript:executeInspection('+row.id+')" style="text-decoration:none;">执行</a>｜<a style="color:#CDC5BF">修改</a></span>';
 				}else if(row.state=='执行中'){
-					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:receiptInspection('+row.id+')" style="text-decoration:none;">回执录入</a>｜<a style="color:#CDC5BF;">执行</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">修改</a></span>';
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:receiptInspection('+row.id+')" style="text-decoration:none;">回执录入</a>｜<a style="color:#CDC5BF;">执行</a>｜<a href="javascript:updateReceiptInspection('+row.id+')" style="text-decoration:none;">修改</a></span>';
 				}else{ // 已完成
 					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">回执录入</a>｜<a style="color:#CDC5BF">执行</a>｜<a style="color:#CDC5BF">修改</a></span>';
 				}
@@ -241,6 +241,36 @@ function receiptInspection(id){
 				})
 			}
 		},
-	})
-	
+	})	
+}
+
+/*
+ * 修改回执录入
+ */
+function updateReceiptInspection(id){
+	// 先判断权限，然后再后台标记是修改，再跳页面
+	$.ajax({
+		url:"checkInspectionReceipter",
+		type:"POST",
+		data:{
+			taskId:id
+		},
+		success:function(result){
+			if(result == true){
+				$.ajax({
+					url:"addUpdateReceiptFlag",
+					type:"POST",
+					success:function(result){
+						move('巡检任务回执录入','receiptInspection?taskId='+id);
+					}
+				});
+			}else{
+				$.messager.alert({
+					title:'修改回执录入失败',
+					msg:'<h3 style="color: red;">权限不够，需要权限：负责人！</h3>',
+					icon:'warning',
+				})
+			}
+		},
+	})	
 }

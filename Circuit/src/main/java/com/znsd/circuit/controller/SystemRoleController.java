@@ -36,7 +36,6 @@ public class SystemRoleController {
 		map.put("state",state);
 		map.put("name",name);
 		int count = systemRoleService.systemRoleCount(map);
-		System.out.println("要模糊查询的条件："+state+","+name);
 		List<Systemrole> listRole=systemRoleService.listSystemRole(map);
 		for (Iterator iterator = listRole.iterator(); iterator.hasNext();) {
 			Systemrole role = (Systemrole) iterator.next();
@@ -150,7 +149,6 @@ public class SystemRoleController {
 		List<Systemrole> list=systemRoleService.likeRole(map);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Systemrole systemrole = (Systemrole) iterator.next();
-			System.out.println("`````````````````"+systemrole);
 		}
 		return list;
 	}

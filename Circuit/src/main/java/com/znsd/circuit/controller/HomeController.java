@@ -33,9 +33,6 @@ public class HomeController {
     public List<Power> homeNav(Integer id){
 		Integer nid = id == null ? 0 : id;
 		List<Power> listPower=homeService.selectAllPower(nid);
-		for (Iterator iterator = listPower.iterator(); iterator.hasNext();) {
-			Power power = (Power) iterator.next();
-		}
     	return listPower;
     }
 	

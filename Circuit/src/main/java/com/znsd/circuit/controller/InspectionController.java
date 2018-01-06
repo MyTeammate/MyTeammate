@@ -1,11 +1,9 @@
 package com.znsd.circuit.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flaw;
+import com.znsd.circuit.model.FlawQuery;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
+import com.znsd.circuit.model.Personalwork;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.model.Tower;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.InspectionService;
+import com.znsd.circuit.service.PersonalworkService;
 import com.znsd.circuit.service.SystemParamService;
 import com.znsd.circuit.service.ThreadService;
 import com.znsd.circuit.service.TowerService;
+import com.znsd.circuit.util.DateTime;
 import com.znsd.circuit.util.Pager;
 
 @Controller
@@ -44,12 +47,18 @@ public class InspectionController {
 	@Autowired
 	private TowerService towerService;
 	
+	@Autowired
+	private PersonalworkService personalworkService;
+	
 	
 	/*
 	 * 进入 巡检任务 制定与分配页面
 	 */
 	@RequestMapping(value = "inspectionMakeAllot")
-	public String intoMakeAllot() {
+	public String intoMakeAllot(Model model) {
+		model.addAttribute("updateInspection",null);
+		model.addAttribute("inspectionStaffs",null);
+		model.addAttribute("inspection",null);
 		return "inspectionMakeAllot";
 	}
 
@@ -57,14 +66,15 @@ public class InspectionController {
 	 * 进入 巡检任务 任务执行与回执
 	 */
 	@RequestMapping(value = "inspectionExecuteReceipt")
-	public String intoExecuteReceipt() {
+	public String intoExecuteReceipt(Model model) {
+		model.addAttribute("updateReceiptFlag", null);
 		return "inspectionExecuteReceipt";
 	}
 
 	/*
 	 * 进入 制定巡检任务页面
 	 */
-	@RequestMapping(value = "makeInspection")
+	@RequestMapping(value = "makeInspectionTask")
 	public String intoMakeInspection() {
 		return "makeInspection";
 	}
@@ -102,6 +112,28 @@ public class InspectionController {
 		model.addAttribute("towers", towers);
 		return "inspectionTaskQuery";
 	}
+	
+	/*
+	 * 进入 修改巡检任务页面
+	 */
+	@RequestMapping(value = "updateInspection")
+	public String intoUpdateInspection(@RequestParam("id")int id,Model model) {
+		Inspection inspection = inspectionService.getUpdateInspectionInfo(id);
+		List<User> inspectionStaffs = inspectionService.getInspectionTackStaff(id);
+		model.addAttribute("updateInspection",id);
+		model.addAttribute("inspectionStaffs",inspectionStaffs);
+		model.addAttribute("inspection",inspection);
+		return "makeInspection";
+	}
+	
+	/*
+	 * 进入  缺陷查询 页面
+	 */
+	@RequestMapping(value="flawQuery")
+	public String intoFlawQuery(){
+		return "flawQuery";
+	}
+	
 	
 	/*
 	 * 所有 巡检任务状态
@@ -334,14 +366,14 @@ public class InspectionController {
 		if (inspectionService.checkFlawRecord(flawconfirm) > 0) {
 			// 修改
 			inspectionService.updateFlawConfirm(flawconfirm);
-			Map<String, Object> map = new HashMap<>();
-			map.put("creater", user.getId());
-			map.put("taskId", taskId);
-			inspectionService.updateInspectionDate(map);
 		} else {
 			// 第一次保存
 			inspectionService.saveInspectionFlaw(flawconfirm);
 		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("creater", user.getId());
+		map.put("taskId", taskId);
+		inspectionService.updateInspectionDate(map);
 		return true;
 	}
 	
@@ -353,7 +385,14 @@ public class InspectionController {
 	@ResponseBody
 	public Flawconfirm  onclickTowerFlawInfo(@RequestParam("towerCoding")String towerCoding,@RequestParam("taskId")int taskId) {
 		Tower tower = towerService.checkCoding(towerCoding);
+		
 		Flawconfirm  fc = inspectionService.getFlawInfoByTowerId(tower.getId(),taskId);
+		if(fc!=null&&fc.getFlawGrade()!=null) {
+			Systemparam sp = systemParamService.getSystemparamById(Integer.parseInt(fc.getFlawGrade()));
+			fc.setFlawGrade(sp.getSettingName());
+		}
+		
+		
 		return fc;
 	}
 	
@@ -362,22 +401,92 @@ public class InspectionController {
 	 * 巡检任务上传回执
 	 */
 	@ResponseBody
-	@RequestMapping(value = "executeReceipt")
-	public boolean executeReceipt(HttpSession session) {
+	@RequestMapping(value="executeReceipt")
+	public Map<String, Object>  executeReceipt(HttpSession session){
 		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			return false;
+		Map<String, Object> map = new HashMap<>();
+		if(user==null){
+			map.put("flag", false);
 		}
 		int taskId = session.getAttribute("receiptId") == null ? 0 : (int) session.getAttribute("receiptId");
 		inspectionService.updateFlawRecord(taskId);
-		Map<String, Object> map = new HashMap<>();
+		
 		map.put("coding", "TASK_STATE");
 		map.put("creater", user.getId());
 		map.put("taskId", taskId);
 		map.put("settingName", "已完成");
+		
 		map.put("actualDate", "now");
 		inspectionService.updateInspectionState(map);
 		inspectionService.updateInspectionDate(map);
+		Personalwork personalwork = new Personalwork();
+		personalwork.setTaskId(taskId);
+		personalwork.setIsAccomplish(0);
+		personalwork.setBackDate(new DateTime().getDateTime());
+		List<Flawconfirm> ffs = personalworkService.getTaskTowerFlawInfo(taskId);
+		if(ffs.size()>0) {
+			for (Flawconfirm flawconfirm : ffs) {
+				personalwork.setName(flawconfirm.getThreadName()+"杆塔编号"+flawconfirm.getTowerCoding()+"缺陷等级确认");
+				personalwork.setUserId(flawconfirm.getTaskMan());
+				map.put("userId",personalwork.getUserId());
+				personalworkService.arriveWork(personalwork);
+			}
+			
+		}
+		map.put("flag", true);
+		return map;
+	}
+	
+	/*
+	 * 获取 修改巡检录入的原始数据
+	 */
+	@ResponseBody
+	@RequestMapping(value="updateInspectionTask")
+	public boolean getUpdateInspectionInfo(Inspection inspection,HttpSession session){
+		System.out.println(inspection);
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return false;
+		}
+		inspectionService.updateInspection(inspection);
+		inspectionService.updateInspectionThread(inspection);
+		Map<String, Object> map = new HashMap<>();
+		map.put("creater", user.getId());
+		map.put("taskId", inspection.getId());
+		inspectionService.updateInspectionDate(map);
 		return true;
+	}
+	
+	/*
+	 * 加标记是修改巡检录入
+	 */
+	@ResponseBody
+	@RequestMapping
+	public boolean addUpdateReceiptFlag(Model model){
+		model.addAttribute("updateReceiptFlag", "修改回执录入");
+		return true;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getAllInspectionFlaw")
+	public Map<String,Object> getAllInspectionFlaw(@RequestParam("page") int pageIndex,@RequestParam("rows") int pageSize
+			,FlawQuery flawQuery,String endDiscover,String endDate,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return null;
+		}
+		int creater = user.getId();
+		pageIndex = (pageIndex - 1) * pageSize;
+		Map<String, Object> map = new HashMap<>();
+		map.put("pageIndex", pageIndex);
+		map.put("pageSize", pageSize);
+		map.put("creater", creater);
+		
+		int count = inspectionService.getInspectionFlawCount(map);// 总条数
+		List<FlawQuery> list = inspectionService.getAllInspectionFlaw(map);
+		
+		map.put("rows", list);
+		map.put("total", count);
+		return map;
 	}
 }

@@ -36,4 +36,5 @@ public interface SystemRoleDao {
     
     //根据姓名和状态模糊查询
     public List<Systemrole> likeRole(Map<String,Object> map);
+
 }

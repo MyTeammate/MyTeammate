@@ -59,6 +59,7 @@ function role_tb(){
 		]]
 	})
 
+
 	$("#role_add").bind('click',function(){
 		$('#role_add_option').html("" +
 				"<tr>" +
@@ -153,7 +154,6 @@ function role_tb(){
 	})
 }
 
-
 function roleState(id,state){
 	var data={id:id,state:state};
 	if(state==0){
@@ -204,13 +204,14 @@ function roleState(id,state){
 	
 }
 
+
 function roleUpdate(id){
-	var dataId={id:id}
-	$.ajax({
-		url:'roleManage/queryRole',
-		type:"post",
-		data:dataId,
-		success:function(result){
+		var dataId={id:id}
+		$.ajax({
+			url:'roleManage/queryRole',
+			type:"post",
+			data:dataId,
+			success:function(result){
 			$('#role_update_option').html("" +
 					"<tr>" +
 					"<td style='float:right;'>角色编号：</td><td style='width:250px'><input type='text' id='newCoding' name='param' /><span id='newCoding2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
@@ -264,7 +265,6 @@ function roleUpdate(id){
 											type:"post",
 											data:data,
 											success:function(result){
-												alert(result);
 												if(result=="11"){
 													$('#newName2').html("*");
 													$('#newCoding2').html("*");
@@ -308,6 +308,7 @@ function roleUpdate(id){
 	})
 }
 
+
 function roleDelete(id,state){
 	if(state==1){
 		$.messager.confirm('确定','您确定要删除所选的角色吗？',function(f){
@@ -332,5 +333,3 @@ function roleDelete(id,state){
 		});
 	}
 }
-
- 

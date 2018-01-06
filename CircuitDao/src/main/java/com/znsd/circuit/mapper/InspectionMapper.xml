@@ -193,10 +193,10 @@ AND settingName='待分配' OR settingName='已取消')
 	<update id="updateInspectionDate" parameterType="Map">
 		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW()
 		<if test="actualDate != null">
-			,set actualDate=now()
+			,actualDate=now()
 		</if>
 		<if test="predictDate != null">
-			,set predictDate=now()
+			,predictDate=now()
 		</if>
 		 WHERE id=#{taskId}
 	</update>
@@ -229,8 +229,8 @@ AND settingName='待分配' OR settingName='已取消')
 			WHERE fr.receiptState=0 AND fc.taskId=#{taskId} AND fc.towerId=#{towerId}
 	</select>
 	<insert id="saveFlawConfirm" parameterType="Flawconfirm" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade)
-			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade});
+		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade,confirmstate)
+			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade},1);
 	</insert>
 	<insert id="saveFlawRecord">
 		INSERT INTO t_flaw_record(taskId,flawconfirmId,receiptState,createdBy,createdDate,updatedBy,updatedDate,delete_flag)
@@ -268,5 +268,48 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 	<delete id="deleteInspectionStaff" parameterType="int">
 		DELETE FROM t_inspectionstaff WHERE inspectionId in(SELECT id FROM t_inspection WHERE taskId=#{taskId})
 	</delete>
+	<select id="getUpdateInspectionInfo" resultType="Inspection" parameterType="int">
+		SELECT 
+		t.id,t.coding,t.name,i.threadId AS
+		thread,th.startTower,th.endTower,t.predictDate,t.date as createDate,t.remark
+		from t_inspection i
+		left JOIN t_task t ON i.taskId=t.id
+		left JOIN t_thread th ON i.threadId=th.id
+		WHERE t.id=#{taskId}
+	</select>
+	<update id="updateInspection" parameterType="Inspection">
+		update t_task set coding=#{coding},name=#{name},predictDate=#{predictDate},remark=#{remark} where id=#{id}
+	</update>
+	<update id="updateInspectionThread" parameterType="Inspection">
+		update t_inspection set threadId=#{thread} where taskId=#{id}
+	</update>
 	<select id="checkInspectionCoding" ></select>
+	<select id="getInspectionFlawCount" resultType="int" parameterType="Map">
+		SELECT count(1)
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+	</select>
+	<select id="getAllInspectionFlaw" resultType="FlawQuery" parameterType="Map">
+		SELECT t.coding AS taskCoding,h.coding AS threadCoding,o.coding AS towerCoding,sys.settingName as flawGrade,
+		f.`name` AS flawType,u.name as receipter,c.discoverDate,u2.name AS creater,t.date,c.serviceAbility,c.flawDesc
+		FROM t_flawconfirm c
+		INNER JOIN t_task t ON c.taskId=t.id
+		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN t_tower o ON c.towerId=o.id
+		INNER JOIN t_flaw f ON c.flawId=f.id
+		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
+		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
+		INNER JOIN t_user u ON u.id=c.userId
+		INNER JOIN t_user u2 ON u2.id=t.taskMan
+		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		limit #{pageIndex},#{pageSize}
+	</select>
 </mapper>

@@ -7,6 +7,13 @@ public class Power {
     private String url;
     private String iconCls;
     private int nid;
+    private int createBy;
+    private String createDate;
+    private String updatedDate;
+    private String deleteFlag;
+    private String remark;
+    private int status;
+    
 	public int getId() {
 		return id;
 	}
@@ -42,6 +49,44 @@ public class Power {
 	}
 	public void setNid(int nid) {
 		this.nid = nid;
+	}
+	
+	
+	public int getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(int createBy) {
+		this.createBy = createBy;
+	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	public String getDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(String deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

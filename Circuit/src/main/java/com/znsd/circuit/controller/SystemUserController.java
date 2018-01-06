@@ -54,7 +54,6 @@ public class SystemUserController {
 		    	}
 		    	user.setLoginDate(time);
 			}
-			System.out.println("leaveDate:"+leaveDate+";;"+user.getLeaveDate());
 			if(user.getLeaveDate()!=null&&user.getLeaveDate().equals(leaveDate)) {
 				Date date=new Date();
 				DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -78,17 +77,12 @@ public class SystemUserController {
 	@RequestMapping("/select")
 	public List<Systemrole> selectSysteUser(){
 		List<Systemrole> s=systemUserService.selectSysteUser();
-		for (Iterator iterator = s.iterator(); iterator.hasNext();) {
-			Systemrole systemrole = (Systemrole) iterator.next();
-			System.out.println("systemrole"+systemrole);
-		}
 		return s;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/add")
 	public int addSysteUser(HttpSession session,String userName,String name,String passWord,int roleId,String entryDate){
-		System.out.println("passWord:"+passWord+";roleId:"+roleId);
 	    String passWord2=passWord.replaceAll(" ", "");
 	    User user=new User();
 	    user.setUserName(userName);
