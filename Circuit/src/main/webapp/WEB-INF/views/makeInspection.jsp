@@ -1,52 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>制定巡检任务</title>
+<title></title>
 </head>
 <body>
 	<div id="content" style="width:600px;height:auto;padding-left:25px;">
-		<p>巡检任务管理>>巡检任务制定与分配>>制定巡检任务</p>
+	<c:choose>
+		<c:when test="${updateInspection == null }">
+			<p>巡检任务管理>>巡检任务制定与分配>>制定巡检任务</p>
+		</c:when>
+		<c:otherwise>
+			<p>巡检任务管理>>巡检任务制定与分配>>修改巡检任务</p>
+		</c:otherwise>
+	</c:choose>
 		<form id="inspection_save_form">
+			<input type="hidden" name="inspectionId" value="${inspection.id }"/>
 			<table>
 				<tr>
 					<td class="leftText">任务编码：</td>
-					<td><input type="text" id="taskCoding" name="coding"/></td>
+					<td><input type="text" id="taskCoding" name="coding" value="${inspection.coding }"/></td>
 				</tr>
 				<tr>
 					<td class="leftText">任务名称：</td>
-					<td><input type="text" id="taskName" name="name"/></td>
+					<td><input type="text" id="taskName" name="name" value="${inspection.name }"/></td>
 				</tr>
 				<tr>
 					<td class="leftText">巡检线路：</td>
-					<td><input type="text" id="inspectionThread" name="thread"/></td>
+					<td><input type="text" id="inspectionThread" name="thread" value="${inspection.thread }"/></td>
 				</tr>
 				<tr>
 					<td class="leftText">起始杆号：</td>
-					<td><input type="text" id="startTowerCoding" readonly="readonly" /></td>
+					<td><input type="text" id="startTowerCoding" readonly="readonly" value="${inspection.startTower }"/></td>
 				</tr>
 				<tr>
 					<td class="leftText">终止杆号：</td>
-					<td><input type="text" id="endTowerCoding" readonly="readonly"/></td>
+					<td><input type="text" id="endTowerCoding" readonly="readonly" value="${inspection.endTower }"/></td>
 				</tr>
-				<tr>
-					<td class="leftText">巡检员：</td>
-					<td><textarea cols="20" rows="3" maxlength="250" readonly="readonly" name="inspectionStaff" placeholder="点击右边头像选择巡检员"/></textarea><a href="#" onclick="show()" class="easyui-linkbutton" iconCls="icon-user"></a></td>
-				</tr>
+				<c:if test="${updateInspection == null }">
+					<tr>
+						<td class="leftText">巡检员：</td>
+						<td><textarea cols="20" rows="3" maxlength="250" readonly="readonly" name="inspectionStaff" placeholder="点击右边头像选择巡检员"/></textarea><a href="#" onclick="show()" class="easyui-linkbutton" iconCls="icon-user"></a></td>
+					</tr>
+				</c:if>
 				<tr>
 					<td class="leftText">下发人：</td>
 					<td><input type="text" value="${user.name}" readonly="readonly" style="border:none;color:#A1A1A1;"/></td>
 				</tr>
 				<tr>
 					<td class="leftText">下发日期：</td>
-					<td><input type="text" readonly="readonly" style="border:none;color:#A1A1A1;" id="createInspectionDate" name="createDate"/></td>
+					<td><input type="text" readonly="readonly" style="border:none;color:#A1A1A1;" id="createInspectionDate" name="createDate" value="${inspection.createDate }"/></td>
+				</tr>
+				<tr>
+					<td class="leftText">预计日期：</td>
+					<td><input class="easyui-datebox" style="width:120px;" name="predictDate" value="${inspection.predictDate }"></td>
 				</tr>
 				<tr>
 					<td  class="leftText">备注：</td>
 					<td>
-						<textarea cols="25" rows="6" maxlength="250" name="remark">无</textarea>
+						<textarea cols="25" rows="6" maxlength="250" name="remark">${inspection.remark }</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -54,7 +69,16 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td class="leftText"><input type="button" value="保存" class="bbb" onclick='javascript:saveInspection()'/></td>
+					<td class="leftText">
+					<c:choose>
+						<c:when test="${updateInspection == null }">
+							<input type="button" value="保存" class="bbb" onclick='javascript:saveInspection()'/>
+						</c:when>
+						<c:otherwise>
+							<input type="button" value="保存" class="bbb" onclick='javascript:updateInspectionTask()'/>
+						</c:otherwise>
+					</c:choose>
+					</td>
 					<td style="padding-left:75px;"><input type="button" value="返回" onclick='javascript:backInspection()' class="bbb"/></td>
 				</tr>
 			</table>

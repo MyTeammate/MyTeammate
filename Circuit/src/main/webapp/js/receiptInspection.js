@@ -204,6 +204,7 @@ function saveExecuteReceipt(){
 	// 杆塔id,缺陷类型,缺陷级别,完好率,发现时间，缺陷描述
 	var flawType=$("#inspectionFlawType").combobox('getValue');
 	var flawGrade=$("#inspectionFlawGrade").combobox('getValue');
+	alert(flawGrade)
 	var serviceAbility=$('.text').text();
 	var sb=serviceAbility.replace('%','');
 	var date=$("#receiptInspectionDate").val();

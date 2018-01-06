@@ -153,7 +153,7 @@ $(function() {
 				if(row.state=='待分配'){
 					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:showallotInspection('+row.id+')" style="text-decoration:none;">分配任务</a>｜<a href="javascript:updateInspection('+row.id+')" style="text-decoration:none;">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
 				}else if(row.state=='已分配'){
-					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
+					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a href="javascript:updateallotInspection('+row.id+')" style="text-decoration:none;">修改分配</a>｜<a style="color:#CDC5BF">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">取消</a></span>';
 				}else{ // if(row.state=='执行中' || row.state=='已完成' || row.state=='已取消')
 					oper='<span><a href="javascript:lookInspection('+row.id+')" style="text-decoration:none;">查看</a>｜<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜<a style="color:#CDC5BF">取消</a></span>';
 				}
@@ -295,7 +295,7 @@ function getInspectionStaff(){
  */
 function makeInspection(){
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-	tab.panel('refresh', 'makeInspection');
+	tab.panel('refresh', 'makeInspectionTask');
 }
 
 /*
@@ -317,7 +317,7 @@ function showallotInspection(id){
  * 修改巡检任务
  */
 function updateInspection(id){
-	
+	move("修改巡检任务","updateInspection?id="+id);
 }
 
 /*

@@ -3,31 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.InspectionDao">
-	<resultMap type="Inspection" id="inspectionTask">
-		<result column="threadId" property="threadId" />
-		<association property="threads" column="threadId"
-			javaType="Threads">
-			<id column="id" property="id" />
-			<result column="name" property="name" />
-			<result column="coding" property="coding" />
-			<result column="endTower" property="endTower" />
-			<result column="startTower" property="startTower" />
-		</association>
-		<association property="task" column="taskId" javaType="Task">
-			<id column="id" property="id" />
-			<result column="name" property="name" />
-			<result column="coding" property="coding" />
-			<result column="createdDate" property="createdDate" />
-			<result column="actualDate" property="actualDate" />
-			<result column="predictDate" property="predictDate" />
-			<result column="remark" property="remark" />
-			<result column="state" property="stateInteger" />
-			<association property="user" column="taskMan" javaType="User">
-				<id column="id" property="id" />
-				<result column="name" property="name" />
-			</association>
-		</association>
-	</resultMap>
+    <resultMap type="Inspection" id="inspectionTask">
+      <id column="id"  property="id" /> 
+      <id column="threadId" property="threadId"/>
+      <association property="threads" column="threadId" javaType="Threads">
+             <id column="id"  property="id" />
+             <result  column="name" property="name"/>
+             <result  column="coding" property="coding"/>
+             <result  column="endTower" property="endTower"/>
+            <result  column="startTower" property="startTower"/>
+         </association>
+         <association property="task" column="taskId" javaType="Task">
+             <id column="id"  property="id" />
+             <result  column="name" property="name"/>
+             <result  column="coding" property="coding"/>
+             <result  column="createdDate" property="createdDate"/>
+             <result  column="actualDate" property="actualDate"/>
+             <result  column="predictDate" property="predictDate"/>   
+               <result  column="remark" property="remark"/>
+                <result  column="state" property="stateInteger"/>
+                <association property="user" column="taskMan" javaType="User">
+                      <id column="id"  property="id" />
+                     <result  column="name" property="name"/>     
+               </association>
+         </association>  
+    </resultMap>
 
 	<select id="getSystemParam" resultType="Systemparam"
 		parameterType="String">
@@ -48,62 +48,51 @@
 	</select>
 	<select id="getInspectionStaff" resultType="User" parameterType="String">
 		SELECT u.id,u.name,r.coding FROM t_user u
-		LEFT JOIN t_user_role ur ON
-		u.id=ur.userId
+		LEFT JOIN t_user_role ur ON u.id=ur.userId
 		left JOIN t_role r ON
 		ur.roleId=r.id
-		WHERE u.state='0' and
-		r.coding=#{coding}
+		WHERE u.state='0' and r.coding=#{coding}
 	</select>
-	<!-- 通过巡检task的id获取inspection的id -->
+	<!-- 通过巡检task的id获取inspection的id  -->
 	<select id="getInspectionId" resultType="int" parameterType="int">
 		SELECT id FROM t_inspection WHERE taskId=#{id}
 	</select>
 	<!-- 通过巡检task的id获取inspection的threadId -->
-	<select id="getThreaddByTask" resultType="Threads"
-		parameterType="int">
+	<select id="getThreaddByTask" resultType="Threads" parameterType="int">	
 		SELECT ins.threadId as id,coding,th.name FROM t_inspection ins
-		left JOIN
-		t_thread th on ins.threadId=th.id
-		WHERE ins.taskId=#{id}
+		left JOIN t_thread th on ins.threadId=th.id
+		 WHERE ins.taskId=#{id}
 	</select>
-	<!-- 通过线路threadId获取Tower -->
+	<!-- 通过线路threadId获取Tower  -->
 	<select id="getTowerByThread" resultType="Tower" parameterType="int">
-		select id,coding,lineId,state from t_tower where coding BETWEEN
-		(SELECT startTower FROM t_thread WHERE id=#{id})
-		and
+		select id,coding,lineId,state from t_tower where coding BETWEEN 
+		(SELECT startTower FROM t_thread WHERE id=#{id}) 
+		and 
 		(SELECT endTower FROM t_thread WHERE id=#{id})
 	</select>
 	<select id="getAllFlaw" resultType="Flaw">
-		SELECT id,name FROM t_flaw
-		WHERE state=0
+		SELECT id,name FROM t_flaw WHERE state=0
 	</select>
-	<select id="getInspectionPageCount" resultType="Integer"
-		parameterType="Map">
-		select count(1) from (
+	<select id="getInspectionPageCount" resultType="Integer" parameterType="Map">
+	select count(1) from (
 		SELECT DISTINCT t.id
 		from t_inspection i
-		left JOIN
-		t_inspectionstaff ins ON i.id=ins.inspectionId
-		left JOIN t_task t ON
-		i.taskId=t.id
+		left JOIN t_inspectionstaff ins ON i.id=ins.inspectionId
+		left JOIN t_task t ON i.taskId=t.id
 		left JOIN t_thread
 		th ON i.threadId=th.id
-		left JOIN t_user
-		u on t.createdBy=u.id
+		left JOIN t_user u on t.createdBy=u.id
 		left
 		JOIN t_systemparam sy on
 		t.state=sy.id
-		WHERE
-		t.type='巡检任务'
+		WHERE t.type='巡检任务' 
 		<if test="operate == 'execute'">
 			and t.state not in (SELECT id FROM t_systemparam where settingid
-			= (select id FROM t_systemsetting
-			WHERE coding='task_state' AND
-			delete_flag='否' AND state='启用')
-			AND settingName='待分配' OR settingName='已取消')
-			AND ins.userId=#{userId} <!-- AND 
-				ins.isReceipter='是' -->
+		= (select id FROM t_systemsetting
+		WHERE coding='task_state' AND
+		delete_flag='否' AND state='启用')
+AND settingName='待分配' OR settingName='已取消')
+			AND ins.userId=#{userId} <!-- AND ins.isReceipter='是' -->
 		</if>
 		<if test="operate == null">
 			and t.taskMan=#{userId}
@@ -121,10 +110,10 @@
 			and u.name like #{taskMan}
 		</if>
 		<if test="startDate!=null &amp;&amp;startDate!=''">
-			and t.date &gt; #{startDate}
+		   and t.date &gt; #{startDate}
 		</if>
 		<if test="endDate!=null &amp;&amp;endDate!=''">
-			and t.date &lt; #{endDate}
+		   and t.date &lt; #{endDate}
 		</if>
 		)insp
 	</select>
@@ -139,22 +128,19 @@
 		left JOIN t_inspectionstaff ins ON i.id=ins.inspectionId
 		left JOIN t_task t ON i.taskId=t.id
 		left JOIN t_thread
-		th ON
-		i.threadId=th.id
+		th ON i.threadId=th.id
 		left JOIN t_user u on t.createdBy=u.id
 		left
-		JOIN
-		t_systemparam sy on
+		JOIN t_systemparam sy on
 		t.state=sy.id
-		WHERE t.type='巡检任务'
+		WHERE t.type='巡检任务' 
 		<if test="operate == 'execute'">
 			and t.state not in (SELECT id FROM t_systemparam where settingid
-			= (select id FROM t_systemsetting
-			WHERE coding='task_state' AND
-			delete_flag='否' AND state='启用')
-			AND settingName='待分配' OR settingName='已取消')
-			AND ins.userId=#{userId} <!-- AND 
-				ins.isReceipter='是' -->
+		= (select id FROM t_systemsetting
+		WHERE coding='task_state' AND
+		delete_flag='否' AND state='启用')
+AND settingName='待分配' OR settingName='已取消')
+			AND ins.userId=#{userId} <!-- AND ins.isReceipter='是' -->
 		</if>
 		<if test="operate == null">
 			and t.taskMan=#{userId}
@@ -172,10 +158,10 @@
 			and u.name like #{taskMan}
 		</if>
 		<if test="startDate!=null &amp;&amp;startDate!=''">
-			and t.date &gt; #{startDate}
+		   and t.date &gt; #{startDate}
 		</if>
 		<if test="endDate!=null &amp;&amp;endDate!=''">
-			and t.date &lt; #{endDate}
+		   and t.date &lt; #{endDate}
 		</if>
 		ORDER BY t.updatedDate desc
 		LIMIT #{pageIndex},#{pageSize}
@@ -196,74 +182,59 @@
 		VALUES(#{inspectionId},#{userId},#{isReceipter},#{creater},NOW(),#{creater},NOW(),'否');
 	</insert>
 	<update id="updateInspectionState" parameterType="Map">
-		UPDATE t_task
-		SET state=(SELECT id
+		UPDATE t_task SET state=(SELECT id
 		FROM t_systemparam where
 		settingid
-		= (select id FROM
-		t_systemsetting
+		= (select id FROM t_systemsetting
 		WHERE coding=#{coding} AND
-		delete_flag='否' AND
-		state='启用')
+		delete_flag='否' AND state='启用')
 		AND settingName=#{settingName}) WHERE id=#{taskId}
 	</update>
 	<update id="updateInspectionDate" parameterType="Map">
 		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW()
 		<if test="actualDate != null">
-			,set actualDate=now()
+			,actualDate=now()
 		</if>
 		<if test="predictDate != null">
-			,set predictDate=now()
+			,predictDate=now()
 		</if>
-		WHERE id=#{taskId}
+		 WHERE id=#{taskId}
 	</update>
-
-	<select id="getInspectionTaskById" resultMap="inspectionTask"
-		parameterType="int">
-		select
-		t.threadId,k.id,k.coding,k.name,h.id,h.name,h.startTower,h.endTower,u.name,k.createdDate
-		,k.state,k.actualDate,k.predictDate,k.remark
-		from t_inspection t
-		inner join t_task k on t.taskId = k.id
-		inner join t_thread h on t.threadId = h.id
-		inner join t_user u on k.taskMan = u.id
-		where k.id = #{id}
+	
+	<select id="getInspectionTaskById" resultMap="inspectionTask" parameterType="int">
+	       select t.id,t.threadId,k.id,k.coding,k.name,h.id,h.name,h.startTower,h.endTower,u.name,k.createdDate
+			,k.state,k.actualDate,k.predictDate,k.remark 
+			from t_inspection t 
+			inner join t_task k on t.taskId = k.id 
+			inner join t_thread h on t.threadId = h.id
+			inner join t_user u on k.taskMan = u.id
+			where k.id = #{id}
 	</select>
-
-	<select id="getFlawInfoByTowerId" parameterType="int"
-		resultType="Flawconfirm">
-		select
-		t.towerId,t.flawId,t.flawGrade,t.discoverDate,t.isTrouble,serviceAbility,w.`name`
-		as flawType,flawDesc,u.name as receiptMan
-		from t_flawconfirm t inner join t_flaw w on t.flawId=w.id inner join
-		t_user u on t.userId=u.id
-		inner join t_flaw_record tfr on t.id = tfr.flawconfirmId
-		where t.towerId =
-		#{0} and t.taskId = #{1} and tfr.receiptState=1
+	
+	<select id="getFlawInfoByTowerId" parameterType="int" resultType="Flawconfirm">
+	     select t.towerId,t.flawId,t.flawGrade as flowGrade,t.discoverDate,t.isTrouble,serviceAbility,w.`name` as flawType,flawDesc,u.name as receiptMan 
+		from t_flawconfirm t inner join t_flaw w on t.flawId=w.id inner join t_user u on t.userId=u.id
+		where t.towerId = #{0} and t.taskId = #{1}
 	</select>
-	<select id="getInspectionTackStaff" parameterType="int"
-		resultType="User">
-		select u.id,u.name from t_task k inner join t_inspection t on k.id=t.taskId
-		inner join t_inspectionstaff f
-		on t.id = f.inspectionId
+	<select id="getInspectionTackStaff" parameterType="int" resultType="User">
+	    select u.id,u.name from t_task k inner join  t_inspection t on k.id=t.taskId
+		inner join t_inspectionstaff f 
+		on t.id = f.inspectionId 
 		inner join t_user u on f.userId = u.id
 		where taskId=#{taskId}
 	</select>
 	<select id="checkFlawRecord" resultType="int" parameterType="Flawconfirm">
-		SELECT count(1) FROM t_flaw_record fr
-		LEFT JOIN t_flawconfirm fc ON fr.flawconfirmId=fc.id
-		WHERE fr.receiptState=0 AND fc.taskId=#{taskId} AND fc.towerId=#{towerId}
+		SELECT count(1) FROM t_flaw_record fr 
+			LEFT JOIN t_flawconfirm fc ON fr.flawconfirmId=fc.id
+			WHERE fr.receiptState=0 AND fc.taskId=#{taskId} AND fc.towerId=#{towerId}
 	</select>
-	<insert id="saveFlawConfirm" parameterType="Flawconfirm"
-		useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_flawconfirm
-		(flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade)
-		values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade});
+	<insert id="saveFlawConfirm" parameterType="Flawconfirm" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade,confirmstate)
+			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade},1);
 	</insert>
 	<insert id="saveFlawRecord">
-		INSERT INTO
-		t_flaw_record(taskId,flawconfirmId,receiptState,createdBy,createdDate,updatedBy,updatedDate,delete_flag)
-		values(#{taskId},#{id},0,#{userId},NOW(),#{userId},NOW(),'否');
+		INSERT INTO t_flaw_record(taskId,flawconfirmId,receiptState,createdBy,createdDate,updatedBy,updatedDate,delete_flag)
+			values(#{taskId},#{id},0,#{userId},NOW(),#{userId},NOW(),'否');
 	</insert>
 	<update id="updateFlawConfirm" parameterType="Flawconfirm">
 		update t_flawconfirm SET id=id
@@ -278,34 +249,39 @@
 		</if>
 		<if test="flawDesc != null and flawDesc != ''">
 			,flawDesc=#{flawDesc}
-		</if>
+		</if> 
 		WHERE taskId=#{taskId} AND towerId=#{towerId}
 	</update>
-	<select id="getTowerFlaw" resultType="Flawconfirm"
-		parameterType="Flawconfirm">
-		SELECT
-		flawId,flawGrade,serviceAbility,discoverDate,flawDesc FROM
-		t_flawconfirm WHERE towerId=#{towerId} AND taskId=#{taskId}
+	<select id="getTowerFlaw" resultType="Flawconfirm" parameterType="Flawconfirm">
+		SELECT flawId,flawGrade,serviceAbility,discoverDate,flawDesc FROM t_flawconfirm WHERE towerId=#{towerId} AND taskId=#{taskId}
 	</select>
 	<update id="updateFlawRecord" parameterType="int">
-		update t_flaw_record
-		set receiptState=1 where taskId=#{taskId}
+		update t_flaw_record set receiptState=1 where taskId=#{taskId}
 	</update>
-	<select id="checkInspectionReceipter" resultType="int"
-		parameterType="Map">
-		SELECT count(1) FROM t_inspectionstaff inst inner JOIN
-		t_inspection ins ON ins.id=inst.inspectionId
-		WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND
-		inst.isReceipter='是'
+	<select id="checkInspectionReceipter" resultType="int" parameterType="Map">
+		SELECT count(1) FROM t_inspectionstaff inst inner JOIN t_inspection ins ON ins.id=inst.inspectionId 
+WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 	</select>
 	<select id="getTaskState" resultType="String" parameterType="int">
-		SELECT settingName FROM t_systemparam WHERE id=(SELECT state from
-		t_task where id=#{taskId})
+		SELECT settingName FROM t_systemparam WHERE id=(SELECT state from t_task where id=#{taskId})
 	</select>
 	<delete id="deleteInspectionStaff" parameterType="int">
-		DELETE FROM
-		t_inspectionstaff WHERE inspectionId in(SELECT id FROM t_inspection
-		WHERE taskId=#{taskId})
+		DELETE FROM t_inspectionstaff WHERE inspectionId in(SELECT id FROM t_inspection WHERE taskId=#{taskId})
 	</delete>
-	<select id="checkInspectionCoding"></select>
+	<select id="getUpdateInspectionInfo" resultType="Inspection" parameterType="int">
+		SELECT 
+		t.id,t.coding,t.name,i.threadId AS
+		thread,th.startTower,th.endTower,t.predictDate,t.date as createDate,t.remark
+		from t_inspection i
+		left JOIN t_task t ON i.taskId=t.id
+		left JOIN t_thread th ON i.threadId=th.id
+		WHERE t.id=#{taskId}
+	</select>
+	<update id="updateInspection" parameterType="Inspection">
+		update t_task set coding=#{coding},name=#{name},predictDate=#{predictDate},remark=#{remark} where id=#{id}
+	</update>
+	<update id="updateInspectionThread" parameterType="Inspection">
+		update t_inspection set threadId=#{thread} where taskId=#{id}
+	</update>
+	<select id="checkInspectionCoding" ></select>
 </mapper>

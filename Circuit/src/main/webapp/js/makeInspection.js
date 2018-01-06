@@ -3,7 +3,7 @@
  */
 
 $(function(){
-
+	
 	$("#taskCoding").validatebox({
 		required : true,
 		validType : 'checkCoding',
@@ -15,10 +15,17 @@ $(function(){
 		missingMessage : '请填写任务名称',
 	});
 	
-	$("textarea[name=inspectionStaff]").validatebox({
+	/*$("textarea[name=inspectionStaff]").validatebox({
 		required : true,
 		missingMessage : '请选择巡检人员',
+	});*/
+	
+	$("input[name=predictDate]").datebox({
+		required:true,
+		validType : 'checkPredictDate',
+		missingMessage: '请选择完成时间'
 	});
+	
 	
 	/*
 	 * 巡检线路下拉列表
@@ -90,7 +97,21 @@ $.extend($.fn.validatebox.defaults.rules, {
 			return regphone.test(value);
 		},
 		message : '任务编号格式不正确'
-	}
+	},
+	checkPredictDate : {
+		validator : function(value, param) {
+			var now = new Date();
+			var now2 = new Date(now.getFullYear(), now.getMonth(),now.getDate());// 当前 年月日
+			
+			var d = new Date(now.getFullYear()+10, now.getMonth(),now.getDate());
+			var value2 = $.fn.datebox.defaults.parser(value);
+	
+			return value2 >= now2 && value2<d ;
+			/*
+			return now <= date1;*/
+		},
+		message : '日期应该在未来十年内！'
+	},
 });
 
 /*
@@ -129,9 +150,10 @@ function initDate(){
  */
 function save_staffs(){
 	var staffs = $.map($("#select_list option:not(:selected)"),
-            function(ele){return ele.value} 
+            function(ele){return ele.text} 
          ).join(",");
 	$("textarea[name=inspectionStaff]").text(staffs);
+	hid();
 }
 
 /*
@@ -153,23 +175,28 @@ function checkMakeInspection(){
 	}
 }
 
+/*
+ * 提交 巡检任务信息
+ */
 function saveInspection(){
 	if(checkMakeInspection()){
 		var staffs = $.map($("#select_list option:not(:selected)"),
 	            function(ele){return ele.value} 
 	         ).join(",");
+		console.log('staffs : '+staffs);
 		$.ajax({
 			url:'saveInspection',
 			type:"POST",
-			/*data:{
+			data:{
 				coding:$("#taskCoding").val(),
 				name:$('#taskName').val(),
 				thread:$("#inspectionThread").val(),
 				createDate:$("#createInspectionDate").val(),
 				remark:$("textarea[name=remark]").val(),
+				predictDate:$("input[name=predictDate]").val(),
 				ids:staffs,
-			},*/
-			data:$("#inspection_save_form").serialize(),
+			},
+			//data:$("#inspection_save_form").serialize(),
 			success:function(result){
 				if(result==true){
 					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
@@ -178,7 +205,49 @@ function saveInspection(){
 					$.messager.alert({
 						title:'保存失败',
 						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
-						icon:'warning',
+						icon:'warning',	
+					})
+				}
+				//刷新数据表格
+				//$('#serve_datagrid').datagrid('reload');
+			}
+		})
+	}else{
+		$.messager.alert({
+			title:'警告操作',
+			msg:'<h3 style="color: red;">请正确完善信息再提交！</h3>',
+			icon:'warning',
+		})
+	}
+}
+
+/*
+ * 提交修改
+ */
+function updateInspectionTask(){
+	if(checkMakeInspection()){
+		$.ajax({
+			url:'updateInspectionTask',
+			type:"POST",
+			data:{
+				id:$("input[name=inspectionId]").val(),
+				coding:$("#taskCoding").val(),
+				name:$('#taskName').val(),
+				thread:$("#inspectionThread").val(),
+				createDate:$("#createInspectionDate").val(),
+				remark:$("textarea[name=remark]").val(),
+				predictDate:$("input[name=predictDate]").val(),
+			},
+			//data:$("#inspection_save_form").serialize(),
+			success:function(result){
+				if(result==true){
+					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+					tab.panel('refresh', 'inspectionMakeAllot');
+				}else{
+					$.messager.alert({
+						title:'修改失败',
+						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
+						icon:'warning',	
 					})
 				}
 				//刷新数据表格
