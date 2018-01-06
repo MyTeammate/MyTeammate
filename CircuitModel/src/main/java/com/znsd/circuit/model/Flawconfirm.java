@@ -20,6 +20,9 @@ public class Flawconfirm {
 	private String serviceAbility;//完好率
 	private String flawGrade;//缺陷等级
 	private String remark;//备注
+	private String threadName; //线路名称
+	private String towerCoding; //杆塔编号
+	private int taskMan; //发布这个巡检任务的user
 
 	public Flawconfirm() {
 		super();
@@ -151,6 +154,22 @@ public class Flawconfirm {
 	
 	
 
+	public String getThreadName() {
+		return threadName;
+	}
+
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
+	}
+
+	public String getTowerCoding() {
+		return towerCoding;
+	}
+
+	public void setTowerCoding(String towerCoding) {
+		this.towerCoding = towerCoding;
+	}
+
 	public String getReceiptMan() {
 		return receiptMan;
 	}
@@ -165,6 +184,17 @@ public class Flawconfirm {
 
 	public void setFlawType(String flawType) {
 		this.flawType = flawType;
+	}
+	
+
+	
+
+	public int getTaskMan() {
+		return taskMan;
+	}
+
+	public void setTaskMan(int taskMan) {
+		this.taskMan = taskMan;
 	}
 
 	@Override

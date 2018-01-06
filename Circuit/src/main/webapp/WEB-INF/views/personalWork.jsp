@@ -13,7 +13,7 @@
 			<div style="padding: 0 50px 0 50px">我的工作平台>>待办列表</div>
 			<hr />
 			<div
-				style="margin-left: 120px; margin-top: 20px; width: 810px; height: 800px">
+				style="margin-left: 120px; margin-top: 20px; width: 1010px; height: 800px">
 
 				<table id="perWork"></table>
 			</div>

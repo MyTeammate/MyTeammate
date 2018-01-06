@@ -31,7 +31,7 @@
     		          <td colspan="2"><strong>任务完成时间：</strong>${inspection.task.actualDate}</td>
     		      </tr>
     		      <tr>
-    		          <td><strong>备注：</strong>${inspection.task.remark}</td>
+    		          <td colspan="3"><strong>备注：</strong>${inspection.task.remark}</td>
     		          <td colspan="3" id="inspectionStaffs"><strong>巡检员：</strong>
     		           <c:choose>
     		             <c:when test="${staffs!='无'}">

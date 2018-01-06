@@ -24,7 +24,7 @@ $(function(){
 	
 	$("#inspectionFlawType").combobox({
 		valueField : 'id',
-		textField : 'flawname',
+		textField : 'name',
 		editable : false,// 不可编辑，只能选择
 		panelHeight : 'auto',
 		required : true,
@@ -224,7 +224,7 @@ function saveExecuteReceipt(){
 		data:{
 			flawId:flawType,
 			towerId:towerId,
-			flowGrade:flawGrade,
+			flawGrade:flawGrade,
 			serviceAbility:serviceAbility,
 			discoverDate:date,
 			flawDesc:description,
@@ -256,7 +256,11 @@ function executeReceipt(){
 		url:"executeReceipt",
 		type:"POST",
 		success:function(result){
-			if(result==true){
+			console.log(result)
+			if(result.flag==true){
+				if(result.userId){
+					websocket.send(result.userId)
+				}
 				 $.messager.show({
 					title:'提示',
 					msg:'上传回执成功',

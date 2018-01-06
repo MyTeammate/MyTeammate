@@ -1,15 +1,15 @@
 function perWork() {
 	$('#perWork').datagrid({
-		// url:"",
+		url:"work/getPersonalworkData",
 		columns : [ [ {
-			field : 'coding',
+			field : 'type',
 			title : '代办任务类型',
 			width : 200,
 			align : "center",
 		}, {
-			field : 'lineId',
+			field : 'name',
 			title : '代办任务名称',
-			width : 200,
+			width : 400,
 			align : "center",
 		}, {
 			field : 'backDate',

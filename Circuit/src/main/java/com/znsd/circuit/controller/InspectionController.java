@@ -1,11 +1,9 @@
 package com.znsd.circuit.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +16,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.znsd.circuit.model.Flaw;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Inspection;
+import com.znsd.circuit.model.Personalwork;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.model.Tower;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.InspectionService;
+import com.znsd.circuit.service.PersonalworkService;
 import com.znsd.circuit.service.SystemParamService;
 import com.znsd.circuit.service.ThreadService;
 import com.znsd.circuit.service.TowerService;
+import com.znsd.circuit.util.DateTime;
 import com.znsd.circuit.util.Pager;
 
 @Controller
@@ -43,6 +44,9 @@ public class InspectionController {
 	
 	@Autowired
 	private TowerService towerService;
+	
+	@Autowired
+	private PersonalworkService personalworkService;
 	
 	
 	
@@ -325,7 +329,14 @@ public class InspectionController {
 	@ResponseBody
 	public Flawconfirm  onclickTowerFlawInfo(@RequestParam("towerCoding")String towerCoding,@RequestParam("taskId")int taskId) {
 		Tower tower = towerService.checkCoding(towerCoding);
+		
 		Flawconfirm  fc = inspectionService.getFlawInfoByTowerId(tower.getId(),taskId);
+		if(fc!=null&&fc.getFlawGrade()!=null) {
+			Systemparam sp = systemParamService.getSystemparamById(Integer.parseInt(fc.getFlawGrade()));
+			fc.setFlawGrade(sp.getSettingName());
+		}
+		
+		
 		return fc;
 	}
 	
@@ -335,20 +346,37 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="executeReceipt")
-	public boolean executeReceipt(HttpSession session){
+	public Map<String, Object>  executeReceipt(HttpSession session){
 		User user = (User) session.getAttribute("user");
+		Map<String, Object> map = new HashMap<>();
 		if(user==null){
-			return false;
+			map.put("flag", false);
 		}
 		int taskId = session.getAttribute("receiptId") == null ? 0:(int)session.getAttribute("receiptId");
 		inspectionService.updateFlawRecord(taskId);
-		Map<String, Object> map = new HashMap<>();
+		
 		map.put("coding", "TASK_STATE");
 		map.put("creater", user.getId());
 		map.put("taskId", taskId);
 		map.put("settingName", "已完成");
+		
 		inspectionService.updateInspectionState(map);
 		inspectionService.updateInspectionDate(map);
-		return true;
+		Personalwork personalwork = new Personalwork();
+		personalwork.setTaskId(taskId);
+		personalwork.setIsAccomplish(0);
+		personalwork.setBackDate(new DateTime().getDateTime());
+		List<Flawconfirm> ffs = personalworkService.getTaskTowerFlawInfo(taskId);
+		if(ffs.size()>0) {
+			for (Flawconfirm flawconfirm : ffs) {
+				personalwork.setName(flawconfirm.getThreadName()+"杆塔编号"+flawconfirm.getTowerCoding()+"缺陷等级确认");
+				personalwork.setUserId(flawconfirm.getTaskMan());
+				map.put("userId",personalwork.getUserId());
+				personalworkService.arriveWork(personalwork);
+			}
+			
+		}
+		map.put("flag", true);
+		return map;
 	}
 }
