@@ -66,7 +66,7 @@
 	</bean> -->
 	<mvc:interceptors>
          <mvc:interceptor>
-            <!-- 拦截所有URL中包含/user/的请求 -->
+            <!-- 拦截所有URL中包含//的请求 -->
               <mvc:mapping path="/**"/>
               <!-- 需排除拦截的地址 -->  
             <!--   <mvc:exclude-mapping path="/"/>

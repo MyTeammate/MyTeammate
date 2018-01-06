@@ -20,7 +20,7 @@ public class EliminateQueryController {
 
 	@Autowired
 	private EliminateQueryService eliminateQueryService;
-
+ 
 	@RequestMapping("/eliminate_query")
 	public String Eliminate_query() {
 		return "eliminate_query";

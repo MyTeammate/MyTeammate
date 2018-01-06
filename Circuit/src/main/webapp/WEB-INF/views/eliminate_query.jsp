@@ -16,11 +16,11 @@ body {
 	<div id="div_toolTwo" style="text-align: left;">&nbsp;&nbsp;&nbsp;
 		任务编号：<input type="text" id="query_taskcoding" class="textbox"
 			name="votem" style="width: 220px; height: 22px;" />&nbsp;&nbsp;&nbsp;
-		 缺陷类型：<select id="query_workbills" class="easyui-combobox" name="dept"
+		 缺陷类型：<select id="query_workbills" class="easyui-combobox" name="de"
 			style="width: 80px;">
 		<option value="">请选择</option>
 		</select> &nbsp;&nbsp;&nbsp;
-		任务状态：<select id="query_taskstatus" class="easyui-combobox" name="dept"
+		任务状态：<select id="query_taskstatus" class="easyui-combobox" name="dep"
 			style="width: 80px;">
 		<option value="">请选择</option>
 		</select> &nbsp;&nbsp;&nbsp;

@@ -120,17 +120,7 @@ function user_tb(){
 							return newNow <= newDate;
 						},
 						message : '所选时间不能低于当前时间！'
-					}/*,
-					md : {
-						validator : function(value, param) {
-							var start = $(param[0]).datetimebox('getValue');
-							var now = new Date();
-							var start2 = $.fn.datebox.defaults.parser(value);
-							return now >= start2 && start <= value;
-							// 需要进行两个判断，先判断不能超过当前时间，再判断是否大于开始时间
-						},
-						message : '选择有误！'
-					}*/
+					}
 				});
 			}
 		})
