@@ -34,12 +34,12 @@ $(function(){
 			width : 60,
 			align:"center",
 		}, {
-			field : 'flawGrade',
+			field : 'flawType',
 			title : '缺陷等级',
 			width : 75,
 			align:"center",
 		}, {
-			field : 'flawType',
+			field : 'flawGrade',
 			title : '缺陷类型',
 			width : 75,
 			align:"center",
@@ -129,12 +129,20 @@ $(function(){
 	/*
 	 * 模糊查询日期验证
 	 */
-	$('input[name=flawQueryBegin]').datebox({
+	$('#inspectionBeginDate1').datebox({
 		//required : true,
 		editable : false,
 		validType : 'checkNow',
 		missingMessage : '请选择日期',
 	});
+	
+	$('#inspectionBeginDate2').datebox({
+		//required : true,
+		editable : false,
+		validType : 'checkNow',
+		missingMessage : '请选择日期',
+	});
+	
 	
 	$.extend($.fn.validatebox.defaults.rules, {
 		checkNow : {
@@ -156,4 +164,41 @@ $(function(){
 			message : '选择有误！'
 		}
 	});
+	
+	flawQuery_onclick={
+			search:function(){
+				var start1 = $('#inspectionBeginDate1').datebox('isValid');
+				var end1 = $('#flawQueryEnd1').datebox('isValid');
+				var start2 = $('#inspectionBeginDate2').datebox('isValid');
+				var end2 = $('#flawQueryEnd2').datebox('isValid');
+				if(start1 && end1 && start2 && end2){
+					var taskCoding=$("#taskCoding").val();
+					var threadCoding=$("#threadCoding").val();
+					var flawType=$("#inspectionFlawType").combobox('getValue');
+					var flawGrade=$("#inspectionFlawGrade").combobox('getValue');
+					
+					var discoverDate=$("#inspectionBeginDate1").val();
+					var endDiscover=$("#flawQueryEnd1").val();
+					var date=$("#inspectionBeginDate2").val();
+					var endDate=$("#flawQueryEnd2").val();
+					
+					console.log('taskCoding:'+taskCoding+',threadCoding:'+threadCoding+",flawType:"+flawType+',flawGrade:'+flawGrade);
+					console.log('discoverDate:'+discoverDate+',endDiscover'+endDiscover+",date:"+date+',endDate:'+endDate);
+					
+					$("#flawQuery_datagrid").datagrid('reload',{
+						taskCoding:$("#taskCoding").val(),
+						threadCoding:$("#threadCoding").val(),
+						flawType:$("#inspectionFlawType").combobox('getValue'),
+						flawGrade:$("#inspectionFlawGrade").combobox('getValue'),
+						date:$("#inspectionBeginDate1").val(),
+						endDate:$("#flawQueryEnd1").val(),
+						discoverDate:$("#inspectionBeginDate2").val(),
+						endDiscover:$("#flawQueryEnd2").val()
+					})
+				}else{
+					console.log('日期验证不通过！');
+				}
+				
+			}
+	}
 });

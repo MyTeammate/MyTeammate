@@ -84,6 +84,13 @@ public class FlawQuery {
 		this.flawDesc = flawDesc;
 	}
 	
+	@Override
+	public String toString() {
+		return "FlawQuery [taskCoding=" + taskCoding + ", threadCoding=" + threadCoding + ", towerCoding=" + towerCoding
+				+ ", flawGrade=" + flawGrade + ", flawType=" + flawType + ", receipter=" + receipter + ", discoverDate="
+				+ discoverDate + ", creater=" + creater + ", date=" + date + ", serviceAbility=" + serviceAbility
+				+ ", flawDesc=" + flawDesc + "]";
+	}
 	
 	
 }
