@@ -42,5 +42,6 @@
 	</dependencies>
 	<build>
 		<finalName>Circuit</finalName>
+		<defaultGoal>compile</defaultGoal>
 	</build>
 </project>

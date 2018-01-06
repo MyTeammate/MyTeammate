@@ -2,6 +2,7 @@ package com.znsd.circuit.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.model.Systemlog;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.SystemUserService;
@@ -29,13 +31,18 @@ public class SystemUserController {
 	
 	@ResponseBody
 	@RequestMapping("/listSystemUser")
-	public Map<String,Object> listSysteUser(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows){
+	public Map<String,Object> listSysteUser(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows,String name,String state){
 		Map<String, Object> map = new HashMap<String, Object>();
-		int count = systemUserService.systemUserCount();
+		
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
+		map.put("name",name);
+		map.put("state",state);
+		int count = systemUserService.systemUserCount(map);
 		List<User> listUser=systemUserService.listSystemUser(map);
+		Calendar now = Calendar.getInstance();  
+		String leaveDate=now.get(Calendar.YEAR)+"-"+(now.get(Calendar.MONTH)+1)+"-"+now.get(Calendar.DAY_OF_MONTH);
 		for (Iterator iterator = listUser.iterator(); iterator.hasNext();) {
 			User user = (User) iterator.next();
 			if(user.getLoginDate()==null){
@@ -46,6 +53,17 @@ public class SystemUserController {
 		    		 time=time.substring(0,time.indexOf("."));
 		    	}
 		    	user.setLoginDate(time);
+			}
+			if(user.getLeaveDate()!=null&&user.getLeaveDate().equals(leaveDate)) {
+				Date date=new Date();
+				DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time=format.format(date);
+				Map<String,Object> map2=new HashMap<String,Object>();
+				map2.put("id",user.getId());
+				map2.put("newState",1);
+				map2.put("updateBy",user.getId());
+				map2.put("updatedDate", time);
+				systemUserService.freezeSysteUser(map2);
 			}
 		}
 		Map<String,Object> map2=new HashMap<String,Object>();
@@ -59,17 +77,12 @@ public class SystemUserController {
 	@RequestMapping("/select")
 	public List<Systemrole> selectSysteUser(){
 		List<Systemrole> s=systemUserService.selectSysteUser();
-		for (Iterator iterator = s.iterator(); iterator.hasNext();) {
-			Systemrole systemrole = (Systemrole) iterator.next();
-			System.out.println("systemrole"+systemrole);
-		}
 		return s;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/add")
 	public int addSysteUser(HttpSession session,String userName,String name,String passWord,int roleId,String entryDate){
-		System.out.println("passWord:"+passWord+";roleId:"+roleId);
 	    String passWord2=passWord.replaceAll(" ", "");
 	    User user=new User();
 	    user.setUserName(userName);
@@ -135,7 +148,18 @@ public class SystemUserController {
 		User u=(User) session.getAttribute("user");
 		map.put("updateBy",u.getId());
 		map.put("updatedDate", time);
-	    return systemUserService.freezeSysteUser(map);
+		if(state==0){
+			systemUserService.freezeSysteUser(map);
+		}else{
+			Calendar now = Calendar.getInstance();  
+	        System.out.println("年: " +(now.get(Calendar.YEAR)+1));  
+	        System.out.println("月: " + (now.get(Calendar.MONTH) + 1) + "");  
+	        System.out.println("日: " + now.get(Calendar.DAY_OF_MONTH));  
+			map.put("leaveDate",(now.get(Calendar.YEAR)+1)+"-"+(now.get(Calendar.MONTH)+1)+"-"+now.get(Calendar.DAY_OF_MONTH));
+			systemUserService.freezeSysteUser2(map);
+		}
+		
+	    return 1;
 	}
 	
 	//根据Id查询用户信息
@@ -173,14 +197,11 @@ public class SystemUserController {
 	
 	@ResponseBody
 	@RequestMapping("/update")
-	public int updateSysteUser(HttpSession session,int id,String userName,String name,String passWord,int roleId,String entryDate,String leaveDate){
-		System.out.println("passWord:"+passWord+";roleId:"+roleId);
-	    String passWord2=passWord.replaceAll(" ", "");
+	public int updateSysteUser(HttpSession session,int id,String userName,String name,int roleId,String entryDate,String leaveDate){
 	    User user=new User();
 	    user.setId(id);
 	    user.setUserName(userName);
 	    user.setName(name);
-	    user.setPassWord(passWord2);
 	    user.setEntryDate(entryDate);
 	    if("".equals(leaveDate)){
 	    	leaveDate=null;
@@ -213,4 +234,54 @@ public class SystemUserController {
 	public int deleteSysteUser(int id) {
 		return systemUserService.delete(id);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/listSystemLog")
+	public Map<String,Object> listSystemLog(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows,String uentryDate,String uentryDate2){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int pageIndex = (page - 1) * rows;
+		map.put("pageIndex", pageIndex);
+		map.put("pageSize", rows);
+	    if(uentryDate2!=null&&uentryDate2!="") {
+	    	String u=uentryDate2.substring(uentryDate2.length()-1);
+	    	int i=Integer.parseInt(u)+1;
+			uentryDate2=uentryDate2+i;
+		}
+		map.put("uentryDate", uentryDate);
+		map.put("uentryDate2", uentryDate2);
+		int count = systemUserService.systemLogCount(map);
+		System.out.println("count:"+count);
+		List<Systemlog> listLog=systemUserService.listSystemLog(map);
+		for (Iterator iterator = listLog.iterator(); iterator.hasNext();) {
+			Systemlog log = (Systemlog) iterator.next();
+			String time=log.getCreateDate();
+	    	if(time.contains(".")){
+	    		 time=time.substring(0,time.indexOf("."));
+	    	}
+	    	log.setCreateDate(time);
+		}
+		Map<String,Object> map2=new HashMap<String,Object>();
+		map2.put("rows",listLog);
+		map2.put("total",count);
+		return map2;
+	}
+	
+	//log
+    @ResponseBody
+    @RequestMapping("/addLog")
+    public String addLog(HttpSession session,int logId){
+    	return "success";
+    }
+    
+  //log
+    @ResponseBody
+    @RequestMapping("/comparison")
+    public String comparison(String now,String date){
+    	System.out.println();
+    	System.out.println(now.length());
+    	System.out.println(now.substring(0, now.length()-17));
+    	System.out.println(now+","+date);
+    	return "success";
+    }
 }

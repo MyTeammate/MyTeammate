@@ -10,55 +10,67 @@ import java.util.Date;
 public class Personalwork {
 
 	private int id;
-	private String to_doTasks;//代办任务类型
-	private String task_agents;//代办任务名称
-	private Date arrive_time;//到达时间
+	private String type;//代办任务类型
+	private String name;//代办任务名称
+	private String backDate;//到达时间
+	private int taskId;//相关的任务Id
+	private int userId;//那个用户的代办任务
+	private int isAccomplish;//是否完成
 	private String operation;//操作
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getTo_doTasks() {
-		return to_doTasks;
+	public String getType() {
+		return type;
 	}
-
-	public void setTo_doTasks(String to_doTasks) {
-		this.to_doTasks = to_doTasks;
+	public void setType(String type) {
+		this.type = type;
 	}
-
-	public String getTask_agents() {
-		return task_agents;
+	public String getName() {
+		return name;
 	}
-
-	public void setTask_agents(String task_agents) {
-		this.task_agents = task_agents;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public Date getArrive_time() {
-		return arrive_time;
+	public String getBackDate() {
+		return backDate;
 	}
-
-	public void setArrive_time(Date arrive_time) {
-		this.arrive_time = arrive_time;
+	public void setBackDate(String backDate) {
+		this.backDate = backDate;
 	}
-
+	public int getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+	public int getIsAccomplish() {
+		return isAccomplish;
+	}
+	public void setIsAccomplish(int isAccomplish) {
+		this.isAccomplish = isAccomplish;
+	}
 	public String getOperation() {
 		return operation;
 	}
-
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
-
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
-		return "Personalwork [id=" + id + ", to_doTasks=" + to_doTasks + ", task_agents=" + task_agents
-				+ ", arrive_time=" + arrive_time + ", operation=" + operation + "]";
+		return "Personalwork [id=" + id + ", type=" + type + ", name=" + name + ", backDate=" + backDate + ", taskId="
+				+ taskId + ", isAccomplish=" + isAccomplish + ", operation=" + operation + "]";
 	}
 
+	
 }

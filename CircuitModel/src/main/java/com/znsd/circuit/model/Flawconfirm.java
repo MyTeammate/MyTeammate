@@ -20,10 +20,33 @@ public class Flawconfirm {
 	private String serviceAbility;//完好率
 	private String flawGrade;//缺陷等级
 	private String remark;//备注
+	private String threadName; //线路名称
+	private String towerCoding; //杆塔编号
+	private int taskMan; //发布这个巡检任务的user
 
 	public Flawconfirm() {
 		super();
 	}
+
+	public Flawconfirm(int id, String flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
+			String discoverDate, String isTrouble, int userId, String flawDesc, String serviceAbility, String flawGrade,
+			String remark) {
+		super();
+		this.id = id;
+		this.flawId = flawId;
+		this.towerId = towerId;
+		this.taskId = taskId;
+		this.threadId = threadId;
+		this.inspectionstaffId = inspectionstaffId;
+		this.discoverDate = discoverDate;
+		this.isTrouble = isTrouble;
+		this.userId = userId;
+		this.flawDesc = flawDesc;
+		this.serviceAbility = serviceAbility;
+		this.flawGrade = flawGrade;
+		this.remark = remark;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -131,6 +154,22 @@ public class Flawconfirm {
 	
 	
 
+	public String getThreadName() {
+		return threadName;
+	}
+
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
+	}
+
+	public String getTowerCoding() {
+		return towerCoding;
+	}
+
+	public void setTowerCoding(String towerCoding) {
+		this.towerCoding = towerCoding;
+	}
+
 	public String getReceiptMan() {
 		return receiptMan;
 	}
@@ -146,36 +185,24 @@ public class Flawconfirm {
 	public void setFlawType(String flawType) {
 		this.flawType = flawType;
 	}
+	
 
 	
-	
-	public Flawconfirm(int id, String flawId, int towerId, int taskId, int threadId, int inspectionstaffId,
-			String discoverDate, String isTrouble, String flawType, int userId, String flawDesc, String receiptMan,
-			String serviceAbility, String flawGrade, String remark) {
-		super();
-		this.id = id;
-		this.flawId = flawId;
-		this.towerId = towerId;
-		this.taskId = taskId;
-		this.threadId = threadId;
-		this.inspectionstaffId = inspectionstaffId;
-		this.discoverDate = discoverDate;
-		this.isTrouble = isTrouble;
-		this.flawType = flawType;
-		this.userId = userId;
-		this.flawDesc = flawDesc;
-		this.receiptMan = receiptMan;
-		this.serviceAbility = serviceAbility;
-		this.flawGrade = flawGrade;
-		this.remark = remark;
+
+	public int getTaskMan() {
+		return taskMan;
 	}
+
+	public void setTaskMan(int taskMan) {
+		this.taskMan = taskMan;
+	}
+
 	@Override
 	public String toString() {
 		return "Flawconfirm [id=" + id + ", flawId=" + flawId + ", towerId=" + towerId + ", taskId=" + taskId
 				+ ", threadId=" + threadId + ", inspectionstaffId=" + inspectionstaffId + ", discoverDate="
-				+ discoverDate + ", isTrouble=" + isTrouble + ", flawType=" + flawType + ", userId=" + userId
-				+ ", flawDesc=" + flawDesc + ", receiptMan=" + receiptMan + ", serviceAbility=" + serviceAbility
-				+ ", flawGrade=" + flawGrade + ", remark=" + remark + "]";
+				+ discoverDate + ", isTrouble=" + isTrouble + ", userId=" + userId + ", flawDesc=" + flawDesc
+				+ ", serviceAbility=" + serviceAbility + ", flawGrade=" + flawGrade + ", remark=" + remark + "]";
 	}
 
 }

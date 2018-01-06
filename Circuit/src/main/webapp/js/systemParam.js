@@ -101,22 +101,26 @@ function parameter_tb(){
 				icon:'info'
 			});
     	}else{
-		var data={id:cost.id};
-		$.ajax({
-			url:"paramManage/delete",
-			type:"post",
-			data:data,
-			success:function(result){
-				if(result==1){
-					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-			    	tab.panel('refresh', 'systemParam');
-				}else{
-					$.messager.alert({
-						title:'错误',
-						msg:'删除错误！',
-						icon:'info'
-					});
+		$.messager.confirm('确定','您确定要删除所选的参数吗？',function(f){
+			if(f){
+			var data={id:cost.id};
+			$.ajax({
+				url:"paramManage/delete",
+				type:"post",
+				data:data,
+				success:function(result){
+					if(result==1){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemParam');
+					}else{
+						$.messager.alert({
+							title:'错误',
+							msg:'删除错误！',
+							icon:'info'
+						});
+					}
 				}
+			})
 			}
 		})
     	}

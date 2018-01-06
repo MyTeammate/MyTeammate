@@ -33,22 +33,18 @@ public class HomeController {
     public List<Power> homeNav(Integer id){
 		Integer nid = id == null ? 0 : id;
 		List<Power> listPower=homeService.selectAllPower(nid);
-		for (Iterator iterator = listPower.iterator(); iterator.hasNext();) {
-			Power power = (Power) iterator.next();
-		}
     	return listPower;
     }
 	
 	@ResponseBody
-	@RequestMapping("/login")
-	public boolean login(HttpSession session,HttpServletResponse response,String userName,String passWord){
+	@RequestMapping("/defined")
+	public boolean login(HttpSession session,HttpServletResponse response,String userName,String passWord,String logId){
 		response.setContentType("text/html;charset=UTF-8"); 
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("userName",userName);
 		map.put("passWord",passWord);
 		User user=homeService.login(map);
 		if(user!=null){
-			System.out.println(user);
 			session.setAttribute("user",user);
 			Date date=new Date();
 			DateFormat format=new SimpleDateFormat("yyyy-MM-dd");

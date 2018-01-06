@@ -32,7 +32,8 @@ $(function() {
 		pageSize : 5,
 		pagination : true,
 		pageList : [ 5, 10, 15, 20 ],
-		rownumbers : true
+		rownumbers : true,
+		nowrap:false,
 	})
 })
 

@@ -1,0 +1,51 @@
+#roleConfigParent{
+	width:1000px;
+	height:560px;
+	margin-left: 70px;
+	margin-top: 20px;
+}
+#roleConfigLeft{
+	border: 1px solid #33CCFF;
+	width:260px;
+	float:left;
+	height:560px;
+	overflow-y:scroll;
+}
+#roleConfigRight{
+	border: 1px solid #33CCFF;
+	width:730px;
+	margin-left:270px;
+	height:560px;
+}
+#roleConfigLeftP{
+	margin-left: 35px;
+}
+
+#roleConfigTree{
+	margin-left: 35px;
+}
+#addNav{
+	margin-left: 90px;
+}
+#addPowerMenu{
+	display:none;
+	width:550px;
+	margin: auto auto;
+	margin-top: 50px;
+}
+#updatePowerMenu{
+	display:none;
+	width:550px;
+	margin: auto auto;
+	margin-top: 50px;
+}
+#addPowerMenu table{
+	line-height: 40px;
+	margin-left: 90px;
+	font-size: 13px;
+}
+#updatePowerMenu table{
+	line-height: 40px;
+	margin-left: 90px;
+	font-size: 13px;
+}	

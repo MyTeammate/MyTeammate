@@ -25,14 +25,6 @@ public class TaskpollingController {
 		return "taskPonew";
 	}
 
-	/**
-	 * 查询巡检任务
-	 * @param page
-	 * @param rows
-	 * @param conteTitle
-	 * @param renTitle
-	 * @return
-	 */
 	@RequestMapping("/taskPollingPost")
 	@ResponseBody
 	public Map<String, Object> taskPollingPost(@RequestParam("page") int page, @RequestParam("rows") int rows,
@@ -69,18 +61,12 @@ public class TaskpollingController {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
 			maps.put("rows", list);
-			maps.put("total", list.size());
+			maps.put("total", count);
 		}
 
 		return maps;
 	}
 
-	/**
-	 * 获取巡检任务的id
-	 * @param session
-	 * @param coding
-	 * @return
-	 */
 	@RequestMapping("/taskTowerPost")
 	public String taskTowerPost(HttpSession session, @RequestParam("coding") String coding) {
 		Taskpolling task = taskpollingService.selectTaskTower(coding);
@@ -88,17 +74,6 @@ public class TaskpollingController {
 		return "taskPonew";
 	}
 
-	/**
-	 * 查询每个巡检任务下面的所有任务杆塔
-	 * @param page
-	 * @param rows
-	 * @param coding
-	 * @param ganTitle
-	 * @param queTitle
-	 * @param sTitle
-	 * @param eTitle
-	 * @return
-	 */
 	@RequestMapping("/towerTask")
 	@ResponseBody
 	public Map<String, Object> towerTask(@RequestParam("page") int page, @RequestParam("rows") int rows,

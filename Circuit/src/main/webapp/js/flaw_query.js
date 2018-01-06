@@ -97,7 +97,7 @@ function eliminatequery() {
 		url : 'eliminatequery/selFlawPost',
 		valueField : 'id',
 		textField : 'name',
-		width : 80,
+		width : 130,
 	});
 	
 	

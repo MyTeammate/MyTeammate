@@ -10,7 +10,6 @@ import com.znsd.circuit.dao.EliminateDao;
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flawstaff;
 import com.znsd.circuit.model.Systemparam;
-import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
@@ -115,92 +114,6 @@ public class EliminateServiceImpl implements EliminateService {
 		
 		return eliminateDao.getAllUserId(eliminateId);
 	}
-	@Override
-	public List<MyFlaw> seeEliminateBytaskId(int taskid) {
-		
-		return eliminateDao.seeEliminateBytaskId(taskid);
-	}
-	@Override
-	public List<Eliminate> getAllTaskByCondition(Map<String, Object> map) {
-		
-		return eliminateDao.getAllTaskByCondition(map);
-	}
-	@Override
-	public int getCountByCondition(Map<String, Object> map) {
-		
-		return eliminateDao.getCountByCondition(map);
-	}
-	@Override
-	public int execu_updateTaskstatus(int id) {
-		
-		return eliminateDao.execu_updateTaskstatus(id);
-	}
-	@Override
-	public Flawstaff selectEliminateByUserId(int eliminateId, int userId) {
-		
-		return eliminateDao.selectEliminateByUserId(eliminateId, userId);
-	}
-	@Override
-	public Systemrole selectRoleByUserId(int id) {
-		
-		return eliminateDao.selectRoleByUserId(id);
-	}
-	@Override
-	public int update_receipte(Map<String, Object> map) {
-		
-		return eliminateDao.update_receipte(map);
-	}
-	@Override
-	public int execu_updateTaskstatusAudit(int id) {
-		
-		return eliminateDao.execu_updateTaskstatusAudit(id);
-	}
-	@Override
-	public Eliminate midflag(int eliminateId, int userId) {
-		
-		return eliminateDao.midflag(eliminateId, userId);
-	}
-	@Override
-	public Task taskmanflag(int taskId, int userId) {
-		
-		return eliminateDao.taskmanflag(taskId, userId);
-	}
-	@Override
-	public int update_fuze(Map<String, Object> map) {
-		
-		return eliminateDao.update_fuze(map);
-	}
-	@Override
-	public int execu_updateTaskstatusSuccess(int id) {
-		
-		return eliminateDao.execu_updateTaskstatusSuccess(id);
-	}
-	@Override
-	public int execu_updateTaskstatusReturn(int id) {
-		
-		return eliminateDao.execu_updateTaskstatusReturn(id);
-	}
-	@Override
-	public Task selectTaskByeliminateId(int id) {
-		
-		return eliminateDao.selectTaskByeliminateId(id);
-	}
-	@Override
-	public int updateActualDate(Map<String, Object> map) {
-		
-		return eliminateDao.updateActualDate(map);
-	}
-	@Override
-	public int update_xiafa(Map<String, Object> map) {
-		
-		return eliminateDao.update_xiafa(map);
-	}
-	@Override
-	public int update_all(Map<String, Object> map) {
-		
-		return eliminateDao.update_all(map);
-	}
-	
 	
 	
 
