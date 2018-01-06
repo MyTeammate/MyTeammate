@@ -11,7 +11,7 @@
 		FROM
 		t_flawconfirm tf ,t_task
 		t,t_thread h WHERE tf.taskId=t.id AND
-		tf.threadId=h.id AND tf.confirmstate=0
+		tf.threadId=h.id
 		<if test="make!=null &amp;&amp; make!=''">
 			AND t.coding LIKE #{make}
 		</if>
@@ -46,7 +46,7 @@
 		tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flawGrade AND
+		s.id=tf.flowGrade AND
 		tf.flawId=a.id AND
 		t.coding=#{coding}
 	</select>
@@ -61,7 +61,7 @@
 		WHERE tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flawGrade AND tf.flawId=a.id AND
+		s.id=tf.flowGrade AND tf.flawId=a.id AND
 		t.coding=#{coding}
 	</select>
 
@@ -80,8 +80,8 @@
 		WHERE tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flawGrade AND tf.flawId=a.id AND
-		t.coding=#{coding} AND tf.confirmstate=0
+		s.id=tf.flowGrade AND tf.flawId=a.id AND
+		t.coding=#{coding}
 		<if test="gan!=null &amp;&amp; gan!=''">
 			AND w.coding LIKE #{gan}
 		</if>

@@ -100,4 +100,26 @@
     <update id="delete" parameterType="int">
         update t_user set delete_flag='是' where id=#{id}
     </update>
+    
+    <select id="systemLogCount" resultType="int">
+        select count(1) from t_log where delete_flag='否'
+    </select>
+    
+    <select id="listSystemLog" resultType="Systemlog" parameterType="map">
+        select tl.id,tl.userId,tu.userName,tl.logMessage,tl.createDate,tl.updatedDate,tl.remark from t_log tl
+		LEFT JOIN t_user tu
+		on tl.userId=tu.id
+		where tl.delete_flag='否'
+		GROUP BY tl.id
+		order by tl.id desc
+		limit #{pageIndex},#{pageSize}
+    </select>
+    
+    <insert id="addLog" parameterType="Systemlog">
+        insert into t_log (userId,logMessage,createDate,remark) values (#{userId},(select text from t_power where id=#{id}),#{createDate},(select text from t_power where id=#{id}))
+    </insert>
+    
+    <insert id="loginLog" parameterType="Systemlog">
+        insert into t_log (userId,logMessage,createDate,remark) values (#{userId},#{remark},#{createDate},#{remark})
+    </insert>
 </mapper>

@@ -3,7 +3,6 @@ package com.znsd.circuit.util;
 public class SeeEliminate {
 		private int id;//消缺确认id
 		private String taskCoding;//任务编码
-		private int taskId;//任务id
 		private String taskName;//任务名称
 		private String taskStatus;//任务状态
 		private String taskBills;//任务单据
@@ -25,16 +24,13 @@ public class SeeEliminate {
 			// TODO Auto-generated constructor stub
 		}
 		
-		
-		
-		public SeeEliminate(int id, String taskCoding, int taskId, String taskName, String taskStatus, String taskBills,
+		public SeeEliminate(int id, String taskCoding, String taskName, String taskStatus, String taskBills,
 				String taskxiafaUser, String taskxiafaDate, int taskfuzeId, String taskfuzeUser, String taskDesc,
 				String taskxiaoqueUser, String taskfinishDate, String taskfuzeUserIdea, String taskxiafaUserIdea,
 				String taskCompletionDesc, int taskPassed, String extensionRecord, String finalReport) {
 			super();
 			this.id = id;
 			this.taskCoding = taskCoding;
-			this.taskId = taskId;
 			this.taskName = taskName;
 			this.taskStatus = taskStatus;
 			this.taskBills = taskBills;
@@ -52,9 +48,7 @@ public class SeeEliminate {
 			this.extensionRecord = extensionRecord;
 			this.finalReport = finalReport;
 		}
-
-
-
+		
 		/**
 		 * @return the taskfuzeId
 		 */
@@ -273,38 +267,18 @@ public class SeeEliminate {
 		public void setFinalReport(String finalReport) {
 			this.finalReport = finalReport;
 		}
-		
-		/**
-		 * @return the taskId
-		 */
-		public int getTaskId() {
-			return taskId;
-		}
-
-
-
-		/**
-		 * @param taskId the taskId to set
-		 */
-		public void setTaskId(int taskId) {
-			this.taskId = taskId;
-		}
-
-
-
 		/* (non-Javadoc)
 		 * @see java.lang.Object#toString()
 		 */
 		@Override
 		public String toString() {
-			return "SeeEliminate [id=" + id + ", taskCoding=" + taskCoding + ", taskId=" + taskId + ", taskName="
-					+ taskName + ", taskStatus=" + taskStatus + ", taskBills=" + taskBills + ", taskxiafaUser="
-					+ taskxiafaUser + ", taskxiafaDate=" + taskxiafaDate + ", taskfuzeId=" + taskfuzeId
-					+ ", taskfuzeUser=" + taskfuzeUser + ", taskDesc=" + taskDesc + ", taskxiaoqueUser="
-					+ taskxiaoqueUser + ", taskfinishDate=" + taskfinishDate + ", taskfuzeUserIdea=" + taskfuzeUserIdea
-					+ ", taskxiafaUserIdea=" + taskxiafaUserIdea + ", taskCompletionDesc=" + taskCompletionDesc
-					+ ", taskPassed=" + taskPassed + ", extensionRecord=" + extensionRecord + ", finalReport="
-					+ finalReport + "]";
+			return "SeeEliminate [id=" + id + ", taskCoding=" + taskCoding + ", taskName=" + taskName + ", taskStatus="
+					+ taskStatus + ", taskBills=" + taskBills + ", taskxiafaUser=" + taskxiafaUser + ", taskxiafaDate="
+					+ taskxiafaDate + ", taskfuzeId=" + taskfuzeId + ", taskfuzeUser=" + taskfuzeUser + ", taskDesc="
+					+ taskDesc + ", taskxiaoqueUser=" + taskxiaoqueUser + ", taskfinishDate=" + taskfinishDate
+					+ ", taskfuzeUserIdea=" + taskfuzeUserIdea + ", taskxiafaUserIdea=" + taskxiafaUserIdea
+					+ ", taskCompletionDesc=" + taskCompletionDesc + ", taskPassed=" + taskPassed + ", extensionRecord="
+					+ extensionRecord + ", finalReport=" + finalReport + "]";
 		}
 		
 }

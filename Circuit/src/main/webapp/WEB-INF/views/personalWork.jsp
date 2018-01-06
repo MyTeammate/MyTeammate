@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办列表</title>
-
 </head>
 <body>
 	<div>
@@ -13,14 +12,8 @@
 		<div>
 			<div style="padding: 0 50px 0 50px">我的工作平台>>待办列表</div>
 			<hr />
-			<div style="padding: 5px 70px 0 880px">
-				<img style="width: 40px; height: 25px" onclick="xiaoxi()"
-					src="image/840acd79693784419620ed1fdefbdbdb.png"> 
-				<div
-					style="width: 20px; height: 20px; line-height: 20px; font-size: 10px; color: #fff; text-align: center; background-color: #f00; border-radius: 50%; position: absolute; right: 330px; top: 80px;">6</div>
-			</div>
 			<div
-				style="margin-left: 120px; margin-top: 10px; width: 810px; height: 800px">
+				style="margin-left: 120px; margin-top: 20px; width: 810px; height: 800px">
 
 				<table id="perWork"></table>
 			</div>

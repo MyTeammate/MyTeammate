@@ -193,10 +193,10 @@ AND settingName='待分配' OR settingName='已取消')
 	<update id="updateInspectionDate" parameterType="Map">
 		UPDATE t_task SET updatedBy=#{creater},updatedDate=NOW()
 		<if test="actualDate != null">
-			,set actualDate=now()
+			,actualDate=now()
 		</if>
 		<if test="predictDate != null">
-			,set predictDate=now()
+			,predictDate=now()
 		</if>
 		 WHERE id=#{taskId}
 	</update>
@@ -229,8 +229,8 @@ AND settingName='待分配' OR settingName='已取消')
 			WHERE fr.receiptState=0 AND fc.taskId=#{taskId} AND fc.towerId=#{towerId}
 	</select>
 	<insert id="saveFlawConfirm" parameterType="Flawconfirm" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade)
-			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade});
+		INSERT INTO t_flawconfirm (flawId,towerId,taskId,threadId,discoverDate,isTrouble,userId,flawDesc,serviceAbility,flawGrade,confirmstate)
+			values(#{flawId},#{towerId},#{taskId},#{threadId},NOW(),'有',#{userId},#{flawDesc},#{serviceAbility},#{flawGrade},1);
 	</insert>
 	<insert id="saveFlawRecord">
 		INSERT INTO t_flaw_record(taskId,flawconfirmId,receiptState,createdBy,createdDate,updatedBy,updatedDate,delete_flag)

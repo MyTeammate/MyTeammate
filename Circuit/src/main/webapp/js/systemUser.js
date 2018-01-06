@@ -418,24 +418,26 @@ function userUpdate(id){
 															}
 															if(rUN=="success"&&rN=="success"){
 																$.messager.confirm('确定','您确定要修改所选的用户吗？',function(f){
-																	var dataUser={id:id,userName:userName,name:name,passWord:passWord,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
-																	$.ajax({
-																		url:'userManage/update',
-																		type:"post",
-																		data:dataUser,
-																		success:function(result){
-																			if(result==0){
-																				$.messager.alert({
-																					title:'错误',
-																					msg:'添加错误',
-																					icon:'info'
-																				});
-																			}else{
-																				var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-																		    	tab.panel('refresh', 'systemUser');
+																	if(f){
+																		var dataUser={id:id,userName:userName,name:name,passWord:passWord,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
+																		$.ajax({
+																			url:'userManage/update',
+																			type:"post",
+																			data:dataUser,
+																			success:function(result){
+																				if(result==0){
+																					$.messager.alert({
+																						title:'错误',
+																						msg:'添加错误',
+																						icon:'info'
+																					});
+																				}else{
+																					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+																			    	tab.panel('refresh', 'systemUser');
+																				}
 																			}
-																		}
-																	})
+																		})
+																	}
 																})
 															}else{
 															}
@@ -456,16 +458,18 @@ function userUpdate(id){
 function userDelete(id,state){
 	if(state==1){
 		$.messager.confirm('确定','您确定要删除所选的用户吗？',function(f){
-			var data={id:id};
-			$.ajax({
-				url:'userManage/delete',
-				type:"post",
-				data:data,
-				success:function(result){
-					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-			    	tab.panel('refresh', 'systemUser');
-				}
-			})
+			if(f){
+				var data={id:id};
+				$.ajax({
+					url:'userManage/delete',
+					type:"post",
+					data:data,
+					success:function(result){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemUser');
+					}
+				})
+			}
 		})
 	}else{
 		$.messager.alert({
@@ -477,6 +481,7 @@ function userDelete(id,state){
 }
 
 function userLOG(id){
-	alert("4");
+	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+	tab.panel('refresh', 'systemLog');
 }
  

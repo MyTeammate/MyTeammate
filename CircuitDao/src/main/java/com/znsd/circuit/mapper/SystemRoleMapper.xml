@@ -24,20 +24,4 @@
     <select id="verifyName" resultType="Systemrole" parameterType="String">
         select id,coding,name,state,createBy,updatedDate from t_role where name=#{name}
     </select>
-    
-    <insert id="addRole" parameterType="Systemrole">
-        insert into t_role (coding,name,createBy,createDate,remark) values (#{coding},#{name},#{createBy},#{createDate},#{remark});
-    </insert>
-    
-    <update id="stateRole" parameterType="map">
-        update t_role set state=#{state},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
-    </update>
-    
-    <update id="updateRole" parameterType="map">
-        update t_role set coding=#{coding},`name`=#{name},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
-    </update>
-    
-    <update id="deleteRole" parameterType="int">
-        update t_role set delete_flag='是' where id=#{id}
-    </update>
 </mapper>

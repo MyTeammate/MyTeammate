@@ -1,9 +1,6 @@
 function eliminate() {
 	$("#flaw_manager").datagrid({
 						url : "eliminate/getAll",
-						queryParams: {          
-					          operate: 'flaw'            
-					    },
 						height : 370,
 						width : 850,
 						pagination : true,
@@ -31,10 +28,6 @@ function eliminate() {
 								fontColor = '#009900';
 							} else if (value == '已取消') {
 								fontColor = '#FF3030'
-							}else if (value == '待审核'){
-								fontColor = '#7D26CD';
-							}else if (value == '已驳回') {
-								fontColor = '#FF3030'
 							}
 							return '<span style="color:'
 									+ fontColor + '">' + value
@@ -53,7 +46,7 @@ function eliminate() {
 									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
-											+ '<a href="javaScript:fenpeiEliminate('
+											+ '<a href="javaScript:allotInspection('
 											+ row.id
 											+ ')">分配任务</a>｜'
 											+ '<a href="javaScript:updateInspection('
@@ -66,7 +59,7 @@ function eliminate() {
 									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
-											+ '<a href="javaScript:fenpeiEliminate('
+											+ '<a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜'
 											+ '<a style="color:#CDC5BF">取消</a></span>';
@@ -81,7 +74,7 @@ function eliminate() {
 											+ row.id
 											+ ')">查看</a>｜'
 											+ '<a style="color:#CDC5BF">分配任务</a>｜'
-											+ '<a href="javaScript:audit_eliminate('
+											+ '<a href="javaScript:updateInspection('
 											+ row.id
 											+ ')">审查</a>｜'
 											+ '<a style="color:#CDC5BF">取消</a></span>';
@@ -91,23 +84,7 @@ function eliminate() {
 											+ ')">查看</a>｜'
 											+ '<a style="color:#CDC5BF">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜'
 											+ '<a style="color:#CDC5BF">取消</a></span>';
-								}else if (row.taskStatus == '待审核') {
-									oper = '<span><a href="javaScript:seeEliminate('
-										+ row.id
-										+ ')">查看</a>｜'
-										+ '<a style="color:#CDC5BF">分配任务</a>｜<a href="javaScript:audit_eliminate('
-										+ row.id
-										+ ')">审核</a>｜'
-										+ '<a style="color:#CDC5BF">取消</a></span>';
-							} else if (row.taskStatus == '已驳回') {
-								oper = '<span><a href="javaScript:seeEliminate('
-									+ row.id
-									+ ')">查看</a>｜'
-									+ '<a style="color:#CDC5BF">回执录入</a>｜<a style="color:#CDC5BF">执行</a>｜'
-									+ '<a href="javaScript:seeEliminate_receipte('
-									+ row.id
-									+ ')">修改</a></span>';
-						}
+								}
 								return oper;
 							}
 						} ] ],
@@ -116,7 +93,7 @@ function eliminate() {
 				
 			});
 	$('#flaw_taskstatus').combobox({
-		url : 'eliminate/getAllstatus?coding='+'TASK_STATE',
+		url : 'eliminate/getAllstatus',
 		valueField : 'id',
 		textField : 'settingName',
 		width : 154,
@@ -138,29 +115,6 @@ function eliminate() {
 		}
 	});*/
 }
-
-//审核任务
-function audit_eliminate(eliminateId){
-	$.ajax({
-		url : "eliminate/audit_eliminate_user?eliminateId="+eliminateId,
-		type : "post",
-		success : function(data) {
-				if(data=="taskmid"){
-					//都是
-					move("审核", "http://localhost:8080/Circuit/eliminate/all_details?eliminateId="+eliminateId);
-				}else if (data=="eliminate"){
-					//负责人
-					alert(2);
-					move("审核", "http://localhost:8080/Circuit/eliminate/fuze_details?eliminateId="+eliminateId);
-					
-				}else if(data=="task"){
-					//下发人
-					move("审核", "http://localhost:8080/Circuit/eliminate/xiafa_details?eliminateId="+eliminateId);
-				}
-			}
-	});
-}
-
 //分配任务
 function fenpeiEliminate(id){
 	$("#fenpeidiv").show(1000);
@@ -256,35 +210,8 @@ function cancelEminate(id) {
 				$('#flaw_manager').datagrid('reload');
 			}
 		}
-	});
-}
-//执行
-function execuEminate_receipt(id){
-	$.ajax({
-		url : "eliminate/execu_updateTaskStatusById?id=" + id,
-		type : "post",
-		success : function(data) {
-			if (data=="true") {
-				$('#eliminate_execution_receipt').datagrid('reload');
-			}else if (data=="false"){
-				$.messager.show({
-					title : '友好提示您',
-					msg : '<h3 style="color: red;">你没有权限执行!</h3>',
-					showType : 'show',
-					timeout : 3000,
-					width : 260,
-					height : 120,
-					style : {
-						right : '',
-						top : document.body.scrollTop
-								+ document.documentElement.scrollTop,
-						bottom : ''
-					}
-				});
-			}
-		}
 	})
-};
+}
 //模糊查询
 function search_eliminate() {
 
@@ -295,7 +222,6 @@ function search_eliminate() {
 	var startdate = $("#flaw_startdate").val();
 	var enddate = $("#flaw_enddate").val();*/
 	$("#flaw_manager").datagrid('reload', {
-		operate: 'flaw',
 		taskcoding : $("#flaw_taskcoding").val(),
 		workbills : $("#flaw_workbills").val(),
 		taskstatus : $("#flaw_taskstatus").combobox('getText'),
@@ -307,23 +233,15 @@ function search_eliminate() {
 			enddate);
 
 }
-
-
 function gotoanthor() {
 	move("制定消缺任务", "http://localhost:8080/Circuit/eliminate/addeliminateflaw");
 }
 
 function seeEliminate(eliminateId){
+	alert(eliminateId);
 	move("查看消缺任务", "http://localhost:8080/Circuit/eliminate/lookeliminateflaw?eliminateId="+eliminateId);
-}
-//回执的查看
-function seeEliminate_receipte(eliminateId){
-	move("查看消缺任务", "http://localhost:8080/Circuit/eliminate/lookeliminateflaw_receipte?eliminateId="+eliminateId);
+	
 }
 function returntoshou() {
-	move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+	move("制定消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
 }
-function returntoReceipt(){
-	move("消缺任务执行与回执","http://localhost:8080/Circuit/eliminate/execution_receipt")
-}
-

@@ -4,7 +4,7 @@ public class Flawstaff {
 	private int id;
 	private int eliminateId;//消缺任务id
 	private int userId;//消缺员id
-	private String isReceipter;//是否是回执录入人
+	private int isReceipter;//是否是回执录入人
 	private int createdBy;//创建人
 	private String createdDate;//创建时间
 	private int updatedBy;//修改人
@@ -15,7 +15,7 @@ public class Flawstaff {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Flawstaff(int id, int eliminateId, int userId, String isReceipter, int createdBy, String createdDate,
+	public Flawstaff(int id, int eliminateId, int userId, int isReceipter, int createdBy, String createdDate,
 			int updatedBy, String updatedDate, String delete_flag, String remark) {
 		super();
 		this.id = id;
@@ -47,10 +47,10 @@ public class Flawstaff {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getIsReceipter() {
+	public int getIsReceipter() {
 		return isReceipter;
 	}
-	public void setIsReceipter(String isReceipter) {
+	public void setIsReceipter(int isReceipter) {
 		this.isReceipter = isReceipter;
 	}
 	public int getCreatedBy() {

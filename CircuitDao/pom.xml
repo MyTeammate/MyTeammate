@@ -266,4 +266,7 @@
 			<version>${spring-version}</version>
 		</dependency>
   </dependencies>
+  <build>
+  	<defaultGoal>compile</defaultGoal>
+  </build>
 </project>

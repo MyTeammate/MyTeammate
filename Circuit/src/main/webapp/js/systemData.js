@@ -81,22 +81,26 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		var data={id:cost.id};
-		$.ajax({
-			url:"dateManage/deleteSystemsetting",
-			type:"post",
-			data:data,
-			success:function(result){
-				if(result==1){
-					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-			    	tab.panel('refresh', 'systemData');
-				}else{
-					$.messager.alert({
-						title:'错误',
-						msg:'删除错误！',
-						icon:'info'
-					});
+		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+			if(f){
+			var data={id:cost.id};
+			$.ajax({
+				url:"dateManage/deleteSystemsetting",
+				type:"post",
+				data:data,
+				success:function(result){
+					if(result==1){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemData');
+					}else{
+						$.messager.alert({
+							title:'错误',
+							msg:'删除错误！',
+							icon:'info'
+						});
+					}
 				}
+			})
 			}
 		})
     	}
@@ -182,22 +186,26 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		var data={id:cost.id};
-		$.ajax({
-			url:"dateManage/stateSystemsetting",
-			type:"post",
-			data:data,
-			success:function(result){
-				if(result==1){
-					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-			    	tab.panel('refresh', 'systemData');
-				}else{
-					$.messager.alert({
-						title:'错误',
-						msg:'删除错误！',
-						icon:'info'
-					});
+		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+			if(f){
+			var data={id:cost.id};
+			$.ajax({
+				url:"dateManage/stateSystemsetting",
+				type:"post",
+				data:data,
+				success:function(result){
+					if(result==1){
+						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+				    	tab.panel('refresh', 'systemData');
+					}else{
+						$.messager.alert({
+							title:'错误',
+							msg:'删除错误！',
+							icon:'info'
+						});
+					}
 				}
+			})
 			}
 		})
     	}

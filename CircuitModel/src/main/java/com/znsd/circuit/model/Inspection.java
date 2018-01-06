@@ -18,8 +18,8 @@ public class Inspection {
 	private String endTower; //终止杆号
 	private String creater; //下发人
 	private String createDate; //下发时间
+	private String predictDate; //预计完成时间
 	private String state; //任务状态
-	private String predictDate; //任务预计完成时间
 	private String actualDate; //任务完成时间
 	private String delete_flag; //任务是否取消
 	private String remark; // 任务备注

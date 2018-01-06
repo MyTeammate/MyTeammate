@@ -10,7 +10,6 @@ public class Systemrole{
     private int updateBy;      //修改人
     private String updatedDate;//修改时间
     private String state;	   //状态
-    private String remark;     //备注
 	public int getId() {
 		return id;
 	}
@@ -65,19 +64,11 @@ public class Systemrole{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
 	@Override
 	public String toString() {
 		return "Systemrole [id=" + id + ", coding=" + coding + ", name=" + name + ", createBy=" + createBy
 				+ ", createName=" + createName + ", createDate=" + createDate + ", updateBy=" + updateBy
-				+ ", updatedDate=" + updatedDate + ", state=" + state + ", remark=" + remark + "]";
+				+ ", updatedDate=" + updatedDate + ", state=" + state + "]";
 	}
-	
     
 }

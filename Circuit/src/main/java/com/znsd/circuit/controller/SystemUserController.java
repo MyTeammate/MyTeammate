@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.model.Systemlog;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.SystemUserService;
@@ -84,6 +85,7 @@ public class SystemUserController {
 		user.setCreateDate(time);
 		int adduser=systemUserService.add(user);
 		if(adduser==1&&roleId!=0){
+			System.out.println("进来了");
 			User u2=systemUserService.queryUserName(userName);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("userId", u2.getId());
@@ -213,4 +215,35 @@ public class SystemUserController {
 	public int deleteSysteUser(int id) {
 		return systemUserService.delete(id);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/listSystemLog")
+	public Map<String,Object> listSystemLog(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int count = systemUserService.systemLogCount();
+		int pageIndex = (page - 1) * rows;
+		map.put("pageIndex", pageIndex);
+		map.put("pageSize", rows);
+		List<Systemlog> listLog=systemUserService.listSystemLog(map);
+		for (Iterator iterator = listLog.iterator(); iterator.hasNext();) {
+			Systemlog log = (Systemlog) iterator.next();
+			String time=log.getCreateDate();
+	    	if(time.contains(".")){
+	    		 time=time.substring(0,time.indexOf("."));
+	    	}
+	    	log.setCreateDate(time);
+		}
+		Map<String,Object> map2=new HashMap<String,Object>();
+		map2.put("rows",listLog);
+		map2.put("total",count);
+		return map2;
+	}
+	
+	//log
+    @ResponseBody
+    @RequestMapping("/addLog")
+    public String addLog(HttpSession session,int logId){
+    	System.out.println("ew22```````````````````r");
+    	return "success";
+    }
 }

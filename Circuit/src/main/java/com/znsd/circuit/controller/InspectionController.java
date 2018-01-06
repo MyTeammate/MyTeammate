@@ -348,14 +348,14 @@ public class InspectionController {
 		if (inspectionService.checkFlawRecord(flawconfirm) > 0) {
 			// 修改
 			inspectionService.updateFlawConfirm(flawconfirm);
-			Map<String, Object> map = new HashMap<>();
-			map.put("creater", user.getId());
-			map.put("taskId", taskId);
-			inspectionService.updateInspectionDate(map);
 		} else {
 			// 第一次保存
 			inspectionService.saveInspectionFlaw(flawconfirm);
 		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("creater", user.getId());
+		map.put("taskId", taskId);
+		inspectionService.updateInspectionDate(map);
 		return true;
 	}
 	

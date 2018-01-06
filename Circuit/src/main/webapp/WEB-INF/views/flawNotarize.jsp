@@ -1,75 +1,47 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>等级确认</title>
+<title>缺陷等级确认</title>
+<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+<script type="text/javascript" src="easyui/jquery.min.js"></script>
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"	src="easyui/locale/easyui-lang-zh_CN.js"></script>
+
 </head>
 <body>
-	<div>缺陷管理>> 缺陷等级确认>> 等级确认</div>
-	<table border="2" >
-		<tr>
-			<td>任务编号：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="taskId" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>线路编号：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="threadId" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>杆塔编号：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="towerId" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>缺陷类型：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="flawId" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>完好率：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="serviceAbility" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>缺陷描述：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="flawDesc" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>发现时间：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="discoverDate" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>发现人：</td>
-			<td><input id="userName" class="text"
-				style="width: 200px; padding-top: 4px; margin: 7px 0px;" type="text"
-				name="userId" disabled="disabled" /></td>
-		</tr>
-		<tr>
-			<td>缺陷等级：</td>
-			<td><select style="width:84px" id="plasttim">
+<table  id="flawNot_datagrid"></table>
+	<div id="flawNot_tool"">
+	<h5>缺陷管理>> 缺陷等级确认</h5>
+	<p style="padding-left:60px;">任务编号：<input type="text" style="width:80px">&nbsp;&nbsp;&nbsp;
+	线路编号：<input type="text" style="width:80px">&nbsp;&nbsp;&nbsp;
+	杆塔编号：<input type="text" style="width:80px">&nbsp;&nbsp;&nbsp;
+	发现人：<input type="text" style="width:80px">&nbsp;&nbsp;&nbsp;
+	</p>
+	<p style="padding-left:60px;">
+	缺陷类型：<select style="width:84px" id="plasttime">
+			 <option value="请选择" selected="selected">--请选择--</option>
+			 <option value="叉粱断裂">叉粱断裂</option>
+			 <option value="拦河线断裂">拦河线断裂</option>
+			 <option value="绝缘子爆破">绝缘子爆破</option>
+			 <option value="杆塔倾斜">杆塔倾斜</option>
+			 <option value="绝缘子爆破">绝缘子爆破</option>
+			 <option value="吊杆变形">吊杆变形</option>
+			 <option value="其他">其他</option>
+		</select>&nbsp;&nbsp;&nbsp;
+	缺陷级别：<select style="width:84px" id="plasttim">
 			  <option value="请选择" selected="selected">--请选择--</option>
 			  <option value="一般">一般</option>
 			  <option value="严重">严重</option>
 			  <option value="紧急">紧急</option>
-		</select></td>
-		</tr>
-		<tr>
-			<td><input value="保存" type="button"></td>
-			<td><input value="取消" type="button"></td>
-		</tr>
-	</table>
+		</select>&nbsp;&nbsp;&nbsp;
+		<input type="button" value="查询" onclice=""/>
+		<input type="button" value="保存" onclice=""/>
+	</p>
+	<script type="text/javascript" src="js/flawNot.js"></script>
 </body>
 </html>
