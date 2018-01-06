@@ -191,7 +191,20 @@ public class InspectionServiceImpl implements InspectionService{
 		inspectionDao.deleteInspectionStaff(taskId);
 	}
 
-	
+	@Override
+	public Inspection getUpdateInspectionInfo(int taskId) {
+		return inspectionDao.getUpdateInspectionInfo(taskId);
+	}
+
+	@Override
+	public void updateInspection(Inspection inspection) {
+		inspectionDao.updateInspection(inspection);
+	}
+
+	@Override
+	public void updateInspectionThread(Inspection inspection) {
+		inspectionDao.updateInspectionThread(inspection);
+	}
 
 
 }

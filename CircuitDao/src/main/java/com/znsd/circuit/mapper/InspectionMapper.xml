@@ -268,5 +268,20 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 	<delete id="deleteInspectionStaff" parameterType="int">
 		DELETE FROM t_inspectionstaff WHERE inspectionId in(SELECT id FROM t_inspection WHERE taskId=#{taskId})
 	</delete>
+	<select id="getUpdateInspectionInfo" resultType="Inspection" parameterType="int">
+		SELECT 
+		t.id,t.coding,t.name,i.threadId AS
+		thread,th.startTower,th.endTower,t.predictDate,t.date as createDate,t.remark
+		from t_inspection i
+		left JOIN t_task t ON i.taskId=t.id
+		left JOIN t_thread th ON i.threadId=th.id
+		WHERE t.id=#{taskId}
+	</select>
+	<update id="updateInspection" parameterType="Inspection">
+		update t_task set coding=#{coding},name=#{name},predictDate=#{predictDate},remark=#{remark} where id=#{id}
+	</update>
+	<update id="updateInspectionThread" parameterType="Inspection">
+		update t_inspection set threadId=#{thread} where taskId=#{id}
+	</update>
 	<select id="checkInspectionCoding" ></select>
 </mapper>

@@ -64,7 +64,7 @@ public class InspectionController {
 	/*
 	 * 进入 制定巡检任务页面
 	 */
-	@RequestMapping(value = "makeInspection")
+	@RequestMapping(value = "makeInspectionTask")
 	public String intoMakeInspection() {
 		return "makeInspection";
 	}
@@ -102,6 +102,20 @@ public class InspectionController {
 		model.addAttribute("towers", towers);
 		return "inspectionTaskQuery";
 	}
+	
+	/*
+	 * 进入 修改巡检任务页面
+	 */
+	@RequestMapping(value = "updateInspection")
+	public String intoUpdateInspection(@RequestParam("id")int id,Model model) {
+		Inspection inspection = inspectionService.getUpdateInspectionInfo(id);
+		List<User> inspectionStaffs = inspectionService.getInspectionTackStaff(id);
+		model.addAttribute("updateInspection",id);
+		model.addAttribute("inspectionStaffs",inspectionStaffs);
+		model.addAttribute("inspection",inspection);
+		return "makeInspection";
+	}
+	
 	
 	/*
 	 * 所有 巡检任务状态
@@ -378,6 +392,36 @@ public class InspectionController {
 		map.put("actualDate", "now");
 		inspectionService.updateInspectionState(map);
 		inspectionService.updateInspectionDate(map);
+		return true;
+	}
+	
+	/*
+	 * 获取 修改巡检录入的原始数据
+	 */
+	@ResponseBody
+	@RequestMapping(value="updateInspectionTask")
+	public boolean getUpdateInspectionInfo(Inspection inspection,HttpSession session){
+		System.out.println(inspection);
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return false;
+		}
+		inspectionService.updateInspection(inspection);
+		inspectionService.updateInspectionThread(inspection);
+		Map<String, Object> map = new HashMap<>();
+		map.put("creater", user.getId());
+		map.put("taskId", inspection.getId());
+		inspectionService.updateInspectionDate(map);
+		return true;
+	}
+	
+	/*
+	 * 加标记是修改巡检录入
+	 */
+	@ResponseBody
+	@RequestMapping
+	public boolean addUpdateReceiptFlag(HttpSession session){
+		session.setAttribute("updateReceiptFlag", "修改回执录入");
 		return true;
 	}
 }

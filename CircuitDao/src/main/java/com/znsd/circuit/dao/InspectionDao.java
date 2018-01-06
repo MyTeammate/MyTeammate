@@ -171,4 +171,16 @@ public interface InspectionDao {
 	 * @param taskId
 	 */
 	public void deleteInspectionStaff(int taskId);
+	
+	/**获取要修改的原始数据
+	 * @param taskId
+	 * @return
+	 */
+	public Inspection getUpdateInspectionInfo(int taskId);
+	
+	/**修改巡检任务
+	 * @param inspection
+	 */
+	public void updateInspection(Inspection inspection);
+	public void updateInspectionThread(Inspection inspection);
 }
