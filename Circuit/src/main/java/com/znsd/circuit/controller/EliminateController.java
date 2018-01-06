@@ -297,11 +297,6 @@ public class EliminateController {
 		return inspectionService.getSystemParam(coding);
 	}
 	
-<<<<<<< HEAD
-	
-	//分配的状态下 再分配消缺员
-	@RequestMapping("/updateEliminateUserById") 
-=======
 	//已经存在的消缺员
 	@RequestMapping("/existUser")
 	@ResponseBody
@@ -313,7 +308,6 @@ public class EliminateController {
 
 	//分配消缺员
 	@RequestMapping("/updateEliminateUserById")
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	@ResponseBody
 	public String updateEliminateUserById(String str,HttpSession session) {
 		int id = (int) session.getAttribute("idd");
@@ -691,6 +685,7 @@ public class EliminateController {
 		public String update_wait_eliminate(Integer id,Model model,HttpSession session) {
 			System.out.println("。。。。。。。。。id"+id);
 			UpdateWait updateWait= eliminateService.select_update_wait(id);
+			System.out.println("。。。。。。"+updateWait);
 			model.addAttribute("updateWait",updateWait);
 			int taskid = updateWait.getTaskId();
 			session.setAttribute("taskid", taskid);
@@ -734,7 +729,19 @@ public class EliminateController {
 		public String update_task_eliminate(String update_taskcoding,String update_taskname,String taskbills,Integer taskMan,
 				String update_taskDesc,String update_taskRemark,Integer taskid,Integer eliminateId) {
 			
-			
+			System.out.println("。。。。taskbills"+taskbills+"taskman...."+taskMan);
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("workBills",taskbills);
+			map.put("taskMan", taskMan);
+			map.put("eliminateId", eliminateId);
+			eliminateService.updateEliminate(map);
+			Map<String,Object> map1 = new HashMap<String,Object>();
+			map1.put("update_taskcoding", update_taskcoding);
+			map1.put("update_taskname", update_taskname);
+			map1.put("update_taskDesc", update_taskDesc);
+			map1.put("update_taskRemark", update_taskRemark);
+			map1.put("taskid",taskid);
+			eliminateService.updateTask(map1);
 			return "true";
 			
 		}

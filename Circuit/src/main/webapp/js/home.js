@@ -164,7 +164,6 @@ function move($text,$url){
 	tab.panel('refresh',$url);
 }
 
-<<<<<<< HEAD
 function addTabs($text,$url){
 	// 添加一个未选中状态的选项卡面板
 	$('#tabs').tabs('add',{
@@ -173,7 +172,6 @@ function addTabs($text,$url){
 		closable:true, 
 	});
 }
-=======
 
 function showtime()  
 {  
@@ -217,4 +215,3 @@ function showtime()
 	document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":" + second+"</span>"; //显示时间  
 	setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)  
 }  
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
