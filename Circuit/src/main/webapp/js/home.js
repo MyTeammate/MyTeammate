@@ -200,6 +200,15 @@ function showtime()
 	hour = today.getHours();  
 	minute =today.getMinutes();  
 	second = today.getSeconds();  
-	document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":" + second+"</span>"; //显示时间  
+	if(minute<10&&second<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":0" + minute + ":0" + second+"</span>"; //显示时间  
+	}else if(minute<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":0" + minute + ":" + second+"</span>"; //显示时间
+	}else if(second<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":0" + second+"</span>"; //显示时间
+	}else{
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":" + second+"</span>"; //显示时间
+	}
+	
 	setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)  
 }  

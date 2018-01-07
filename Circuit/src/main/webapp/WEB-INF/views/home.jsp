@@ -41,7 +41,7 @@
 	<div
 		data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
 		style="height: 75px; background: #ccc;">
-		<div class="logo" style="font-size:29px;color:#0000E3">电力巡检§</div>
+		<span class="logo" style="font-size:29px;color:#0000E3">电力巡检§</span>
 		<div class="logout">
 			<span id="time" style="font-size:24px;text-align: center;color:#CF9E9E"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前权限：${user.roleName}&nbsp;&nbsp;您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="#" id="logout">&nbsp;&nbsp;退出</a>
 		</div>

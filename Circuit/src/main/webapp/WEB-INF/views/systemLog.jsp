@@ -16,6 +16,7 @@
 		    操作时间：<input type='text' id='uentryDate'/>&nbsp;--&nbsp;
 		    <input type='text' id='uentryDate2'/>
 			<a id="log_query" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+			<a id="log_back" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-customers'">返回</a>
 	   	   </th>
 	    </tr>
 	    <tr>

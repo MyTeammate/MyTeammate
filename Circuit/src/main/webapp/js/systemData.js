@@ -1,14 +1,14 @@
 function data_tb(){
 	$('#data_tb').datagrid({
 		url:'dateManage/listSystemsetting',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		singleSelect:true,
 		rownumbers : true,
 		pagination : true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'coding',title:'配置类型编码',width:140,align:'center'},

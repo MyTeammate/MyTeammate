@@ -47,4 +47,11 @@ public interface TaskEliminateDao {
 	 * @return
 	 */
 	public int getselTowerCount(String coding);
+	
+	/**
+	 * 导出消缺记录
+	 * @param coding
+	 * @return
+	 */
+	public List<TaskEliminate> eSelectEliminate();
 }

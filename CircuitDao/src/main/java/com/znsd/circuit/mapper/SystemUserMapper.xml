@@ -113,7 +113,14 @@
     </update>
     
     <update id="delete" parameterType="int">
-        update t_user set delete_flag='是' where id=#{id}
+        update t_user set delete_flag='是' where id=#{id} and id!=(
+        select tu.id from t_user tu 
+		LEFT JOIN t_user_role tur
+		on tu.id=tur.userId
+		LEFT JOIN t_role tr
+		on tur.roleId=tr.id
+		where tr.`name`!='系统管理员'
+		)
     </update>
     
     <select id="systemLogCount" resultType="int" parameterType="map">

@@ -152,9 +152,6 @@ public class SystemUserController {
 			systemUserService.freezeSysteUser(map);
 		}else{
 			Calendar now = Calendar.getInstance();  
-	        System.out.println("年: " +(now.get(Calendar.YEAR)+1));  
-	        System.out.println("月: " + (now.get(Calendar.MONTH) + 1) + "");  
-	        System.out.println("日: " + now.get(Calendar.DAY_OF_MONTH));  
 			map.put("leaveDate",(now.get(Calendar.YEAR)+1)+"-"+(now.get(Calendar.MONTH)+1)+"-"+now.get(Calendar.DAY_OF_MONTH));
 			systemUserService.freezeSysteUser2(map);
 		}
@@ -215,7 +212,6 @@ public class SystemUserController {
 		user.setUpdatedDate(time);
 		int adduser=systemUserService.update(user);
 		if(adduser==1&&roleId!=0){
-			System.out.println("进来了");
 			User u2=systemUserService.queryUserName(userName);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("userId", u2.getId());

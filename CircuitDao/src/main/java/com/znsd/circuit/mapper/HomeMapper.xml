@@ -23,7 +23,7 @@
 		on u.id=ur.userId
 		LEFT JOIN t_role r
 		on ur.roleId=r.id
-		where u.userName=#{userName} and u.`password`=#{passWord} and u.state='0'
+		where u.userName=#{userName} and u.`password`=#{passWord}
     </select>
     
     <update id="loginDate" parameterType="Map"> 

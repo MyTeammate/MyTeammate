@@ -1,6 +1,7 @@
 package com.znsd.circuit.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.znsd.circuit.excel.toEP;
+import com.znsd.circuit.model.TaskEliminate;
 import com.znsd.circuit.model.Taskpolling;
 import com.znsd.circuit.service.TaskpollingService;
 
@@ -106,6 +110,16 @@ public class TaskpollingController {
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/toPExcel")
+	public String toPExcel(HttpSession session,String path,String name) {
+		System.out.println(path+","+name);
+		List<Taskpolling> taskList = taskpollingService.eSelelectTaskPoll();
+		toEP t=new toEP();
+		String mark=t.outputExcel(taskList,"巡检",path,name);
+		return mark;
 	}
 
 }

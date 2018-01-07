@@ -41,26 +41,33 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping("/defined")
-	public boolean login(HttpSession session,HttpServletResponse response,String userName,String passWord,String logId){
+	public String login(HttpSession session,HttpServletResponse response,String userName,String passWord,String logId){
 		response.setContentType("text/html;charset=UTF-8"); 
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("userName",userName);
 		map.put("passWord",passWord);
 		User user=homeService.login(map);
+		String type="";
+		
 		if(user!=null){
-			session.setAttribute("user",user);
-			Date date=new Date();
-			DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-			String time=format.format(date);
-			Map<String,Object> map2=new HashMap<String,Object>();
-			map2.put("id",user.getId());
-			map2.put("time",time);
-			session.setAttribute("date",time);
-			homeService.loginDate(map2);
-			return true;
+			if(user.getState()==0) {
+				session.setAttribute("user",user);
+				Date date=new Date();
+				DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+				String time=format.format(date);
+				Map<String,Object> map2=new HashMap<String,Object>();
+				map2.put("id",user.getId());
+				map2.put("time",time);
+				session.setAttribute("date",time);
+				homeService.loginDate(map2);
+				type="success";
+			}else {
+				type="state";
+			}
 		}else{
-			return false;
+			type="error";
 		}
 		
+		return type;
 	}
 }

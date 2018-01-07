@@ -21,7 +21,7 @@
 					style="width: 60px; height: 25px; background-image: url('image/wx_icps.png');">查询</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;	
 				<a type="button" class="easyui-linkbutton"  
-					iconCls="icon-page-white-excel"
+					iconCls="icon-page-white-excel" onclick="addxls()"
 					style="width: 100px; height: 25px; background-image: url('image/wx_icps.png');">导出EXCEL</a>
 			</div>
 			<div
@@ -30,5 +30,6 @@
 			</div>
 		</div>
 	</div>
+	<table id="poption"></table>
 </body>
 </html>

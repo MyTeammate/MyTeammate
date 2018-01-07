@@ -43,6 +43,11 @@ public class TaskpollingServiceImpl implements TaskpollingService {
 		return taskpollingDao.getselTaskCount(coding);
 	}
 
+	@Override
+	public List<Taskpolling> eSelelectTaskPoll() {
+		return taskpollingDao.eSelelectTaskPoll();
+	}
+
 	
 
 }

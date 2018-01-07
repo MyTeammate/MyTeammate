@@ -30,11 +30,17 @@
     </select>
     
     <select id="verifyCoding" resultType="Systemrole" parameterType="map">
-        select id,coding,name,state,createBy,updatedDate from t_role where coding=#{coding} and id!=#{id}
+        select id,coding,name,state,createBy,updatedDate from t_role where coding=#{coding} 
+        <if test="id!=null &amp;&amp; id!='' &amp;&amp; id!=0">
+			 and id!=#{id}
+		</if>
     </select>
     
     <select id="verifyName" resultType="Systemrole" parameterType="map">
-        select id,coding,name,state,createBy,updatedDate from t_role where name=#{name} and id!=#{id}
+        select id,coding,name,state,createBy,updatedDate from t_role where name=#{name} 
+        <if test="id!=null &amp;&amp; id!='' &amp;&amp; id!=0">
+			 and id!=#{id}
+		</if>
     </select>
     
     <insert id="addRole" parameterType="Systemrole">
