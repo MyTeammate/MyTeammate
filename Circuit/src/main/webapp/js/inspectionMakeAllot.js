@@ -361,7 +361,6 @@ function cancelInspection(id){
  * 获取任务被分配人员
  */
 function updateallotInspection(id){
-	alert('111');
 	$.ajax({
 		url:"getInspectionTaskStaffs",
 		type:"POST",
@@ -369,34 +368,8 @@ function updateallotInspection(id){
 			taskId:id
 		},
 		success:function(data){
-			$("#fb_list").html("");
-			var str = "";
-			if(data){
-				/*for (var i = 0; i < data.length; i++) {
-					str += "<option value='" + data[i].id
-							+ "' name='options'>" + data[i].name
-							+ "</option>"
-				}*/
-				
-				$("#select_list option:not(:selected)").each(
-					function() {
-						if(data[i].id!=$(this).val()){
-							str += "<option value='" + data[i].id + "' name='options'>"
-							+ data[i].name + "</option>"
-						}
-				});
-				
-				if($("#select_list option:not(:selected)").length>0){
-					$("#select_list option:not(:selected)").each(
-							function() {
-								if(data[i].id!=$(this).val()){
-									str += "<option value='" + data[i].id + "' name='options'>"
-									+ data[i].name + "</option>"
-								}
-							});
-				}
-			}
-			$("#fb_list").append(str);
+			
+			
 		}
 	});
 	$("#bigdiv").show(1000);

@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="getFlawPage" resultType="Flaw" parameterType="Map">
-		SELECT `name` as name,state,id FROM t_flaw where  delete_flag='否'  LIMIT #{pageIndex},#{pageSize};
+		SELECT `name` as name,state,id FROM t_flaw where  delete_flag='否' order by updatedDate DESC  LIMIT #{pageIndex},#{pageSize};
 	</select>
 	
 	<!-- 增加缺陷类型 -->
