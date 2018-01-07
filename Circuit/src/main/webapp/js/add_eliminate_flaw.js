@@ -118,7 +118,7 @@ function taskSave_update(){
 			update_taskcoding:update_taskcoding,
 			update_taskname:update_taskname,
 			taskbills:taskbills,
-			taskMan,taskMan,
+			taskMan:taskMan,
 			update_taskDesc:update_taskDesc,
 			update_taskRemark:update_taskRemark,
 			taskid:taskid,
