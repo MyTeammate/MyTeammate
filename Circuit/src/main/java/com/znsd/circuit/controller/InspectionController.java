@@ -84,6 +84,17 @@ public class InspectionController {
 	 */
 	@RequestMapping(value = "receiptInspection")
 	public String intoReceiptInspection(int taskId, HttpSession session) {
+		session.removeAttribute("updateReceiptFlag");
+		session.setAttribute("receiptId", taskId);
+		return "receiptInspection";
+	}
+	
+	/*
+	 * 进入 修改回执录入界面
+	 */
+	@RequestMapping(value="updateReceiptInspection")
+	public String intoUpdateAllotInspection(int taskId, HttpSession session){
+		session.setAttribute("updateReceiptFlag", "修改回执录入");
 		session.setAttribute("receiptId", taskId);
 		return "receiptInspection";
 	}
@@ -125,6 +136,7 @@ public class InspectionController {
 		model.addAttribute("inspection",inspection);
 		return "makeInspection";
 	}
+	
 	
 	/*
 	 * 进入  缺陷查询 页面
@@ -283,7 +295,15 @@ public class InspectionController {
 		for (int i = 0; i < s.length; i++) {
 			userId[count++] = Integer.parseInt(s[i]);
 		}
-		inspectionService.allotInspection(taskId, userId, user.getId());
+		String state = inspectionService.getTaskState(taskId);
+		if("待分配".equals(state)){
+			System.out.println("保存分配");
+			inspectionService.allotInspection(taskId, userId, user.getId());
+		}else{
+			System.out.println("修改分配");
+			//inspectionService.deleteInspectionStaff(taskId);
+			//inspectionService.allotInspection(taskId, userId, user.getId());
+		}
 		return true;
 	}
 	
@@ -464,16 +484,7 @@ public class InspectionController {
 		return true;
 	}
 	
-	/*
-	 * 加标记是修改巡检录入
-	 */
-	@ResponseBody
-	@RequestMapping
-	public boolean addUpdateReceiptFlag(Model model){
-		model.addAttribute("updateReceiptFlag", "修改回执录入");
-		return true;
-	}
-	
+
 	/*
 	 * 缺陷查询
 	 */
@@ -522,7 +533,6 @@ public class InspectionController {
 	public List<User> getInspectionTaskStaffs(int taskId,HttpSession session){
 		System.out.println("getInspectionTaskStaffs");
 		List<User> staffs = inspectionService.getInspectionTackStaff(taskId);
-		session.setAttribute("updateStaff","修改巡检分配人员");
 		return staffs;
 	}
 }
