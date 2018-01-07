@@ -291,7 +291,7 @@ function getInspectionStaff(){
 }
 
 /*
- * 制定巡检任务
+ * 跳转  制定巡检任务页面
  */
 function makeInspection(){
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
@@ -299,7 +299,7 @@ function makeInspection(){
 }
 
 /*
- * 查看巡检任务
+ * 跳转  查看巡检任务页面
  */
 function lookInspection(id){
 	move("查看巡检任务","inspectionTaskQuery?id="+id);
@@ -361,17 +361,18 @@ function cancelInspection(id){
  * 获取任务被分配人员
  */
 function updateallotInspection(id){
-	taskId=id;
 	$.ajax({
-		url:"getInspectionTaskStaff",
+		url:"getInspectionTaskStaffs",
 		type:"POST",
 		data:{
 			taskId:id
 		},
 		success:function(data){
-			$("#bigdiv").show(1000);
+			
+			
 		}
-	})
+	});
+	$("#bigdiv").show(1000);
 }
 
 /*

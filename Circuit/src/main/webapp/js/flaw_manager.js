@@ -121,7 +121,7 @@ function eliminate() {
 		textField : 'settingName',
 		width : 154,
 	});
-	/*$('#update_taskbills').combobox({
+	$('#update_taskbills').combobox({
 		url : 'eliminate/getBills',
 		valueField : 'id',
 		textField : 'settingName',
@@ -132,7 +132,7 @@ function eliminate() {
 		valueField : 'id',
 		textField : 'name',
 		width : 154,
-	});*/
+	});
 	/*$.ajax({
 		url:"eliminate/getAllstatus",
 		type:"post",
@@ -155,7 +155,55 @@ function update_wait(id){
 	move("修改任务","http://localhost:8080/Circuit/eliminate/update_wait_eliminate?id="+id);
 }
 
-
+/*//保存修改
+function taskSave_update(){
+	alert(1);
+	var update_taskcoding = $("#update_taskcoding").val();
+	var update_taskname = $("#update_taskname").val();
+	alert($("#update_taskbills").combobox('getText'));
+	var taskbills = $("#update_taskbills").combobox('getText');
+	
+	var taskMan = $("#update_taskMan").combobox('getValue');
+	var update_taskDesc = $("#update_taskDesc").val();
+	var update_taskRemark = $("#update_taskRemark").val();
+	var taskid = $("#taskid").val();
+	var eliminateId = $("#eliminateId").val();
+	console.log(taskbills,taskMan);
+	$.ajax({
+		url:"eliminate/update_task_eliminate",
+		type:"post",
+		data:{
+			update_taskcoding:update_taskcoding,
+			update_taskname:update_taskname,
+			taskbills:taskbills,
+			taskMan,taskMan,
+			update_taskDesc:update_taskDesc,
+			update_taskRemark:update_taskRemark,
+			taskid:taskid
+		},
+		success:function(data){
+			if(data=="true"){
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改成功!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+				move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+			}
+		}
+		
+	})
+}*/
 //已驳回的状态下修改
 function update_return_Eliminate_receipte(id){
 	$.ajax({
@@ -231,47 +279,19 @@ function fenpeiEliminate(id){
 		success:function(data){
 			$("#select_list").html("");
 			var ss="";
-			if(data){
-				alert(data);
-				for (var i = 0; i < data.length; i++) {
-					ss+="<option value='" + data[i].id + "' name='options'>"
-					+ data[i].name + "</option>";
-				}
+			if(data!=""||data!=null){
+			
+					for (var i = 0; i < data.length; i++) {
+						ss+="<option class='options' value='" + data[i].id + "' name='options'>"
+						+ data[i].name + "</option>";
+					}
+				
 				$("#select_list").append(ss);
 			}
+			me(id);
 		}
 	});
-	$.ajax({
-		
-		url : "eliminate/getEliminateUser?id="+id,
-		type : "post",
-		success : function(data) {
-			$("#fb_list").html("");
-			var str = "";
-			if (data) {
-				
-				for (var i = 0; i < data.length; i++) {
-					if($("#select_list option:not(:selected)").val()==""){
-						str += "<option value='" + data[i].id + "' name='options'>"
-						+ data[i].name + "</option>"
-					}
-					
-					//console.log($("#select_list option:not(:selected)").text());
-					if($("#select_list option:not(:selected)").length>0){
-						$("#select_list option:not(:selected)").each(
-								function() {
-									if(data[i].id!=$(this).val()){
-										str += "<option value='" + data[i].id + "' name='options'>"
-										+ data[i].name + "</option>"
-									}
-								});
-					}	
-				}
-			}
-			$("#fb_list").append(str);
-			
-		}
-	});
+	
 	$("#fenpeidiv").show(1000);
 	$("#add").click(
 			function() {
@@ -314,6 +334,43 @@ function fenpeiEliminate(id){
 				}
 			});
 };
+
+function me(id){
+	$.ajax({
+		url : "eliminate/getEliminateUser?id="+id,
+		type : "post",
+		success : function(data) {
+			
+			var str = "";
+			if (data) {
+				$("#fb_list").html("");
+				for (var i = 0; i < data.length; i++) {
+					if($("#select_list").html() == ""){
+						str += "<option value='" + data[i].id + "' name='options'>"
+						+ data[i].name + "</option>"
+					}else{
+						var flag = true;
+						$(".options").each(
+								function() {
+									if(data[i].id==$(this).val()){
+										flag = false;									
+									}
+									
+						});
+						if(flag==true){
+							str += "<option value='" + data[i].id + "' name='options'>"
+							+ data[i].name + "</option>"
+						}
+					}
+				}
+				$("#fb_list").append(str);
+			}
+			
+		}
+			
+			
+	});
+}
 //开始分配消缺员
 function fenpei_save_user(){
 	var str = $.map($("#select_list option:not(:selected)"), function(ele) {

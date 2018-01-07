@@ -127,17 +127,16 @@ $(function() {
 	 */
 	
 });
-//保存修改
 function taskSave_update(){
 	var update_taskcoding = $("#update_taskcoding").val();
 	var update_taskname = $("#update_taskname").val();
-	var taskbills = $("#taskbills").val();
-	var taskMan = $("#taskMan").val();
+	var taskbills = $("#update_taskbills").combobox('getText');
+	var taskMan = $("#update_taskMan").combobox('getValue');
 	var update_taskDesc = $("#update_taskDesc").val();
 	var update_taskRemark = $("#update_taskRemark").val();
 	var taskid = $("#taskid").val();
 	var eliminateId = $("#eliminateId").val();
-	console.log(update_taskcoding,update_taskname,taskbills,taskMan,update_taskDesc,update_taskRemark,eliminateId);
+	console.log(taskbills,taskMan);
 	$.ajax({
 		url:"eliminate/update_task_eliminate",
 		type:"post",
@@ -148,10 +147,44 @@ function taskSave_update(){
 			taskMan:taskMan,
 			update_taskDesc:update_taskDesc,
 			update_taskRemark:update_taskRemark,
-			taskid:taskid
+			taskid:taskid,
+			eliminateId:eliminateId
 		},
 		success:function(data){
-			
+			if(data=="true"){
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改成功!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+				move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+			}else{
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改失败请检查原因!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+			}
 		}
 		
 	})
@@ -161,7 +194,6 @@ function taskSave_update(){
 
 //移除选择的缺陷
 function delete_yetid(id){
-	alert(id);
 	$.ajax({
 		url:"eliminate/removerecord?id="+id,
 		type:"post",
@@ -219,7 +251,7 @@ function save_update() {
 		},
 		type:"post",
 		success:function(data){
-			if(data=="true"){alert('成功了');}
+			if(data=="true"){}
 		}
 	});
 	$("#update_wait_manager").datagrid({

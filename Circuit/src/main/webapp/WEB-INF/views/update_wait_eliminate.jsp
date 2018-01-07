@@ -34,9 +34,9 @@ body {
 		任务名称：<input type="text" class="textbox" id="update_taskname"
 			style="width: 160px; height: 20px;" value="${updateWait.name}" />
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		任务单据：<select id="taskbills" style="width: 160px; height: 25px;">
+		任务单据：<select id="update_taskbills" style="width: 160px; height: 25px;" class="easyui-combobox">
 			<option value="${updateWait.workbills}">${updateWait.workbills}</option>
-		</select> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 任务负责人：<select id="taskMan"
+		</select> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 任务负责人：<select id="update_taskMan"
 			class="easyui-combobox" style="width: 168px; height: 25px;">
 			<option value="${updateWait.mid}">${updateWait.fuzeName}</option>
 		</select>

@@ -128,6 +128,7 @@ public class FlawController {
 	@RequestMapping("/lookupdate")
 	public Flaw lookFlaw(int id){
 		Flaw f = flawService.fupdate(id);	//查询到要修改的id
+		System.out.println("要修改的权限："+f);
 		return f;
 	}
 	
