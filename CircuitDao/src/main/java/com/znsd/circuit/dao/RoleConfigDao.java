@@ -2,6 +2,7 @@ package com.znsd.circuit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Power;
@@ -74,4 +75,11 @@ public interface RoleConfigDao {
 	 * @param list
 	 */
 	public void addPowerByRole(List<RolePower> list);
+	
+	
+	/**
+	 * 删除一个角色的权限
+	 * @param roleId
+	 */
+	public void deletePowerByRoleId(@Param("roleId")int roleId);
 }

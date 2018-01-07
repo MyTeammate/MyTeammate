@@ -46,7 +46,7 @@ function eliminate() {
 									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
-											+ '<a href="javaScript:allotInspection('
+											+ '<a href="javaScript:fenpeiEliminate('
 											+ row.id
 											+ ')">分配任务</a>｜'
 											+ '<a href="javaScript:updateInspection('
@@ -59,7 +59,7 @@ function eliminate() {
 									oper = '<span><a href="javaScript:seeEliminate('
 											+ row.id
 											+ ')">查看</a>｜'
-											+ '<a href="javaScript:seeEliminate('
+											+ '<a href="javaScript:fenpeiEliminate('
 											+ row.id
 											+ ')">分配任务</a>｜<a style="color:#CDC5BF">修改</a>｜'
 											+ '<a style="color:#CDC5BF">取消</a></span>';
@@ -98,8 +98,6 @@ function eliminate() {
 		textField : 'settingName',
 		width : 154,
 	});
-<<<<<<< HEAD
-=======
 	$('#update_taskbills').combobox({
 		url : 'eliminate/getBills',
 		valueField : 'id',
@@ -112,7 +110,6 @@ function eliminate() {
 		textField : 'name',
 		width : 154,
 	});
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	/*$.ajax({
 		url:"eliminate/getAllstatus",
 		type:"post",
@@ -130,8 +127,6 @@ function eliminate() {
 		}
 	});*/
 }
-<<<<<<< HEAD
-=======
 function update_wait(id){
 	
 	move("修改任务","http://localhost:8080/Circuit/eliminate/update_wait_eliminate?id="+id);
@@ -253,12 +248,10 @@ function audit_eliminate(eliminateId){
 	});
 }
 
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 //分配任务
 function fenpeiEliminate(id){
 	$("#fenpeidiv").show(1000);
 	$.ajax({
-<<<<<<< HEAD
 		url : "eliminate/getEliminateUser?id="+id,
 		type : "post",
 		success : function(data) {
@@ -273,7 +266,7 @@ function fenpeiEliminate(id){
 			$("#fb_list").append(str);
 		}
 	});
-=======
+	$.ajax({
 		url:"eliminate/existUser?id="+id,
 		type : "post",
 		success:function(data){
@@ -293,7 +286,6 @@ function fenpeiEliminate(id){
 	});
 	
 	$("#fenpeidiv").show(1000);
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	$("#add").click(
 			function() {
 				if ($("#fb_list option:selected").length > 0) {
@@ -374,7 +366,10 @@ function fenpei_save_user(){
 		url : "eliminate/updateEliminateUserById?str=" + str,
 		type : "post",
 		success : function(data) {
-			if(data=="true"){
+			if(data.flag=="true"){
+				if(data.userId){
+					 websocket.send(data.userId)
+				}
 				$.messager.show({
 					title : '友好提示您',
 					msg : '<h3 style="color: #4876FF;">分配成功!</h3>',

@@ -45,4 +45,8 @@
      <update id="setAccomplish" parameterType="Personalwork">
           update t_backlog set isAccomplish=#{personalwork.isAccomplish}  where id=#{personalwork.id}
      </update>
+     
+     <select id="getTaskById" parameterType="int" resultType="Task">
+          select id,name,state from t_task where id=#{id} 
+     </select>
  </mapper>

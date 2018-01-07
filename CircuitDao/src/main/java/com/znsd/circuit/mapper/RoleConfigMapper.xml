@@ -55,4 +55,10 @@
     <update id="deletePowerMenu" parameterType="int">
         update t_power set delete_flag='是' where id=#{id}
     </update>
+    
+    <delete id="deletePowerByRoleId" parameterType="int">
+       delete from t_role_power where roleId = #{roleId}
+    </delete>
+    
+    
 </mapper>

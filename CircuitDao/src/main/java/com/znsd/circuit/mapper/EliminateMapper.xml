@@ -536,13 +536,8 @@
 	<update id="updateTask" parameterType="java.util.Map">
 	update t_task set coding=#{update_taskcoding},name=#{update_taskname},
 	description=#{update_taskDesc},remark=#{update_taskRemark} where id=#{taskid}
-	</update>
-<<<<<<< HEAD
-	
-	
+	</update>		
 	<select id="getTaskByEliminateId" parameterType="int" resultType="Eliminate">
 	     select id,taskId from t_eliminate where id=#{eliminateId}
 	</select>
-=======
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 </mapper>

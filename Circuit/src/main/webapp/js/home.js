@@ -20,9 +20,9 @@
      
      //接收到消息的回调方法
      websocket.onmessage = function (event) {
-    	 $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
+    	 $.messager.confirm('提示','您有新的代办任务,是否查看？',function(r){    
      	    if (r){  
-     	    	move('待办任务','personalWork');
+     	    	addTabs('待办列表','personalWork');
      	    }    
      	});
      }
@@ -165,12 +165,18 @@ function move($text,$url){
 }
 
 function addTabs($text,$url){
-	// 添加一个未选中状态的选项卡面板
-	$('#tabs').tabs('add',{
-		title: $text,
-		href: $url,
-		closable:true, 
-	});
+	if ($("#tabs").tabs('exists', $text)) {
+		$("#tabs").tabs('select', $text);
+		var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+		tab.panel('refresh',$url);
+	}else{
+		// 添加一个未选中状态的选项卡面板
+		$('#tabs').tabs('add',{
+			title: $text,
+			href: $url,
+			closable:true, 
+		});
+	}
 }
 
 function showtime()  

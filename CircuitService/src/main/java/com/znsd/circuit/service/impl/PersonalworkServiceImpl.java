@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.znsd.circuit.dao.PersonalworkDao;
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Personalwork;
+import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.service.PersonalworkService;
 @Service
@@ -45,14 +46,14 @@ public class PersonalworkServiceImpl implements PersonalworkService {
 		    		personalworkDao.setAccomplish(personalwork2);
 		    	}
 		    }else{
-		    	Threads thread = personalworkDao.getThreadBytaskId(personalwork2.getTaskId());
+		    	Task task = personalworkDao.getTaskById(personalwork2.getTaskId());
 		    	
 		    	if(personalwork2.getType().equals("消缺任务")) {
 		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkEliminating()'>查看</a>");
 		    	}else if(personalwork2.getType().equals("巡检任务")) {
 		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkInspection()'>查看</a>");
 		    	}
-		    	if(thread.getState()==5) {
+		    	if(task.getState().equals("5")) {
 		    		rs.add(personalwork2);
 		    	}else {
 		    		personalwork2.setIsAccomplish(1);

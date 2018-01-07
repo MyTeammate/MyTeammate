@@ -8,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Personalwork;
+import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.Threads;
 
 @MapperScan
@@ -66,4 +67,11 @@ public interface PersonalworkDao {
 	 * @param personalwork
 	 */
 	public void setAccomplish(@Param("personalwork")Personalwork personalwork);
+	
+	/**
+	 * 根据任务ID获取任务对象
+	 * @param taskId
+	 * @return
+	 */
+	public Task getTaskById(int taskId);
 }

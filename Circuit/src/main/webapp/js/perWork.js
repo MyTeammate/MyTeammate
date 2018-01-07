@@ -35,7 +35,7 @@ function queryWorkFlaw(){
 	addTabs("缺陷等级确认","flawConfirm");
 }
 function queryWorkEliminating(){
-	
+	addTabs("缺陷等级确认","eliminate/execution_receipt");
 	
 }
 function queryWorkInspection(){

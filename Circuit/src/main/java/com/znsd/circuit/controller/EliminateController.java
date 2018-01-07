@@ -317,7 +317,8 @@ public class EliminateController {
 	//分配消缺员
 	@RequestMapping("/updateEliminateUserById")
 	@ResponseBody
-	public String updateEliminateUserById(String str,HttpSession session) {
+	public Map<String,Object> updateEliminateUserById(String str,HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		int id = (int) session.getAttribute("idd");
 		System.out.println("。。。    id。"+id+"str........+"+str);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -342,17 +343,19 @@ public class EliminateController {
 		}
 		//将状态改为已分配
 		eliminateService.update_allocated(id);
+		//被分配的巡检员的回执录入人，生成一条待办任务，提醒他去执行这个任务
 		Eliminate eliminate = eliminateService.getTaskByEliminateId(id);
 		Personalwork personalwork = new Personalwork();
 		personalwork.setTaskId(eliminate.getTaskId());
 		personalwork.setIsAccomplish(0);
 		personalwork.setUserId(Integer.parseInt(s[0]));
-		Threads thread =  personalworkService.getThreadBytaskId(eliminate.getTaskId());
-		personalwork.setName(thread.getName()+"消缺任务执行");
+		personalwork.setName("消缺任务执行");
 		personalwork.setBackDate(new DateTime().getDateTime());
 		personalwork.setType("消缺任务");
 		personalworkService.arriveWork(personalwork);
-		return "true";
+		map.put("userId", Integer.parseInt(s[0]));
+		map.put("flag", "true");
+		return map;
 	}
 	@RequestMapping("/removethis")
 	public String removethis(HttpSession session,Integer userId) {
