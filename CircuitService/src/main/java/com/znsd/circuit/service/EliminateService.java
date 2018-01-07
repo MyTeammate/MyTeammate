@@ -3,6 +3,8 @@ package com.znsd.circuit.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flawstaff;
 import com.znsd.circuit.model.Systemparam;
@@ -301,4 +303,11 @@ public interface EliminateService {
 	 * @return
 	 */
 	public int updateTask(Map<String,Object> map);
+	
+	/**
+	 * 根据消缺ID获取对应的对象
+	 * @param eliminateId
+	 * @return
+	 */
+	public Eliminate getTaskByEliminateId(@Param("eliminateId")int eliminateId);
 }

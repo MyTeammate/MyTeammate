@@ -306,24 +306,20 @@ public class InspectionController {
 		for (int i = 0; i < s.length; i++) {
 			userId[count++] = Integer.parseInt(s[i]);
 		}
-		inspectionService.allotInspection(taskId, userId, user.getId());
-		
-	
-		Personalwork personalwork = new Personalwork();
-		personalwork.setTaskId(taskId);
-		personalwork.setIsAccomplish(0);
-		personalwork.setUserId(userId[0]);
-		Threads thread =  personalworkService.getThreadBytaskId(taskId);
-		personalwork.setName(thread.getName()+"巡检任务执行");
-		personalwork.setBackDate(new DateTime().getDateTime());
-		personalwork.setType("巡检任务");
-		personalworkService.arriveWork(personalwork);
-		
 		
 		String state = inspectionService.getTaskState(taskId);
 		if("待分配".equals(state)){
 			System.out.println("保存分配");
 			inspectionService.allotInspection(taskId, userId, user.getId());
+			Personalwork personalwork = new Personalwork();
+			personalwork.setTaskId(taskId);
+			personalwork.setIsAccomplish(0);
+			personalwork.setUserId(userId[0]);
+			Threads thread =  personalworkService.getThreadBytaskId(taskId);
+			personalwork.setName(thread.getName()+"巡检任务执行");
+			personalwork.setBackDate(new DateTime().getDateTime());
+			personalwork.setType("巡检任务");
+			personalworkService.arriveWork(personalwork);
 		}else{
 			System.out.println("修改分配");
 			//inspectionService.deleteInspectionStaff(taskId);

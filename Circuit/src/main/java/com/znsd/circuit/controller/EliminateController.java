@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flawstaff;
+import com.znsd.circuit.model.Personalwork;
 import com.znsd.circuit.model.Systemparam;
 import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.Task;
+import com.znsd.circuit.model.Threads;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.EliminateService;
 import com.znsd.circuit.service.InspectionService;
+import com.znsd.circuit.service.PersonalworkService;
+import com.znsd.circuit.util.DateTime;
 import com.znsd.circuit.util.MyFlaw;
 import com.znsd.circuit.util.SeeEliminate;
 import com.znsd.circuit.util.UpdateWait;
@@ -38,6 +42,9 @@ public class EliminateController {
 
 	@Autowired
 	private InspectionService inspectionService;
+	
+	@Autowired
+	private PersonalworkService personalworkService;
 
 	@RequestMapping("/eliminateflaw")
 	public String eliminate() {
@@ -330,16 +337,20 @@ public class EliminateController {
 			} else {
 				flawStaff.setIsReceipter("否");
 			}
-			flawStaff.setCreatedBy(loginId);
-			flawStaff.setCreatedDate(time);
-			flawStaff.setEliminateId(id);
-			flawStaff.setUpdatedBy(loginId);
-			flawStaff.setUpdatedDate(time);
-			flawStaff.setUserId(userid);
-			eliminateService.insertintoFlawStaff(flawStaff);
+			
 		}
 		//将状态改为已分配
 		eliminateService.update_allocated(id);
+		Eliminate eliminate = eliminateService.getTaskByEliminateId(id);
+		Personalwork personalwork = new Personalwork();
+		personalwork.setTaskId(eliminate.getTaskId());
+		personalwork.setIsAccomplish(0);
+		personalwork.setUserId(Integer.parseInt(s[0]));
+		Threads thread =  personalworkService.getThreadBytaskId(eliminate.getTaskId());
+		personalwork.setName(thread.getName()+"消缺任务执行");
+		personalwork.setBackDate(new DateTime().getDateTime());
+		personalwork.setType("消缺任务");
+		personalworkService.arriveWork(personalwork);
 		return "true";
 	}
 	@RequestMapping("/removethis")

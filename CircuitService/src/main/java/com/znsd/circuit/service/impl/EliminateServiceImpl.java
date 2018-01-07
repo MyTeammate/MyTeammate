@@ -246,6 +246,10 @@ public class EliminateServiceImpl implements EliminateService {
 		
 		return eliminateDao.updateTask(map);
 	}
+	@Override
+	public Eliminate getTaskByEliminateId(int eliminateId) {
+		return eliminateDao.getTaskByEliminateId(eliminateId);
+	}
 	
 	
 	

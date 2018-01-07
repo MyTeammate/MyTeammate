@@ -2,6 +2,7 @@ package com.znsd.circuit.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Eliminate;
@@ -295,6 +296,15 @@ public interface EliminateDao {
 	 * @return
 	 */
 	public int updateTask(Map<String,Object> map);
+	
+	
+	
+	/**
+	 * 根据消缺ID获取对应的对象
+	 * @param eliminateId
+	 * @return
+	 */
+	public Eliminate getTaskByEliminateId(@Param("eliminateId")int eliminateId);
 }
 
 
