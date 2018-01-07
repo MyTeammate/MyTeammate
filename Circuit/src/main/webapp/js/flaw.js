@@ -1,54 +1,66 @@
 $(function() {
 	$("#flaw_datagrid").datagrid({
-		url : 'getflawpage',
-		width : 950,
-		height : 500,
-		// total:5,
-		fitColumns : true,
-		striped : true,
-		rownumbers : true,
-		pagination : true,
-		pageSize : 2,
-		pageList : [ 2, 5, 10, 15, 20 ],
-		pageNumber : 2,
-		toolbar : "#flaw_tool",
-		columns : [ [ {
-			field : 'name',
-			title : '缺陷类型名称',
-			width : 200,
-			align: "center",
-		},{
-			field : 'state',
-			title : '状态（启用/未启用）',
-			width : 100,
-			align: "center",
-			formatter:function(value,row){
-				var flawstate='';
-				if (value=='0') {
-					flawstate="启用";
-				} else if(value=='1') {
-					flawstate="未启用";
-				}
-				return flawstate;
-			}
-		},{
-			field : 'operate',
-			title : '操作',
-			width : 200,
-			align: "center",
-			formatter:function(value,row){
-				var oper='';
-				if (row.state==0) {
-					oper='<span><a href="javascript:lookFlaw('+row.id+')" style="text-decoration:none;">修改</a>｜<a style="color:#CDC5BF">删除</a></span>';
-				} else if (row.state==1) {
-					oper='<span><a href="javascript:updateInspection('+row.id+')" style="text-decoration:none;">修改</a>｜<a href="javascript:cancelInspection('+row.id+')" style="text-decoration:none;">删除</a></span>';
-				}
-				return oper;
-			}
-		}, ] ],
-	});
-	
-	$('#fstateadd').dialog({
+						url : 'getflawpage',
+						width : 950,
+						height : 500,
+						// total:5,
+						fitColumns : true,
+						striped : true,
+						rownumbers : true,
+						pagination : true,
+						pageSize : 2,
+						pageList : [ 2, 5, 10, 15, 20 ],
+						pageNumber : 2,
+						toolbar : "#flaw_tool",
+						columns : [ [
+								{
+									field : 'id',
+									checkbox : true
+								},
+								{
+									field : 'name',
+									title : '缺陷类型名称',
+									width : 200,
+									align : "center",
+								},
+								{
+									field : 'state',
+									title : '状态（启用/未启用）',
+									width : 100,
+									align : "center",
+									formatter : function(value, row) {
+										var flawstate = '';
+										if (value == '0') {
+											flawstate = "启用";
+										} else if (value == '1') {
+											flawstate = "未启用";
+										}
+										return flawstate;
+									}
+								},
+								{
+									field : 'operate',
+									title : '操作',
+									width : 200,
+									align : "center",
+									formatter : function(value, row) {
+										var oper = '';
+										if (row.state == 0) {
+											oper = '<span><a href="javascript:updateF('
+													+ row.id
+													+ ')" style="text-decoration:none;">修改</a>｜<a style="color:#CDC5BF">删除</a></span>';
+										} else if (row.state == 1) {
+											oper = '<span><a href="javascript:updateF('
+													+ row.id
+													+ ')" style="text-decoration:none;">修改</a>｜<a href="javascript:deleteFlawState('
+													+ row.id
+													+ ')" style="text-decoration:none;">删除</a></span>';
+										}
+										return oper;
+									}
+								}, ] ],
+					});
+$('#fstateadd').dialog({
 		
 		width : 230,
 		height : 130,

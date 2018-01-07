@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.znsd.circuit.model.Flaw;
-import com.znsd.circuit.model.Flawnot;
+import com.znsd.circuit.model.FlawCont;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.service.FlawConfirmService;
@@ -31,7 +31,7 @@ public class FlawController {
 	private FlawService flawService;
 	
 	@Autowired
-	private FlawConfirmService flawNotService;
+	private FlawConfirmService flawConfirmService;
 	
 	
 	//等级确认
@@ -91,6 +91,21 @@ public class FlawController {
 		return true;
 	}
 	
+	//修改缺陷等级
+	@ResponseBody
+	@RequestMapping("/updateflawconfirmgrade")
+	public boolean updateflawgrade(HttpSession session,FlawCont flawCont/*,int flawGrade*/){
+		System.out.println("--------------"+flawCont);
+		System.out.println("--------"+flawCont.getFlawGrade());
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return false;
+		}
+		flawCont.setUpdatedBy(user.getId());
+		flawConfirmService.updateflawgrade(flawCont);
+		return true;
+	}
+	
 	//删除缺陷类型
 	@ResponseBody
 	@RequestMapping("/deleteFlawState")
@@ -116,6 +131,16 @@ public class FlawController {
 		return f;
 	}
 	
+	
+	//查找到要保存的id
+	@ResponseBody
+	@RequestMapping("/lookflawconfirm")
+	public FlawCont lookflawconfirmiid(int id){
+		FlawCont f = flawConfirmService.flawconfid(id);
+		return f;
+	}
+	
+	
 	//缺陷类型设置表查询
 	@ResponseBody
 	@RequestMapping("/selectFlawAll")
@@ -128,17 +153,6 @@ public class FlawController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getFlawNotarizeAll")
-	public List<Flawnot> getFlawNotAll(HttpServletRequest   request){
-		Flawnot fn = new Flawnot();
-		List<Flawnot> listfn = flawNotService.getFlawNotAll(fn.getId(),fn.getTasknumber(),fn.getThreadcoding(),fn.getTowercoding(),fn.getFlawname(),fn.getFlawConfirmserviceAbility(),fn.getFlawConfirmflawDesc(),fn.getFlawConfirmdiscoverDate(),fn.getInspectionstaffuserId(),fn.getFlawConfirmflowGrade());
-		request.setAttribute("listfn", listfn);
-		System.out.println("listfn:"+listfn);
-		return listfn;
-		
-	}
-
-	@ResponseBody
 	@RequestMapping("/getflawpage")
 	public Map<String,Object> getflawpage(@RequestParam("page") int pageIndex,@RequestParam("rows")int pageSize,Flaw flaw){
 		Map<String,Object> map = new HashMap<>();
@@ -149,4 +163,28 @@ public class FlawController {
 		System.out.println("pageSize"+pageSize);
 		return map;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/getFlawConfirmPager")
+	public Map<String,Object> getFlawConfirmPager(@RequestParam("page") int pageIndex,@RequestParam("rows")int pageSize,FlawCont flawCont){
+		Map<String,Object> map = new HashMap<>();
+		Pager<FlawCont> pager = flawConfirmService.getFlawConfirmPager(pageIndex, pageSize);
+		map.put("rows",pager.getData());
+		map.put("total",pager.getSumSize());
+		System.out.println("pageIndex"+pageIndex);
+		System.out.println("pageSize"+pageSize);
+		return map;
+	}
+	
+	//缺陷等级确认表的查询
+	@ResponseBody
+	@RequestMapping("/seleteFlawConfirm")
+	public List<FlawCont> getFlawConfirm(HttpServletRequest request){
+		FlawCont fl = new FlawCont();
+		List<FlawCont> listfc = flawConfirmService.getFlawConfirmAll(fl.getTaskcoding(), fl.getThreadcoding(), fl.getTowercoding(), fl.getFlawname(), fl.getServiceAbility(), fl.getFlawDesc(), fl.getDiscoverDate(), fl.getUserId(), fl.getFlawGrade(), fl.getConfirmstate(),fl.getUpdatedBy());
+		request.setAttribute("listfc", listfc);
+		return listfc;
+	}
+	
+	
 }
