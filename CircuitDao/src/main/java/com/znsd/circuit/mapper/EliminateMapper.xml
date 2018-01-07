@@ -491,7 +491,7 @@
 		id=#{0})
 	</update>
 	<select id="existUserById" parameterType="int" resultType="User">
-		select * from t_user where id = (select userId from t_flawstaff where
+		select * from t_user where id in (select userId from t_flawstaff where
 		eliminateId =#{0})
 	</select>
 	<delete id="removethis" parameterType="java.util.Map">
@@ -537,9 +537,12 @@
 	update t_task set coding=#{update_taskcoding},name=#{update_taskname},
 	description=#{update_taskDesc},remark=#{update_taskRemark} where id=#{taskid}
 	</update>
+<<<<<<< HEAD
 	
 	
 	<select id="getTaskByEliminateId" parameterType="int" resultType="Eliminate">
 	     select id,taskId from t_eliminate where id=#{eliminateId}
 	</select>
+=======
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 </mapper>

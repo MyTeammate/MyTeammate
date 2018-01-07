@@ -154,6 +154,7 @@ public class EliminateController {
 		session.setAttribute("idd", id);
 		String coding = "es_flaw";
 		List<User> list = eliminateService.getAlleliminateUser(coding);
+		System.out.println("所有的existUserById消缺员....."+list);
 		return list;
 	}
 
@@ -382,9 +383,7 @@ public class EliminateController {
 	@ResponseBody
 	public List<MyFlaw> selectEliminateById(HttpSession session) {
 		int id = (int) session.getAttribute("eliminateId");
-		System.out.println("id++++++" + id);
 		List<MyFlaw> list = eliminateService.seeEliminateBytaskId(id);
-		System.out.println("。。。。。。" + list);
 		return list;
 	}
 
@@ -745,15 +744,18 @@ public class EliminateController {
 			map.put("workBills",taskbills);
 			map.put("taskMan", taskMan);
 			map.put("eliminateId", eliminateId);
-			eliminateService.updateEliminate(map);
+			int count = eliminateService.updateEliminate(map);
 			Map<String,Object> map1 = new HashMap<String,Object>();
 			map1.put("update_taskcoding", update_taskcoding);
 			map1.put("update_taskname", update_taskname);
 			map1.put("update_taskDesc", update_taskDesc);
 			map1.put("update_taskRemark", update_taskRemark);
 			map1.put("taskid",taskid);
-			eliminateService.updateTask(map1);
-			return "true";
+			int count2 = eliminateService.updateTask(map1);
+			if(count>0&&count2>0) {
+				return "true";
+			}
+			return "false";
 			
 		}
 }
