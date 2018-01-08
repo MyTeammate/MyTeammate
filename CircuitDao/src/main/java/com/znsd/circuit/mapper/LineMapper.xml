@@ -5,8 +5,8 @@
  <mapper namespace="com.znsd.circuit.dao.LineDao">
     <select  id="pageSelectLine" parameterType="java.util.Map"  resultType="Line">
            select id,coding,name,length,return_way as returnWay,date,startTower,endTower,redix,state from t_line t where
-           <if test="line.coding!=null">
-               t.coding like #{line.coding} and
+           <if test="line.name!=null">
+               t.name like #{line.name} and
            </if>
            <if test="line.stateString!=null">
                  t.state = #{line.state} and    
@@ -18,8 +18,8 @@
     
     <select id="getLineTotal" parameterType="java.util.Map" resultType="int">
              select count(1) from t_line t where
-          <if test="line.coding!=null and line.coding!=''">
-               t.coding like #{line.coding} and
+          <if test="line.name!=null">
+               t.name like #{line.name} and
            </if>
            <if test="line.stateString!=null">
                  t.state=#{line.state} and    
