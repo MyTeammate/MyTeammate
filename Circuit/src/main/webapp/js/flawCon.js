@@ -98,6 +98,14 @@ $(function() {
 			}
 		} ]
 	})
+	
+	$('#plasttime').combobox({
+		url : 'eliminatequery/selFlawPost',
+		valueField : 'id',
+		textField : 'name',
+		width : 130,
+	});
+	
 });
 
 function lookflawconfirmiid(id){
@@ -128,4 +136,18 @@ function updateFconfirm() {
 					}
 				}
 			});
+}
+
+//模糊查询
+function flawConf(){	
+	$('#flawCon_datagrid').datagrid('reload', {
+		rencoding : $("#rencoding").val(),
+		xlconding : $("#xlconding").val(),
+		gtcoding : $("#gtcoding").val(),
+		fxperson : $("#fxperson").val(),
+		plasttime : $("#plasttime").combobox('getText'),
+		discoverDate : $("#discoverDate").val(),
+		endtime : $("#endtime").val()		
+	});
+
 }
