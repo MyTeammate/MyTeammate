@@ -124,7 +124,7 @@ public class ThreadController {
 		threads.setRunningState(0);
 		threads.setCreateDate(datetime);
 		threads.setUpdateDate(datetime);
-		threads.setCreateById(1);
+		threads.setCreateById(user.getId());
 		threads.setDeleteFlag("否");
 		int id = threadService.insertThread(threads);
 		if(id>0) {

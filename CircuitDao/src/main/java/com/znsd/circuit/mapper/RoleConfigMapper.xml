@@ -6,7 +6,7 @@
 
   <select id="getRoles" resultType="Systemrole">
          select tr.id,tr.coding,tr.`name`,tr.state,tr.createBy,tr.createDate,tr.updatedBy,tr.updatedDate from t_role tr
-		where tr.delete_flag='否' and tr.state='0'
+		where tr.delete_flag='否' and tr.state='0' and tr.name!='系统管理员'
   </select>
   
     <select id="selectAllPower" resultType="Power" parameterType="Integer">
