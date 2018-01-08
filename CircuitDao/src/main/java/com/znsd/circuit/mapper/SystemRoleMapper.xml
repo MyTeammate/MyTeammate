@@ -48,7 +48,7 @@
     </insert>
     
     <update id="stateRole" parameterType="map">
-        update t_role set state=#{state},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
+        update t_role set state=#{newState},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id}
     </update>
     
     <update id="updateRole" parameterType="map">

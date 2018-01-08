@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -69,15 +68,13 @@
 	<br/>
 	<p style="position: relative;bottom: 155px;">
 	<a href="#" onclick="hid()" class="easyui-linkbutton" style="float: right;">返回</a>
-	${updateStaff }
-	<c:choose>
-		<c:when test="${updateStaff == null }">
-			<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
-		</c:when>
-		<c:otherwise>
-			<a href="javascript:onclick=update_staffs()" class="easyui-linkbutton" style="float: right;">修改</a>
-		</c:otherwise>
-	</c:choose>
+<<<<<<< HEAD
+	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+=======
+	
+	<a href="javascript:onclick=allot_staffs()" class="easyui-linkbutton" style="float: right;">保存</a>
+		
+>>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 	</p>
 	<p style="position: relative;bottom: 250px;left: 127px;">
 	<a href="#" id="add" class="easyui-linkbutton" style="width: 40px;">+</a></p>

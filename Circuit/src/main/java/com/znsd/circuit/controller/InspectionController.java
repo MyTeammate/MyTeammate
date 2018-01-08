@@ -84,6 +84,17 @@ public class InspectionController {
 	 */
 	@RequestMapping(value = "receiptInspection")
 	public String intoReceiptInspection(int taskId, HttpSession session) {
+		session.removeAttribute("updateReceiptFlag");
+		session.setAttribute("receiptId", taskId);
+		return "receiptInspection";
+	}
+	
+	/*
+	 * 进入 修改回执录入界面
+	 */
+	@RequestMapping(value="updateReceiptInspection")
+	public String intoUpdateAllotInspection(int taskId, HttpSession session){
+		session.setAttribute("updateReceiptFlag", "修改回执录入");
 		session.setAttribute("receiptId", taskId);
 		return "receiptInspection";
 	}
@@ -98,6 +109,7 @@ public class InspectionController {
 		Task task = inspection.getTask();
 		task.setState(sp.getSettingName());
 		task.setCreatedDate(task.getCreatedDate().split(" ")[0]);
+		task.setId(id);
 		inspection.setTask(task);
 		Threads threads = threadService.getThreadById(inspection.getThreadId());
 		List<Tower> towers = inspectionService.getTowerByThread(inspection.getThreadId());
@@ -125,6 +137,7 @@ public class InspectionController {
 		model.addAttribute("inspection",inspection);
 		return "makeInspection";
 	}
+	
 	
 	/*
 	 * 进入  缺陷查询 页面
@@ -254,17 +267,26 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "saveInspection")
-	public boolean saveInspection(Inspection inspection,String ids, HttpSession session) {
+	public Map<String,Object> saveInspection(Inspection inspection,String ids, HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			return false;
+			map.put("flag", false);
 		}
 		inspection.setCreater(user.getId() + "");
 		int taskId = inspectionService.makeInspection(inspection);
 		if(!ids.equals("")){
+			
 			allotInspection(taskId, ids,session);
+			String[] s = ids.split(",");
+			int id = Integer.parseInt(s[0]);
+			map.put("userId",id);
+			map.put("distribution", true);
+		}else {
+			map.put("distribution", false);
 		}
-		return true;
+		map.put("flag", true);
+		return map;
 	}
 
 	/*
@@ -272,10 +294,11 @@ public class InspectionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "allotInspection")
-	public boolean allotInspection(int taskId, String users, HttpSession session) {
+	public Map<String,Object> allotInspection(int taskId, String users, HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			return false;
+			map.put("flag", false);
 		}
 		String[] s = users.split(",");
 		int[] userId = new int[s.length];
@@ -283,8 +306,28 @@ public class InspectionController {
 		for (int i = 0; i < s.length; i++) {
 			userId[count++] = Integer.parseInt(s[i]);
 		}
-		inspectionService.allotInspection(taskId, userId, user.getId());
-		return true;
+		
+		String state = inspectionService.getTaskState(taskId);
+		if("待分配".equals(state)){
+			System.out.println("保存分配");
+			inspectionService.allotInspection(taskId, userId, user.getId());
+			Personalwork personalwork = new Personalwork();
+			personalwork.setTaskId(taskId);
+			personalwork.setIsAccomplish(0);
+			personalwork.setUserId(userId[0]);
+			Threads thread =  personalworkService.getThreadBytaskId(taskId);
+			personalwork.setName(thread.getName()+"巡检任务执行");
+			personalwork.setBackDate(new DateTime().getDateTime());
+			personalwork.setType("巡检任务");
+			personalworkService.arriveWork(personalwork);
+		}else{
+			System.out.println("修改分配");
+			//inspectionService.deleteInspectionStaff(taskId);
+			//inspectionService.allotInspection(taskId, userId, user.getId());
+		}
+		map.put("userId", userId[0]);
+		map.put("flag", true);
+		return map;
 	}
 	
 	/*
@@ -397,6 +440,11 @@ public class InspectionController {
 		if(fc!=null&&fc.getFlawGrade()!=null) {
 			Systemparam sp = systemParamService.getSystemparamById(Integer.parseInt(fc.getFlawGrade()));
 			fc.setFlawGrade(sp.getSettingName());
+		}else {
+			if(fc!=null) {
+				fc.setFlawGrade("无");
+			}
+			
 		}
 		
 		
@@ -430,11 +478,13 @@ public class InspectionController {
 		personalwork.setTaskId(taskId);
 		personalwork.setIsAccomplish(0);
 		personalwork.setBackDate(new DateTime().getDateTime());
+		personalwork.setType("缺陷确认任务");
 		List<Flawconfirm> ffs = personalworkService.getTaskTowerFlawInfo(taskId);
 		if(ffs.size()>0) {
 			for (Flawconfirm flawconfirm : ffs) {
 				personalwork.setName(flawconfirm.getThreadName()+"杆塔编号"+flawconfirm.getTowerCoding()+"缺陷等级确认");
 				personalwork.setUserId(flawconfirm.getTaskMan());
+				personalwork.setTaskId(flawconfirm.getId());
 				map.put("userId",personalwork.getUserId());
 				personalworkService.arriveWork(personalwork);
 			}
@@ -464,16 +514,7 @@ public class InspectionController {
 		return true;
 	}
 	
-	/*
-	 * 加标记是修改巡检录入
-	 */
-	@ResponseBody
-	@RequestMapping
-	public boolean addUpdateReceiptFlag(Model model){
-		model.addAttribute("updateReceiptFlag", "修改回执录入");
-		return true;
-	}
-	
+
 	/*
 	 * 缺陷查询
 	 */
@@ -522,7 +563,6 @@ public class InspectionController {
 	public List<User> getInspectionTaskStaffs(int taskId,HttpSession session){
 		System.out.println("getInspectionTaskStaffs");
 		List<User> staffs = inspectionService.getInspectionTackStaff(taskId);
-		session.setAttribute("updateStaff","修改巡检分配人员");
 		return staffs;
 	}
 }

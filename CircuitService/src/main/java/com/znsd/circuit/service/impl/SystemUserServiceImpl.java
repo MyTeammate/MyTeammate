@@ -98,7 +98,7 @@ public class SystemUserServiceImpl implements SystemUserService{
 	}
 
 	@Override
-	public int systemLogCount(Map<String, Object> map) {
+	public int systemLogCount(Map<String,Object> map) {
 		return systemUserDao.systemLogCount(map);
 	}
 

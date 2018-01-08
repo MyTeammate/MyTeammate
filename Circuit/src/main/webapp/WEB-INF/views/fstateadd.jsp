@@ -10,11 +10,11 @@
 	<table>
 		<tr>
 			<td>缺陷类型名称：</td>
-			<td><input id="name" type="text" name="name" style="width:110px"></td>
+			<td><input id="name" class="easyui-validatebox" data-options="required:true" type="text" name="name" style="width:110px"></td>
 		</tr>
 		<tr>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用状态：</td>
-			<td>启用<input type="radio" value="0" name="state"/>&nbsp;&nbsp;不启用<input type="radio" value="1" name="state" /></td>
+			<td>启用<input type="radio" value="0" name="state" checked="checked"/>&nbsp;&nbsp;不启用<input type="radio" value="1" name="state" /></td>
 		</tr>
 	</table>
 </body>

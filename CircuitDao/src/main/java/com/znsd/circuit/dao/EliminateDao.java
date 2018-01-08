@@ -2,15 +2,18 @@ package com.znsd.circuit.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.znsd.circuit.model.Eliminate;
 import com.znsd.circuit.model.Flawstaff;
 import com.znsd.circuit.model.Systemparam;
+import com.znsd.circuit.model.Systemrole;
 import com.znsd.circuit.model.Task;
 import com.znsd.circuit.model.User;
 import com.znsd.circuit.util.MyFlaw;
 import com.znsd.circuit.util.SeeEliminate;
+import com.znsd.circuit.util.UpdateWait;
 
 @MapperScan
 public interface EliminateDao {
@@ -125,6 +128,183 @@ public interface EliminateDao {
 	 * @return
 	 */
 	public List<MyFlaw> seeEliminateBytaskId(int taskid);
+
+	/**
+	 * 消缺执行与回执的任务分页
+	 * @param map
+	 * @return
+	 */
+	public List<Eliminate> getAllTaskByCondition(Map<String,Object> map);
+	
+	/**
+	 * 回执的总数计算
+	 * @param map
+	 * @return
+	 */
+	public int getCountByCondition(Map<String,Object> map);
+	
+	/**
+	 * 通过id修改任务状态为执行中
+	 */
+	public int execu_updateTaskstatus(int id);
+	
+	/**
+	 * 通userid和消缺id判断是否是回执录入人
+	 * @param eliminateId
+	 * @param userId
+	 * @return
+	 */
+	public Flawstaff selectEliminateByUserId(int eliminateId,int userId);
+	
+	/**
+	 * 通过用户id找到我要查询的角色对象
+	 * @param id
+	 * @return
+	 */
+	public Systemrole selectRoleByUserId(int id);
+	
+	/**
+	 * 回执录入除下发人和负责人意见的其他三个信息
+	 * @param map
+	 * @return
+	 */
+	public int update_receipte(Map<String,Object> map);
+	
+	/**
+	 * 通过id修改任务状态为审核中
+	 */
+	public int execu_updateTaskstatusAudit(int id);
+	
+	/**
+	 * 判断是否是任务负责人
+	 * @param eliminateId
+	 * @param userId
+	 * @return
+	 */
+	public Eliminate midflag(int eliminateId,int userId);
+	
+	/**
+	 * 判断是否是任务下发人
+	 * @param eliminateId
+	 * @param userId
+	 * @return
+	 */
+	public Task taskmanflag(int taskId,int userId);
+	
+	/**
+	 * 负责人的意见
+	 * @param map
+	 * @return
+	 */
+	public int update_fuze(Map<String,Object> map) ;
+	
+	/**
+	 * 通过id修改任务状态为已完成
+	 */
+	public int execu_updateTaskstatusSuccess(int id);
+	/**
+	 * 通过id修改任务状态为驳回
+	 */
+	public int execu_updateTaskstatusReturn(int id);
+	
+	/**
+	 * 通过消缺id找到任务对象
+	 * @param id
+	 * @return
+	 */
+	public Task selectTaskByeliminateId(int id);
+	
+	/**
+	 * 修改已完成时间
+	 * @param task
+	 * @return
+	 */
+	public int updateActualDate(Map<String,Object> map);
+	
+	/**
+	 * 下发人的意见
+	 * @param map
+	 * @return
+	 */
+	public int update_xiafa(Map<String,Object> map);
+	
+	/**
+	 * 下发人和负责人
+	 * @param map
+	 * @return
+	 */
+	public int update_all(Map<String,Object> map);
+	
+	/**
+	 * 修改状态为已分配
+	 * @param eliminate
+	 * @return
+	 */
+	public int update_allocated (int eliminate);
+	
+	/**
+	 * 已经存在消缺分配表中的人员
+	 * @param id
+	 * @return
+	 */
+	public List<User> existUserById(int id);
+	
+	/**
+	 * 分配时取消人员的时候 往数据库中删除
+	 * @param userId
+	 * @return
+	 */
+	public int removethis(Map<String,Object> map);
+	/**
+	 * 通过id
+	 * 查询出我要修改的缺陷任务
+	 * @param id
+	 * @return
+	 */
+	public UpdateWait select_update_wait(int id);
+	
+	/**
+	 * 移除选择的缺陷
+	 * @param id
+	 * @return
+	 */
+	public int delete_record(Integer id);
+	
+	/**
+	 * 通过任务id查询出每个任务所对应的缺陷
+	 * @return
+	 */
+	public List<MyFlaw> update_EliminateBytaskId(int taskid);
+	
+	/**	插入到记录表的缺陷
+	 * @param taskId
+	 * @param yetid
+	 * @return
+	 */
+	public int insertintoRecord(int taskId,int yetid);
+	
+	/**
+	 * 修改消缺表
+	 * @param map
+	 * @return
+	 */
+	public int updateEliminate(Map<String,Object> map);
+	
+	/**
+	 * 修改任务表
+	 * @param map
+	 * @return
+	 */
+	public int updateTask(Map<String,Object> map);
+	
+	
+	
+	/**
+	 * 根据消缺ID获取对应的对象
+	 * @param eliminateId
+	 * @return
+	 */
+	public Eliminate getTaskByEliminateId(@Param("eliminateId")int eliminateId);
 }
 
 

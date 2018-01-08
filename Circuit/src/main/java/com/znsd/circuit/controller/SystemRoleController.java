@@ -30,11 +30,12 @@ public class SystemRoleController {
 	@RequestMapping("/listSystemRole")
     public Map<String,Object> listSystemRole(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows,String name,String state){
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
-		map.put("state",state);
 		map.put("name",name);
+		map.put("state",state);
 		int count = systemRoleService.systemRoleCount(map);
 		List<Systemrole> listRole=systemRoleService.listSystemRole(map);
 		for (Iterator iterator = listRole.iterator(); iterator.hasNext();) {
@@ -79,77 +80,67 @@ public class SystemRoleController {
 	
 	@ResponseBody
 	@RequestMapping("/addRole")
-	public int addRole(HttpSession session,String coding,String name){
+	public int addRole(HttpSession session,int id,String coding,String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id",id);
+		map.put("coding", coding);
+		map.put("name",name);
 		User user=(User) session.getAttribute("user");
-		Systemrole role=new Systemrole();
-		role.setCoding(coding);
-		role.setName(name);
-		role.setCreateBy(user.getId());
+		map.put("createBy",user.getId());
 		Date date=new Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time=format.format(date);
-		role.setCreateDate(time);
-		role.setRemark("这是一个"+name);
-		return systemRoleService.addRole(role);
+		map.put("createDate",time);
+		map.put("remark",name);
+		return systemRoleService.addRole(map);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/stateRole")
-	public int stateRole(HttpSession session,int id,int state){
-		Map<String,Object> map=new HashMap<String,Object>();
+	public int stateRole(HttpSession session,int id,String state) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id",id);
-		if(state==0){
-			map.put("state","1");
+		String newState="0";
+		if("0".equals(state)) {
+			newState="1";
 		}else {
-			map.put("state","0");
+			newState="0";
 		}
+		map.put("newState", newState);
+		User user=(User) session.getAttribute("user");
+		map.put("updatedBy",user.getId());
 		Date date=new Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time=format.format(date);
-		User user=(User) session.getAttribute("user");
-		map.put("updatedBy",user.getId());
 		map.put("updatedDate",time);
 		return systemRoleService.stateRole(map);
 	}
 	
 	@ResponseBody
+	@RequestMapping("/queryRole")
+	public Systemrole queryRole(int id) {
+		return systemRoleService.queryRole(id);
+	}
+	
+	@ResponseBody
 	@RequestMapping("/updateRole")
-	public int updateRole(HttpSession session,int id,String coding,String name){
-		Map<String,Object> map=new HashMap<String,Object>();
+	public int updateRole(HttpSession session,int id,String coding,String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id",id);
-		map.put("coding",coding);
+		map.put("coding", coding);
 		map.put("name",name);
+		User user=(User) session.getAttribute("user");
+		map.put("updatedBy",user.getId());
 		Date date=new Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time=format.format(date);
-		User user=(User) session.getAttribute("user");
-		map.put("updatedBy",user.getId());
 		map.put("updatedDate",time);
 		return systemRoleService.updateRole(map);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/deleteRole")
-	public int deleteRole(int id){
+	public int deleteRole(HttpSession session,int id) {
 		return systemRoleService.deleteRole(id);
-	}
-	
-	@ResponseBody
-	@RequestMapping("/queryRole")
-	public Systemrole queryRole(int id){
-		return systemRoleService.queryRole(id);
-	}
-	
-	@ResponseBody
-	@RequestMapping("/likeRole")
-	public List<Systemrole> likeRole(String name,String state){
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("state",state);
-		map.put("name",name);
-		List<Systemrole> list=systemRoleService.likeRole(map);
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Systemrole systemrole = (Systemrole) iterator.next();
-		}
-		return list;
 	}
 }

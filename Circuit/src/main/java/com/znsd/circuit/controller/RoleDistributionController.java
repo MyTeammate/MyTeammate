@@ -121,6 +121,7 @@ public class RoleDistributionController {
 			rolePowers.add(rp);
 		}
 		try {
+			roleConfigService.deletePowerByRoleId(roleId);
 			roleConfigService.addPowerByRole(rolePowers);
 			return "true";
 		} catch (Exception e) {

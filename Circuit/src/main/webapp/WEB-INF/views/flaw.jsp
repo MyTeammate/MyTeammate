@@ -19,6 +19,7 @@
 <p><input type="button" value="添加缺陷类型" onclick="flaw_onclick.add()"/></p>
 </div>
 <form action="flaw_add" method="post" onsubmit="return flawCreate()" id="fstateadd"></form>
+<form id="updateFlaw_form"></form>
 <script type="text/javascript" src="js/flaw.js"></script>
 </body>
 </html>

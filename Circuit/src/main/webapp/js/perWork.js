@@ -1,3 +1,6 @@
+$(function(){
+	perWork();
+})
 function perWork() {
 	$('#perWork').datagrid({
 		url:"work/getPersonalworkData",
@@ -27,3 +30,15 @@ function perWork() {
 		pageSize : 5,
 	});
 }
+
+function queryWorkFlaw(){
+	addTabs("缺陷等级确认","flawConfirm");
+}
+function queryWorkEliminating(){
+	addTabs("缺陷等级确认","eliminate/execution_receipt");
+	
+}
+function queryWorkInspection(){
+	addTabs("巡检任务执行与回执","inspectionExecuteReceipt");
+}
+

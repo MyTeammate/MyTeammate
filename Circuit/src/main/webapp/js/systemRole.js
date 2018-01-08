@@ -101,8 +101,9 @@ function role_tb(){
 										msg:'请填写必填项！',
 										icon:'info'
 									});
-								}else{
-										var data={id:0,coding:coding,name:name}
+								}else{ 
+									    var newId=0;
+										var data={id:newId,coding:coding,name:name}
 										$.ajax({
 											url:'roleManage/verifyRole',
 											type:"post",

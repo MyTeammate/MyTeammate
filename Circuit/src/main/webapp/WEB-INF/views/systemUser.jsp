@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <div style="padding-left: 20px; padding-top: 15px;line-height:20px">系统管理>>用户管理</div>
+    <div style="padding-left: 20px; padding-top: 15px;line-height:20px">系统管理>>数据字典</div>
     <div style="border:1px solid #c0c0c0;"></div>
 	<table style="margin-left: 50px;margin-top:20px;left:40px;width:1026px;">   
 	    <tr style="height:30px;">

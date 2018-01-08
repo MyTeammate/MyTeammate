@@ -20,9 +20,9 @@
      
      //接收到消息的回调方法
      websocket.onmessage = function (event) {
-    	 $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
-     	    if (r){    
-     	    	perWork();    
+    	 $.messager.confirm('提示','您有新的代办任务,是否查看？',function(r){    
+     	    if (r){  
+     	    	addTabs('待办列表','personalWork');
      	    }    
      	});
      }
@@ -124,6 +124,10 @@ $(function(){
 								roleDistribution();
 							}
 							
+							if(node.text=="消缺查询"){
+								eliminatequery();
+							}
+							
 						}
 					});
 				}
@@ -160,6 +164,20 @@ function move($text,$url){
 	tab.panel('refresh',$url);
 }
 
+function addTabs($text,$url){
+	if ($("#tabs").tabs('exists', $text)) {
+		$("#tabs").tabs('select', $text);
+		var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+		tab.panel('refresh',$url);
+	}else{
+		// 添加一个未选中状态的选项卡面板
+		$('#tabs').tabs('add',{
+			title: $text,
+			href: $url,
+			closable:true, 
+		});
+	}
+}
 
 function showtime()  
 {  

@@ -99,6 +99,167 @@ $(function() {
 	 */
 
 });
+function taskSave_update(){
+	var update_taskcoding = $("#update_taskcoding").val();
+	var update_taskname = $("#update_taskname").val();
+	var taskbills = $("#update_taskbills").combobox('getText');
+	var taskMan = $("#update_taskMan").combobox('getValue');
+	var update_taskDesc = $("#update_taskDesc").val();
+	var update_taskRemark = $("#update_taskRemark").val();
+	var taskid = $("#taskid").val();
+	var eliminateId = $("#eliminateId").val();
+	console.log(taskbills,taskMan);
+	$.ajax({
+		url:"eliminate/update_task_eliminate",
+		type:"post",
+		data:{
+			update_taskcoding:update_taskcoding,
+			update_taskname:update_taskname,
+			taskbills:taskbills,
+			taskMan:taskMan,
+			update_taskDesc:update_taskDesc,
+			update_taskRemark:update_taskRemark,
+			taskid:taskid,
+			eliminateId:eliminateId
+		},
+		success:function(data){
+			if(data=="true"){
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改成功!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+				move("消缺任务制定与分配", "http://localhost:8080/Circuit/eliminate/eliminateflaw");
+			}else{
+				$.messager.show({
+					title : '友好提示您',
+					msg : '<h3 style="color: #4876FF;">修改失败请检查原因!</h3>',
+					showType : 'show',
+					timeout : 3000,
+					width : 260,
+					height : 120,
+					style : {
+						right : '',
+						top : document.body.scrollTop
+								+ document.documentElement.scrollTop,
+						bottom : ''
+					}
+					
+				});
+			}
+		}
+		
+	})
+}
+
+
+
+//移除选择的缺陷
+function delete_yetid(id){
+	$.ajax({
+		url:"eliminate/removerecord?id="+id,
+		type:"post",
+		success:function(data){
+			if(data=="true"){
+				$.messager.show({
+				title : '友好提示您',
+				msg : '<h3 style="color: #4876FF;">移除成功!</h3>',
+				showType : 'show',
+				timeout : 3000,
+				width : 260,
+				height : 120,
+				style : {
+					right : '',
+					top : document.body.scrollTop
+							+ document.documentElement.scrollTop,
+					bottom : ''
+				}
+				
+			});
+				$('#update_wait_manager').datagrid('reload');
+		}else{
+			$.messager.show({
+				title : '友好提示您',
+				msg : '<h3 style="color: #4876FF;">移除失败!</h3>',
+				showType : 'show',
+				timeout : 3000,
+				width : 260,
+				height : 120,
+				style : {
+					right : '',
+					top : document.body.scrollTop
+							+ document.documentElement.scrollTop,
+					bottom : ''
+				}
+			});
+		 }
+	  }
+	})
+}
+
+function save_update() {
+	var row = $('#xun_manager').datagrid('getSelections');
+	console.log(row);
+	var str = "";
+	for (var i = 0; i < row.length; i++) {
+		str += row[i].id + ",";
+	}
+	
+	$.ajax({
+		url:"eliminate/insertIntoRecord",
+		data:{
+			taskId:$("#taskid").val(),
+			str:str
+		},
+		type:"post",
+		success:function(data){
+			if(data=="true"){}
+		}
+	});
+	$("#update_wait_manager").datagrid({
+						url : "eliminate/flawConfirmById?str=" + str,
+						height : 380,
+						width : 865,
+						pagination : true,
+						pageNumber : 1,
+						pageSize : 5,
+						rownumbers : true,
+						pagination : true,
+						pageList : [ 5, 10, 15, 20 ],
+						columns : [ [
+								{field : 'id',title : '自动编号',width : 96,checkbox : true},
+								{field : 'threadCoding',title : '线路编号',width : 96,align : 'center'},
+								{field : 'towerCoding',title : '杆塔编号',width : 96,align : 'center'},
+								{field : 'flawGrade',title : '缺陷等级',width : 96,align : 'center'},
+								{field : 'flawType',title : '缺陷类型',width : 96,align : 'center'},
+								{field : 'flawDesc',title : '缺陷描述',width : 96,align : 'center'},
+								{field : 'findUser',title : '发现人',width : 96,align : 'center'},
+								{field : 'findDate',title : '发现时间',width : 96,align : 'center'},
+								{field : 'flag',title : '操作',width : 96,align : 'center',
+								formatter : function(value, row, index) {
+										var oper = '<span><a style="color:#008B00" href="javaScript:delete_yetid('
+												+ row.id + ')">移除</a>｜'
+										return oper;
+									}
+								} ] ],
+						toolbar : "#smalldiv"
+					});
+	$("#xun_div").hide(1000);
+}
+
+
+
+
 function save_xun() {
 	var row = $('#xun_manager').datagrid('getSelections');
 	console.log(row);

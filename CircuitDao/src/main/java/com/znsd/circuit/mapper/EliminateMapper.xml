@@ -52,17 +52,44 @@
 		<result column="flawType" property="flawType" />
 	</resultMap>
 	<select id="getAllTask" resultMap="eliminateMap" parameterType="java.util.Map">
-		select e.id,e.mid,e.taskId,t.coding as taskcoding,t.name as
+		select DISTINCT ins.userId,e.id,e.mid,e.taskId,t.coding as
+		taskcoding,t.name as
 		taskName,e.workBills,t.id,t.taskMan
 		xiafaid,
-		u.name as xiafaMan,t.date
-		as xiafaDate,p.settingName as taskStatus,t.actualDate as
+		u.name
+		as xiafaMan,t.date
+		as xiafaDate,p.settingName as
+		taskStatus,t.actualDate as
 		wancdate,t.delete_flag,t.type,t.predictDate,t.remark,t.delete_flag as
 		flag
-		from t_eliminate e,t_task t,t_user u,t_systemparam p where
-		e.taskId=t.id
-		and t.taskMan=u.id and p.id=t.state and u.id=#{userid}
-		and 1=1
+		from t_eliminate e left join t_flawstaff ins on
+		e.id=ins.eliminateId
+		left join t_task t on e.taskId=t.id
+		left join
+		t_user u on t.taskMan=u.id
+		left join t_systemparam p on t.state=p.id
+		where t.type='消缺任务'
+		<!-- and p.id !=4 and p.id !=8 -->
+		<if test="operate == 'flaw'">
+			and t.state in (SELECT id FROM t_systemparam where
+			settingid
+			= (select
+			id FROM t_systemsetting
+			WHERE coding='Task_STATE'
+			AND
+			delete_flag='否'
+			AND state='启用')
+			)
+			<if test="coding=='line_staff'">
+				AND t.taskMan=#{userid} or e.mid=#{userid}
+			</if>
+			<!-- <if test="taskman=='taskman'"> and t.taskMan=#{userid} </if> -->
+
+			<if test="coding=='es_flaw'">
+				and ins.userId=#{userid}
+			</if>
+			and ins.isReceipter='是'
+		</if>
 
 		<if test="taskcoding!=null &amp;&amp; taskcoding!=''">
 			and t.coding like #{taskcoding}
@@ -88,10 +115,32 @@
 	</select>
 	<select id="getCount" resultType="int" parameterType="java.util.Map">
 		select count(1)
-		from t_eliminate e,t_task t,t_user u,t_systemparam p
-		where
-		e.taskId=t.id
-		and t.taskMan=u.id and p.id=t.state
+		from t_eliminate e left join t_flawstaff ins on
+		e.id=ins.eliminateId
+		left join t_task t on e.taskId=t.id
+		left join
+		t_user u on t.taskMan=u.id
+		left join t_systemparam p on t.state=p.id
+		where t.type='消缺任务'
+		<!-- and p.id !=4 and p.id !=8 -->
+		<if test="operate == 'eliminate'">
+			and t.state in (SELECT id FROM t_systemparam where
+			settingid
+			= (select
+			id FROM t_systemsetting
+			WHERE coding='Task_STATE'
+			AND
+			delete_flag='否'
+			AND state='启用'))
+			<if test="coding=='line_staff'">
+				AND e.mid=#{userid}
+			</if>
+			<!-- <if test="taskman=='taskman'"> and t.taskMan=#{userid} </if> -->
+			<if test="coding=='es_flaw'">
+				and ins.userId=#{userid}
+			</if>
+			and ins.isReceipter='是'
+		</if>
 		<if test="taskcoding!=null &amp;&amp; taskcoding!=''">
 			and t.coding like #{taskcoding}
 		</if>
@@ -105,10 +154,10 @@
 			and u.name like #{xiapeople}
 		</if>
 		<if test="startdate!=null &amp;&amp;startdate!=''">
-			and t.date &gt; #{startdate}
+			and t.date &gt;= #{startdate}
 		</if>
 		<if test="enddate!=null &amp;&amp;enddate!=''">
-			and t.date &lt; #{enddate}
+			and t.date &lt;= #{enddate}
 		</if>
 	</select>
 	<select id="getAllBills" resultMap="SystemparamMap"
@@ -157,7 +206,7 @@
 		t_eliminate_record) and tf.towerId=tw.id and
 		tf.threadId=th.id and
 		tf.userId=tu.id and
-		tf.flowGrade=ts.id and
+		tf.flawGrade=ts.id and
 		tf.flawId=tfw.id limit
 		#{pageIndex},#{pageSize}
 	</select>
@@ -169,7 +218,7 @@
 		ts,t_flaw tfw
 		where tf.towerId=tw.id and tf.threadId=th.id and
 		tf.userId=tu.id and
-		tf.flowGrade=ts.id and tf.flawId=tfw.id
+		tf.flawGrade=ts.id and tf.flawId=tfw.id
 	</select>
 	<select id="getAllMyFlawById" resultMap="MyFlawMap"
 		parameterType="int">
@@ -182,7 +231,7 @@
 		ts,t_flaw tfw
 		where tf.towerId=tw.id and
 		tf.threadId=th.id and tf.userId=tu.id and
-		tf.flowGrade=ts.id and
+		tf.flawGrade=ts.id and
 		tf.flawId=tfw.id and tf.id=#{0}
 	</select>
 	<insert id="insertTask" parameterType="java.util.Map">
@@ -206,10 +255,12 @@
 		values(#{eid},#{userId},#{isReceipter},#{createBy},#{createDate},#{updatedBy},#{updateDate},'懒得加备注');
 	</insert>
 	<insert id="insertEliminateRecord" parameterType="java.util.Map">
-		insert into t_eliminate_record(xtaskid,yetid) values(#{xtaskid},#{yetid})
+		insert into
+		t_eliminate_record(xtaskid,yetid) values(#{xtaskid},#{yetid})
 	</insert>
 	<delete id="deleteFlawStaff" parameterType="int">
-		delete from t_flawstaff where eliminateId=#{0}
+		delete from
+		t_flawstaff where eliminateId=#{0}
 	</delete>
 	<insert id="insertintoFlawStaff" parameterType="Flawstaff">
 		insert into
@@ -219,8 +270,10 @@
 	</insert>
 	<select id="seeEliminateById" parameterType="int"
 		resultType="com.znsd.circuit.util.SeeEliminate">
-		select e.id,e.mid as taskfuzeId,t.coding as taskcoding,t.name as
-		taskName,ts.settingName as taskStatus, e.workBills as taskBills,
+		select e.id,t.id as taskId,e.mid as taskfuzeId,t.coding as
+		taskcoding,t.name as
+		taskName,ts.settingName as taskStatus, e.workBills
+		as taskBills,
 		u.name as taskxiafaUser,e.mId as taskfuzeId,t.date as
 		taskxiafaDate,t.actualDate as taskfinishDate,t.description as
 		taskDesc, e.taskfuzeUserIdea as taskfuzeUserIdea,e.taskxiafaUserIdea
@@ -235,8 +288,256 @@
 		ts.id=t.state and e.id = #{0}
 	</select>
 	<select id="getAllUserId" parameterType="int" resultType="User">
-		select id,name from t_user where id in( select DISTINCT tf.userId from
+		select
+		id,name from t_user where id in( select DISTINCT tf.userId from
 		t_flawstaff tf where tf.userId in (select userId from t_flawstaff
 		where eliminateId=#{0}))
+	</select>
+	<select id="seeEliminateBytaskId" parameterType="int" resultMap="MyFlawMap">
+		SELECT f.id, h.coding as threadCoding,w.coding as towerCoding,s.settingName
+		as flawGrade
+		,wa.`name` as flawType,f.discoverDate as
+		findDate,f.flawDesc as flawDesc,tu.name as findUser
+		FROM t_flawconfirm
+		f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower
+		w,t_systemparam s,t_flaw wa,t_user tu
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND f.towerId=w.id AND s.id=f.flawGrade and
+		f.userId=tu.id and
+		r.xtaskid=#{0}
+	</select>
+	<select id="getAllTaskByCondition" parameterType="java.util.Map"
+		resultMap="eliminateMap">
+		select DISTINCT ins.userId,e.id,e.mid,e.taskId,t.coding as
+		taskcoding,t.name as
+		taskName,e.workBills,t.id,t.taskMan
+		xiafaid,
+		u.name
+		as xiafaMan,t.date
+		as xiafaDate,p.settingName as
+		taskStatus,t.actualDate as
+		wancdate,t.delete_flag,t.type,t.predictDate,t.remark,t.delete_flag as
+		flag
+		from t_eliminate e left join t_flawstaff ins on
+		e.id=ins.eliminateId
+		left join t_task t on e.taskId=t.id
+		left join
+		t_user u on t.taskMan=u.id
+		left join t_systemparam p on t.state=p.id
+		where t.type='消缺任务'
+		<!-- and p.id !=4 and p.id !=8 -->
+		<if test="operate == 'eliminate'">
+			and t.state not in (SELECT id FROM t_systemparam where
+			settingid
+			=
+			(select id FROM t_systemsetting
+			WHERE coding='Task_STATE'
+			AND
+			delete_flag='否' AND state='启用')
+			AND settingName='待分配' OR
+			settingName='已取消')
+			<if test="coding=='line_staff'">
+				AND e.mid=#{userid}
+			</if>
+			<if test="coding=='es_flaw'">
+				and ins.userId=#{userid}
+			</if>
+			and ins.isReceipter='是'
+		</if>
+		<if test="receipt_taskcoding!=null &amp;&amp; receipt_taskcoding!=''">
+			and t.coding like #{receipt_taskcoding}
+		</if>
+		<if test="receipt_bills!=null &amp;&amp;receipt_bills!=''">
+			and e.workBills = #{receipt_bills}
+		</if>
+		<if test="receipt_xiapeople!=null &amp;&amp;receipt_xiapeople!=''">
+			and u.name like #{receipt_xiapeople}
+		</if>
+		<if test="receipt_startdate!=null &amp;&amp;receipt_startdate!=''">
+			and t.date &gt;= #{receipt_startdate}
+		</if>
+		<if test="receipt_enddate!=null &amp;&amp;receipt_enddate!=''">
+			and t.date &lt;= #{receipt_enddate}
+		</if>
+		ORDER BY t.date desc
+		limit
+		#{pageIndex},#{pageSize}
+	</select>
+	<select id="getCountByCondition" parameterType="java.util.Map"
+		resultType="int">
+		select count(1)
+		from t_eliminate e left join t_flawstaff ins on
+		e.id=ins.eliminateId
+		left join t_task t on e.taskId=t.id
+		left join
+		t_user u on t.taskMan=u.id
+		left join t_systemparam p on t.state=p.id
+		where t.type='消缺任务'
+		<!-- and p.id !=4 and p.id !=8 -->
+		<if test="operate == 'eliminate'">
+			and t.state not in (SELECT id FROM t_systemparam where
+			settingid
+			=
+			(select id FROM t_systemsetting
+			WHERE coding='Task_STATE'
+			AND
+			delete_flag='否' AND state='启用')
+			AND settingName='待分配' OR
+			settingName='已取消')
+			<if test="coding=='line_staff'">
+				AND e.mid=#{userid}
+			</if>
+			<if test="coding=='es_flaw'">
+				and ins.userId=#{userid}
+			</if>
+			and ins.isReceipter='是'
+		</if>
+
+		<if test="receipt_taskcoding!=null &amp;&amp; receipt_taskcoding!=''">
+			and t.coding like #{receipt_taskcoding}
+		</if>
+		<if test="receipt_bills!=null &amp;&amp;receipt_bills!=''">
+			and e.workBills = #{receipt_bills}
+		</if>
+		<if test="receipt_xiapeople!=null &amp;&amp;receipt_xiapeople!=''">
+			and u.name like #{receipt_xiapeople}
+		</if>
+		<if test="receipt_startdate!=null &amp;&amp;receipt_startdate!=''">
+			and t.date &gt;= #{receipt_startdate}
+		</if>
+		<if test="receipt_enddate!=null &amp;&amp;receipt_enddate!=''">
+			and t.date &lt;= #{receipt_enddate}
+		</if>
+	</select>
+	<update id="execu_updateTaskstatus" parameterType="int">
+		update t_task
+		set
+		state=6 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<select id="selectEliminateByUserId" parameterType="int"
+		resultType="Flawstaff">
+		select * from t_flawstaff where eliminateId =#{0} and
+		userId = #{1}
+	</select>
+	<select id="selectRoleByUserId" parameterType="int" resultType="Systemrole">
+		select * from t_role where id =(select roleId from t_user_role where
+		userId = #{0})
+	</select>
+	<update id="update_receipte" parameterType="java.util.Map">
+		update t_eliminate set
+		taskCompletionDesc=#{taskCompletionDesc},extensionRecord=#{extensionRecord}
+		,finalReport=#{finalReport} where id=#{eliminateId}
+	</update>
+	<update id="execu_updateTaskstatusAudit" parameterType="int">
+		update
+		t_task
+		set
+		state=46 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<select id="midflag" parameterType="int" resultType="Eliminate">
+		select * from t_eliminate where id=#{0} and mid=#{1}
+	</select>
+
+	<select id="taskmanflag" parameterType="int" resultType="Task">
+		select * from t_task where id = (select taskId from t_eliminate where
+		id=#{0}) and taskMan=#{1}
+	</select>
+	<update id="update_fuze" parameterType="java.util.Map">
+		update t_eliminate set
+		taskfuzeUserIdea=#{fuze_receipte},taskPassed=#{pass_select}
+		where id=#{fuze_save_eliminateId}
+	</update>
+	<update id="execu_updateTaskstatusSuccess" parameterType="int">
+		update t_task
+		set
+		state=7 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<update id="execu_updateTaskstatusReturn" parameterType="int">
+		update t_task
+		set
+		state=37 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<select id="selectTaskByeliminateId" parameterType="int"
+		resultType="Task">
+		select * from t_task where id = (select taskId from t_eliminate where
+		id=#{0})
+	</select>
+	<update id="updateActualDate" parameterType="java.util.Map">
+		update t_task set actualDate=#{date} where id in(select taskId from
+		t_eliminate where
+		id=#{eliminateId})
+	</update>
+	<update id="update_xiafa" parameterType="java.util.Map">
+		update t_eliminate set taskxiafaUserIdea=#{xiafa_receipte} where
+		id=#{eliminateId}
+	</update>
+	<update id="update_all" parameterType="java.util.Map">
+		update t_eliminate set
+		taskxiafaUserIdea=#{all_xiafa_receipte},taskfuzeUserIdea=#{all_fuze_receipte},taskPassed=#{all_pass_select}
+		where id=#{all_save_eliminateId}
+	</update>
+	<update id="update_allocated" parameterType="int">
+		update t_task
+		set
+		state=5 where id in (select taskId from t_eliminate where
+		id=#{0})
+	</update>
+	<select id="existUserById" parameterType="int" resultType="User">
+		select * from t_user where id in (select userId from t_flawstaff where
+		eliminateId =#{0})
+	</select>
+	<delete id="removethis" parameterType="java.util.Map">
+		delete from t_flawstaff where eliminateId=#{eliminateId} and
+		userId=#{userId}
+	</delete>
+
+	<select id="select_update_wait" parameterType="int"
+		resultType="com.znsd.circuit.util.UpdateWait">
+		select DISTINCT e.id,e.workbills,e.taskId,e.mid
+		,t.coding,t.name,t.description,t.remark
+		,u.name as fuzeName
+		from t_eliminate e ,t_task t,t_user u
+		where e.taskId=t.id and e.mid=u.id and e.id=#{0}
+	</select>
+	<delete id="delete_record" parameterType="int">
+	delete from t_eliminate_record where yetid=#{0}
+	</delete>
+	<select id="update_EliminateBytaskId" parameterType="int" resultMap="MyFlawMap">
+	SELECT f.id, h.coding as threadCoding,w.coding as towerCoding,s.settingName
+		as flawGrade
+		,wa.`name` as flawType,f.discoverDate as
+		findDate,f.flawDesc as flawDesc,tu.name as findUser
+		FROM t_flawconfirm
+		f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower
+		w,t_systemparam s,t_flaw wa,t_user tu
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND f.towerId=w.id AND s.id=f.flawGrade and
+		f.userId=tu.id and
+		r.xtaskid=#{0}
+	</select>
+	<insert id="insertintoRecord" parameterType="int">
+	insert into t_eliminate_record(xtaskid,yetid) values(#{0},#{1});
+	</insert>
+	<update id="updateEliminate" parameterType="java.util.Map">
+	update t_eliminate set workBills=#{workBills},mid=#{taskMan} where id=#{eliminateId}
+	</update>
+	<update id="updateTask" parameterType="java.util.Map">
+	update t_task set coding=#{update_taskcoding},name=#{update_taskname},
+	description=#{update_taskDesc},remark=#{update_taskRemark} where id=#{taskid}
+	</update>		
+	<select id="getTaskByEliminateId" parameterType="int" resultType="Eliminate">
+	     select id,taskId from t_eliminate where id=#{eliminateId}
 	</select>
 </mapper>
