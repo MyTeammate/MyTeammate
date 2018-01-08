@@ -1,9 +1,16 @@
 package com.znsd.circuit.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.znsd.circuit.excel.toEP;
 import com.znsd.circuit.model.TaskEliminate;
+import com.znsd.circuit.model.Taskpolling;
 import com.znsd.circuit.service.TaskEliminateService;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 @Controller
 public class TaskeliminateController {
@@ -102,8 +120,23 @@ public class TaskeliminateController {
 		List<TaskEliminate> list = taskEliminateService.selectElTower(map, tcoding);
 		System.out.println("=====" + list);
 		maps.put("rows", list);
-		maps.put("total", list.size());
+		maps.put("total", list.size()); 
 		return maps;
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("/toEExcel")
+	public String toExcel(HttpSession session,String path,String name) {
+		System.out.println(path+","+name+","+123123);
+		List<TaskEliminate> taskList = taskEliminateService.eSelectEliminate();
+		for (Iterator iterator = taskList.iterator(); iterator.hasNext();) {
+			TaskEliminate taskEliminate = (TaskEliminate) iterator.next();
+			System.out.println(taskEliminate);
+		}
+		toEP t=new toEP();
+		String mark=t.outputExcel(taskList,"消缺",path,name);
+		return mark;
+	}
+	
+	
 }

@@ -48,5 +48,10 @@ public interface TaskpollingDao {
 	 */
 	public int getselTaskCount(String coding);
 	
-	
+	/**
+	 * 导出巡检记录
+	 * @param coding
+	 * @return
+	 */
+	public List<Taskpolling> eSelelectTaskPoll();
 }

@@ -1,14 +1,14 @@
 function user_tb(){
 	$('#user_tb').datagrid({
 		url:'userManage/listSystemUser',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		rownumbers : true,
 		pagination : true,
 		singleSelect:true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'userName',title:'用户账号',width:110,align:'center'},
@@ -61,37 +61,24 @@ function user_tb(){
 								+ row.id
 								+ ')">LOG日志</a></span>';
             		  }
+            		  if(row.roleName=="系统管理员"){
+            			  oper = '<span><a href="javaScript:userLOG('
+								+ row.id
+								+ ')">LOG日志</a></sapn>';
+            		  }
             		  return oper;
             	  }
               },
 		]]
 	})
-	
-	
-	/*$('#user_add_option').html("" +
-				"<tr>" +
-				"<td style='float:right;'>用户账号：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>用户名称：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>密码：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>角色：</td><td><select id='user_cc' class='easyui-combobox' name='dept' style='width:80px;' data-options='panelMaxHeight:'70px',editable:false'><option value='--请选择--'>--请选择--</option><option value='正常'>正常</option><option value='冻结'>冻结</option></select></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>入职时间：</td><td><input type='text' id='entryDate'/></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>离职时间：</td><td><input type='text' id='leaveDate'/></td>" +
-				"</tr><tr>" +
-				"<td style='float:right;'>使用状态：</td><td><input type='text' id='0' name='param' /></td>" +
-				"</tr>");
-		$('#entryDate').datebox({    
-		    required:true,
-		    editable:false
-		});  
-		$('#leaveDate').datebox({    
-		    required:true,
-		    editable:false
-		});  */
+	$('#user_query').bind('click',function(){
+		var u_name=$('#user_name').val();
+		var u_cc=$('#user_cc').val();
+		$('#user_tb').datagrid('reload',{
+			name:u_name,
+			state:u_cc
+		});
+	})
 
 	$("#user_add").bind('click',function(){
 		$.ajax({
@@ -100,6 +87,9 @@ function user_tb(){
 			success:function(result){
 				var $op="";
 				for (var int = 0; int < result.length; int++) {
+					if(result[int].name=="系统管理员"){
+						 continue;
+					}
 					$op=$op+"<option value='"+result[int].id+"'>"+result[int].name+"</option>";
 				}
 				$('#user_add_option').html("" +
@@ -123,8 +113,34 @@ function user_tb(){
 						"<td style='float:right;'>使用状态：</td><td>正常</td>" +
 						"</tr>");
 				$('#uentryDate').datebox({    
-				    editable:false
-				});  
+				    editable:false,
+					editable : false,
+					validType : 'checkNow',
+					missingMessage : '请选择日期',
+				});
+				$.extend($.fn.validatebox.defaults.rules, {
+					checkNow : {
+						validator : function(value, param) {
+							var now = new Date();
+							var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
+							var date = $.fn.datebox.defaults.parser(value);
+							var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+							if(now.getFullYear()<date.getFullYear()){
+								return true;
+							}else if(now.getFullYear()==date.getFullYear()){
+								if((now.getMonth()+1)<(date.getMonth()+1)){
+									return true;
+								}else if((now.getMonth()+1)==(date.getMonth()+1)){
+									if(now.getDate()<=date.getDate()){
+										return true;
+									}
+								}
+							}
+							return false;
+						},
+						message : '所选时间不能低于当前时间！'
+					}
+				});
 			}
 		})
 		
@@ -300,8 +316,6 @@ function userUpdate(id){
 					"</tr><tr>" +
 					"<td style='float:right;'>用户姓名：</td><td><input type='text' id='name' name='param' /><span id='name2' style='font-size:8px;color:red'>&nbsp;&nbsp;*</span></td>" +
 					"</tr><tr>" +
-					"<td style='float:right;'>密码：</td><td><input type='passWord' id='passWord' name='param' /><span id='passWord2' style='font-size:8px;'>&nbsp;&nbsp;默认初始密码为123456</span></td>" +
-					"</tr><tr>" +
 					"<td style='float:right;'>角色：</td>" +
 					"<td>" +
 					"<select id='roleId' class='easyui-combobox' name='dept' style='width:90px;' data-options='panelMaxHeight:'120px',editable:false'>" +
@@ -320,8 +334,33 @@ function userUpdate(id){
 			    editable:false
 			});
 			$('#leaveDate').datebox({    
-			    editable:false
+				editable:false,
+				editable : false,
+				validType : 'checkNow',
+				missingMessage : '请选择日期',
 			});
+			$.extend($.fn.validatebox.defaults.rules, {
+				checkNow : {
+					validator : function(value, param) {
+						var now = new Date();
+						var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
+						var date = $.fn.datebox.defaults.parser(value);
+						var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+						if(now.getFullYear()<date.getFullYear()){
+							return true;
+						}else if(now.getFullYear()==date.getFullYear()){
+							if((now.getMonth()+1)<(date.getMonth()+1)){
+								return true;
+							}else if((now.getMonth()+1)==(date.getMonth()+1)){
+								if(now.getDate()<=date.getDate()){
+									return true;
+								}
+							}
+						}
+					},
+					message : '所选时间不能低于当前时间！'
+				}
+			})
 			var dataId={id:id};
 			$.ajax({
 				url:'userManage/userId',
@@ -330,9 +369,9 @@ function userUpdate(id){
 				success:function(result){
 					$('#userName').val(result.userName);
 					$('#name').val(result.name);
-					$('#passWord').val(result.passWord);
 					$('#roleId').val(result.roleId);
 					$('#entryDate').datebox('setValue', result.entryDate);
+					$('#leaveDate').datebox('setValue', result.leaveDate);
 					if(result.state==0){
 						$('#state').html("正常");
 					}else{
@@ -366,7 +405,6 @@ function userUpdate(id){
 							handler:function(){	
 								var userName=$('#userName').val();
 								var name=$('#name').val();
-								var passWord=$('#passWord').val();
 								var roleId=$('#roleId').val();
 								var entryDate=$('#entryDate').val();
 								var leaveDate=$('#leaveDate').val();
@@ -419,7 +457,7 @@ function userUpdate(id){
 															if(rUN=="success"&&rN=="success"){
 																$.messager.confirm('确定','您确定要修改所选的用户吗？',function(f){
 																	if(f){
-																		var dataUser={id:id,userName:userName,name:name,passWord:passWord,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
+																		var dataUser={id:id,userName:userName,name:name,roleId:roleId,entryDate:entryDate,leaveDate:leaveDate};
 																		$.ajax({
 																			url:'userManage/update',
 																			type:"post",
@@ -465,8 +503,17 @@ function userDelete(id,state){
 					type:"post",
 					data:data,
 					success:function(result){
-						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-				    	tab.panel('refresh', 'systemUser');
+						if(result==1){
+							var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+					    	tab.panel('refresh', 'systemUser');
+						}else{
+							$.messager.alert({
+								title:'提示',
+								msg:'删除失败！',
+								icon:'info'
+							});
+						}
+						
 					}
 				})
 			}

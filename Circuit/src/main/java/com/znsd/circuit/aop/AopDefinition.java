@@ -93,6 +93,9 @@ public class AopDefinition implements HandlerInterceptor {
         if(url.indexOf("/logout")>=0){  
             return true;  
         }  
+        if(url.indexOf("/prepareLogout")>=0){  
+            return true;  
+        } 
         //获取Session  
         HttpSession session = request.getSession();  
         User user = (User)session.getAttribute("user");  

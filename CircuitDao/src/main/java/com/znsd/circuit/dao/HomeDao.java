@@ -14,7 +14,7 @@ public interface HomeDao {
      * @param nid
      * @return
      */
-    public List<Power> selectAllPower(Integer nid);
+    public List<Power> selectAllPower(Map<String,Object> map);
     
     /**用户登录
      * @param userName

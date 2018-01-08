@@ -9,7 +9,7 @@ import com.znsd.circuit.model.User;
 
 public interface SystemUserService {
 	//分页总数量
-    public int systemUserCount();
+    public int systemUserCount(Map<String, Object> map);
     
     //分页查询
     public List<User> listSystemUser(Map<String, Object> map);
@@ -57,11 +57,13 @@ public interface SystemUserService {
     public List<Systemlog> listSystemLog(Map<String, Object> map);
     
   //分页总数量
-    public int systemLogCount();
+    public int systemLogCount(Map<String,Object> map);
     
   //操作日志
     public int addLog(Systemlog log);
     
   //日志记录登陆或注销
     public int loginLog(Systemlog log);
+    
+    public int freezeSysteUser2(Map<String,Object> map);
 }

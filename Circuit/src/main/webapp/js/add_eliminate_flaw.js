@@ -99,8 +99,6 @@ $(function() {
 	 */
 
 });
-<<<<<<< HEAD
-=======
 function taskSave_update(){
 	var update_taskcoding = $("#update_taskcoding").val();
 	var update_taskname = $("#update_taskname").val();
@@ -262,7 +260,6 @@ function save_update() {
 
 
 
->>>>>>> branch 'master' of https://github.com/MyTeammate/MyTeammateOperation.git
 function save_xun() {
 	var row = $('#xun_manager').datagrid('getSelections');
 	console.log(row);

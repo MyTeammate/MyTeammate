@@ -1,14 +1,14 @@
 function parameter_tb(){
 	$('#parameter_tb').datagrid({
 		url:'paramManage/listSystemparam',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		rownumbers : true,
 		pagination : true,
 		singleSelect:true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'settingName',title:'配置参数名称',width:560,align:'center'},
@@ -101,7 +101,7 @@ function parameter_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+		$.messager.confirm('确定','您确定要删除所选的参数吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({

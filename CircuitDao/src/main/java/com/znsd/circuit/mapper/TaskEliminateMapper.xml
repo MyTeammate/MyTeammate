@@ -109,4 +109,21 @@
 		is NOT NULL AND
 		a.coding=#{tcoding}
 	</select>
+	
+	<select id="eSelectEliminate" parameterType="java.util.Map"
+		resultType="TaskEliminate">
+		SELECT distinct a.coding tcoding,a.`name` tename,h.coding
+		ethreadCoding,h.startTower
+		estartTower,
+		h.endTower tendTower
+		FROM
+		t_flawconfirm f,t_eliminate_record r,t_eliminate e,t_task a,t_thread
+		h,t_tower w,t_systemparam s,t_flaw wa
+		WHERE f.id=r.yetid AND
+		r.xtaskid=e.taskId AND r.xtaskid=a.id AND
+		h.id=f.threadId AND
+		wa.id=f.flawId
+		AND f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate
+		is NOT NULL
+	</select>
 </mapper>

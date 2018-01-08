@@ -1,14 +1,14 @@
 function data_tb(){
 	$('#data_tb').datagrid({
 		url:'dateManage/listSystemsetting',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		singleSelect:true,
 		rownumbers : true,
 		pagination : true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'coding',title:'配置类型编码',width:140,align:'center'},
@@ -81,7 +81,7 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+		$.messager.confirm('确定','您确定要删除所选的数据类型吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({
@@ -186,7 +186,11 @@ function data_tb(){
 				icon:'info'
 			});
     	}else{
-		$.messager.confirm('确定','您确定要冻结所选的用户吗？',function(f){
+    	var makr='启用'; 
+    	if(cost.state=='启用'){
+    		makr='禁用';
+    	}
+		$.messager.confirm('确定','您确定要'+makr+'所选的数据类型吗？',function(f){
 			if(f){
 			var data={id:cost.id};
 			$.ajax({

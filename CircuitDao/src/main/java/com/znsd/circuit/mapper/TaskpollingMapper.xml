@@ -46,7 +46,7 @@
 		tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flowGrade AND
+		s.id=tf.flawGrade AND
 		tf.flawId=a.id AND
 		t.coding=#{coding}
 	</select>
@@ -61,7 +61,7 @@
 		WHERE tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flowGrade AND tf.flawId=a.id AND
+		s.id=tf.flawGrade AND tf.flawId=a.id AND
 		t.coding=#{coding}
 	</select>
 
@@ -80,7 +80,7 @@
 		WHERE tf.taskId=t.id AND
 		tf.threadId=h.id AND
 		tf.towerId=w.id and
-		s.id=tf.flowGrade AND tf.flawId=a.id AND
+		s.id=tf.flawGrade AND tf.flawId=a.id AND
 		t.coding=#{coding}
 		<if test="gan!=null &amp;&amp; gan!=''">
 			AND w.coding LIKE #{gan}
@@ -96,5 +96,16 @@
 		</if>
 		ORDER BY tf.discoverDate DESC 
 		limit #{pageIndex},#{pageSize}
+	</select>
+	
+	<select id="eSelelectTaskPoll"
+		resultType="Taskpolling">
+		SELECT distinct t.coding coding, t.`name` tanem,h.coding
+		threadCoding,h.startTower startTower,h.endTower
+		engTower
+		FROM
+		t_flawconfirm tf ,t_task
+		t,t_thread h WHERE tf.taskId=t.id AND
+		tf.threadId=h.id
 	</select>
 </mapper>

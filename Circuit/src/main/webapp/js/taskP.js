@@ -39,6 +39,8 @@ function taskP() {// 巡检记录统计数据查询
 		rownumbers : true,
 		
 	});
+	
+	
 }
 
 function selId() {
@@ -59,4 +61,42 @@ function plListid() {
 		renTitle:$('#ren').val(),
 		conteTitle:$('#lu').val(),
 	});
+}
+
+function addxls(){
+		$('#poption').html("<tr><td style='float:right'>默认保存路径：</td><td><input type='text' id='pPath' value='C:/' readonly='readonly' /></td></tr><tr><td style='float:right'>保存的文件名：</td><td><input type='text' id='pName' /></td></tr>");
+		$('#poption').dialog({
+    		width:360,
+    		height:120,
+    		inline:true,
+    		left:320,
+    		top:210,
+			title:'新增',
+			buttons:[
+						{
+							text:'取消',
+							width:60,
+							handler:function(){	
+								$('#poption').dialog('close')
+							}		
+						},
+						{
+							text:'确定',
+							width:60,
+							handler:function(){	
+								var edata={path:$('#pPath').val(),name:$('#pName').val()}
+								$.ajax({
+									url:'toPExcel',
+									type:"post",
+									data:edata,
+									success:function(result){
+									    if(result=="success"){
+									    	$('#poption').dialog('close')
+									    }	
+									}
+								})
+							}
+						}
+				    ]
+		})
 }

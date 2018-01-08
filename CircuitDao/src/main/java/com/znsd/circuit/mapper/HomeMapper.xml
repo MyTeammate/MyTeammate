@@ -3,10 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.znsd.circuit.dao.HomeDao">
-    <select id="selectAllPower" resultType="Power" parameterType="Integer">
-        select DISTINCT id,text,state,url,iconCls,nid
+    <select id="selectAllPower" resultType="Power" parameterType="map">
+        select DISTINCT p.id,p.text,p.state,p.url,p.iconCls,p.nid
 		from t_power p
-		where p.nid=#{nid}
+		LEFT JOIN t_role_power trp
+	    on p.id=trp.powerId
+	    LEFT JOIN t_role tr
+	    on tr.id=trp.roleId
+	    LEFT JOIN t_user_role tur
+	    on tr.id=tur.roleId
+	    LEFT JOIN t_user tu
+	    on tur.userId=tu.id
+		where p.nid=#{nid} and tu.id=#{userId}
     </select>
     
     <select id="login" resultType="User" parameterType="Map">

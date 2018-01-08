@@ -62,7 +62,7 @@
 						type:"post",
 						data:data,
 						success:function(result){
-							if(result==true){
+							if(result=="success"){
 								/* $.ajax({
 									url:"http://192.168.16.143:7075/newWeather/weather",
 									type:"post",
@@ -70,8 +70,11 @@
 									}
 								}) */
 								window.location.href="home";
-							}else{
+							}else if(result=="error"){
 								$("#ts").html("用户名或密码错误！");
+								is_show();
+							}else if(result=="state"){
+								$("#ts").html("该用户已被冻结！");
 								is_show();
 							}
 						}
