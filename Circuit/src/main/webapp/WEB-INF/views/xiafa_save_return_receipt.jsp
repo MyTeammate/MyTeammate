@@ -106,14 +106,14 @@ table.hovertable td {
 			<td style="border: 1px solid #ccc;">
 			<textarea cols="30" rows="5" id="xiafa_receipte">${seeEliminate.taskxiafaUserIdea}</textarea></td>
 			<td style="border: 1px solid #ccc;font-size: 14px;font-weight: bold;" class="tdstyle" >审核是否通过</td>
-			<td style="border: 1px solid #ccc;"><select id="pass_select">
+			<td style="border: 1px solid #ccc;"><!-- <select id="pass_select"> -->
 			
-			<c:if test="${seeEliminate.taskPassed==0}">
+			<%-- <c:if test="${seeEliminate.taskPassed==0}">
 			<option value="0">通过</option>
 			</c:if>
 			<c:if test="${seeEliminate.taskPassed==1}">
 			<option value="1">不通过</option>
-			</c:if>
+			</c:if> --%>
 			
 			</select></td>;
 		</tr>

@@ -599,3 +599,15 @@ function taskSave() {
 		});
 	}
 }
+//判断任务编号是否重复
+function moveTrigg(){
+	alert(1111);
+	var taskcoding = $("#taskcoding").val();
+	$.ajax({
+		url:"",
+		type:"post",
+		success:function(data){
+			
+		}
+	});
+}

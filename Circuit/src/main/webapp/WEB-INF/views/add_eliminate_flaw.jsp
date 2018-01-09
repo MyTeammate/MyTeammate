@@ -26,7 +26,7 @@ body {
 	<!-- <div style="margin-left: 120px;margin-top:60px;width:900px;height:600px; background-color: #F7F7F7; border: 1px solid #ccc; margin: auto"> -->
 	<div id="smalldiv">
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 任务编码：&nbsp;&nbsp;&nbsp; <input id="taskcoding"
-			type="text" class="textbox" style="width: 160px; height: 20px;" />
+			type="text" class="textbox" style="width: 160px; height: 20px;" onblur="moveTrigg()"/>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		任务名称：<input type="text" class="textbox" id="taskname"
 			style="width: 160px; height: 20px;" />
