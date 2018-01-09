@@ -2,6 +2,8 @@ package com.znsd.circuit.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.znsd.circuit.model.Power;
 import com.znsd.circuit.model.RolePower;
 import com.znsd.circuit.model.Systemrole;
@@ -75,4 +77,11 @@ public interface RoleConfigService {
 	 * @param list
 	 */
 	public void addPowerByRole(List<RolePower> list);
+	
+	
+	/**
+	 * 删除一个角色的权限
+	 * @param roleId
+	 */
+	public void deletePowerByRoleId(@Param("roleId")int roleId);
 }

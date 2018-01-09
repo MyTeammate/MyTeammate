@@ -13,11 +13,11 @@
 	<table style="margin-left: 170px;margin-top:20px;left:40px;width:867px;">   
 	    <tr style="height:30px;">
 		   <th>
-		    角色名称：<input style="text" id="role_name" size="15"/>&nbsp;&nbsp;&nbsp;启用状态：
+		    角色名称：<input style="text" id="role_name" size="15"/>&nbsp;&nbsp;&nbsp;使用状况：
 		    <select id="role_cc" class="easyui-combobox" name="dept" style="width:80px;" data-options="panelMaxHeight:'70px',editable:false">   
 			    <option value="00">--请选择--</option>   
-			    <option value="0">启用</option>   
-			    <option value="1">未启用</option>     
+			    <option value="0">正常</option>   
+			    <option value="1">冻结</option>     
 			</select>
 			<a id="role_query" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 		    <a style="float:right" id="role_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加角色</a>    

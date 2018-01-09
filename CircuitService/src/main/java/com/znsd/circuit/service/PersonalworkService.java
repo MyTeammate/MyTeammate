@@ -3,8 +3,11 @@ package com.znsd.circuit.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Personalwork;
+import com.znsd.circuit.model.Threads;
 
 public interface PersonalworkService {
 
@@ -32,4 +35,13 @@ public interface PersonalworkService {
 	 * @return
 	 */
 	public List<Flawconfirm> getTaskTowerFlawInfo(int taskId);
+	
+	
+	
+	/**
+	 * 根据任务ID获取线路
+	 * @param taskId
+	 * @return
+	 */
+	public Threads getThreadBytaskId(int taskId);
 }

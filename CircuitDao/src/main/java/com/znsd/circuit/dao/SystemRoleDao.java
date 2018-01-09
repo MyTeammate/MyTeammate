@@ -19,22 +19,18 @@ public interface SystemRoleDao {
     //验证角色名称是否重复
     public Systemrole verifyName(Map<String,Object> map);
     
-    //增加角色
-    public int addRole(Systemrole role);
+    //角色增加
+    public int addRole(Map<String,Object> map);
     
-    //启用/禁用
+    //禁用启用
     public int stateRole(Map<String,Object> map);
+    
+    //根据id查询角色信息
+    public Systemrole queryRole(int id);
     
     //修改角色
     public int updateRole(Map<String,Object> map);
     
     //删除角色
     public int deleteRole(int id);
-    
-    //查询角色信息
-    public Systemrole queryRole(int id);
-    
-    //根据姓名和状态模糊查询
-    public List<Systemrole> likeRole(Map<String,Object> map);
-
 }

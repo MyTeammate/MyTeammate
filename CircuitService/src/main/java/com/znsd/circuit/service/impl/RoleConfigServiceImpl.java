@@ -67,4 +67,9 @@ public class RoleConfigServiceImpl implements RoleConfigService {
 		roleConfigDao.addPowerByRole(list);
 	}
 
+	@Override
+	public void deletePowerByRoleId(int roleId) {
+		roleConfigDao.deletePowerByRoleId(roleId);
+	}
+
 }

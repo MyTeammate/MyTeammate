@@ -37,13 +37,18 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	}
 
 	@Override
-	public int addRole(Systemrole role) {
-		return systemRoleDao.addRole(role);
+	public int addRole(Map<String, Object> map) {
+		return systemRoleDao.addRole(map);
 	}
 
 	@Override
 	public int stateRole(Map<String, Object> map) {
 		return systemRoleDao.stateRole(map);
+	}
+
+	@Override
+	public Systemrole queryRole(int id) {
+		return systemRoleDao.queryRole(id);
 	}
 
 	@Override
@@ -55,15 +60,4 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	public int deleteRole(int id) {
 		return systemRoleDao.deleteRole(id);
 	}
-
-	@Override
-	public Systemrole queryRole(int id) {
-		return systemRoleDao.queryRole(id);
-	}
-
-	@Override
-	public List<Systemrole> likeRole(Map<String,Object> map) {
-		return systemRoleDao.likeRole(map);
-	}
-
 }

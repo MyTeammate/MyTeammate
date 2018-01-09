@@ -42,7 +42,7 @@
 	<div
 		data-options="region:'north',split:true,noheader:true,iconCls:'icon-premium'"
 		style="height: 75px; background: #ccc;">
-		<div class="logo" style="font-size:29px;color:#0000E3">电力巡检§</div>
+		<span class="logo" style="font-size:29px;color:#0000E3">电力巡检§</span>
 		<div class="logout">
 			<span id="time" style="font-size:24px;text-align: center;color:#CF9E9E"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前权限：${user.roleName}&nbsp;&nbsp;您好,&nbsp;${user.name}&nbsp;|&nbsp; <a href="#" id="logout">&nbsp;&nbsp;退出</a>
 		</div>
@@ -55,10 +55,9 @@
 	</div>
 	<div data-options="region:'center'" style="overflow: hidden; background: #eee;">
 		<div id="tabs" class="easyui-tabs" style="height: 750px">
-			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
+			<div title="待办列表" data-options="closable:true,iconCls:'icon-house',href:'personalWork'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">
-				<p style="color: #00EE00;">欢迎来到电力巡检系统！</p>
 			</div>
 		</div>
     </div>   

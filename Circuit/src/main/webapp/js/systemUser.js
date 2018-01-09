@@ -1,14 +1,14 @@
 function user_tb(){
 	$('#user_tb').datagrid({
 		url:'userManage/listSystemUser',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		rownumbers : true,
 		pagination : true,
 		singleSelect:true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'userName',title:'用户账号',width:110,align:'center'},
@@ -61,6 +61,11 @@ function user_tb(){
 								+ row.id
 								+ ')">LOG日志</a></span>';
             		  }
+            		  if(row.roleName=="系统管理员"){
+            			  oper = '<span><a href="javaScript:userLOG('
+								+ row.id
+								+ ')">LOG日志</a></sapn>';
+            		  }
             		  return oper;
             	  }
               },
@@ -82,6 +87,9 @@ function user_tb(){
 			success:function(result){
 				var $op="";
 				for (var int = 0; int < result.length; int++) {
+					if(result[int].name=="系统管理员"){
+						 continue;
+					}
 					$op=$op+"<option value='"+result[int].id+"'>"+result[int].name+"</option>";
 				}
 				$('#user_add_option').html("" +
@@ -117,7 +125,18 @@ function user_tb(){
 							var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
 							var date = $.fn.datebox.defaults.parser(value);
 							var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
-							return newNow <= newDate;
+							if(now.getFullYear()<date.getFullYear()){
+								return true;
+							}else if(now.getFullYear()==date.getFullYear()){
+								if((now.getMonth()+1)<(date.getMonth()+1)){
+									return true;
+								}else if((now.getMonth()+1)==(date.getMonth()+1)){
+									if(now.getDate()<=date.getDate()){
+										return true;
+									}
+								}
+							}
+							return false;
 						},
 						message : '所选时间不能低于当前时间！'
 					}
@@ -327,7 +346,17 @@ function userUpdate(id){
 						var newNow=now.getFullYear()+""+(now.getMonth()+1)+""+now.getDate();
 						var date = $.fn.datebox.defaults.parser(value);
 						var newDate=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
-						return newNow <= newDate;
+						if(now.getFullYear()<date.getFullYear()){
+							return true;
+						}else if(now.getFullYear()==date.getFullYear()){
+							if((now.getMonth()+1)<(date.getMonth()+1)){
+								return true;
+							}else if((now.getMonth()+1)==(date.getMonth()+1)){
+								if(now.getDate()<=date.getDate()){
+									return true;
+								}
+							}
+						}
 					},
 					message : '所选时间不能低于当前时间！'
 				}
@@ -474,8 +503,17 @@ function userDelete(id,state){
 					type:"post",
 					data:data,
 					success:function(result){
-						var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-				    	tab.panel('refresh', 'systemUser');
+						if(result==1){
+							var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+					    	tab.panel('refresh', 'systemUser');
+						}else{
+							$.messager.alert({
+								title:'提示',
+								msg:'删除失败！',
+								icon:'info'
+							});
+						}
+						
 					}
 				})
 			}

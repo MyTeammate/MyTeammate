@@ -1,7 +1,6 @@
 function eliminatequery() {
 	$("#query_manager").datagrid({
-		url:"eliminatequery/queryAllPost",
-		
+		url:"eliminatequery/queryAllPost", 		
 		pagination : true,
 		pageNumber : 1,
 		pageSize : 5,
@@ -86,12 +85,7 @@ function eliminatequery() {
 		width : 80,
 	});
 	
-	$('#query_xiapeople').combobox({
-		url : 'eliminate/getAllstatus?coding='+'GRADE_FLAW',
-		valueField : 'id',
-		textField : 'settingName',
-		width : 80,
-	});
+
 	
 	$('#query_workbills').combobox({
 		url : 'eliminatequery/selFlawPost',
@@ -100,11 +94,18 @@ function eliminatequery() {
 		width : 130,
 	});
 	
+	$('#query_xiapeople').combobox({
+		url : 'eliminate/getAllstatus?coding='+'GRADE_FLAW',
+		valueField : 'id',
+		textField : 'settingName',
+		width : 80,
+	});
+	
 	
 
 }
 
-function elimiates_query() {
+function elimiates_query() {	
 	$('#query_manager').datagrid('reload', {
 		taskcoding : $("#query_taskcoding").val(),
 		workbills : $("#query_workbills").combobox('getText'),

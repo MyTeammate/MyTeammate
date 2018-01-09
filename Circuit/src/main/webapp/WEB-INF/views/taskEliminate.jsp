@@ -19,7 +19,7 @@
 				&nbsp;&nbsp; <a type="button" id="s" class="easyui-linkbutton"
 					iconCls="icon-magnifier" onclick="likeId()"
 					style="width: 60px; height: 25px; background-image: url('image/wx_icps.png')">查询</a>
-				&nbsp;&nbsp; &nbsp;&nbsp; <a type="button" class="easyui-linkbutton"
+				&nbsp;&nbsp; &nbsp;&nbsp; <a type="button"  id="toExcel" class="easyui-linkbutton"
 					iconCls="icon-page-white-excel"
 					style="width: 100px; height: 25px; background-image: url('image/wx_icps.png')">导出EXCEL</a>
 			</div>
@@ -29,6 +29,7 @@
 
 				</table>
 			</div>
+			<table id="option"></table>
 		</div>
 	</div>
 </body>

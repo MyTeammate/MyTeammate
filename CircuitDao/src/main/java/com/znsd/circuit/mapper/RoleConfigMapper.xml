@@ -6,7 +6,7 @@
 
   <select id="getRoles" resultType="Systemrole">
          select tr.id,tr.coding,tr.`name`,tr.state,tr.createBy,tr.createDate,tr.updatedBy,tr.updatedDate from t_role tr
-		where tr.delete_flag='否' and tr.state='0'
+		where tr.delete_flag='否' and tr.state='0' and tr.name!='系统管理员'
   </select>
   
     <select id="selectAllPower" resultType="Power" parameterType="Integer">
@@ -55,4 +55,10 @@
     <update id="deletePowerMenu" parameterType="int">
         update t_power set delete_flag='是' where id=#{id}
     </update>
+    
+    <delete id="deletePowerByRoleId" parameterType="int">
+       delete from t_role_power where roleId = #{roleId}
+    </delete>
+    
+    
 </mapper>

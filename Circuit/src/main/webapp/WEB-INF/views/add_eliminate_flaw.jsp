@@ -47,11 +47,11 @@ body {
 		备注：&nbsp;&nbsp;&nbsp;
 		<textarea id="taskRemark" rows="6" cols="24" style="border: 0; overflow: auto;"></textarea>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<!-- 消缺员：&nbsp;&nbsp;&nbsp;
+		消缺员：&nbsp;&nbsp;&nbsp;
 		<select id="select_user" multiple="multiple"
 	    style="text-align: center; height:100px;width:150px"></select>
-		<textarea rows="6" cols="24" style="border: 0; overflow: auto;"></textarea>
-	<a href="#" onclick="show()" class="easyui-linkbutton" iconCls="icon-user"></a>  -->
+		<!-- <textarea rows="6" cols="24" style="border: 0; overflow: auto;"></textarea> -->
+	<a href="#" onclick="show()" class="easyui-linkbutton" iconCls="icon-user"></a> 
 	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺陷列表：
 	<a href="javascript:onclick=add_eliminate()" class="easyui-linkbutton">+添加缺陷</a>
 	<a href="javascript:onclick=taskSave()" class="easyui-linkbutton">保存</a>

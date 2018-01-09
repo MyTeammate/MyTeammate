@@ -12,13 +12,14 @@ body {
 </style>
 </head>
 <body>
-	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制定与分配</div>
+	<div style="padding-left: 20px; padding-top: 15px">消缺任务管理>>消缺任务制度与分配</div>
 	<div id="div_toolOne"
 		style="text-align: left;">
 		任务编号：<input type="text" id="flaw_taskcoding" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		工作单据：<input type="text" id="flaw_workbills" class="textbox" name="votem" style="width: 220px; height: 22px;" />
 		任务状态：<select id="flaw_taskstatus" class="easyui-combobox" name="dept"
 			style="width: 80px;"> 
+			<option value="请选择">请选择</option>
 		</select>
 		<br/>
 		下发人：&nbsp;&nbsp;&nbsp;<input type="text" id="flaw_xiapeople" class="textbox" name="votem" style="width: 220px; height: 22px;" />
@@ -53,6 +54,5 @@ body {
 	<p style="position: relative;bottom: 245px;left: 127px;">
 	<a href="#" id="delete" class="easyui-linkbutton"style="width: 40px;">&nbsp;-&nbsp;</a></p>
 	</div>
-	<script type="text/javascript" src="js/eliminate_execution_receipt.js"></script>
 </body>
 </html>

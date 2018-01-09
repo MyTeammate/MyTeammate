@@ -180,7 +180,6 @@ function updateLine() {
 
 function loadLine(){
 	$('#line').datagrid('load',{
-		"coding":$("#lineCodingLike").val(),
 		"status":$("#lineStateLike").val()
 	})
 }

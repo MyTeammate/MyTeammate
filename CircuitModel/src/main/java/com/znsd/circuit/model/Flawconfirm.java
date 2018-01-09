@@ -23,6 +23,7 @@ public class Flawconfirm {
 	private String threadName; //线路名称
 	private String towerCoding; //杆塔编号
 	private int taskMan; //发布这个巡检任务的user
+	private int confirmstate;//是否确认了
 
 	public Flawconfirm() {
 		super();
@@ -195,6 +196,15 @@ public class Flawconfirm {
 
 	public void setTaskMan(int taskMan) {
 		this.taskMan = taskMan;
+	}
+
+	
+	public int getConfirmstate() {
+		return confirmstate;
+	}
+
+	public void setConfirmstate(int confirmstate) {
+		this.confirmstate = confirmstate;
 	}
 
 	@Override

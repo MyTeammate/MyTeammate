@@ -20,9 +20,9 @@
      
      //接收到消息的回调方法
      websocket.onmessage = function (event) {
-    	 $.messager.confirm('提示','您有一条新的代办任务,是否查看？',function(r){    
-     	    if (r){    
-     	    	perWork();    
+    	 $.messager.confirm('提示','您有新的代办任务,是否查看？',function(r){    
+     	    if (r){  
+     	    	addTabs('待办列表','personalWork');
      	    }    
      	});
      }
@@ -164,6 +164,20 @@ function move($text,$url){
 	tab.panel('refresh',$url);
 }
 
+function addTabs($text,$url){
+	if ($("#tabs").tabs('exists', $text)) {
+		$("#tabs").tabs('select', $text);
+		var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
+		tab.panel('refresh',$url);
+	}else{
+		// 添加一个未选中状态的选项卡面板
+		$('#tabs').tabs('add',{
+			title: $text,
+			href: $url,
+			closable:true, 
+		});
+	}
+}
 
 function showtime()  
 {  
@@ -204,6 +218,15 @@ function showtime()
 	hour = today.getHours();  
 	minute =today.getMinutes();  
 	second = today.getSeconds();  
-	document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":" + second+"</span>"; //显示时间  
+	if(minute<10&&second<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":0" + minute + ":0" + second+"</span>"; //显示时间  
+	}else if(minute<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":0" + minute + ":" + second+"</span>"; //显示时间
+	}else if(second<10){
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":0" + second+"</span>"; //显示时间
+	}else{
+		document.getElementById('time').innerHTML = "<span style='color:white'>"+year + "年" + month + "月" + date + "日  " + strDate +"   " + hour + ":" + minute + ":" + second+"</span>"; //显示时间
+	}
+	
 	setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)  
 }  

@@ -42,4 +42,9 @@ public class TaskEliminateServiceImpl implements TaskEliminateService{
 		return taskEliminateDao.getselTowerCount(coding);
 	}
 
+	@Override
+	public List<TaskEliminate> eSelectEliminate() {
+		return taskEliminateDao.eSelectEliminate();
+	}
+
 }

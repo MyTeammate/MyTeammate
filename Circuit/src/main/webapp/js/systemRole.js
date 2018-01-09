@@ -1,14 +1,14 @@
 function role_tb(){
 	$('#role_tb').datagrid({
 		url:'roleManage/listSystemRole',
-		height : 200,
+		height : 330,
 		pagination : true,
 		pageNumber : 1,
-		pageSize : 1,
+		pageSize : 3,
 		rownumbers : true,
 		pagination : true,
 		singleSelect:true,
-		pageList : [ 1, 2, 3, 4 ],
+		pageList : [ 3, 6, 9 ],
 		columns:[[
 		      {field:'id',checkbox:true},
               {field:'coding',title:'角色编号',width:110,align:'center'},
@@ -53,6 +53,11 @@ function role_tb(){
 								+ row.id+','+row.state
 								+ ')">删除</a></sapn>';
             		  }
+            		  if(row.name=="系统管理员"){
+            			  oper = '<span><a href="javaScript:roleUpdate('
+								+ row.id
+								+ ')">修改</a></sapn>';
+            		  }
             		  return oper;
             	  }
               },
@@ -96,8 +101,9 @@ function role_tb(){
 										msg:'请填写必填项！',
 										icon:'info'
 									});
-								}else{
-										var data={coding:coding,name:name}
+								}else{ 
+									    var newId=0;
+										var data={id:newId,coding:coding,name:name}
 										$.ajax({
 											url:'roleManage/verifyRole',
 											type:"post",
@@ -220,9 +226,18 @@ function roleUpdate(id){
 					"</tr><tr>" +
 					"<td style='float:right;'>使用状态：</td><td id='newState'></td>" +
 					"</tr>"); 
-			$('#newCoding').val(result.coding);
-			$('#newName').val(result.name);
-			$('#newState').val(result.state);
+			
+			if(result.name=="系统管理员"){
+				$('#newCoding').val(result.coding);
+				$('#newName').val(result.name);
+				$('#newState').val(result.state);
+				$('#newCoding').attr("readonly","readonly");
+				$('#newName').attr("readonly","readonly");
+			}else{
+				$('#newCoding').val(result.coding);
+				$('#newName').val(result.name);
+				$('#newState').val(result.state);
+			}
 			if(result.state==0){
 				$('#newState').html("启用");
 			}else{
@@ -248,6 +263,9 @@ function roleUpdate(id){
 							text:'确定',
 							width:60,
 							handler:function(){	
+								if($('#newName').val()=="系统管理员"){
+									$('#role_update_option').dialog('close');
+								}else{
 								var newCoding=$('#newCoding').val();
 								var newName=$('#newName').val();
 								var rUN="";
@@ -298,6 +316,7 @@ function roleUpdate(id){
 												}
 											}
 										})
+								}
 									
 								}
 							}		

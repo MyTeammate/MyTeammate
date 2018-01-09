@@ -77,7 +77,8 @@
 		<p style="padding:25px;">
 			<c:if test="${updateReceiptFlag == null }">
 					<input type="button" value="上传回执" class="bbb" onClick="executeReceipt()"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			</c:if>	
+			</c:if>
+			
 			<span style="padding-left:"></span>
 			<input type="button" value="保存" class="bbb" onClick="saveExecuteReceipt()"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<span style="width:50px;"></span>

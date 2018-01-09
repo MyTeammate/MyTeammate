@@ -198,7 +198,10 @@ function saveInspection(){
 			},
 			//data:$("#inspection_save_form").serialize(),
 			success:function(result){
-				if(result==true){
+				if(result.flag==true){
+					if(result.distribution==true){
+						 websocket.send(result.userId);
+					}
 					var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
 					tab.panel('refresh', 'inspectionMakeAllot');
 				}else{
