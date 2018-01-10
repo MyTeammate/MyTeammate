@@ -16,7 +16,7 @@
          </table>
        </div>
        <div id="lineTb" style="height:40px;padding-top: 15px;">
-	                   路线编号：<input id="lineCodingLike" class="easyui-textbox" />&nbsp;&nbsp;&nbsp;&nbsp;
+	                 <!--   路线编号：<input id="lineCodingLike" class="easyui-textbox" />&nbsp;&nbsp;&nbsp;&nbsp; -->
 	                   线路状态：<input id="lineStateLike" class="easyui-combobox"   
                               data-options="valueField:'settingName',textField:'settingName',url:'getSystemDataState?key=STATE'" /> &nbsp;&nbsp;&nbsp;&nbsp;
 	                   <a href="javascript:onclick=loadLine()" class="easyui-linkbutton" data-options="text:'查   询',plain:false"></a>

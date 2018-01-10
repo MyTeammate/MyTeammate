@@ -22,11 +22,11 @@
     
     <select id="getSystemparamById" resultType="Systemparam" parameterType="int">
          select sp.id,sp.settingName from t_systemparam sp
-		  where sp.id=#{id}
+		  where sp.id=#{id} and sp.delete_flag='否'
     </select>
     
     <select id="querySystemparam" parameterType="map" resultType="Systemparam">
-        select id,settingName from t_systemparam where settingName=#{settingName} and settingId=#{settingId}
+        select id,settingName from t_systemparam where settingName=#{settingName} and settingId=#{settingId} and delete_flag='否'
     </select>
     
     <insert id="addSystemparam" parameterType="Systemparam">

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,11 +66,12 @@ public class SystemParamController {
 		for (int u = 0; u < os.length; u++) {
 			for (int i = 0; i < os.length; i++) {
 				if(os[u].equals(os[i])&&u!=i){
+					System.out.println(os[u]+","+os[i]);
 					return "error";
 				}
 				String string = os[i];
 				if(this.query(session,string)!=null){
-					System.out.println("2");
+					//System.out.println("2");
 					return string;
 				}
 			}

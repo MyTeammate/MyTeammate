@@ -66,4 +66,7 @@ public interface SystemUserService {
     public int loginLog(Systemlog log);
     
     public int freezeSysteUser2(Map<String,Object> map);
+    
+  //修改权限
+    public int addRoleId3(Map<String,Object> map);
 }

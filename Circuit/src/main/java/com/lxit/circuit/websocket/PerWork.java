@@ -37,7 +37,7 @@ public class PerWork {
      */
     @OnOpen
     public void onOpen(Session session,EndpointConfig  config){
-    	System.out.println("连接成功！");
+    	//System.out.println("连接成功！");
     HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
    	User user = (User) httpSession.getAttribute("user");	
         this.session = session;
@@ -57,13 +57,13 @@ public class PerWork {
     
     
     /**
-     * 收到客户端消息后调用的方法
+     * 收到客户端消息后调用的方法、
      * @param message 客户端发送过来的消息
      * @param session 可选的参数
      */
     @OnMessage
     public void onMessage(String message, Session session,EndpointConfig  config) {
-   	   System.out.println("来自客户端的消息:" + message);
+   	 //  System.out.println("来自客户端的消息:" + message);
    	     Set<Integer> users = sessionList.keySet();
 	   	for (Integer userId : users) {
 	   		int id = Integer.parseInt(message);
@@ -71,7 +71,7 @@ public class PerWork {
 				Session se = sessionList.get(userId);
 				try {
 					se.getBasicRemote().sendText(userId+"");
-					 System.out.println("发送给:" + userId);
+					// System.out.println("发送给:" + userId);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

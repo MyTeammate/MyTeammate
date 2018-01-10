@@ -67,7 +67,7 @@ function updatePwd(){
 // 年龄的验证
 function isAge() {
 	var str = document.getElementById("age").value;
-	var ag = /^[1-9]*$/;
+	var ag = /^[0-9]*$/;
 	if (str != "") {
 		if (str.search(ag) < 0) {
 			document.getElementById('agess').innerHTML = '年龄格式错误！';

@@ -77,7 +77,7 @@ $(function(){
 		}, 
 		onClick : function(node) {
 			if (node.url) { 
-				console.log($("#tabs"))
+				//console.log($("#tabs"))
 				if ($("#tabs").tabs('exists', node.text)) {
 					$("#tabs").tabs('select', node.text);
 				} else {

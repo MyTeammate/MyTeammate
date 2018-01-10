@@ -58,18 +58,33 @@ $(function() {
 		},{
 			field : 'flawGrade',
 			title : '缺陷级别',
+			width : 100,
+			align: "center",
+		},{
+			field : 'operate',
+			title : '操作',
 			width : 95,
 			align: "center",
 			//hidden : true,
 			formatter : function (value, row){
-				 return  '<span><a href="javascript:updateFconfirm()" style="text-decoration:none;">级别确认</a></span>';
+				 return  '<span><a href="javascript:updateFconfirm('+row.id+')" style="text-decoration:none;">级别确认</a></span>';
 			}
 		}, ] ],
 	});
 	
+	$("#GradeId").combobox({
+		valueField : 'id',
+		textField : 'settingName',
+		editable : false,// 不可编辑，只能选择
+		panelHeight : 'auto',
+		required : true,
+	    missingMessage : '请选择缺陷级别',
+		url : 'getFlawGrade',
+	});
+	
 	$('#updateflawconfirm').dialog({
-		width : 250,
-		height : 150,
+		width : 300,
+		height : 120,
 		top : 300,
 		title : '缺陷等级确认',
 		modal : true,// 后面加一个不可编辑
@@ -77,18 +92,29 @@ $(function() {
 		buttons : [ {
 			text : '保存',
 			handler : function() {
-				var flawid = $("#GradeId").val();
-				alert("---------------------------------"+flawid);
 				if ($('#updateflawconfirm').form('validate')) {
+					//alert($('#updateflawconfirm').serialize());
 					$.ajax({
 						url : 'updatefla',
 						type : "POST",
-						data :{"flawGrade": flawid},
+						data :$('#updateflawconfirm').serialize(),
+						success:function(result){
+							if(result==true){
+								 $.messager.show({
+										title:'提示',
+										msg:'缺陷等级确认成功',
+										timeout:100,
+										showType:"slide",
+										style:{
+										}
+									});
+							}
+						}
 					});
 					// 关闭窗口
 					$('#updateflawconfirm').dialog('close').form('reset');
 					// 刷新数据表格
-					$('#flaw_datagrid').datagrid('reload');
+					$('#flawCon_datagrid').datagrid('reload');
 				}
 			}
 		}, {
@@ -98,24 +124,32 @@ $(function() {
 			}
 		} ]
 	})
+	
+	$('#plasttime').combobox({
+		url : 'eliminatequery/selFlawPost',
+		valueField : 'id',
+		textField : 'name',
+		width : 130,
+	});
+	
 });
 
 function lookflawconfirmiid(id){
-	alert(id);
+	//alert(id);
 }
 
 //修改缺陷类型
-function updateFconfirm() {
-	var select = $("#flawCon_datagrid").datagrid("getSelected");
-	alert(select.id);
+function updateFconfirm(id) {
+//	var select = $("#flawCon_datagrid").datagrid("getSelected");
+//	alert(select.id);
 	//console.log(select)
 	
 	$.ajax({
-				url : "updateflawconfirmgrade",
+				url : "lookflawconfirm",
 				type : "post",
-				data : {id:select.id},
+				data : {id:id},
 				success : function(result) {
-					console.log(result);
+					//console.log(result);
 				},
 				complete : function(XMLHttpRequest, textStatus) {
 					if (XMLHttpRequest.readyState == 4
@@ -128,4 +162,18 @@ function updateFconfirm() {
 					}
 				}
 			});
+}
+
+//模糊查询
+function flawConf(){	
+	$('#flawCon_datagrid').datagrid('reload', {
+		rencoding : $("#rencoding").val(),
+		xlconding : $("#xlconding").val(),
+		gtcoding : $("#gtcoding").val(),
+		fxperson : $("#fxperson").val(),
+		plasttime : $("#plasttime").combobox('getText'),
+		discoverDate : $("#discoverDate").val(),
+		endtime : $("#endtime").val()		
+	});
+
 }

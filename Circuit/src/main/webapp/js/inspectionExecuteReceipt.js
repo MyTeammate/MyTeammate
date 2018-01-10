@@ -154,7 +154,7 @@ $(function(){
 						endDate : $("#inspectionEndDate").val()
 					});
 				}else{
-					console.log('日期验证不通过！');
+					//console.log('日期验证不通过！');
 				}
 			}
 	}

@@ -55,6 +55,9 @@ public interface SystemUserDao {
     //修改权限
     public int addRoleId2(Map<String,Object> map);
     
+  //修改权限
+    public int addRoleId3(Map<String,Object> map);
+    
   //删除用户
     public int delete(int id);
     
@@ -69,4 +72,5 @@ public interface SystemUserDao {
     
   //日志记录登陆或注销
     public int loginLog(Systemlog log);
+    
 }

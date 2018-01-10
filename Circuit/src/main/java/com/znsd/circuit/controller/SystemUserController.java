@@ -162,8 +162,10 @@ public class SystemUserController {
 	//根据Id查询用户信息
 	@ResponseBody
 	@RequestMapping("/userId")
-	public User IdSysteUser(int id){
-		return systemUserService.IdSysteUser(id);
+	public User IdSysteUser(HttpSession session,int id){
+		User u=systemUserService.IdSysteUser(id);
+		session.setAttribute("ruId",u.getRoleId());
+		return u;
 	}
 	
 	//修改，判断账号不重复
@@ -182,7 +184,7 @@ public class SystemUserController {
 	@ResponseBody
 	@RequestMapping("/queryName2")
 	public String queryNameSysteUser2(int id,String name){
-		System.out.println(id+","+name);
+		//System.out.println(id+","+name);
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("id",id);
 		map.put("name",name);
@@ -211,12 +213,20 @@ public class SystemUserController {
 		String time=format.format(date);
 		user.setUpdatedDate(time);
 		int adduser=systemUserService.update(user);
+		System.out.println(adduser+","+roleId);
 		if(adduser==1&&roleId!=0){
 			User u2=systemUserService.queryUserName(userName);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("userId", u2.getId());
 			map.put("roleId",roleId);
-			int i=systemUserService.addRoleId2(map);
+			int ruId=(int) session.getAttribute("ruId");
+			int i=0;
+			if(ruId==0) {
+				i=systemUserService.addRoleId2(map);
+			}else {
+				i=systemUserService.addRoleId3(map);
+			}
+			System.out.println(i+",,"+u2.getId()+"::"+roleId);
 			return i;
 		}else if(adduser==1){
 			return adduser;
@@ -234,6 +244,9 @@ public class SystemUserController {
 	@ResponseBody
 	@RequestMapping("/listSystemLog")
 	public Map<String,Object> listSystemLog(HttpSession session,@RequestParam("page") int page, @RequestParam("rows") int rows,String uentryDate,String uentryDate2){
+		if(session.getAttribute("logUserId")==null){
+			return null;
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		int pageIndex = (page - 1) * rows;
@@ -246,8 +259,9 @@ public class SystemUserController {
 		}
 		map.put("uentryDate", uentryDate);
 		map.put("uentryDate2", uentryDate2);
+		map.put("logUserId", session.getAttribute("logUserId"));
 		int count = systemUserService.systemLogCount(map);
-		System.out.println("count:"+count);
+		//System.out.println("count:"+count);
 		List<Systemlog> listLog=systemUserService.listSystemLog(map);
 		for (Iterator iterator = listLog.iterator(); iterator.hasNext();) {
 			Systemlog log = (Systemlog) iterator.next();
@@ -260,6 +274,7 @@ public class SystemUserController {
 		Map<String,Object> map2=new HashMap<String,Object>();
 		map2.put("rows",listLog);
 		map2.put("total",count);
+		session.removeAttribute("logUserId");
 		return map2;
 	}
 	
@@ -274,10 +289,10 @@ public class SystemUserController {
     @ResponseBody
     @RequestMapping("/comparison")
     public String comparison(String now,String date){
-    	System.out.println();
-    	System.out.println(now.length());
-    	System.out.println(now.substring(0, now.length()-17));
-    	System.out.println(now+","+date);
+    	//System.out.println();
+    	//System.out.println(now.length());
+    	//System.out.println(now.substring(0, now.length()-17));
+    	//System.out.println(now+","+date);
     	return "success";
     }
 }

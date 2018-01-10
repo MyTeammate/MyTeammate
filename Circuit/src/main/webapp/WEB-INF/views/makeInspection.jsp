@@ -91,7 +91,7 @@
    	<select id="fb_list" multiple="multiple" style="text-align: center; height:120px;width:128px"></select> 
 	<p style="margin: 0px 0px 0px 0px;font-size: 12px;position: relative;top: -135px;left: 180px;">&nbsp;&nbsp;已选巡检员</p>
    <div style="position: relative;left: 170px;bottom: 135px;">
-   <select id="select_list" multiple="multiple"
+   <select id="select_list2" multiple="multiple"
 	style="text-align: center; height:120px;width:128px"></select>
    </div>
 	<br/>

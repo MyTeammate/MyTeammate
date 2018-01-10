@@ -295,7 +295,7 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
 		INNER JOIN t_user u ON u.id=c.userId
 		INNER JOIN t_user u2 ON u2.id=t.taskMan
-		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		WHERE t.taskMan=#{creater} AND confirmstate=0 AND r.receiptState=1
 		<if test="taskCoding != null and taskCoding != ''">
 			and t.coding like #{taskCoding}
 		</if>
@@ -333,7 +333,7 @@ WHERE ins.taskId=#{taskId} AND inst.userId=#{userId} AND inst.isReceipter='是'
 		INNER JOIN t_systemparam sys ON sys.id = c.flawGrade
 		INNER JOIN t_user u ON u.id=c.userId
 		INNER JOIN t_user u2 ON u2.id=t.taskMan
-		WHERE t.taskMan=#{creater} AND confirmstate=1 AND r.receiptState=1
+		WHERE t.taskMan=#{creater} AND confirmstate=0 AND r.receiptState=1
 		<if test="taskCoding != null and taskCoding != ''">
 			and t.coding like '%${taskCoding}%'
 		</if>

@@ -33,6 +33,7 @@
 <link rel="stylesheet" href="css/roleConfig.css" />
 <script type="text/javascript" src="js/systemRole.js"></script>
 <script type="text/javascript" src="js/systemLog.js"></script>
+<script type="text/javascript" src="js/flaw_query.js"></script>
 
 
 
@@ -54,10 +55,9 @@
 	</div>
 	<div data-options="region:'center'" style="overflow: hidden; background: #eee;">
 		<div id="tabs" class="easyui-tabs" style="height: 750px">
-			<div title="起始页" data-options="closable:true,iconCls:'icon-house'"
+			<div title="待办列表" data-options="closable:true,iconCls:'icon-house',href:'personalWork'"
 				class="iconfont .icon-logistic"
 				style="padding: 0 10px; display: block;">
-				<p style="color: #00EE00;">欢迎来到电力巡检系统！</p>
 			</div>
 		</div>
     </div>   

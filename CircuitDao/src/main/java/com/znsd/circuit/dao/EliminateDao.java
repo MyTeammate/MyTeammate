@@ -297,8 +297,6 @@ public interface EliminateDao {
 	 */
 	public int updateTask(Map<String,Object> map);
 	
-	
-	
 	/**
 	 * 根据消缺ID获取对应的对象
 	 * @param eliminateId

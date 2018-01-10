@@ -50,7 +50,8 @@
 		AND r.xtaskid=a.id AND
 		h.id=f.threadId AND wa.id=f.flawId
 		AND
-		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate is NOT NULL
+		f.towerId=w.id AND s.id=f.flawGrade AND a.actualDate is NOT NULL 
+		and a.coding=#{tcoding}
 	</select>
 
 	<select id="selectElTower" parameterType="java.util.Map"

@@ -45,13 +45,13 @@ public class LineController {
 	
 	@RequestMapping("/getLineData")
 	@ResponseBody
-	public Map<String,Object> getLineData(@RequestParam("page")int page,@RequestParam("rows")int rows,@RequestParam(value="coding",required=false)String coding,@RequestParam(value="status",required=false)String status) {
+	public Map<String,Object> getLineData(@RequestParam("page")int page,@RequestParam("rows")int rows,@RequestParam(value="name",required=false)String coding,@RequestParam(value="status",required=false)String status) {
 		Line line = new Line();
 		if(status!=null) {
 			line.setState(status.equals("启用")?0:1);
 			line.setStateString(status);
 		}
-		line.setCoding(coding);
+		line.setName(coding);
 		return lineService.pageSelectLine(page, rows, line);
 	}
 	
@@ -92,7 +92,7 @@ public class LineController {
 		User user = (User) session.getAttribute("user");
 		line.setCreateDate(datetime);
 		line.setUpdateDate(datetime);
-		line.setCreateById(1);
+		line.setCreateById(user.getId());
 		line.setDeleteFlag("否");
 		int lineId = lineService.insertLine(line);
 		if(lineId>0) {

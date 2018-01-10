@@ -109,6 +109,7 @@ function role_tb(){
 											type:"post",
 											data:data,
 											success:function(result){
+												alert('result:'+result)
 												if(result=="11"){
 													$('#name2').html("*");
 													$('#coding2').html("*");
@@ -130,14 +131,14 @@ function role_tb(){
 														}
 													})
 												}else if(result=="12"){
-													$('#name2').html("角色名称已存在！");
+													$('#name2').html("已存在！");
 													$('#coding2').html("*");
 												}else if(result=="21"){
 													$('#name2').html("*");
-													$('#coding2').html("角色编号已存在！");
+													$('#coding2').html("已存在！");
 												}else if(result=="22"){
-													$('#name2').html("角色名称已存在！");
-													$('#coding2').html("角色编号已存在！");
+													$('#name2').html("已存在！");
+													$('#coding2').html("已存在！");
 												}
 											}
 										})
@@ -305,14 +306,14 @@ function roleUpdate(id){
 														}
 													})
 												}else if(result=="12"){
-													$('#newName2').html("角色名称已存在！");
+													$('#newName2').html("已存在！");
 													$('#newCoding2').html("*");
 												}else if(result=="21"){
 													$('#newName2').html("*");
-													$('#newCoding2').html("角色编号已存在！");
+													$('#newCoding2').html("已存在！");
 												}else if(result=="22"){
-													$('#newName2').html("角色名称已存在！");
-													$('#newCoding2').html("角色编号已存在！");
+													$('#newName2').html("已存在！");
+													$('#newCoding2').html("已存在！");
 												}
 											}
 										})

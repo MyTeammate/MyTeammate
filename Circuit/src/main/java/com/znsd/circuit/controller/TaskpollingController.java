@@ -43,7 +43,7 @@ public class TaskpollingController {
 		if (conteTitle != "" && conteTitle != null) {
 			map.put("title", "%" + conteTitle + "%");
 			List<Taskpolling> list1 = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list1);
+			//System.out.println(list1);
 			for (Taskpolling polling : list1) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -52,7 +52,7 @@ public class TaskpollingController {
 		} else if (renTitle != "" && renTitle != null) {
 			map.put("make", "%" + renTitle + "%");
 			List<Taskpolling> list2 = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list2);
+			//System.out.println(list2);
 			for (Taskpolling polling : list2) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -60,7 +60,7 @@ public class TaskpollingController {
 			maps.put("total", list2.size());
 		} else {
 			List<Taskpolling> list = taskpollingService.selelectTaskPoll(map);
-			System.out.println(list);
+			//System.out.println(list);
 			for (Taskpolling polling : list) {
 				polling.setDescription("<a href='javascript:onclick=selId()'>查看</a>");
 			}
@@ -102,11 +102,11 @@ public class TaskpollingController {
 
 			map.put("start", sTitle);
 			map.put("end", eTitle);
-			System.out.println(map);
+			//System.out.println(map);
 		}
 		//int count = taskpollingService.getselTaskCount(coding);
 		List<Taskpolling> list = taskpollingService.selectTower(map, coding);
-		System.out.println(list);
+		//System.out.println(list);
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
@@ -115,7 +115,7 @@ public class TaskpollingController {
 	@ResponseBody
 	@RequestMapping("/toPExcel")
 	public String toPExcel(HttpSession session,String path,String name) {
-		System.out.println(path+","+name);
+		//System.out.println(path+","+name);
 		List<Taskpolling> taskList = taskpollingService.eSelelectTaskPoll();
 		toEP t=new toEP();
 		String mark=t.outputExcel(taskList,"巡检",path,name);

@@ -59,7 +59,7 @@ $(function(){
 	$("#add").click(function(){
 		  if($("#fb_list option:selected").length>0) {
 		   $("#fb_list option:selected").each(function(){
-		    $("#select_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		    $("#select_list2").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
 		    
 		    $(this).remove();
 		   })
@@ -69,8 +69,8 @@ $(function(){
 		 });
 		 
 		 $("#delete").click(function() {
-		   if($("#select_list option:selected").length>0) {
-		    $("#select_list option:selected").each(function(){
+		   if($("#select_list2 option:selected").length>0) {
+		    $("#select_list2 option:selected").each(function(){
 		     $("#fb_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
 		      $(this).remove();
 		    })
@@ -149,7 +149,7 @@ function initDate(){
  * 选择巡检人员点击保存
  */
 function save_staffs(){
-	var staffs = $.map($("#select_list option:not(:selected)"),
+	var staffs = $.map($("#select_list2 option:not(:selected)"),
             function(ele){return ele.text} 
          ).join(",");
 	$("textarea[name=inspectionStaff]").text(staffs);
@@ -180,10 +180,10 @@ function checkMakeInspection(){
  */
 function saveInspection(){
 	if(checkMakeInspection()){
-		var staffs = $.map($("#select_list option:not(:selected)"),
+		var staffs = $.map($("#select_list2 option:not(:selected)"),
 	            function(ele){return ele.value} 
 	         ).join(",");
-		console.log('staffs : '+staffs);
+		//console.log('staffs : '+staffs);
 		$.ajax({
 			url:'saveInspection',
 			type:"POST",

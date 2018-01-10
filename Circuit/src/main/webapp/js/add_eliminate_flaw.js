@@ -73,6 +73,34 @@ $(function() {
 								} ] ],
 						toolbar : "#smalldiv"
 					});
+	$("#update_wait_manager").datagrid({
+		url : "eliminate/update_manager",
+		height : 380,
+		width : 865,
+		pagination : true,
+		pageNumber : 1,
+		pageSize : 5,
+		rownumbers : true,
+		pagination : true,
+		pageList : [ 5, 10, 15, 20 ],
+		columns : [ [
+				{field : 'id',title : '自动编号',width : 96,checkbox : true},
+				{field : 'threadCoding',title : '线路编号',width : 96,align : 'center'},
+				{field : 'towerCoding',title : '杆塔编号',width : 96,align : 'center'},
+				{field : 'flawGrade',title : '缺陷等级',width : 96,align : 'center'},
+				{field : 'flawType',title : '缺陷类型',width : 96,align : 'center'},
+				{field : 'flawDesc',title : '缺陷描述',width : 96,align : 'center'},
+				{field : 'findUser',title : '发现人',width : 96,align : 'center'},
+				{field : 'findDate',title : '发现时间',width : 96,align : 'center'},
+				{field : 'flag',title : '操作',width : 96,align : 'center',
+					formatter : function(value, row, index) {
+						var oper = '<span><a style="color:#008B00" href="javaScript:delete_yetid('
+								+ row.id + ')">移除</a>｜'
+						return oper;
+					}
+				} ] ],
+		toolbar : "#smalldivtwo"
+	});
 	$('#taskMan').combobox({
 		url : 'eliminate/getLineUser',
 		valueField : 'id',
@@ -97,7 +125,7 @@ $(function() {
 	 * $('#taskbills').combobox('setValues', data[i].settingName); } }
 	 * $("#taskbills").append(str); } })
 	 */
-
+	
 });
 function taskSave_update(){
 	var update_taskcoding = $("#update_taskcoding").val();
@@ -108,7 +136,7 @@ function taskSave_update(){
 	var update_taskRemark = $("#update_taskRemark").val();
 	var taskid = $("#taskid").val();
 	var eliminateId = $("#eliminateId").val();
-	console.log(taskbills,taskMan);
+	//console.log(taskbills,taskMan);
 	$.ajax({
 		url:"eliminate/update_task_eliminate",
 		type:"post",
@@ -209,7 +237,7 @@ function delete_yetid(id){
 
 function save_update() {
 	var row = $('#xun_manager').datagrid('getSelections');
-	console.log(row);
+	//console.log(row);
 	var str = "";
 	for (var i = 0; i < row.length; i++) {
 		str += row[i].id + ",";
@@ -262,7 +290,7 @@ function save_update() {
 
 function save_xun() {
 	var row = $('#xun_manager').datagrid('getSelections');
-	console.log(row);
+	//console.log(row);
 	var str = "";
 	for (var i = 0; i < row.length; i++) {
 		str += row[i].id + ",";
@@ -334,7 +362,7 @@ function save_xun() {
 									width : 96,
 									align : 'center',
 									formatter : function(value, row, index) {
-										var oper = '<span><a style="color:#008B00" href="javaScript:lookInspection('
+										var oper = '<span><a style="color:#008B00" href="javaScript:delete_yetid('
 												+ row.id + ')">移除</a>｜'
 										return oper;
 									}
@@ -361,7 +389,7 @@ $(function() {
 							+ data[i].name + "</option>"
 				}
 			}
-			console.log(str);
+			//console.log(str);
 			$("#fb_list").append(str);
 		}
 	});
@@ -403,7 +431,7 @@ function save_user() {
 	var str = $.map($("#select_list option:not(:selected)"), function(ele) {
 		return ele.value
 	}).join(",");
-	console.log(str);
+	//console.log(str);
 	$.ajax({
 		url : "eliminate/getEliminateUserById?str=" + str,
 		type : "post",
@@ -411,7 +439,7 @@ function save_user() {
 			$("#select_user").html("");
 			var str = "";
 			if (data) {
-				console.log(data);
+				//console.log(data);
 				for (var i = 0; i < data.length; i++) {
 					str += "<option value='" + data[i].id + "' name='options'>"
 							+ data[i].name + "</option>"
@@ -424,7 +452,7 @@ function save_user() {
 	$("#bigdiv").hide(1000);
 }
 function flaw_add_staff() {
-	alert(1);
+	//alert(1);
 }
 function hid() {
 	$("#bigdiv").hide(1000);
@@ -515,17 +543,16 @@ function taskSave() {
 	var mid = $("#taskMan").combobox('getValue');// 负责人
 	var taskDesc = $("#taskDesc").val();// 任务描述
 	var taskRemark = $("#taskRemark").val();// 任务备注
-	var str = $.map($("#select_user option:not(:selected)"), function(ele) {
+	/*var str = $.map($("#select_user option:not(:selected)"), function(ele) {
 		return ele.value
-	}).join(",");// 已经选择的消缺员id
-	console.log(str);
+	}).join(",");*/// 已经选择的消缺员id
 	var row = $('#add_flaw').datagrid('getSelections');
 	var alstr = "";
 	for (var i = 0; i < row.length; i++) {
 		alstr += row[i].id + ",";
 	}
-	console.log(taskcoding, taskname, taskbills, mid, taskDesc, taskRemark,
-			str, alstr);
+	/*console.log(taskcoding, taskname, taskbills, mid, taskDesc, taskRemark,
+			 alstr);*/
 	if (taskcoding == "" || taskname == "" || taskbills == ""
 			|| taskbills == "请选择" || mid == "请选择" || mid == ""
 			|| taskDesc == "" || taskRemark == "" || alstr == "") {
@@ -545,7 +572,7 @@ function taskSave() {
 				mid : mid,
 				taskDesc : taskDesc,
 				taskRemark : taskRemark,
-				str : str,
+				/*str : str,*/
 				alstr : alstr
 			},
 			success : function(data) {

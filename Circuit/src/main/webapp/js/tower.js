@@ -23,6 +23,7 @@ function tower(){
 
 function addTower(){
 	$("#towerCodingHd").val("");
+	$("#towerCoding").val("");
 	$('#addTower').window('open');  // open a window    
 }
 
@@ -40,9 +41,7 @@ function validateTower(node,msg){
 		cache:false,
 		success:function(result){
 			if(result=="false"){
-				alert($("#towerCodingHd").val())
 				if($("#towerCodingHd").val()!=""){
-					alert($(node).val())
 					if($(node).val()!=$("#towerCodingHd").val()){
 						towerFlaf = "false";
 						if(msg=="update"){
@@ -75,9 +74,7 @@ function smtUpdateTower(){
 		}
 	});*/
 	var tower = $("#tower").datagrid("getSelected");
-	if(!tower.lineId){
-		$.messager.alert('警告','该杆塔已属于某一条路线，您不能执行此操作！');  
-	}else{
+	
 		$('#towerUpdateForm').form('submit', {
 			url: "updateTower",
 			onSubmit: function(){
@@ -96,7 +93,6 @@ function smtUpdateTower(){
 				
 			}
 		});
-	}
 }
 
 function smtTower() {
@@ -134,7 +130,7 @@ function closeTowerUpdate(){
 
 function updateTower(){
 	var tower = $("#tower").datagrid("getSelected");
-	console.log(tower)
+	//console.log(tower)
 	if(tower){
 		$.ajax({
 			url:"isLineId",

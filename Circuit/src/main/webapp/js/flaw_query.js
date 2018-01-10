@@ -119,5 +119,5 @@ function elimiates_query() {
 }
 
 function exportExcel(){
-	alert(222)
+	//alert(222)
 }

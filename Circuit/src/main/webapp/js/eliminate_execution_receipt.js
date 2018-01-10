@@ -174,7 +174,7 @@ function update_return_save_receipt(){
 function save_receipte_xiafa(){
 	var xiafa_save_eliminateId = $("#xiafa_save_eliminateId").val();
 	var xiafa_receipte = $("#xiafa_receipte").val();
-	console.log(xiafa_save_eliminateId,xiafa_receipte);
+	//console.log(xiafa_save_eliminateId,xiafa_receipte);
 	$.ajax({
 		url:"eliminate/update_eliminate_receipte_xiafa",
 		data:{
@@ -184,7 +184,7 @@ function save_receipte_xiafa(){
 		type : "post",
 		success:function(data){
 			if(data=="true"){
-				alert(111);
+				//alert(111);
 				$.messager.show({
 					title : '友好提示您',
 					msg : '<h3 style="color: red;">审查成功!</h3>',
@@ -283,7 +283,7 @@ function save_receipte(){
 	var success_desc = $("#success_desc").val();
 	var work_record = $("#work_record").val();
 	var final_report = $("#final_report").val();
-	console.log(save_eliminateId,success_desc,work_record,final_report);
+	//console.log(save_eliminateId,success_desc,work_record,final_report);
 	$.ajax({
 		url:"eliminate/update_eliminate_receipte",
 		data:{

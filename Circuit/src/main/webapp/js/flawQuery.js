@@ -182,8 +182,8 @@ $(function(){
 					var date=$("#inspectionBeginDate2").val();
 					var endDate=$("#flawQueryEnd2").val();
 					
-					console.log('taskCoding:'+taskCoding+',threadCoding:'+threadCoding+",flawType:"+flawType+',flawGrade:'+flawGrade);
-					console.log('discoverDate:'+discoverDate+',endDiscover'+endDiscover+",date:"+date+',endDate:'+endDate);
+					 //console.log('taskCoding:'+taskCoding+',threadCoding:'+threadCoding+",flawType:"+flawType+',flawGrade:'+flawGrade);
+					//console.log('discoverDate:'+discoverDate+',endDiscover'+endDiscover+",date:"+date+',endDate:'+endDate);
 					
 					$("#flawQuery_datagrid").datagrid('reload',{
 						taskCoding:$("#taskCoding").val(),
@@ -196,7 +196,7 @@ $(function(){
 						endDiscover:$("#flawQueryEnd2").val()
 					})
 				}else{
-					console.log('日期验证不通过！');
+					//console.log('日期验证不通过！');
 				}
 				
 			}

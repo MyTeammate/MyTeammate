@@ -154,7 +154,7 @@ public class EliminateController {
 		session.setAttribute("idd", id);
 		String coding = "es_flaw";
 		List<User> list = eliminateService.getAlleliminateUser(coding);
-		System.out.println("所有的existUserById消缺员....."+list);
+		//System.out.println("所有的existUserById消缺员....."+list);
 		return list;
 	}
 
@@ -222,9 +222,9 @@ public class EliminateController {
 		User user = (User) session.getAttribute("user");
 		int taskman = user.getId();// 下发人
 		String date = (String) session.getAttribute("date");// 登录时间
-		System.out.println("登录时间： ：" + date + "下发人   " + taskman + "任务编码：：" + taskcoding + "  任务名称" + taskname
-				+ "  任务单据" + taskbills + "  负责人" + mid + "  任务描述" + taskDesc + "  任务备注" + taskRemark + /*"  消缺员" + str*/
-				 "  缺陷" + alstr + "  ");
+		/*System.out.println("登录时间： ：" + date + "下发人   " + taskman + "任务编码：：" + taskcoding + "  任务名称" + taskname
+				+ "  任务单据" + taskbills + "  负责人" + mid + "  任务描述" + taskDesc + "  任务备注" + taskRemark + "  消缺员" + str
+				 "  缺陷" + alstr + "  ");*/
 		Map<String, Object> map1 = new HashMap<>();
 		map1.put("taskcoding", taskcoding);
 		map1.put("taskname", taskname);
@@ -310,7 +310,7 @@ public class EliminateController {
 	@ResponseBody
 	public List<User> existUser(Integer id) {
 		List<User> list=eliminateService.existUserById(id);
-		System.out.println("。。。。。。。。。分打发阿迪斯发  "+list);
+		//System.out.println("。。。。。。。。。分打发阿迪斯发  "+list);
 		return list;
 	}
 
@@ -320,7 +320,7 @@ public class EliminateController {
 	public Map<String,Object> updateEliminateUserById(String str,HttpSession session) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		int id = (int) session.getAttribute("idd");
-		System.out.println("。。。    id。"+id+"str........+"+str);
+		//System.out.println("。。。    id。"+id+"str........+"+str);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String time = sdf.format(new Date());
 		User user = (User) session.getAttribute("user");
@@ -435,7 +435,7 @@ public class EliminateController {
 
 		int count = eliminateService.getCountByCondition(map);// 总条数
 		List<Eliminate> list = eliminateService.getAllTaskByCondition(map);
-		System.out.println("..........." + list);
+		//System.out.println("..........." + list);
 		maps.put("rows", list);
 		maps.put("total", count);
 		return maps;
@@ -600,7 +600,7 @@ public class EliminateController {
 	@RequestMapping("/update_eliminate_receipte_xiafa")
 	@ResponseBody
 	public String update_eliminate_receipte_xiafa(Integer xiafa_save_eliminateId,String xiafa_receipte) {
-		System.out.println("xiafa_save_eliminateId。。。"+xiafa_save_eliminateId+"...xiafa_receipte"+xiafa_receipte);
+		//System.out.println("xiafa_save_eliminateId。。。"+xiafa_save_eliminateId+"...xiafa_receipte"+xiafa_receipte);
 		Map<String,Object> map = new HashMap<>();
 		map.put("eliminateId",xiafa_save_eliminateId);
 		map.put("xiafa_receipte", xiafa_receipte);
@@ -696,9 +696,9 @@ public class EliminateController {
 	//修改分分配的其他信息
 		@RequestMapping("/update_wait_eliminate")
 		public String update_wait_eliminate(Integer id,Model model,HttpSession session) {
-			System.out.println("。。。。。。。。。id"+id);
+			//System.out.println("。。。。。。。。。id"+id);
 			UpdateWait updateWait= eliminateService.select_update_wait(id);
-			System.out.println("。。。。。。"+updateWait);
+			//System.out.println("。。。。。。"+updateWait);
 			model.addAttribute("updateWait",updateWait);
 			int taskid = updateWait.getTaskId();
 			session.setAttribute("taskid", taskid);
@@ -710,7 +710,7 @@ public class EliminateController {
 		public List<MyFlaw> update_manager(HttpSession session){
 			int id = (int) session.getAttribute("taskid");
 			List<MyFlaw> list = eliminateService.update_EliminateBytaskId(id);
-			System.out.println("list........"+list);
+			//System.out.println("list........"+list);
 			return list;
 		}
 		@RequestMapping("/removerecord")
@@ -728,7 +728,7 @@ public class EliminateController {
 			int taskid = (int) session.getAttribute("taskid");
 			String [] s = str.split(",");
 			for (String string : s) {
-				System.out.println("string......"+string);
+				//System.out.println("string......"+string);
 				int id = Integer.parseInt(string);
 				eliminateService.insertintoRecord(taskid,id);
 				
@@ -742,7 +742,7 @@ public class EliminateController {
 		public String update_task_eliminate(String update_taskcoding,String update_taskname,String taskbills,Integer taskMan,
 				String update_taskDesc,String update_taskRemark,Integer taskid,Integer eliminateId) {
 			
-			System.out.println("。。。。taskbills"+taskbills+"taskman...."+taskMan);
+			//System.out.println("。。。。taskbills"+taskbills+"taskman...."+taskMan);
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("workBills",taskbills);
 			map.put("taskMan", taskMan);

@@ -25,7 +25,7 @@ public class LineServiceImpl implements LineService {
 		Operation operation = new Operation();	
 		params.put("page", (page-1)*rows);
 		params.put("row", rows);
-		line.setCoding(line.getCoding()!=null&&!line.getCoding().equals("")?"%"+line.getCoding()+"%":null);
+		line.setName(line.getName()!=null&&!line.getName().equals("")?"%"+line.getName()+"%":null);
 		params.put("line", line);
 		List<Line> lines = lineDao.pageSelectLine(params);
 		int total = lineDao.getLineTotal(params);

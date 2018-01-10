@@ -9,8 +9,8 @@ public class FlawCont {
 	private String serviceAbility;		//完好率
 	private String flawDesc;			//缺陷描述
 	private String discoverDate;		//发现时间
-	private int userId;					//发现人
-	private int flawGrade;				//缺陷级别
+	private String userId;					//发现人
+	private String flawGrade;				//缺陷级别
 	private int confirmstate;			//缺陷等级状态
 	private int updatedBy;
 	
@@ -68,18 +68,22 @@ public class FlawCont {
 	public void setDiscoverDate(String discoverDate) {
 		this.discoverDate = discoverDate;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getFlawGrade() {
+
+	public String getFlawGrade() {
 		return flawGrade;
 	}
-	public void setFlawGrade(int flawGrade) {
+
+	public void setFlawGrade(String flawGrade) {
 		this.flawGrade = flawGrade;
 	}
+
 	public int getConfirmstate() {
 		return confirmstate;
 	}
@@ -102,7 +106,7 @@ public class FlawCont {
 	}
 
 	public FlawCont(int id, String taskcoding, String threadcoding, String towercoding, String flawname,
-			String serviceAbility, String flawDesc, String discoverDate, int userId, int flawGrade, int confirmstate,
+			String serviceAbility, String flawDesc, String discoverDate, String userId, String flawGrade, int confirmstate,
 			int updatedBy) {
 		super();
 		this.id = id;

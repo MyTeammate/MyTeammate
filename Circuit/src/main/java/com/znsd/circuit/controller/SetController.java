@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -64,7 +65,8 @@ public class SetController {
     
   //用户管理日志
     @RequestMapping("/systemLog")
-    public String systemLog(){
+    public String systemLog(int logUserId,HttpSession session){
+    	session.setAttribute("logUserId", logUserId);
     	return "systemLog";
     }
     

@@ -39,7 +39,7 @@ public class PersonalworkServiceImpl implements PersonalworkService {
 		    if(personalwork2.getType().equals("缺陷确认任务")) {
 		    	Flawconfirm flawconfirm = personalworkDao.getFlawconfirmById(personalwork2.getTaskId());
 		    	if(flawconfirm.getConfirmstate()==1) {
-		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkFlaw()'>查看</a>");
+		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkFlaw()'>前往查看</a>");
 		    		rs.add(personalwork2);
 		    	}else {
 		    		personalwork2.setIsAccomplish(1);
@@ -49,9 +49,9 @@ public class PersonalworkServiceImpl implements PersonalworkService {
 		    	Task task = personalworkDao.getTaskById(personalwork2.getTaskId());
 		    	
 		    	if(personalwork2.getType().equals("消缺任务")) {
-		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkEliminating()'>查看</a>");
+		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkEliminating()'>前往查看</a>");
 		    	}else if(personalwork2.getType().equals("巡检任务")) {
-		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkInspection()'>查看</a>");
+		    		personalwork2.setOperation("<a href='javascript:onclick=queryWorkInspection()'>前往查看</a>");
 		    	}
 		    	if(task.getState().equals("5")) {
 		    		rs.add(personalwork2);

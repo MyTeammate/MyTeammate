@@ -276,7 +276,6 @@ public class InspectionController {
 		inspection.setCreater(user.getId() + "");
 		int taskId = inspectionService.makeInspection(inspection);
 		if(!ids.equals("")){
-			
 			allotInspection(taskId, ids,session);
 			String[] s = ids.split(",");
 			int id = Integer.parseInt(s[0]);
@@ -309,7 +308,6 @@ public class InspectionController {
 		
 		String state = inspectionService.getTaskState(taskId);
 		if("待分配".equals(state)){
-			System.out.println("保存分配");
 			inspectionService.allotInspection(taskId, userId, user.getId());
 			Personalwork personalwork = new Personalwork();
 			personalwork.setTaskId(taskId);
@@ -321,9 +319,8 @@ public class InspectionController {
 			personalwork.setType("巡检任务");
 			personalworkService.arriveWork(personalwork);
 		}else{
-			System.out.println("修改分配");
-			//inspectionService.deleteInspectionStaff(taskId);
-			//inspectionService.allotInspection(taskId, userId, user.getId());
+			inspectionService.deleteInspectionStaff(taskId);
+			inspectionService.allotInspection(taskId, userId, user.getId());
 		}
 		map.put("userId", userId[0]);
 		map.put("flag", true);
@@ -399,7 +396,6 @@ public class InspectionController {
 	@ResponseBody
 	@RequestMapping(value = "saveExecuteReceipt")
 	public boolean saveExecuteReceipt(Flawconfirm flawconfirm, HttpSession session) {
-		System.out.println("要保存的数据：" + flawconfirm);
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			return false;
@@ -500,7 +496,6 @@ public class InspectionController {
 	@ResponseBody
 	@RequestMapping(value="updateInspectionTask")
 	public boolean getUpdateInspectionInfo(Inspection inspection,HttpSession session){
-		System.out.println(inspection);
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			return false;
@@ -533,7 +528,6 @@ public class InspectionController {
 		map.put("pageSize", pageSize);
 		map.put("creater", creater);
 		
-		System.out.println(flawQuery.toString());
 		map.put("taskCoding",flawQuery.getTaskCoding() );
 		map.put("threadCoding", flawQuery.getThreadCoding());
 		if (!"--请选择--".equals(flawQuery.getFlawType())) {
@@ -561,7 +555,6 @@ public class InspectionController {
 	@ResponseBody
 	@RequestMapping(value="getInspectionTaskStaffs")
 	public List<User> getInspectionTaskStaffs(int taskId,HttpSession session){
-		System.out.println("getInspectionTaskStaffs");
 		List<User> staffs = inspectionService.getInspectionTackStaff(taskId);
 		return staffs;
 	}

@@ -17,7 +17,7 @@ import jxl.write.WriteException;
 
 public class toEP {
 	public String  outputExcel(List<?> arrayList,String type,String path,String name){
-		System.out.println("type:"+type+",path:"+path+",name:"+name);
+		//System.out.println("type:"+type+",path:"+path+",name:"+name);
 		WritableWorkbook bWorkuser = null;  
         try {  
             // 创建Excel对象  

@@ -32,7 +32,7 @@
     </select>
     
     <select id="selectSysteUser" resultType="SystemRole">
-        select id,coding,`name`,state,createBy,updatedDate from t_role
+        select id,coding,`name`,state,createBy,updatedDate from t_role where delete_flag='否'
     </select>
     
     <select id="queryUserNameSysteUser" resultType="User" parameterType="String">
@@ -108,8 +108,12 @@
         update t_user set userName=#{userName},name=#{name},entryDate=#{entryDate},leaveDate=#{leaveDate},updatedBy=#{updatedBy},updatedDate=#{updatedDate} where id=#{id} 
     </update>
     
-    <update id="addRoleId2" parameterType="Map">
-        update t_user_role set roleId=#{roleId} where userId=#{userId}
+    <insert id="addRoleId2" parameterType="Map">
+        insert into t_user_role (roleId,userId) values (#{roleId},#{userId})
+    </insert>
+    
+    <update id="addRoleId3" parameterType="Map">
+        update t_user_role set roleId=#{roleId} where userId=#{userId} 
     </update>
     
     <update id="delete" parameterType="int">
@@ -117,7 +121,7 @@
     </update>
     
     <select id="systemLogCount" resultType="int" parameterType="map">
-        select count(1) from t_log where delete_flag='否'
+        select count(1) from t_log where delete_flag='否' and userId=#{logUserId}
         <if test="uentryDate!=null &amp;&amp; uentryDate!=''">
 			and	createDate &gt; #{uentryDate}
 		</if>
@@ -131,7 +135,7 @@
         select tl.id,tl.userId,tu.userName,tl.logMessage,tl.createDate,tl.remark from t_log tl
 		LEFT JOIN t_user tu
 		on tl.userId=tu.id
-		where tl.delete_flag='否'
+		where tl.delete_flag='否' and tl.userId=#{logUserId}
 		<if test="uentryDate!=null &amp;&amp; uentryDate!=''">
 			and	tl.createDate &gt; #{uentryDate}
 		</if>

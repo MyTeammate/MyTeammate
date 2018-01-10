@@ -63,14 +63,14 @@ public class TaskeliminateController {
 			if (conteTitles != "" && conteTitles != null) {
 				map.put("cont", "%" + conteTitles + "%");
 			}
-			System.out.println("----**" + map);
+			//System.out.println("----**" + map);
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectEliminate(map);
 		for (TaskEliminate eliminate : list) {
 			eliminate.setEdescription("<a href='javascript:onclick=selElId()'>查看</a>");
 		}
-		System.out.println(list);
+		//System.out.println(list);
 		maps.put("rows", list);
 		maps.put("total", list.size());
 		return maps;
@@ -93,9 +93,9 @@ public class TaskeliminateController {
 			@RequestParam(value = "staTitle", required = false) String staTitle,
 			@RequestParam(value = "endTitle", required = false) String endTitle) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(tcoding + "///");
+	//	System.out.println(tcoding + "///");
 		int count = taskEliminateService.getselTowerCount(tcoding);
-		System.out.println(count + "****");
+		//System.out.println(count + "****");
 		int pageIndex = (page - 1) * rows;
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", rows);
@@ -118,7 +118,7 @@ public class TaskeliminateController {
 		}
 
 		List<TaskEliminate> list = taskEliminateService.selectElTower(map, tcoding);
-		System.out.println("=====" + list);
+		//System.out.println("=====" + list);
 		maps.put("rows", list);
 		maps.put("total", list.size()); 
 		return maps;
@@ -127,11 +127,11 @@ public class TaskeliminateController {
 	@ResponseBody
 	@RequestMapping("/toEExcel")
 	public String toExcel(HttpSession session,String path,String name) {
-		System.out.println(path+","+name+","+123123);
+		//System.out.println(path+","+name+","+123123);
 		List<TaskEliminate> taskList = taskEliminateService.eSelectEliminate();
 		for (Iterator iterator = taskList.iterator(); iterator.hasNext();) {
 			TaskEliminate taskEliminate = (TaskEliminate) iterator.next();
-			System.out.println(taskEliminate);
+			//System.out.println(taskEliminate);
 		}
 		toEP t=new toEP();
 		String mark=t.outputExcel(taskList,"消缺",path,name);

@@ -116,5 +116,10 @@ public class SystemUserServiceImpl implements SystemUserService{
 	public int freezeSysteUser2(Map<String, Object> map) {
 		return systemUserDao.freezeSysteUser2(map);
 	}
+
+	@Override
+	public int addRoleId3(Map<String, Object> map) {
+		return systemUserDao.addRoleId3(map);
+	}
     
 }

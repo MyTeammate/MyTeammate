@@ -49,7 +49,7 @@ public class TowerController {
 			User user = (User) session.getAttribute("user");
 			tower.setCreateDate(datetime);
 			tower.setUpdateDate(datetime);
-			tower.setCreateById(1);
+			tower.setCreateById(user.getId());
 			tower.setDeleteFlag("否");
 			tower = setStateTower(tower);
 			towerService.insertTower(tower);
@@ -86,6 +86,7 @@ public class TowerController {
 	@ResponseBody
 	public String isLineId(@RequestParam("id")int id) {
 		Tower tower = towerService.getTowerById(id);
+		//System.out.println("towerId:"+id+",result:"+tower.getLineId());
 		return tower.getLineId()==null?"true":"false";
 	}
 

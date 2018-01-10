@@ -145,7 +145,7 @@ function user_tb(){
 		})
 		
     		$('#user_add_option').dialog({
-	    		width:400,
+	    		width:480,
 	    		height:120,
 	    		inline:true,
 	    		left:320,
@@ -201,7 +201,8 @@ function user_tb(){
 														$('#uname2').html("&nbsp;2-12个汉字或字母组成");
 														$('#uname2').css("color","red");
 													}else{
-														var data={name:aname};
+														arN="success";
+														/*var data={name:aname};
 														$.ajax({
 															url:'userManage/queryName',
 															type:"post",
@@ -213,7 +214,7 @@ function user_tb(){
 																}else{
 																	$('#uname2').html("&nbsp;&nbsp;用户姓名已存在！");
 																	$('#uname2').css("color","red");
-																}
+																}*/
 																if(arUN=="success"&&arN=="success"){
 																	var dataUser={userName:auserName,name:aname,passWord:apassWord,roleId:aroleId,entryDate:aentryDate};
 																	$.ajax({
@@ -235,8 +236,8 @@ function user_tb(){
 																	})
 																}else{
 																}
-															}
-														})
+															/*}
+														})*/
 													}
 												}
 											})
@@ -308,6 +309,9 @@ function userUpdate(id){
 		success:function(result){
 			var $op="";
 			for (var int = 0; int < result.length; int++) {
+				if(result[int].name=="系统管理员"){
+					 continue;
+				}
 				$op=$op+"<option value='"+result[int].id+"'>"+result[int].name+"</option>";
 			}
 			$('#user_update_option').html("" +
@@ -385,7 +389,7 @@ function userUpdate(id){
 	
 		$('#user_update_option').dialog({
 			/*closed:true,*/
-    		width:400,
+    		width:480,
     		height:120,
     		inline:true,
     		left:320,
@@ -441,7 +445,8 @@ function userUpdate(id){
 													$('#name2').html("&nbsp;&nbsp;2-12个汉字或字母组成");
 													$('#name2').css("color","red");
 												}else{
-													var data={id:id,name:name};
+													rN="success";
+													/*var data={id:id,name:name};
 													$.ajax({
 														url:'userManage/queryName2',
 														type:"post",
@@ -453,7 +458,7 @@ function userUpdate(id){
 															}else{
 																$('#name2').html("&nbsp;&nbsp;用户姓名已存在！");
 																$('#name2').css("color","red");
-															}
+															}*/
 															if(rUN=="success"&&rN=="success"){
 																$.messager.confirm('确定','您确定要修改所选的用户吗？',function(f){
 																	if(f){
@@ -466,7 +471,7 @@ function userUpdate(id){
 																				if(result==0){
 																					$.messager.alert({
 																						title:'错误',
-																						msg:'添加错误',
+																						msg:'修改错误',
 																						icon:'info'
 																					});
 																				}else{
@@ -480,8 +485,8 @@ function userUpdate(id){
 															}else{
 															}
 															
-														}
-													})
+														/*}
+													})*/
 												}
 											}
 										})
@@ -529,6 +534,6 @@ function userDelete(id,state){
 
 function userLOG(id){
 	var tab = $('#tabs').tabs('getSelected');  // 获取选择的面板
-	tab.panel('refresh', 'systemLog');
+	tab.panel('refresh', 'systemLog?logUserId='+id);
 }
  

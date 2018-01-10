@@ -166,7 +166,7 @@ function smtLine($url) {
 function intoThread() {
 	var $line = $('#line').datagrid('getSelected');
 	move("线路管理", "thread/intoThread")
-	console.log($line)
+	//console.log($line)
 	thread($line.id, $line.name);
 }
 
@@ -180,7 +180,6 @@ function updateLine() {
 
 function loadLine(){
 	$('#line').datagrid('load',{
-		"coding":$("#lineCodingLike").val(),
 		"status":$("#lineStateLike").val()
 	})
 }

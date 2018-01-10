@@ -60,9 +60,9 @@ public class SystemDataController {
 			DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
 			String time=format.format(date);
 			system.setCreateDate(time);
-			System.out.println(system);
+			//System.out.println(system);
 			int i=systemDataService.addSystemsetting(system);
-			System.out.println(i);
+			//System.out.println(i);
 			return i;
 		}
 	}

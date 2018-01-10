@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.znsd.circuit.dao.FlawConfirmDao;
 import com.znsd.circuit.model.FlawCont;
+import com.znsd.circuit.model.Flawconfirm;
 import com.znsd.circuit.model.Pager;
 import com.znsd.circuit.service.FlawConfirmService;
 
@@ -20,7 +21,7 @@ public class FlawConfirmServiceImpl implements FlawConfirmService{
 
 	@Override
 	public List<FlawCont> getFlawConfirmAll(String taskcoding, String threadcoding, String towercoding, String flawname,
-			String serviceAbility, String flawDesc, String discoverDate, int userId, int flawGrade, int confirmstate,
+			String serviceAbility, String flawDesc, String discoverDate, String userId, String flawGrade, int confirmstate,
 			int updatedBy) {
 		FlawCont f = new FlawCont();
 		f.setTaskcoding(taskcoding);
@@ -41,17 +42,9 @@ public class FlawConfirmServiceImpl implements FlawConfirmService{
 
 	//分页
 	@Override
-	public Pager<FlawCont> getFlawConfirmPager(int pageIndex, int pageSize) {
-		Pager<FlawCont> page = new Pager<>();
-		page.setPageIndex(pageIndex);
-		page.setPageSize(pageSize);
-		Map<String,Object> map = new HashMap<>();
-		map.put("pageIndex",(page.getPageIndex()-1)*page.getPageSize());
-		map.put("pageSize",page.getPageSize());
-		page.setSumSize(getFlawConfirmCount(map));
+	public List<FlawCont> getFlawConfirmPager(Map<String, Object> map) {
 		List<FlawCont> list = flawConfirmDao.getFlawConfirmPager(map);
-		page.setData(list);
-		return page;
+		return list;
 	}
 	
 	@Override
@@ -69,6 +62,9 @@ public class FlawConfirmServiceImpl implements FlawConfirmService{
 		return flawConfirmDao.updateflawgrade(flawCont);
 	}
 
-	
-	
+	@Override
+	public void updateFlawconfirmGrade(Flawconfirm flawconfirm) {
+		flawConfirmDao.updateFlawconfirmGrade(flawconfirm);
+	}
+
 }

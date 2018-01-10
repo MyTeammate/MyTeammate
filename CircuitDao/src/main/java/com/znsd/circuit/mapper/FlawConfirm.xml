@@ -11,18 +11,57 @@
 		INNER JOIN t_tower o ON c.towerId=o.id
 		INNER JOIN t_flaw f ON c.flawId=f.id
 		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
-		WHERE confirmstate=0 AND r.receiptState=1
+		WHERE confirmstate=1 AND r.receiptState=1 and t.taskMan=#{taskMan}
 	</select>
 	<select id="getFlawConfirmPager" resultType="FlawCont" parameterType="Map">
-		SELECT c.id,t.coding AS taskcoding,h.coding AS threadcoding,o.coding AS towercoding,
-		f.`name` AS flawname,c.serviceAbility,c.flawDesc,c.discoverDate,c.userId,c.flawGrade,c.confirmstate
+		SELECT c.id,t.coding AS taskcoding,h.coding AS threadcoding,o.coding
+		AS towercoding,
+		f.`name` AS
+		flawname,c.serviceAbility,c.flawDesc,c.discoverDate,er.`name` as userId,sys.settingName AS flawGrade,c.confirmstate
 		FROM t_flawconfirm c
 		INNER JOIN t_task t ON c.taskId=t.id
-		INNER JOIN t_thread h ON c.threadId=h.id
+		INNER JOIN
+		t_thread h ON c.threadId=h.id
 		INNER JOIN t_tower o ON c.towerId=o.id
 		INNER JOIN t_flaw f ON c.flawId=f.id
-		INNER JOIN t_flaw_record r ON c.id=r.flawconfirmId
-		WHERE confirmstate=0 AND r.receiptState=1
+		INNER JOIN t_flaw_record r ON
+		c.id=r.flawconfirmId
+		INNER JOIN t_user er ON c.userId=er.id
+		INNER JOIN t_systemparam sys ON c.flawGrade=sys.id 
+		WHERE
+		confirmstate=1 AND r.receiptState=1 and t.taskMan=#{taskMan}
+		<if test="renco!=null and renco!=''">
+			AND t.coding LIKE #{renco}
+		</if>
+		<if test="xlco!=null &amp;&amp; xlco!=''">
+			AND h.coding LIKE #{xlco}
+		</if>
+		<if test="gtco!=null &amp;&amp; gtco!=''">
+			AND o.coding LIKE #{gtco}
+		</if>
+		<if test="fxp!=null &amp;&amp; fxp!=''">
+			AND er.`name` LIKE #{fxp}
+		</if>
+		<if test="plas!=null &amp;&amp; plas!=''">
+			AND f.`name` LIKE #{plas}
+		</if>
+		<if test="ids!=null &amp;&amp; ids!=''">
+			AND c.discoverDate &gt;= #{ids}
+		</if>
+		<if test="end!=null &amp;&amp; end!=''">
+			AND c.discoverDate &lt;= #{end}
+		</if>
+		order by c.updatedBy desc
 		LIMIT #{pageIndex},#{pageSize}
 	</select>
+	
+	<!-- 查询要要确认等级的id -->
+	<select id="flawconfid" resultType="FlawCont" parameterType="int">
+		select id,flawGrade,confirmstate from t_flawconfirm where id = #{id}
+	</select>
+	
+	<!-- 第二次确认缺陷等级 -->
+	<update id="updateFlawconfirmGrade" parameterType="Flawconfirm">
+		update t_flawconfirm SET flawGrade=#{flawGrade},confirmstate=0,updatedBy=now() where id=#{id}
+	</update>
 </mapper>

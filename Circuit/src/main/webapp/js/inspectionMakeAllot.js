@@ -183,36 +183,16 @@ $(function() {
 						endDate : $("#inspectionEndDate").val()
 					});
 				}else{
-					console.log('日期验证不通过！');
+					//console.log('日期验证不通过！');
 				}
 			}
 	}
 	
 	
-	getInspectionStaff(); // 获取所有可用巡检员
+	// getInspectionStaff(); // 获取所有可用巡检员
 	
-	$("#add").click(function(){
-		  if($("#fb_list option:selected").length>0) {
-		   $("#fb_list option:selected").each(function(){
-		    $("#select_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
-		    
-		    $(this).remove();
-		   })
-		  }else {
-		   alert("请选择要添加的数据！");
-		  }
-		 });
-		 
-		 $("#delete").click(function() {
-		   if($("#select_list option:selected").length>0) {
-		    $("#select_list option:selected").each(function(){
-		     $("#fb_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
-		      $(this).remove();
-		    })
-		   }else {
-		    alert("请选择要删除的数据！");
-		   }
-		 });
+	add_delete_button();
+	
 });
 
 var taskId='';
@@ -224,7 +204,6 @@ function  allot_staffs(){
 	var staffs = $.map($("#select_list option:not(:selected)"),
             function(ele){return ele.value} 
          ).join(",");
-	 $("#bigdiv").hide(500);
 	 if(staffs==''){
 		 $.messager.alert({
 				title:'分配失败',
@@ -233,7 +212,9 @@ function  allot_staffs(){
 				timeout:500,
 			})
 	 }else{
-		 $.ajax({
+		 $("#select_list").html(""); // 清空右边
+		 $("#bigdiv").hide(500);
+			$.ajax({
 			 url:'allotInspection',
 			 type:"POST",
 			 data:{
@@ -241,7 +222,7 @@ function  allot_staffs(){
 				 users:staffs
 			 },
 			 success:function(result){
-				 console.log(result)
+				 //console.log(result)
 				 if(result.flag==true){
 					 websocket.send(result.userId)
 					 $.messager.show({
@@ -266,7 +247,33 @@ function  allot_staffs(){
 }
 
 function hid() {
+	$("#select_list").html(""); // 清空右边
 	$("#bigdiv").hide(600);
+}
+
+function add_delete_button(){
+	$("#add").click(function(){
+		  if($("#fb_list option:selected").length>0) {
+		   $("#fb_list option:selected").each(function(){
+		    $("#select_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		    
+		    $(this).remove();
+		   })
+		  }else {
+		   alert("请选择要添加的数据！");
+		  }
+		 });
+		 
+		 $("#delete").click(function() {
+		   if($("#select_list option:selected").length>0) {
+		    $("#select_list option:selected").each(function(){
+		     $("#fb_list").append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option");
+		      $(this).remove();
+		    })
+		   }else {
+		    alert("请选择要删除的数据！");
+		   }
+		 });
 }
 
 
@@ -274,7 +281,7 @@ function hid() {
  * 获取所有可用巡检员
  */
 function getInspectionStaff(){
-	$.ajax({
+	/*$.ajax({
 		url : "getInspectionStaff",
 		type : "post",
 		success : function(data) {
@@ -288,6 +295,37 @@ function getInspectionStaff(){
 				}
 			}
 			$("#fb_list").append(str);
+		}
+	});*/
+	
+	$.ajax({
+		url : "getInspectionStaff",
+		type : "post",
+		success : function(data) {
+			var str = "";
+			if (data) {
+				$("#fb_list").html("");
+				for (var i = 0; i < data.length; i++) {
+					if($("#select_list").html() == ""){
+						str += "<option value='" + data[i].id + "' name='options'>"
+						+ data[i].name + "</option>"
+					}else{
+						var flag = true;
+						$(".options").each(
+								function() {
+									if(data[i].id==$(this).val()){
+										flag = false;									
+									}
+									
+						});
+						if(flag==true){
+							str += "<option value='" + data[i].id + "' name='options'>"
+							+ data[i].name + "</option>"
+						}
+					}
+				}
+				$("#fb_list").append(str);
+			}
 		}
 	});
 }
@@ -311,6 +349,7 @@ function lookInspection(id){
  * 显示分配巡检任务的div
  */
 function showallotInspection(id){
+	getInspectionStaff();
 	$("#bigdiv").show(1000);
 	taskId=id;
 }
@@ -363,6 +402,7 @@ function cancelInspection(id){
  * 获取任务被分配人员
  */
 function updateallotInspection(id){
+	taskId=id;
 	$.ajax({
 		url:"getInspectionTaskStaffs",
 		type:"POST",
@@ -370,56 +410,18 @@ function updateallotInspection(id){
 			taskId:id
 		},
 		success:function(data){
-			
-			
+			$("#select_list").html("");
+			var ss="";
+			if(data!=""||data!=null){			
+					for (var i = 0; i < data.length; i++) {
+						ss+="<option class='options' value='" + data[i].id + "' name='options'>"
+						+ data[i].name + "</option>";
+					}
+				
+				$("#select_list").append(ss);
+			}
+			getInspectionStaff();
 		}
 	});
 	$("#bigdiv").show(1000);
-}
-
-/*
- *  提交 修改分配人员
- */
-function update_staffs(){
-	var staffs = $.map($("#select_list option:not(:selected)"),
-            function(ele){return ele.value} 
-         ).join(",");
-	 $("#bigdiv").hide(500);
-	 if(staffs==''){
-		 $.messager.alert({
-				title:'修改分配失败',
-				msg:'<h3 style="color: red;"> 请选择巡检人员 ！</h3>',
-				icon:'warning',
-				timeout:500,
-			})
-	 }else{
-		 console.log("taskId:"+taskId);
-		/* $.ajax({
-			 url:'updateAllotInspection',
-			 type:"POST",
-			 data:{
-				 taskId: taskId,
-				 users:staffs
-			 },
-			 success:function(result){
-				 if(result==true){
-					 $.messager.show({
-						title:'提示',
-						msg:'修改分配成功',
-						timeout:500,
-						showType:"slide",
-						style:{
-						}
-					});
-				 }else{
-					$.messager.alert({
-						title:'修改分配失败',
-						msg:'<h3 style="color: red;">未知错误导致失败，请重试！</h3>',
-						icon:'warning',
-					})
-				 }
-				 $('#makeAllot_datagrid').datagrid('reload');
-			 }
-		 });*/
-	 }
 }
